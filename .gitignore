@@ -215,3 +215,6 @@ tempkey.jwk
 keys
 *.key
 test/Configuration.IntegrationTests/CoverageReports
+
+# Build artifacts
+artifacts/*

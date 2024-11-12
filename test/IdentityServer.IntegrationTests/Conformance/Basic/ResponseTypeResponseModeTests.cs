@@ -101,17 +101,20 @@ public class ResponseTypeResponseModeTests
 
         var state = Guid.NewGuid().ToString();
         var nonce = Guid.NewGuid().ToString();
-
-        var url = _mockPipeline.CreateAuthorizeUrl(
-            clientId: "code_client",
-            responseType: null, // missing
-            scope: "openid",
-            redirectUri: "https://code_client/callback",
-            state: state,
-            nonce: nonce);
-
+        var values = new Parameters
+        {
+            { OidcConstants.AuthorizeRequest.ClientId, "code_client" },
+            { OidcConstants.AuthorizeRequest.ResponseType, null }, // missing
+            { OidcConstants.AuthorizeRequest.RedirectUri, "https://code_client/callback" },
+            { OidcConstants.AuthorizeRequest.Scope, "openid" },
+            { OidcConstants.AuthorizeRequest.State, state },
+            { OidcConstants.AuthorizeRequest.Nonce, nonce }
+        };
+        var request = new RequestUrl(IdentityServerPipeline.AuthorizeEndpoint);
+        var url = request.Create(values);
+        
         _mockPipeline.BrowserClient.AllowAutoRedirect = true;
-        var response = await _mockPipeline.BrowserClient.GetAsync(url);
+        var _ = await _mockPipeline.BrowserClient.GetAsync(url);
 
         _mockPipeline.ErrorMessage.Error.Should().Be(OidcConstants.AuthorizeErrors.InvalidRequest);
     }

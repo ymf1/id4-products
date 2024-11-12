@@ -448,12 +448,13 @@ public class IdentityServerPipeline
         string responseMode = null,
         string codeChallenge = null,
         string codeChallengeMethod = null,
+        string requestUri = null,
         object extra = null)
     {
         var old = BrowserClient.AllowAutoRedirect;
         BrowserClient.AllowAutoRedirect = false;
 
-        var url = CreateAuthorizeUrl(clientId, responseType, scope, redirectUri, state, nonce, loginHint, acrValues, responseMode, codeChallenge, codeChallengeMethod, extra);
+        var url = CreateAuthorizeUrl(clientId, responseType, scope, redirectUri, state, nonce, loginHint, acrValues, responseMode, codeChallenge, codeChallengeMethod, requestUri, extra);
         var result = await BrowserClient.GetAsync(url);
         result.StatusCode.Should().Be(HttpStatusCode.Found);
 

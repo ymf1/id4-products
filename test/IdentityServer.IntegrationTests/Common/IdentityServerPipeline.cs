@@ -20,7 +20,7 @@ using Duende.IdentityServer.ResponseHandling;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Test;
 using FluentAssertions;
-using IdentityModel.Client;
+using Duende.IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -368,6 +368,7 @@ public class IdentityServerPipeline
         string responseMode = null,
         string codeChallenge = null,
         string codeChallengeMethod = null,
+        string requestUri = null,
         object extra = null)
     {
         var url = new RequestUrl(AuthorizeEndpoint).CreateAuthorizeUrl(
@@ -382,6 +383,7 @@ public class IdentityServerPipeline
             responseMode: responseMode,
             codeChallenge: codeChallenge,
             codeChallengeMethod: codeChallengeMethod,
+            requestUri: requestUri,
             extra: Parameters.FromObject(extra));
         return url;
     }
@@ -429,12 +431,12 @@ public class IdentityServerPipeline
         return await PushAuthorizationRequestAsync(parameters);
     }
 
-    public IdentityModel.Client.AuthorizeResponse ParseAuthorizationResponseUrl(string url)
+    public Duende.IdentityModel.Client.AuthorizeResponse ParseAuthorizationResponseUrl(string url)
     {
-        return new IdentityModel.Client.AuthorizeResponse(url);
+        return new Duende.IdentityModel.Client.AuthorizeResponse(url);
     }
 
-    public async Task<IdentityModel.Client.AuthorizeResponse> RequestAuthorizationEndpointAsync(
+    public async Task<Duende.IdentityModel.Client.AuthorizeResponse> RequestAuthorizationEndpointAsync(
         string clientId,
         string responseType,
         string scope = null,
@@ -446,12 +448,13 @@ public class IdentityServerPipeline
         string responseMode = null,
         string codeChallenge = null,
         string codeChallengeMethod = null,
+        string requestUri = null,
         object extra = null)
     {
         var old = BrowserClient.AllowAutoRedirect;
         BrowserClient.AllowAutoRedirect = false;
 
-        var url = CreateAuthorizeUrl(clientId, responseType, scope, redirectUri, state, nonce, loginHint, acrValues, responseMode, codeChallenge, codeChallengeMethod, extra);
+        var url = CreateAuthorizeUrl(clientId, responseType, scope, redirectUri, state, nonce, loginHint, acrValues, responseMode, codeChallenge, codeChallengeMethod, requestUri, extra);
         var result = await BrowserClient.GetAsync(url);
         result.StatusCode.Should().Be(HttpStatusCode.Found);
 
@@ -467,7 +470,7 @@ public class IdentityServerPipeline
             return null;
         }
 
-        return new IdentityModel.Client.AuthorizeResponse(redirect);
+        return new Duende.IdentityModel.Client.AuthorizeResponse(redirect);
     }
 
     public T Resolve<T>()

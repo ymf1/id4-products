@@ -2,7 +2,7 @@
 // See LICENSE in the project root for license information.
 
 
-using IdentityModel;
+using Duende.IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -15,7 +15,7 @@ using System.Linq;
 using Microsoft.Net.Http.Headers;
 using System.Text;
 using Duende.IdentityServer.Stores;
-using static IdentityModel.OidcConstants;
+using static Duende.IdentityModel.OidcConstants;
 
 namespace Duende.IdentityServer.Hosting.LocalApiAuthentication;
 

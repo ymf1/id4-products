@@ -9,8 +9,8 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using FluentAssertions;
-using IdentityModel;
-using IdentityModel.Client;
+using Duende.IdentityModel;
+using Duende.IdentityModel.Client;
 using IntegrationTests.Clients.Setup;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
@@ -274,10 +274,8 @@ public class CustomTokenResponseClients
         return responseObject.ToObject<CustomResponseDto>();
     }
 
-    private Dictionary<string, JsonElement> GetFields(TokenResponse response)
-    {
-        return response.Json.ToObject<Dictionary<string, JsonElement>>();
-    }
+    private Dictionary<string, JsonElement> GetFields(TokenResponse response) => response.Raw.GetFields();
+
 
     private Dictionary<string, JsonElement> GetPayload(TokenResponse response)
     {

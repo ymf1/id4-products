@@ -3,7 +3,7 @@
 
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Configuration.EntityFramework;
-using IdentityModel;
+using Duende.IdentityModel;
 using IdentityServerHost.Extensions;
 using Microsoft.EntityFrameworkCore;
 

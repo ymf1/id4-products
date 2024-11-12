@@ -21,7 +21,7 @@ using System.Text.Json;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using static Duende.IdentityServer.IdentityServerConstants;
-using IdentityModel.Client;
+using Duende.IdentityModel.Client;
 
 namespace IdentityServer.IntegrationTests.Endpoints.Ciba;
 

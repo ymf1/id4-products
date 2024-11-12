@@ -11,7 +11,7 @@ using Duende.IdentityServer.Test;
 using IntegrationTests.Common;
 using Xunit;
 using System.IdentityModel.Tokens.Jwt;
-using IdentityModel.Client;
+using Duende.IdentityModel.Client;
 using System.Linq;
 
 namespace IntegrationTests.Endpoints.Token;

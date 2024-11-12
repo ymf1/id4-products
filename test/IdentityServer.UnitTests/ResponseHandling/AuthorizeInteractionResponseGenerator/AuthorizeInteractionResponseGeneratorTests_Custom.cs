@@ -13,7 +13,7 @@ using FluentAssertions;
 using UnitTests.Common;
 using Microsoft.Extensions.Logging;
 using Xunit;
-using static IdentityModel.OidcConstants;
+using static Duende.IdentityModel.OidcConstants;
 
 namespace UnitTests.ResponseHandling.AuthorizeInteractionResponseGenerator;
 

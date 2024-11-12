@@ -7,7 +7,7 @@
 using System;
 using System.Linq;
 using Duende.IdentityServer;
-using IdentityModel;
+using Duende.IdentityModel;
 using Duende.IdentityServer.AspNetIdentity;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;

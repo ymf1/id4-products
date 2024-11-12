@@ -5,7 +5,7 @@
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Test;
 using FluentAssertions;
-using IdentityModel;
+using Duende.IdentityModel;
 using IntegrationTests.Common;
 using System;
 using System.Collections.Generic;
@@ -53,16 +53,13 @@ public class PushedAuthorizationTests
         // Authorize using pushed request
         var authorizeUrl = _mockPipeline.CreateAuthorizeUrl(
             clientId: "client1",
-            extra: new
-            {
-                request_uri = parJson.RootElement.GetProperty("request_uri").GetString()
-            });
+            requestUri: parJson.RootElement.GetProperty("request_uri").GetString());
         var response = await _mockPipeline.BrowserClient.GetAsync(authorizeUrl);
 
         response.Should().Be302Found();
         response.Should().HaveHeader("Location").And.Match($"{expectedCallback}*");
 
-        var authorization = new IdentityModel.Client.AuthorizeResponse(response.Headers.Location.ToString());
+        var authorization = new Duende.IdentityModel.Client.AuthorizeResponse(response.Headers.Location.ToString());
         authorization.IsError.Should().BeFalse();
         authorization.IdentityToken.Should().NotBeNull();
         authorization.State.Should().Be(expectedState);
@@ -133,10 +130,7 @@ public class PushedAuthorizationTests
         // Authorize using pushed request
         var authorizeUrl = _mockPipeline.CreateAuthorizeUrl(
             clientId: "client1",
-            extra: new
-            {
-                request_uri = parJson.RootElement.GetProperty("request_uri").GetString()
-            });
+            requestUri: parJson.RootElement.GetProperty("request_uri").GetString());
 
         // We expect to be redirected to the error page, as this is an interactive
         // call to authorize. We don't want to follow redirects. Instead we'll just
@@ -161,10 +155,7 @@ public class PushedAuthorizationTests
         // Authorize using pushed request
         var authorizeUrl = _mockPipeline.CreateAuthorizeUrl(
             clientId: "client1",
-            extra: new
-            {
-                request_uri = parJson.RootElement.GetProperty("request_uri").GetString()
-            });
+            requestUri: parJson.RootElement.GetProperty("request_uri").GetString());
 
         _mockPipeline.BrowserClient.AllowAutoRedirect = false;
         var firstAuthorizeResponse = await _mockPipeline.BrowserClient.GetAsync(authorizeUrl);
@@ -221,10 +212,7 @@ public class PushedAuthorizationTests
         // Authorize using pushed request
         var authorizeUrl = _mockPipeline.CreateAuthorizeUrl(
             clientId: "client1",
-            extra: new
-            {
-                request_uri = parJson.RootElement.GetProperty("request_uri").GetString()
-            });
+            requestUri: parJson.RootElement.GetProperty("request_uri").GetString());
         var authorizeResponse = await _mockPipeline.BrowserClient.GetAsync(authorizeUrl);
 
         // Verify that authorize redirects to login

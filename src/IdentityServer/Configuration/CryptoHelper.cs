@@ -4,7 +4,7 @@
 
 #nullable enable
 
-using IdentityModel;
+using Duende.IdentityModel;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Linq;

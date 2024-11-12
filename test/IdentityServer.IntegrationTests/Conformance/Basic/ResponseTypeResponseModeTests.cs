@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Test;
 using FluentAssertions;
-using IdentityModel;
+using Duende.IdentityModel;
+using Duende.IdentityModel.Client;
 using IntegrationTests.Common;
 using Xunit;
 
@@ -83,7 +84,7 @@ public class ResponseTypeResponseModeTests
         var response = await _mockPipeline.BrowserClient.GetAsync(url);
         response.StatusCode.Should().Be(HttpStatusCode.Found);
 
-        var authorization = new IdentityModel.Client.AuthorizeResponse(response.Headers.Location.ToString());
+        var authorization = new AuthorizeResponse(response.Headers.Location.ToString());
         authorization.IsError.Should().BeFalse();
         authorization.Code.Should().NotBeNull();
         authorization.State.Should().Be(state);
@@ -100,17 +101,20 @@ public class ResponseTypeResponseModeTests
 
         var state = Guid.NewGuid().ToString();
         var nonce = Guid.NewGuid().ToString();
-
-        var url = _mockPipeline.CreateAuthorizeUrl(
-            clientId: "code_client",
-            responseType: null, // missing
-            scope: "openid",
-            redirectUri: "https://code_client/callback",
-            state: state,
-            nonce: nonce);
-
+        var values = new Parameters
+        {
+            { OidcConstants.AuthorizeRequest.ClientId, "code_client" },
+            { OidcConstants.AuthorizeRequest.ResponseType, null }, // missing
+            { OidcConstants.AuthorizeRequest.RedirectUri, "https://code_client/callback" },
+            { OidcConstants.AuthorizeRequest.Scope, "openid" },
+            { OidcConstants.AuthorizeRequest.State, state },
+            { OidcConstants.AuthorizeRequest.Nonce, nonce }
+        };
+        var request = new RequestUrl(IdentityServerPipeline.AuthorizeEndpoint);
+        var url = request.Create(values);
+        
         _mockPipeline.BrowserClient.AllowAutoRedirect = true;
-        var response = await _mockPipeline.BrowserClient.GetAsync(url);
+        var _ = await _mockPipeline.BrowserClient.GetAsync(url);
 
         _mockPipeline.ErrorMessage.Error.Should().Be(OidcConstants.AuthorizeErrors.InvalidRequest);
     }

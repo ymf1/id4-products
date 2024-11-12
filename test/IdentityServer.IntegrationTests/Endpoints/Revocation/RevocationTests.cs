@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Test;
 using FluentAssertions;
-using IdentityModel.Client;
+using Duende.IdentityModel.Client;
 using IntegrationTests.Common;
 using Xunit;
 
@@ -175,7 +175,7 @@ public class RevocationTests
             ClientSecret = scope_secret,
 
             Token = token,
-            TokenTypeHint = IdentityModel.OidcConstants.TokenTypes.AccessToken
+            TokenTypeHint = Duende.IdentityModel.OidcConstants.TokenTypes.AccessToken
         });
 
         return response.IsError == false && response.IsActive;

@@ -4,7 +4,7 @@
 
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using IdentityModel;
+using Duende.IdentityModel;
 using Microsoft.AspNetCore.Http;
 using System.Net;
 using Duende.IdentityServer.Endpoints.Results;

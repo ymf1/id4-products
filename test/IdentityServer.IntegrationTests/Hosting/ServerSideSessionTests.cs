@@ -13,7 +13,7 @@ using IntegrationTests.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
-using IdentityModel.Client;
+using Duende.IdentityModel.Client;
 using System.Collections.Generic;
 using System;
 using Microsoft.IdentityModel.JsonWebTokens;

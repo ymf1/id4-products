@@ -8,7 +8,7 @@ using Duende.IdentityServer.Extensions;
 using Microsoft.Extensions.Primitives;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
-using IdentityModel;
+using Duende.IdentityModel;
 
 namespace Duende.IdentityServer.Endpoints.Results;
 

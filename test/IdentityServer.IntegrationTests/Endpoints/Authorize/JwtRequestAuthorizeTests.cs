@@ -21,7 +21,7 @@ using Duende.IdentityServer.Stores;
 using Duende.IdentityServer.Stores.Default;
 using Duende.IdentityServer.Test;
 using FluentAssertions;
-using IdentityModel;
+using Duende.IdentityModel;
 using IntegrationTests.Common;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Logging;
@@ -379,7 +379,7 @@ public class JwtRequestAuthorizeTests
             issuer: _client.ClientId,
             audience: IdentityServerPipeline.BaseUrl,
             credential: new SigningCredentials(_rsaKey, "RS256"),
-            claims: new[] {
+            claims: [
                 new Claim("client_id", _client.ClientId),
                 new Claim("response_type", "id_token"),
                 new Claim("scope", "openid profile"),
@@ -391,7 +391,7 @@ public class JwtRequestAuthorizeTests
                 new Claim("display", "popup"),
                 new Claim("ui_locales", "ui_locale_value"),
                 new Claim("foo", "123foo"),
-            });
+            ]);
 
         var (parResponse, statusCode) = await _mockPipeline.PushAuthorizationRequestAsync(
             new Dictionary<string, string>() 
@@ -403,10 +403,7 @@ public class JwtRequestAuthorizeTests
 
         var url = _mockPipeline.CreateAuthorizeUrl(
             clientId: _client.ClientId,
-            extra: new
-            {
-                request_uri = parResponse.RootElement.GetProperty("request_uri").GetString()
-            });
+            requestUri: parResponse.RootElement.GetProperty("request_uri").GetString());
         var response = await _mockPipeline.BrowserClient.GetAsync(url);
 
         _mockPipeline.LoginRequest.Should().NotBeNull();

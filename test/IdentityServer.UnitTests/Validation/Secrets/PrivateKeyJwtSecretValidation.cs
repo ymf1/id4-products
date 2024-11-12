@@ -14,7 +14,7 @@ using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores;
 using Duende.IdentityServer.Validation;
 using FluentAssertions;
-using IdentityModel;
+using Duende.IdentityModel;
 using UnitTests.Common;
 using UnitTests.Services.Default;
 using UnitTests.Validation.Setup;

@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Validation;
-using IdentityModel;
+using Duende.IdentityModel;
 using Duende.IdentityServer.Stores.Serialization;
 
 namespace Duende.IdentityServer.Services;

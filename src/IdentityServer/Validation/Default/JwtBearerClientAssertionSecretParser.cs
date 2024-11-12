@@ -7,7 +7,7 @@ using System.Linq;
 using System.IdentityModel.Tokens.Jwt;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Models;
-using IdentityModel;
+using Duende.IdentityModel;
 using Duende.IdentityServer.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;

@@ -6,7 +6,7 @@
 
 using System.Threading.Tasks;
 using Duende.IdentityServer.Stores;
-using IdentityModel;
+using Duende.IdentityModel;
 
 namespace Duende.IdentityServer.Services;
 

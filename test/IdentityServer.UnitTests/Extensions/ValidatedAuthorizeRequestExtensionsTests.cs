@@ -4,7 +4,7 @@
 
 using System;
 using Duende.IdentityServer.Validation;
-using IdentityModel;
+using Duende.IdentityModel;
 using Xunit;
 
 namespace UnitTests.Extensions;

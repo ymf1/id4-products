@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Services;
 using static Duende.IdentityServer.IdentityServerConstants;
-using IdentityModel;
+using Duende.IdentityModel;
 
 namespace Duende.IdentityServer.Endpoints.Results;
 

@@ -2,7 +2,7 @@
 // See LICENSE in the project root for license information.
 
 
-using IdentityModel;
+using Duende.IdentityModel;
 using System.Threading.Tasks;
 
 namespace Duende.IdentityServer.Services;

@@ -4,7 +4,7 @@
 
 using System.Threading.Tasks;
 using Duende.IdentityServer.Extensions;
-using IdentityModel;
+using Duende.IdentityModel;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Text.Encodings.Web;

@@ -17,7 +17,7 @@ using Duende.IdentityServer.Stores.Default;
 using Duende.IdentityServer.Test;
 using Duende.IdentityServer.Validation;
 using FluentAssertions;
-using IdentityModel;
+using Duende.IdentityModel;
 using IntegrationTests.Common;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
@@ -236,7 +236,7 @@ public class AuthorizeTests
         response.StatusCode.Should().Be(HttpStatusCode.Redirect);
         response.Headers.Location.ToString().Should().StartWith("https://client1/callback");
 
-        var authorization = new IdentityModel.Client.AuthorizeResponse(response.Headers.Location.ToString());
+        var authorization = new Duende.IdentityModel.Client.AuthorizeResponse(response.Headers.Location.ToString());
         authorization.IsError.Should().BeFalse();
         authorization.IdentityToken.Should().NotBeNull();
         authorization.State.Should().Be("123_state");
@@ -262,7 +262,7 @@ public class AuthorizeTests
         response.StatusCode.Should().Be(HttpStatusCode.Redirect);
         response.Headers.Location.ToString().Should().StartWith("https://client4/callback");
 
-        var authorization = new IdentityModel.Client.AuthorizeResponse(response.Headers.Location.ToString());
+        var authorization = new Duende.IdentityModel.Client.AuthorizeResponse(response.Headers.Location.ToString());
         authorization.IsError.Should().BeFalse();
         authorization.IdentityToken.Should().BeNull();
         authorization.AccessToken.Should().BeNull();
@@ -293,7 +293,7 @@ public class AuthorizeTests
         response.StatusCode.Should().Be(HttpStatusCode.Redirect);
         response.Headers.Location.ToString().Should().StartWith("https://client1/callback");
 
-        var authorization = new IdentityModel.Client.AuthorizeResponse(response.Headers.Location.ToString());
+        var authorization = new Duende.IdentityModel.Client.AuthorizeResponse(response.Headers.Location.ToString());
         authorization.IsError.Should().BeFalse();
         authorization.IdentityToken.Should().NotBeNull();
         authorization.State.Should().Be("123_state");
@@ -336,7 +336,7 @@ public class AuthorizeTests
         response.StatusCode.Should().Be(HttpStatusCode.Redirect);
         response.Headers.Location.ToString().Should().StartWith("https://client2/callback");
 
-        var authorization = new IdentityModel.Client.AuthorizeResponse(response.Headers.Location.ToString());
+        var authorization = new Duende.IdentityModel.Client.AuthorizeResponse(response.Headers.Location.ToString());
         authorization.IsError.Should().BeFalse();
         authorization.IdentityToken.Should().NotBeNull();
         authorization.State.Should().Be("123_state");

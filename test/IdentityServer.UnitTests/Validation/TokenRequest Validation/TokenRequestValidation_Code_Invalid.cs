@@ -13,7 +13,7 @@ using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Stores;
 using Duende.IdentityServer.Validation;
 using FluentAssertions;
-using IdentityModel;
+using Duende.IdentityModel;
 using UnitTests.Common;
 using UnitTests.Validation.Setup;
 using Xunit;

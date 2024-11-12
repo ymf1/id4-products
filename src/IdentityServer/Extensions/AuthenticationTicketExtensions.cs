@@ -4,7 +4,7 @@
 
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Stores.Serialization;
-using IdentityModel;
+using Duende.IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Logging;

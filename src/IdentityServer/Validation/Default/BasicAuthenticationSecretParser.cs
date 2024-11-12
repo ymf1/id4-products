@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Models;
-using IdentityModel;
+using Duende.IdentityModel;
 using Microsoft.AspNetCore.Http;
 
 namespace Duende.IdentityServer.Validation;

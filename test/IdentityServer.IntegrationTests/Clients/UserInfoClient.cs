@@ -10,8 +10,8 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using FluentAssertions;
-using IdentityModel;
-using IdentityModel.Client;
+using Duende.IdentityModel;
+using Duende.IdentityModel.Client;
 using IntegrationTests.Clients.Setup;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
@@ -193,7 +193,7 @@ public class UserInfoEndpointClient
             Token = response.AccessToken
         });
 
-        roles = userInfo.Json.TryGetStringArray("role").ToList();
+        roles = userInfo.Json?.TryGetStringArray("role").ToList();
         roles.Count.Should().Be(2);
         roles.Should().Contain("Geek");
         roles.Should().Contain("Developer");

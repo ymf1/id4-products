@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Duende.IdentityServer.Extensions;
 using System;
-using IdentityModel;
+using Duende.IdentityModel;
 using System.Linq;
 using Duende.IdentityServer.Configuration.DependencyInjection;
 using Duende.IdentityServer.Services;

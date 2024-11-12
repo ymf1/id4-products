@@ -7,7 +7,7 @@ using System.Linq;
 using Duende.IdentityServer.Validation;
 using Duende.IdentityServer.Extensions;
 using System;
-using IdentityModel;
+using Duende.IdentityModel;
 
 namespace Duende.IdentityServer.Logging.Models;
 

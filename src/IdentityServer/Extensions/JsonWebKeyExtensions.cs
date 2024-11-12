@@ -4,7 +4,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using IdentityModel;
+using Duende.IdentityModel;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Duende.IdentityServer.Extensions;

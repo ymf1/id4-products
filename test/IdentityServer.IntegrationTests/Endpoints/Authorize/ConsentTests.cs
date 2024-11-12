@@ -205,7 +205,7 @@ public class ConsentTests
         response.StatusCode.Should().Be(HttpStatusCode.Redirect);
         response.Headers.Location.ToString().Should().StartWith("https://client2/callback");
 
-        var authorization = new IdentityModel.Client.AuthorizeResponse(response.Headers.Location.ToString());
+        var authorization = new Duende.IdentityModel.Client.AuthorizeResponse(response.Headers.Location.ToString());
         authorization.IsError.Should().BeFalse();
         authorization.IdentityToken.Should().NotBeNull();
         authorization.State.Should().Be("123_state");
@@ -273,7 +273,7 @@ public class ConsentTests
         response.StatusCode.Should().Be(HttpStatusCode.Redirect);
         response.Headers.Location.ToString().Should().StartWith("https://client2/callback");
 
-        var authorization = new IdentityModel.Client.AuthorizeResponse(response.Headers.Location.ToString());
+        var authorization = new Duende.IdentityModel.Client.AuthorizeResponse(response.Headers.Location.ToString());
         authorization.IsError.Should().BeTrue();
         authorization.Error.Should().Be("access_denied");
         authorization.State.Should().Be("123_state");
@@ -316,7 +316,7 @@ public class ConsentTests
         response.StatusCode.Should().Be(HttpStatusCode.Redirect);
         response.Headers.Location.ToString().Should().StartWith("https://client2/callback");
 
-        var authorization = new IdentityModel.Client.AuthorizeResponse(response.Headers.Location.ToString());
+        var authorization = new Duende.IdentityModel.Client.AuthorizeResponse(response.Headers.Location.ToString());
         authorization.IsError.Should().BeTrue();
         authorization.Error.Should().Be("temporarily_unavailable");
         authorization.ErrorDescription.Should().Be("some description");
@@ -359,7 +359,7 @@ public class ConsentTests
         response.StatusCode.Should().Be(HttpStatusCode.Redirect);
         response.Headers.Location.ToString().Should().StartWith("https://client2/callback");
 
-        var authorization = new IdentityModel.Client.AuthorizeResponse(response.Headers.Location.ToString());
+        var authorization = new Duende.IdentityModel.Client.AuthorizeResponse(response.Headers.Location.ToString());
         authorization.IsError.Should().BeTrue();
         authorization.Error.Should().Be("unmet_authentication_requirements");
         authorization.ErrorDescription.Should().Be("some description");

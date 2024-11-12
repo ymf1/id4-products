@@ -12,7 +12,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Duende.IdentityServer.Models;
 using FluentAssertions;
-using IdentityModel;
+using Duende.IdentityModel;
 using IntegrationTests.Common;
 using Xunit;
 

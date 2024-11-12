@@ -4,7 +4,7 @@
 
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.DataProtection;
-using IdentityModel;
+using Duende.IdentityModel;
 using System.Text;
 using System;
 using Duende.IdentityServer.Models;

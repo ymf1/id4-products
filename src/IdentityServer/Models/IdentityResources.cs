@@ -4,7 +4,7 @@
 
 #nullable enable
 
-using IdentityModel;
+using Duende.IdentityModel;
 using System.Linq;
 
 namespace Duende.IdentityServer.Models;

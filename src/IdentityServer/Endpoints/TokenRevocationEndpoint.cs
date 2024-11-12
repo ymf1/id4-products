@@ -2,7 +2,7 @@
 // See LICENSE in the project root for license information.
 
 
-using IdentityModel;
+using Duende.IdentityModel;
 using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Threading.Tasks;

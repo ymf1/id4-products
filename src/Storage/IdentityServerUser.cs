@@ -4,7 +4,7 @@
 
 #nullable enable
 
-using IdentityModel;
+using Duende.IdentityModel;
 using Duende.IdentityServer.Extensions;
 using System;
 using System.Collections.Generic;

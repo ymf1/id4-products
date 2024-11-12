@@ -10,7 +10,7 @@ using Microsoft.IdentityModel.JsonWebTokens;
 using System;
 using Duende.IdentityServer.Extensions;
 using System.Text.Json;
-using IdentityModel;
+using Duende.IdentityModel;
 using System.Linq;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Models;

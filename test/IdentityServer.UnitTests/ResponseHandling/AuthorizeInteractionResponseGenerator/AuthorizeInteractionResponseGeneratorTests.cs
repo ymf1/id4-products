@@ -12,7 +12,7 @@ using Duende.IdentityServer.Validation;
 using FluentAssertions;
 using UnitTests.Common;
 using Xunit;
-using static IdentityModel.OidcConstants;
+using static Duende.IdentityModel.OidcConstants;
 
 namespace UnitTests.ResponseHandling.AuthorizeInteractionResponseGenerator;
 

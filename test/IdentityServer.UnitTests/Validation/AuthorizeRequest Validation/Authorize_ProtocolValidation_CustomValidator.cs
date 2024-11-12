@@ -7,7 +7,7 @@ using System.Collections.Specialized;
 using System.Threading.Tasks;
 using Duende.IdentityServer.Validation;
 using FluentAssertions;
-using IdentityModel;
+using Duende.IdentityModel;
 using UnitTests.Validation.Setup;
 using Xunit;
 

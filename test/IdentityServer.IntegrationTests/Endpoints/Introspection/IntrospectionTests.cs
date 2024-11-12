@@ -12,7 +12,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Duende.IdentityServer;
 using FluentAssertions;
-using IdentityModel.Client;
+using Duende.IdentityModel.Client;
 using IntegrationTests.Endpoints.Introspection.Setup;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
@@ -312,7 +312,7 @@ public class IntrospectionTests
             Token = tokenResponse.AccessToken
         });
 
-        var values = introspectionResponse.Json.ToObject<Dictionary<string, JsonElement>>();
+        var values = introspectionResponse.Json.As<Dictionary<string, JsonElement>>();
             
         values["iss"].ValueKind.Should().Be(JsonValueKind.String);
         values["aud"].ValueKind.Should().Be(JsonValueKind.String);
@@ -352,7 +352,7 @@ public class IntrospectionTests
             Token = tokenResponse.AccessToken
         });
 
-        var values = introspectionResponse.Json.ToObject<Dictionary<string, JsonElement>>();
+        var values = introspectionResponse.Json.As<Dictionary<string, JsonElement>>();
             
         values["iss"].ValueKind.Should().Be(JsonValueKind.String);
         values["aud"].ValueKind.Should().Be(JsonValueKind.String);
@@ -390,7 +390,7 @@ public class IntrospectionTests
             Token = tokenResponse.AccessToken
         });
 
-        var values = introspectionResponse.Json.ToObject<Dictionary<string, JsonElement>>();
+        var values = introspectionResponse.Json.As<Dictionary<string, JsonElement>>();
 
         values["aud"].ValueKind.Should().Be(JsonValueKind.Array);
 
@@ -435,7 +435,7 @@ public class IntrospectionTests
             Token = tokenResponse.AccessToken
         });
 
-        var values = introspectionResponse.Json.ToObject<Dictionary<string, JsonElement>>();
+        var values = introspectionResponse.Json.As<Dictionary<string, JsonElement>>();
 
         values["iss"].ValueKind.Should().Be(JsonValueKind.String);
         values["aud"].ValueKind.Should().Be(JsonValueKind.String);

@@ -4,7 +4,7 @@
 
 using System.Text.Json.Serialization;
 using Duende.IdentityServer.Models;
-using IdentityModel;
+using Duende.IdentityModel;
 
 namespace Duende.IdentityServer.Configuration.Models.DynamicClientRegistration;
 

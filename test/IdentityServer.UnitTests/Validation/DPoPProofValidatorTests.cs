@@ -15,7 +15,7 @@ using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Validation;
 using FluentAssertions;
-using IdentityModel;
+using Duende.IdentityModel;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.JsonWebTokens;
@@ -535,7 +535,7 @@ public class DPoPProofValidatorTests
     [Trait("Category", Category)]
     public async Task invalid_alg_should_fail_validation()
     {
-        var key = new SymmetricSecurityKey(IdentityModel.CryptoRandom.CreateRandomKey(32));
+        var key = new SymmetricSecurityKey(Duende.IdentityModel.CryptoRandom.CreateRandomKey(32));
         _publicJWK = JsonSerializer.Serialize(key);
         CreateHeaderValuesFromPublicKey();
         

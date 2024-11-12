@@ -10,7 +10,7 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Duende.IdentityServer.Hosting;
 using Duende.IdentityServer.ResponseHandling;
-using IdentityModel;
+using Duende.IdentityModel;
 
 namespace Duende.IdentityServer.Endpoints.Results;
 

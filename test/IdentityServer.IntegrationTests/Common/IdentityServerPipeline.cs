@@ -20,7 +20,7 @@ using Duende.IdentityServer.ResponseHandling;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Test;
 using FluentAssertions;
-using IdentityModel.Client;
+using Duende.IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -429,12 +429,12 @@ public class IdentityServerPipeline
         return await PushAuthorizationRequestAsync(parameters);
     }
 
-    public IdentityModel.Client.AuthorizeResponse ParseAuthorizationResponseUrl(string url)
+    public Duende.IdentityModel.Client.AuthorizeResponse ParseAuthorizationResponseUrl(string url)
     {
-        return new IdentityModel.Client.AuthorizeResponse(url);
+        return new Duende.IdentityModel.Client.AuthorizeResponse(url);
     }
 
-    public async Task<IdentityModel.Client.AuthorizeResponse> RequestAuthorizationEndpointAsync(
+    public async Task<Duende.IdentityModel.Client.AuthorizeResponse> RequestAuthorizationEndpointAsync(
         string clientId,
         string responseType,
         string scope = null,
@@ -467,7 +467,7 @@ public class IdentityServerPipeline
             return null;
         }
 
-        return new IdentityModel.Client.AuthorizeResponse(redirect);
+        return new Duende.IdentityModel.Client.AuthorizeResponse(redirect);
     }
 
     public T Resolve<T>()

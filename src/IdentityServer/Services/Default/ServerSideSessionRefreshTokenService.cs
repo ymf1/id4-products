@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Validation;
 using Duende.IdentityServer.Configuration.DependencyInjection;
-using IdentityModel;
+using Duende.IdentityModel;
 
 namespace Duende.IdentityServer.Services;
 

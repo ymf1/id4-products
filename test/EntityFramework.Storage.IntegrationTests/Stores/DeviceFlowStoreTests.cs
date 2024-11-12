@@ -15,7 +15,7 @@ using Duende.IdentityServer.EntityFramework.Stores;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Stores.Serialization;
 using FluentAssertions;
-using IdentityModel;
+using Duende.IdentityModel;
 using Microsoft.EntityFrameworkCore.InMemory.Infrastructure.Internal;
 using Xunit;
 using Duende.IdentityServer.Services;

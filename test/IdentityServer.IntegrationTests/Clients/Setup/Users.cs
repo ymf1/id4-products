@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Test;
-using IdentityModel;
+using Duende.IdentityModel;
 
 namespace IntegrationTests.Clients.Setup;
 

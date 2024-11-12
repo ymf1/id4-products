@@ -5,7 +5,7 @@
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Test;
 using FluentAssertions;
-using IdentityModel;
+using Duende.IdentityModel;
 using IntegrationTests.Common;
 using System;
 using System.Collections.Generic;
@@ -62,7 +62,7 @@ public class PushedAuthorizationTests
         response.Should().Be302Found();
         response.Should().HaveHeader("Location").And.Match($"{expectedCallback}*");
 
-        var authorization = new IdentityModel.Client.AuthorizeResponse(response.Headers.Location.ToString());
+        var authorization = new Duende.IdentityModel.Client.AuthorizeResponse(response.Headers.Location.ToString());
         authorization.IsError.Should().BeFalse();
         authorization.IdentityToken.Should().NotBeNull();
         authorization.State.Should().Be(expectedState);

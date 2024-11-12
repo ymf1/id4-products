@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
-using IdentityModel;
+using Duende.IdentityModel;
 
 namespace Duende.IdentityServer.AspNetIdentity;
 

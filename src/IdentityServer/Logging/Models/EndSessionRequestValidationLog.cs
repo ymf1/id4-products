@@ -4,7 +4,7 @@
 
 using System.Collections.Generic;
 using Duende.IdentityServer.Validation;
-using IdentityModel;
+using Duende.IdentityModel;
 using Duende.IdentityServer.Extensions;
 
 namespace Duende.IdentityServer.Logging.Models;

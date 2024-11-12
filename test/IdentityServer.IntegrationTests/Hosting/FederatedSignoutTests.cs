@@ -12,7 +12,7 @@ using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Test;
 using FluentAssertions;
-using IdentityModel;
+using Duende.IdentityModel;
 using IntegrationTests.Common;
 using Microsoft.AspNetCore.Authentication;
 using Xunit;

@@ -2,7 +2,7 @@
 // See LICENSE in the project root for license information.
 
 
-using IdentityModel;
+using Duende.IdentityModel;
 using Duende.IdentityServer.Extensions;
 using System.Collections.Generic;
 using System.Linq;

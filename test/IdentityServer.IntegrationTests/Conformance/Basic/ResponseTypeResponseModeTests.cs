@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Test;
 using FluentAssertions;
-using IdentityModel;
+using Duende.IdentityModel;
+using Duende.IdentityModel.Client;
 using IntegrationTests.Common;
 using Xunit;
 
@@ -83,7 +84,7 @@ public class ResponseTypeResponseModeTests
         var response = await _mockPipeline.BrowserClient.GetAsync(url);
         response.StatusCode.Should().Be(HttpStatusCode.Found);
 
-        var authorization = new IdentityModel.Client.AuthorizeResponse(response.Headers.Location.ToString());
+        var authorization = new AuthorizeResponse(response.Headers.Location.ToString());
         authorization.IsError.Should().BeFalse();
         authorization.Code.Should().NotBeNull();
         authorization.State.Should().Be(state);

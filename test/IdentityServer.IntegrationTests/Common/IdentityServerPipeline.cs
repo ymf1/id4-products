@@ -358,7 +358,7 @@ public class IdentityServerPipeline
 
     public string CreateAuthorizeUrl(
         string clientId = null,
-        string responseType = "id_token",
+        string responseType = null,
         string scope = null,
         string redirectUri = null,
         string state = null,
@@ -368,6 +368,7 @@ public class IdentityServerPipeline
         string responseMode = null,
         string codeChallenge = null,
         string codeChallengeMethod = null,
+        string requestUri = null,
         object extra = null)
     {
         var url = new RequestUrl(AuthorizeEndpoint).CreateAuthorizeUrl(
@@ -382,6 +383,7 @@ public class IdentityServerPipeline
             responseMode: responseMode,
             codeChallenge: codeChallenge,
             codeChallengeMethod: codeChallengeMethod,
+            requestUri: requestUri,
             extra: Parameters.FromObject(extra));
         return url;
     }

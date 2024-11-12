@@ -118,8 +118,5 @@ public class CustomTokenRequestValidatorClient
         fields["custom"].GetString().Should().Be("custom");
     }
 
-    private Dictionary<string, JsonElement> GetFields(TokenResponse response)
-    {
-        return response.Json.As<Dictionary<string, JsonElement>>();
-    }
+    private Dictionary<string, JsonElement> GetFields(TokenResponse response) => response.Raw.GetFields();
 }

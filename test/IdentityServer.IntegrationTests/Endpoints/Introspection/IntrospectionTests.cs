@@ -312,7 +312,7 @@ public class IntrospectionTests
             Token = tokenResponse.AccessToken
         });
 
-        var values = introspectionResponse.Json.As<Dictionary<string, JsonElement>>();
+        var values = GetFields(introspectionResponse);
             
         values["iss"].ValueKind.Should().Be(JsonValueKind.String);
         values["aud"].ValueKind.Should().Be(JsonValueKind.String);
@@ -352,7 +352,7 @@ public class IntrospectionTests
             Token = tokenResponse.AccessToken
         });
 
-        var values = introspectionResponse.Json.As<Dictionary<string, JsonElement>>();
+        var values = GetFields(introspectionResponse);
             
         values["iss"].ValueKind.Should().Be(JsonValueKind.String);
         values["aud"].ValueKind.Should().Be(JsonValueKind.String);
@@ -390,7 +390,7 @@ public class IntrospectionTests
             Token = tokenResponse.AccessToken
         });
 
-        var values = introspectionResponse.Json.As<Dictionary<string, JsonElement>>();
+        var values = GetFields(introspectionResponse);
 
         values["aud"].ValueKind.Should().Be(JsonValueKind.Array);
 
@@ -435,7 +435,7 @@ public class IntrospectionTests
             Token = tokenResponse.AccessToken
         });
 
-        var values = introspectionResponse.Json.As<Dictionary<string, JsonElement>>();
+        var values = GetFields(introspectionResponse);
 
         values["iss"].ValueKind.Should().Be(JsonValueKind.String);
         values["aud"].ValueKind.Should().Be(JsonValueKind.String);
@@ -714,4 +714,6 @@ public class IntrospectionTests
         introspectionResponse.IsActive.Should().BeFalse();
         introspectionResponse.IsError.Should().BeFalse();
     }
+
+    private Dictionary<string, JsonElement> GetFields(TokenIntrospectionResponse response) => response.Raw.GetFields();
 }

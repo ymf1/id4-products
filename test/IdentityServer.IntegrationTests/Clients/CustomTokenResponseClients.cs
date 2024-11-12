@@ -274,10 +274,8 @@ public class CustomTokenResponseClients
         return responseObject.ToObject<CustomResponseDto>();
     }
 
-    private Dictionary<string, JsonElement> GetFields(TokenResponse response)
-    {
-        return response.Json.As<Dictionary<string, JsonElement>>();
-    }
+    private Dictionary<string, JsonElement> GetFields(TokenResponse response) => response.Raw.GetFields();
+
 
     private Dictionary<string, JsonElement> GetPayload(TokenResponse response)
     {

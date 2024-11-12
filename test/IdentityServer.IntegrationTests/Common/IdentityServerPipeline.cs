@@ -358,7 +358,7 @@ public class IdentityServerPipeline
 
     public string CreateAuthorizeUrl(
         string clientId = null,
-        string responseType = null,
+        string responseType = "id_token",
         string scope = null,
         string redirectUri = null,
         string state = null,

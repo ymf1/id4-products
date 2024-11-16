@@ -3,6 +3,7 @@
 
 
 using Duende.IdentityServer.EntityFramework.DbContexts;
+using Duende.IdentityServer.EntityFramework.Interfaces;
 using Duende.IdentityServer.EntityFramework.Mappers;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
@@ -19,7 +20,7 @@ public class ClientConfigurationStore : IClientConfigurationStore
     /// <summary>
     /// The DbContext.
     /// </summary>
-    protected readonly ConfigurationDbContext DbContext;
+    protected readonly IConfigurationDbContext DbContext;
 
     /// <summary>
     /// The CancellationToken provider.
@@ -36,7 +37,7 @@ public class ClientConfigurationStore : IClientConfigurationStore
     /// class.
     /// </summary>
     public ClientConfigurationStore(
-        ConfigurationDbContext dbContext,
+        IConfigurationDbContext dbContext,
         ICancellationTokenProvider cancellationTokenProvider,
         ILogger<ClientConfigurationStore> logger)
     {
@@ -48,8 +49,8 @@ public class ClientConfigurationStore : IClientConfigurationStore
     /// <inheritdoc />
     public async Task AddAsync(Client client)
     {
-        Logger.LogDebug("Adding client {clientId} to configuration store", client.ClientId);
-        DbContext.Clients.Add(ClientMappers.ToEntity(client));
+        Logger.LogDebug("Adding client {ClientId} to configuration store", client.ClientId);
+        DbContext.Clients.Add(client.ToEntity());
         await DbContext.SaveChangesAsync(CancellationTokenProvider.CancellationToken);
     }
 }

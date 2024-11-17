@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Clients;
-using IdentityModel.Client;
+using Duende.IdentityModel.Client;
 
 namespace ConsoleScopesResources
 {

@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Clients;
-using IdentityModel.Client;
+using Duende.IdentityModel.Client;
 
 namespace ConsoleEphemeralMtlsClient
 {

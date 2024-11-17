@@ -1,6 +1,6 @@
 ﻿using Clients;
-using IdentityModel;
-using IdentityModel.Client;
+using Duende.IdentityModel;
+using Duende.IdentityModel.Client;
 using System;
 using System.Net.Http;
 using System.Text;

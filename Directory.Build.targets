@@ -68,14 +68,14 @@
         <PackageReference Update="Microsoft.EntityFrameworkCore.Design" Version="$(EntityFrameworkVersion)" PrivateAssets="All"/>
 
         <!-- open telemetry -->
-        <PackageReference Update="OpenTelemetry" Version="1.8.1" />
-        <PackageReference Update="OpenTelemetry.Exporter.Console" Version="1.8.1" />
-        <PackageReference Update="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.8.1" />
-        <PackageReference Update="OpenTelemetry.Exporter.Prometheus.AspNetCore" Version="1.9.0-alpha.1" />
-        <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="1.8.1" />
-        <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="1.8.1" />
-        <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.8.1" />
-        <PackageReference Update="OpenTelemetry.Instrumentation.SqlClient" Version="1.8.0-beta.1" />
+        <PackageReference Update="OpenTelemetry" Version="1.10.0" />
+        <PackageReference Update="OpenTelemetry.Exporter.Console" Version="1.10.0" />
+        <PackageReference Update="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.10.0" />
+        <PackageReference Update="OpenTelemetry.Exporter.Prometheus.AspNetCore" Version="1.10.0-beta.1" />
+        <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="1.10.0" />
+        <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="1.9.0" />
+        <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.9.0" />
+        <PackageReference Update="OpenTelemetry.Instrumentation.SqlClient" Version="1.9.0-beta.1" />
 
         <!-- Transitive Dependencies -->
         <!-- These packages are all transitive dependencies that would

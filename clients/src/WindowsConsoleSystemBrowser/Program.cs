@@ -1,6 +1,6 @@
 ﻿using Clients;
-using IdentityModel.Client;
-using IdentityModel.OidcClient;
+using Duende.IdentityModel.Client;
+using Duende.IdentityModel.OidcClient;
 using Microsoft.IdentityModel.Logging;
 using Serilog;
 using System;

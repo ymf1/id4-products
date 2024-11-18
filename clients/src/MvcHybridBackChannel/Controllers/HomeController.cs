@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using System.Net.Http;
 using Clients;
-using IdentityModel.Client;
+using Duende.IdentityModel.Client;
 using System.Globalization;
 
 namespace MvcHybrid.Controllers

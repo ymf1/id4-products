@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using Microsoft.Extensions.Configuration;
-using IdentityModel.Client;
+using Duende.IdentityModel.Client;
 
 namespace MvcPar
 {

@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
-using IdentityModel;
-using IdentityModel.Client;
+using Duende.IdentityModel;
+using Duende.IdentityModel.Client;
 using Duende.AccessTokenManagement;
 
 namespace MvcJarUriJwt;

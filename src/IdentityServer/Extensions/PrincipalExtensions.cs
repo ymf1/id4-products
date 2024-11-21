@@ -46,7 +46,7 @@ public static class PrincipalExtensions
     [DebuggerStepThrough]
     public static long GetAuthenticationTimeEpoch(this IIdentity identity)
     {
-        var id = identity as ClaimsIdentity;
+        var id = (ClaimsIdentity)identity;
         var claim = id.FindFirst(JwtClaimTypes.AuthenticationTime);
 
         if (claim == null) throw new InvalidOperationException("auth_time is missing.");

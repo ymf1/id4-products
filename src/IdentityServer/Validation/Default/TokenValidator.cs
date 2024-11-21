@@ -343,19 +343,16 @@ internal class TokenValidator : ITokenValidator
 
         // check the scope format (array vs space delimited string)
         var scopes = claims.Where(c => c.Type == JwtClaimTypes.Scope).ToArray();
-        if (scopes.Any())
+        foreach (var scope in scopes)
         {
-            foreach (var scope in scopes)
+            if (scope.Value.Contains(" "))
             {
-                if (scope.Value.Contains(" "))
-                {
-                    claims.Remove(scope);
+                claims.Remove(scope);
 
-                    var values = scope.Value.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                    foreach (var value in values)
-                    {
-                        claims.Add(new Claim(JwtClaimTypes.Scope, value));
-                    }
+                var values = scope.Value.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                foreach (var value in values)
+                {
+                    claims.Add(new Claim(JwtClaimTypes.Scope, value));
                 }
             }
         }

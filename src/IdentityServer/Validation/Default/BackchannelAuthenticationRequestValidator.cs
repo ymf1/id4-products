@@ -136,19 +136,25 @@ internal class BackchannelAuthenticationRequestValidator : IBackchannelAuthentic
         //////////////////////////////////////////////////////////
         // check for resource indicators and valid format
         //////////////////////////////////////////////////////////
-        var resourceIndicators = _validatedRequest.Raw.GetValues(OidcConstants.AuthorizeRequest.Resource) ?? Enumerable.Empty<string>();
-        
-        if (resourceIndicators?.Any(x => x.Length > _options.InputLengthRestrictions.ResourceIndicatorMaxLength) == true)
+        var resourceIndicators = _validatedRequest.Raw.GetValues(OidcConstants.AuthorizeRequest.Resource);
+        if (resourceIndicators == null)
         {
-            return Invalid(OidcConstants.BackchannelAuthenticationRequestErrors.InvalidTarget, "Resource indicator maximum length exceeded");
+            _validatedRequest.RequestedResourceIndicators = [];
         }
-
-        if (!resourceIndicators.AreValidResourceIndicatorFormat(_logger))
+        else
         {
-            return Invalid(OidcConstants.BackchannelAuthenticationRequestErrors.InvalidTarget, "Invalid resource indicator format");
-        }
+            if (resourceIndicators.Any(x => x.Length > _options.InputLengthRestrictions.ResourceIndicatorMaxLength))
+            {
+                return Invalid(OidcConstants.BackchannelAuthenticationRequestErrors.InvalidTarget, "Resource indicator maximum length exceeded");
+            }
 
-        _validatedRequest.RequestedResourceIndicators = resourceIndicators?.ToList();
+            if (!resourceIndicators.AreValidResourceIndicatorFormat(_logger))
+            {
+                return Invalid(OidcConstants.BackchannelAuthenticationRequestErrors.InvalidTarget, "Invalid resource indicator format");
+            }
+
+            _validatedRequest.RequestedResourceIndicators = resourceIndicators;
+        }
 
         //////////////////////////////////////////////////////////
         // check if scopes are valid/supported and check for resource scopes

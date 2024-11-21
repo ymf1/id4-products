@@ -126,7 +126,7 @@ public static class ValidatedAuthorizeRequestExtensions
 
     public static void AddAcrValue(this ValidatedAuthorizeRequest request, string value)
     {
-        if (String.IsNullOrWhiteSpace(value)) throw new ArgumentNullException(nameof(value));
+        ArgumentNullException.ThrowIfNullOrWhiteSpace(value);
 
         request.AuthenticationContextReferenceClasses.Add(value);
         var acr_values = request.AuthenticationContextReferenceClasses.ToSpaceSeparatedString();

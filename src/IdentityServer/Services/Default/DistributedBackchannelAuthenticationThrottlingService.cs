@@ -43,10 +43,7 @@ public class DistributedBackchannelAuthenticationThrottlingService : IBackchanne
     {
         using var activity = Tracing.ServiceActivitySource.StartActivity("DistributedBackchannelAuthenticationThrottlingService.ShouldSlowDown");
         
-        if (requestId == null)
-        {
-            throw new ArgumentNullException(nameof(requestId));
-        }
+        ArgumentNullException.ThrowIfNull(requestId);
 
         var key = KeyPrefix + requestId;
         var options = new DistributedCacheEntryOptions { AbsoluteExpiration = _clock.UtcNow.AddSeconds(details.Lifetime) };

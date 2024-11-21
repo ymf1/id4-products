@@ -20,7 +20,7 @@ public static class HttpContextExtensions
 {
     internal static void SetSignOutCalled(this HttpContext context)
     {
-        if (context == null) throw new ArgumentNullException(nameof(context));
+        ArgumentNullException.ThrowIfNull(context);
         context.Items[Constants.EnvironmentKeys.SignOutCalled] = "true";
     }
 

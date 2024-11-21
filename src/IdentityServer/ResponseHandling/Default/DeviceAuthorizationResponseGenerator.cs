@@ -72,8 +72,8 @@ public class DeviceAuthorizationResponseGenerator : IDeviceAuthorizationResponse
     public virtual async Task<DeviceAuthorizationResponse> ProcessAsync(DeviceAuthorizationRequestValidationResult validationResult, string baseUrl)
     {
         using var activity = Tracing.BasicActivitySource.StartActivity("DeviceAuthorizationResponseGenerator.Process");
-        
-        if (validationResult == null) throw new ArgumentNullException(nameof(validationResult));
+
+        ArgumentNullException.ThrowIfNull(validationResult);
         if (validationResult.ValidatedRequest.Client == null) throw new ArgumentNullException(nameof(validationResult.ValidatedRequest.Client));
         if (string.IsNullOrWhiteSpace(baseUrl)) throw new ArgumentException("Value cannot be null or whitespace.", nameof(baseUrl));
 

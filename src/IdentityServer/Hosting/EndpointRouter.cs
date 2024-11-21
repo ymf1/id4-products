@@ -26,7 +26,7 @@ internal class EndpointRouter : IEndpointRouter
 
     public IEndpointHandler Find(HttpContext context)
     {
-        if (context == null) throw new ArgumentNullException(nameof(context));
+        ArgumentNullException.ThrowIfNull(context);
 
         foreach(var endpoint in _endpoints)
         {

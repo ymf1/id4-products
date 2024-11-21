@@ -60,7 +60,7 @@ public static class IdentityServerApplicationBuilderExtensions
 
     internal static void Validate(this IApplicationBuilder app)
     {
-        var loggerFactory = app.ApplicationServices.GetService(typeof(ILoggerFactory)) as ILoggerFactory;
+        var loggerFactory = app.ApplicationServices.GetService<ILoggerFactory>();
         if (loggerFactory == null) throw new ArgumentNullException(nameof(loggerFactory));
 
         var logger = loggerFactory.CreateLogger("Duende.IdentityServer.Startup");

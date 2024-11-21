@@ -62,12 +62,12 @@ public class DataProtectionKeyProtector : ISigningKeyProtector
             return KeySerializer.Deserialize<X509KeyContainer>(data);
         }
 
-        if (key.Algorithm.StartsWith("R") || key.Algorithm.StartsWith("P"))
+        if (key.Algorithm.StartsWith('R') || key.Algorithm.StartsWith('P'))
         {
             return KeySerializer.Deserialize<RsaKeyContainer>(data);
         }
             
-        if (key.Algorithm.StartsWith("E"))
+        if (key.Algorithm.StartsWith('E'))
         {
             return KeySerializer.Deserialize<EcKeyContainer>(data);
         }

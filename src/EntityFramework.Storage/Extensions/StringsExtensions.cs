@@ -79,7 +79,7 @@ internal static class StringExtensions
     [DebuggerStepThrough]
     public static string EnsureLeadingSlash(this string url)
     {
-        if (url != null && !url.StartsWith("/"))
+        if (url != null && !url.StartsWith('/'))
         {
             return "/" + url;
         }
@@ -90,7 +90,7 @@ internal static class StringExtensions
     [DebuggerStepThrough]
     public static string EnsureTrailingSlash(this string url)
     {
-        if (url != null && !url.EndsWith("/"))
+        if (url != null && !url.EndsWith('/'))
         {
             return url + "/";
         }
@@ -101,7 +101,7 @@ internal static class StringExtensions
     [DebuggerStepThrough]
     public static string RemoveLeadingSlash(this string url)
     {
-        if (url != null && url.StartsWith("/"))
+        if (url != null && url.StartsWith('/'))
         {
             url = url.Substring(1);
         }
@@ -112,7 +112,7 @@ internal static class StringExtensions
     [DebuggerStepThrough]
     public static string RemoveTrailingSlash(this string url)
     {
-        if (url != null && url.EndsWith("/"))
+        if (url != null && url.EndsWith('/'))
         {
             url = url.Substring(0, url.Length - 1);
         }
@@ -125,7 +125,7 @@ internal static class StringExtensions
     {
         if (String.IsNullOrWhiteSpace(url)) url = "/";
 
-        if (url != "/" && url.EndsWith("/"))
+        if (url != "/" && url.EndsWith('/'))
         {
             url = url.Substring(0, url.Length - 1);
         }
@@ -199,11 +199,11 @@ internal static class StringExtensions
     [DebuggerStepThrough]
     public static string AddQueryString(this string url, string query)
     {
-        if (!url.Contains("?"))
+        if (!url.Contains('?'))
         {
             url += "?";
         }
-        else if (!url.EndsWith("&"))
+        else if (!url.EndsWith('&'))
         {
             url += "&";
         }
@@ -220,7 +220,7 @@ internal static class StringExtensions
     [DebuggerStepThrough]
     public static string AddHashFragment(this string url, string query)
     {
-        if (!url.Contains("#"))
+        if (!url.Contains('#'))
         {
             url += "#";
         }

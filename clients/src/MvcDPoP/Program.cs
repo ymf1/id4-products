@@ -14,7 +14,7 @@ public class Program
 
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
-            .MinimumLevel.Override("IdentityModel", LogEventLevel.Debug)
+            .MinimumLevel.Override("Duende.IdentityModel", LogEventLevel.Debug)
             .MinimumLevel.Override("Duende.AccessTokenManagement", LogEventLevel.Debug)
             .MinimumLevel.Override("System.Net.Http", LogEventLevel.Information)
             .MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Information)

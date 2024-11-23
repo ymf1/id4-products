@@ -21,15 +21,15 @@ public class OidcEvents : OpenIdConnectEvents
         return Task.CompletedTask;
     }
 
-    public override Task RedirectToIdentityProvider(RedirectContext context)
+    public override Task PushAuthorization(PushedAuthorizationContext context)
     {
         var request = _assertionService.SignAuthorizationRequest(context.ProtocolMessage);
         var clientId = context.ProtocolMessage.ClientId;
-        var redirectUri = context.ProtocolMessage.RedirectUri;
-        
+
         context.ProtocolMessage.Parameters.Clear();
         context.ProtocolMessage.ClientId = clientId;
-        context.ProtocolMessage.RedirectUri = redirectUri;
+        context.ProtocolMessage.ClientAssertionType = OidcConstants.ClientAssertionTypes.JwtBearer;
+        context.ProtocolMessage.ClientAssertion = _assertionService.CreateClientToken();
         context.ProtocolMessage.SetParameter("request", request);
 
         return Task.CompletedTask;

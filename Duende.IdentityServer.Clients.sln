@@ -77,10 +77,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleDcrClient", "clients
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleClientCredentialsFlowDPoP", "clients\src\ConsoleClientCredentialsFlowDPoP\ConsoleClientCredentialsFlowDPoP.csproj", "{5864BB85-B0B3-4061-B7BD-98C67651C1B3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcPar", "clients\src\MvcPar\MvcPar.csproj", "{9CAFC6C2-0C6D-4246-A3E1-011AA9CB4240}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcJarPar", "clients\src\MvcJarPar\MvcJarPar.csproj", "{DA7F6CEE-3894-4A3F-A0A5-C51F3793C234}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

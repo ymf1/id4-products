@@ -69,18 +69,11 @@ public static class CryptoHelper
     /// <returns></returns>
     public static string CreateHashClaimValue(string value, string tokenSigningAlgorithm)
     {
-        var signingAlgorithmBits = int.Parse(tokenSigningAlgorithm.Substring(tokenSigningAlgorithm.Length - 3));
-        var toHash = Encoding.ASCII.GetBytes(value);
+        var (hashFunction, hashLength) = GetHashFunctionForSigningAlgorithm(tokenSigningAlgorithm);
+        var encodedBytes = Encoding.ASCII.GetBytes(value);
+        var hash = hashFunction(encodedBytes);
 
-        var hash = signingAlgorithmBits switch
-        {
-            256 => SHA256.HashData(toHash),
-            384 => SHA384.HashData(toHash),
-            512 => SHA512.HashData(toHash),
-            _ => throw new InvalidOperationException($"Invalid signing algorithm: {tokenSigningAlgorithm}"),
-        };
-
-        var size = (signingAlgorithmBits / 8) / 2;
+        var size = (hashLength / 8) / 2;
 
         var leftPart = new byte[size];
         Array.Copy(hash, leftPart, size);
@@ -89,10 +82,33 @@ public static class CryptoHelper
     }
 
     /// <summary>
+    /// Returns the matching hash function for a token signing algorithm
+    /// </summary>
+    /// <param name="signingAlgorithm"></param>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
+    public static (Func<byte[], byte[]> hashFunction, int hashLength) GetHashFunctionForSigningAlgorithm(string signingAlgorithm)
+    {
+        var hashLength = int.Parse(signingAlgorithm.Substring(signingAlgorithm.Length - 3));
+
+        Func<byte[], byte[]> hashFunction = hashLength switch
+        {
+            256 => SHA256.HashData,
+            384 => SHA384.HashData,
+            512 => SHA512.HashData,
+            _ => throw new InvalidOperationException($"Invalid signing algorithm: {signingAlgorithm}"),
+        };
+
+
+        return (hashFunction, hashLength);
+    }
+
+    /// <summary>
     /// Returns the matching hashing algorithm for a token signing algorithm
     /// </summary>
     /// <param name="signingAlgorithm">The signing algorithm</param>
     /// <returns></returns>
+    [Obsolete("This method is obsolete and will be removed in a future version. Consider using GetHashFunctionForSigningAlgorithm instead for better performance (it does not allocate a HashAlgorithm)")]
     public static HashAlgorithm GetHashAlgorithmForSigningAlgorithm(string signingAlgorithm)
     {
         var signingAlgorithmBits = int.Parse(signingAlgorithm.Substring(signingAlgorithm.Length - 3));

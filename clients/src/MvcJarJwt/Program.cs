@@ -13,11 +13,9 @@ public class Program
         Console.Title = "MvcJarJwt";
 
         Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Warning()
-            .MinimumLevel.Override("IdentityModel", LogEventLevel.Debug)
+            .MinimumLevel.Information()
+            .MinimumLevel.Override("Duende.IdentityModel", LogEventLevel.Debug)
             .MinimumLevel.Override("Duende.AccessTokenManagement", LogEventLevel.Debug)
-            .MinimumLevel.Override("System.Net.Http", LogEventLevel.Information)
-            .MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Information)
             .MinimumLevel.Override("MvcJarJwt", LogEventLevel.Debug)
             .Enrich.FromLogContext()
             .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")

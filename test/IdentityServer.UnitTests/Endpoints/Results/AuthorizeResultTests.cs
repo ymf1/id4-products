@@ -59,7 +59,7 @@ public class AuthorizeResultTests
 
         _mockErrorMessageStore.Messages.Count.Should().Be(1);
         _context.Response.StatusCode.Should().Be(302);
-        var location = _context.Response.Headers["Location"].First();
+        var location = _context.Response.Headers.Location.First();
         location.Should().StartWith("https://server/error");
         var query = QueryHelpers.ParseQuery(new Uri(location).Query);
         query["errorId"].First().Should().Be(_mockErrorMessageStore.Messages.First().Key);
@@ -84,7 +84,7 @@ public class AuthorizeResultTests
 
         _mockUserSession.Clients.Count.Should().Be(0);
         _context.Response.StatusCode.Should().Be(302);
-        var location = _context.Response.Headers["Location"].First();
+        var location = _context.Response.Headers.Location.First();
         location.Should().StartWith("http://client/callback");
     }
 
@@ -108,7 +108,7 @@ public class AuthorizeResultTests
 
         _mockUserSession.Clients.Count.Should().Be(0);
         _context.Response.StatusCode.Should().Be(302);
-        var location = _context.Response.Headers["Location"].First();
+        var location = _context.Response.Headers.Location.First();
         location.Should().Contain("session_state=some_session_state");
     }
 
@@ -129,7 +129,7 @@ public class AuthorizeResultTests
 
         _mockUserSession.Clients.Count.Should().Be(0);
         _context.Response.StatusCode.Should().Be(302);
-        var location = _context.Response.Headers["Location"].First();
+        var location = _context.Response.Headers.Location.First();
         location.Should().StartWith("http://client/callback");
 
         var queryString = new Uri(location).Query;
@@ -168,10 +168,10 @@ public class AuthorizeResultTests
         await _subject.WriteHttpResponse(new AuthorizeResult(_response), _context);
 
         _context.Response.StatusCode.Should().Be(302);
-        _context.Response.Headers["Cache-Control"].First().Should().Contain("no-store");
-        _context.Response.Headers["Cache-Control"].First().Should().Contain("no-cache");
-        _context.Response.Headers["Cache-Control"].First().Should().Contain("max-age=0");
-        var location = _context.Response.Headers["Location"].First();
+        _context.Response.Headers.CacheControl.First().Should().Contain("no-store");
+        _context.Response.Headers.CacheControl.First().Should().Contain("no-cache");
+        _context.Response.Headers.CacheControl.First().Should().Contain("max-age=0");
+        var location = _context.Response.Headers.Location.First();
         location.Should().StartWith("http://client/callback");
         location.Should().Contain("?state=state");
     }
@@ -190,10 +190,10 @@ public class AuthorizeResultTests
         await _subject.WriteHttpResponse(new AuthorizeResult(_response), _context);
 
         _context.Response.StatusCode.Should().Be(302);
-        _context.Response.Headers["Cache-Control"].First().Should().Contain("no-store");
-        _context.Response.Headers["Cache-Control"].First().Should().Contain("no-cache");
-        _context.Response.Headers["Cache-Control"].First().Should().Contain("max-age=0");
-        var location = _context.Response.Headers["Location"].First();
+        _context.Response.Headers.CacheControl.First().Should().Contain("no-store");
+        _context.Response.Headers.CacheControl.First().Should().Contain("no-cache");
+        _context.Response.Headers.CacheControl.First().Should().Contain("max-age=0");
+        var location = _context.Response.Headers.Location.First();
         location.Should().StartWith("http://client/callback");
         location.Should().Contain("#state=state");
     }
@@ -213,11 +213,11 @@ public class AuthorizeResultTests
 
         _context.Response.StatusCode.Should().Be(200);
         _context.Response.ContentType.Should().StartWith("text/html");
-        _context.Response.Headers["Cache-Control"].First().Should().Contain("no-store");
-        _context.Response.Headers["Cache-Control"].First().Should().Contain("no-cache");
-        _context.Response.Headers["Cache-Control"].First().Should().Contain("max-age=0");
-        _context.Response.Headers["Content-Security-Policy"].First().Should().Contain("default-src 'none';");
-        _context.Response.Headers["Content-Security-Policy"].First().Should().Contain($"script-src '{IdentityServerConstants.ContentSecurityPolicyHashes.AuthorizeScript}'");
+        _context.Response.Headers.CacheControl.First().Should().Contain("no-store");
+        _context.Response.Headers.CacheControl.First().Should().Contain("no-cache");
+        _context.Response.Headers.CacheControl.First().Should().Contain("max-age=0");
+        _context.Response.Headers.ContentSecurityPolicy.First().Should().Contain("default-src 'none';");
+        _context.Response.Headers.ContentSecurityPolicy.First().Should().Contain($"script-src '{IdentityServerConstants.ContentSecurityPolicyHashes.AuthorizeScript}'");
         _context.Response.Headers["X-Content-Security-Policy"].First().Should().Contain("default-src 'none';");
         _context.Response.Headers["X-Content-Security-Policy"].First().Should().Contain($"script-src '{IdentityServerConstants.ContentSecurityPolicyHashes.AuthorizeScript}'");
         _context.Response.Body.Seek(0, SeekOrigin.Begin);
@@ -245,7 +245,7 @@ public class AuthorizeResultTests
 
         await _subject.WriteHttpResponse(new AuthorizeResult(_response), _context);
 
-        _context.Response.Headers["Content-Security-Policy"].First().Should().Contain($"script-src 'unsafe-inline' '{IdentityServerConstants.ContentSecurityPolicyHashes.AuthorizeScript}'");
+        _context.Response.Headers.ContentSecurityPolicy.First().Should().Contain($"script-src 'unsafe-inline' '{IdentityServerConstants.ContentSecurityPolicyHashes.AuthorizeScript}'");
         _context.Response.Headers["X-Content-Security-Policy"].First().Should().Contain($"script-src 'unsafe-inline' '{IdentityServerConstants.ContentSecurityPolicyHashes.AuthorizeScript}'");
     }
 
@@ -264,7 +264,7 @@ public class AuthorizeResultTests
 
         await _subject.WriteHttpResponse(new AuthorizeResult(_response), _context);
 
-        _context.Response.Headers["Content-Security-Policy"].First().Should().Contain($"script-src '{IdentityServerConstants.ContentSecurityPolicyHashes.AuthorizeScript}'");
+        _context.Response.Headers.ContentSecurityPolicy.First().Should().Contain($"script-src '{IdentityServerConstants.ContentSecurityPolicyHashes.AuthorizeScript}'");
         _context.Response.Headers["X-Content-Security-Policy"].Should().BeEmpty();
     }
 }

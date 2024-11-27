@@ -65,7 +65,7 @@ public class LocalApiAuthenticationHandler : AuthenticationHandler<LocalApiAuthe
 
         string token = null;
 
-        string authorization = Request.Headers["Authorization"];
+        string authorization = Request.Headers.Authorization;
 
         if (string.IsNullOrEmpty(authorization))
         {

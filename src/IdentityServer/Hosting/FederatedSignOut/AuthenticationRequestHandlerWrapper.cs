@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Duende.IdentityServer.Hosting.FederatedSignOut;
 
@@ -24,7 +25,7 @@ internal class AuthenticationRequestHandlerWrapper : IAuthenticationRequestHandl
         _inner = inner;
         _context = httpContextAccessor.HttpContext;
 
-        var factory = (ILoggerFactory)_context.RequestServices.GetService(typeof(ILoggerFactory));
+        var factory = _context.RequestServices.GetService<ILoggerFactory>();
         _logger = factory?.CreateLogger(GetType());
     }
 

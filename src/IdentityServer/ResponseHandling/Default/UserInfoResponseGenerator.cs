@@ -121,7 +121,7 @@ public class UserInfoResponseGenerator : IUserInfoResponseGenerator
             return null;
         }
 
-        var scopeString = string.Join(" ", scopes);
+        var scopeString = string.Join(' ', scopes);
         Logger.LogDebug("Scopes in access token: {scopes}", scopeString);
 
         // if we ever parameterized identity scopes, then we would need to invoke the resource validator's parse API here

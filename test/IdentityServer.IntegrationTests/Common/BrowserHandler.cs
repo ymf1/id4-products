@@ -87,7 +87,7 @@ public class BrowserHandler : DelegatingHandler
 
         if (AllowCookies && response.Headers.Contains("Set-Cookie"))
         {
-            var responseCookieHeader = string.Join(",", response.Headers.GetValues("Set-Cookie"));
+            var responseCookieHeader = string.Join(',', response.Headers.GetValues("Set-Cookie"));
             _cookieContainer.SetCookies(request.RequestUri, responseCookieHeader);
         }
 

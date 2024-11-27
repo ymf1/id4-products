@@ -74,7 +74,7 @@ public static class TokenExtensions
 
                 if (options.EmitScopesAsSpaceDelimitedStringInJwt)
                 {
-                    payload.Add(JwtClaimTypes.Scope, string.Join(" ", scopeValues));
+                    payload.Add(JwtClaimTypes.Scope, string.Join(' ', scopeValues));
                 }
                 else
                 {

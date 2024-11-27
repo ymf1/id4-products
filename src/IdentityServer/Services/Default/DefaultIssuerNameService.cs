@@ -44,7 +44,7 @@ public class DefaultIssuerNameService : IIssuerNameService
 
             if (_options.MutualTls.Enabled && _options.MutualTls.DomainName.IsPresent())
             {
-                if (!_options.MutualTls.DomainName.Contains("."))
+                if (!_options.MutualTls.DomainName.Contains('.'))
                 {
                     var request = _httpContextAccessor.HttpContext.Request;
                     if (request.Host.Value.StartsWith(_options.MutualTls.DomainName, StringComparison.OrdinalIgnoreCase))

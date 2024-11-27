@@ -29,7 +29,7 @@ internal class MockAuthenticationSchemeProvider : IAuthenticationSchemeProvider
 
     public Task<AuthenticationScheme> GetDefaultAuthenticateSchemeAsync()
     {
-        var scheme = Schemes.Where(x => x.Name == Default).FirstOrDefault();
+        var scheme = Schemes.FirstOrDefault(x => x.Name == Default);
         return Task.FromResult(scheme);
     }
 
@@ -60,12 +60,12 @@ internal class MockAuthenticationSchemeProvider : IAuthenticationSchemeProvider
 
     public Task<AuthenticationScheme> GetSchemeAsync(string name)
     {
-        return Task.FromResult(Schemes.Where(x => x.Name == name).FirstOrDefault());
+        return Task.FromResult(Schemes.FirstOrDefault(x => x.Name == name));
     }
 
     public void RemoveScheme(string name)
     {
-        var scheme = Schemes.Where(x => x.Name == name).FirstOrDefault();
+        var scheme = Schemes.FirstOrDefault(x => x.Name == name);
         if (scheme != null)
         {
             Schemes.Remove(scheme);

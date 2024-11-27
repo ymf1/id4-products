@@ -268,8 +268,7 @@ public class HtmlForm
     {
         get
         {
-            if (Inputs.ContainsKey(key)) return Inputs[key];
-            return null;
+            return Inputs.GetValueOrDefault(key);
         }
         set
         {

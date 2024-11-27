@@ -246,10 +246,9 @@ public class LocalApiAuthenticationHandler : AuthenticationHandler<LocalApiAuthe
                 var nonce = Context.Items["DPoP-Nonce"] as string;
                 Context.Response.Headers[HttpHeaders.DPoPNonce] = nonce;
             }
-            else if (properties.Items.ContainsKey("DPoP-Nonce"))
+            else if (properties.Items.TryGetValue("DPoP-Nonce", out var nonce))
             {
                 // this allows the API itself to set the nonce
-                var nonce = properties.Items["DPoP-Nonce"];
                 Context.Response.Headers[HttpHeaders.DPoPNonce] = nonce;
             }
         }

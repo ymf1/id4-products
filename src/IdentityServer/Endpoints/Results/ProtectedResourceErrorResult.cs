@@ -48,9 +48,9 @@ internal class ProtectedResourceErrorHttpWriter : IHttpResponseWriter<ProtectedR
         var error = result.Error;
         var errorDescription = result.ErrorDescription;
 
-        if (Constants.ProtectedResourceErrorStatusCodes.ContainsKey(error))
+        if (Constants.ProtectedResourceErrorStatusCodes.TryGetValue(error, out var code))
         {
-            context.Response.StatusCode = Constants.ProtectedResourceErrorStatusCodes[error];
+            context.Response.StatusCode = code;
         }
 
         if (error == OidcConstants.ProtectedResourceErrors.ExpiredToken)

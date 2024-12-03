@@ -76,7 +76,7 @@ public class TestBrowserClient : HttpClient
     }
     public Cookie GetCookie(string uri, string name)
     {
-        return _handler.CookieContainer.GetCookies(new Uri(uri)).Cast<Cookie>().Where(x => x.Name == name).FirstOrDefault();
+        return _handler.CookieContainer.GetCookies(new Uri(uri)).FirstOrDefault(x => x.Name == name);
     }
 
     public void RemoveCookie(string name)
@@ -85,7 +85,7 @@ public class TestBrowserClient : HttpClient
     }
     public void RemoveCookie(string uri, string name)
     {
-        var cookie = CookieContainer.GetCookies(new Uri(uri)).Cast<Cookie>().Where(x => x.Name == name).FirstOrDefault();
+        var cookie = CookieContainer.GetCookies(new Uri(uri)).FirstOrDefault(x => x.Name == name);
         if (cookie != null)
         {
             cookie.Expired = true;

@@ -62,7 +62,7 @@ internal class BearerTokenUsageValidator
     /// <returns></returns>
     public BearerTokenUsageValidationResult ValidateAuthorizationHeader(HttpContext context)
     {
-        var authorizationHeader = context.Request.Headers["Authorization"].FirstOrDefault();
+        var authorizationHeader = context.Request.Headers.Authorization.FirstOrDefault();
         if (authorizationHeader.IsPresent())
         {
             var header = authorizationHeader.Trim();

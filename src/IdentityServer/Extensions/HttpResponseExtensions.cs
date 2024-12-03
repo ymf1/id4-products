@@ -51,9 +51,9 @@ public static class HttpResponseExtensions
                 var vary = varyBy.Aggregate((x, y) => x + "," + y);
                 if (response.Headers.ContainsKey("Vary"))
                 {
-                    vary = response.Headers["Vary"].ToString() + "," + vary;
+                    vary = response.Headers.Vary.ToString() + "," + vary;
                 }
-                response.Headers["Vary"] = vary;
+                response.Headers.Vary = vary;
             }
         }
     }
@@ -66,7 +66,7 @@ public static class HttpResponseExtensions
         }
         else
         {
-            response.Headers["Cache-Control"] = "no-store, no-cache, max-age=0";
+            response.Headers.CacheControl = "no-store, no-cache, max-age=0";
         }
 
         if (!response.Headers.ContainsKey("Pragma"))

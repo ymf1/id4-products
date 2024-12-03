@@ -100,8 +100,8 @@ public class DefaultCache<T> : ICache<T>
     public async Task<T> GetOrAddAsync(string key, TimeSpan duration, Func<Task<T>> get)
     {
         using var activity = Tracing.CacheActivitySource.StartActivity("DefaultCache.GetOrAdd");
-        
-        if (get == null) throw new ArgumentNullException(nameof(get));
+
+        ArgumentNullException.ThrowIfNull(get);
         if (key == null) return null;
 
         var item = await GetAsync(key);

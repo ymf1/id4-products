@@ -41,7 +41,7 @@ public class EndSessionCallbackResultTests
 
         await _subject.WriteHttpResponse(new EndSessionCallbackResult(_validationResult), ctx);
 
-        ctx.Response.Headers["Content-Security-Policy"].First().Should().Contain("frame-src http://foo");
+        ctx.Response.Headers.ContentSecurityPolicy.First().Should().Contain("frame-src http://foo");
     }
 
     [Fact]
@@ -55,6 +55,6 @@ public class EndSessionCallbackResultTests
 
         await _subject.WriteHttpResponse(new EndSessionCallbackResult(_validationResult), ctx);
 
-        ctx.Response.Headers["Content-Security-Policy"].FirstOrDefault().Should().BeNull();
+        ctx.Response.Headers.ContentSecurityPolicy.FirstOrDefault().Should().BeNull();
     }
 }

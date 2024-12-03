@@ -81,8 +81,7 @@ internal class MessageCookie<TModel>
     public void Write(string id, Message<TModel> message)
     {
         ClearOverflow();
-
-        if (message == null) throw new ArgumentNullException(nameof(message));
+        ArgumentNullException.ThrowIfNull(message);
 
         var name = GetCookieFullName(id);
         var data = Protect(message);

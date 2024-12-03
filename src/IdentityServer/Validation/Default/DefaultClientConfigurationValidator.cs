@@ -165,7 +165,7 @@ public class DefaultClientConfigurationValidator : IClientConfigurationValidator
                 {
                     var uri = new Uri(origin);
                     
-                    if (uri.AbsolutePath == "/" && !origin.EndsWith("/"))
+                    if (uri.AbsolutePath == "/" && !origin.EndsWith('/'))
                     {
                         fail = false;
                     }

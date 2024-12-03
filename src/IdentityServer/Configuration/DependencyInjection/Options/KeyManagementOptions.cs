@@ -189,6 +189,6 @@ public class SigningAlgorithmOptions
     /// </summary>
     public bool UseX509Certificate { get; set; }
 
-    internal bool IsRsaKey => Name.StartsWith("R") || Name.StartsWith("P");
-    internal bool IsEcKey => Name.StartsWith("E");
+    internal bool IsRsaKey => Name.StartsWith('R') || Name.StartsWith('P');
+    internal bool IsEcKey => Name.StartsWith('E');
 }

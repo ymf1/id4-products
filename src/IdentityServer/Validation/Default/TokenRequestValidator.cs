@@ -99,7 +99,7 @@ internal class TokenRequestValidator : ITokenRequestValidator
 
         _logger.LogDebug("Start token request validation");
 
-        if (context == null) throw new ArgumentNullException(nameof(context));
+        ArgumentNullException.ThrowIfNull(context);
 
         var parameters = context.RequestParameters;
         var clientValidationResult = context.ClientValidationResult;

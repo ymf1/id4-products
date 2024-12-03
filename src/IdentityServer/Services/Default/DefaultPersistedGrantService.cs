@@ -42,7 +42,7 @@ public class DefaultPersistedGrantService : IPersistedGrantService
     {
         using var activity = Tracing.ServiceActivitySource.StartActivity("DefaultPersistedGrantService.GetAllGrants");
 
-        if (String.IsNullOrWhiteSpace(subjectId)) throw new ArgumentNullException(nameof(subjectId));
+        ArgumentNullException.ThrowIfNullOrWhiteSpace(subjectId);
 
         var grants = (await _store.GetAllAsync(new PersistedGrantFilter { SubjectId = subjectId }))
             .Where(x => x.ConsumedTime == null) // filter consumed grants
@@ -179,7 +179,7 @@ public class DefaultPersistedGrantService : IPersistedGrantService
     {
         using var activity = Tracing.ServiceActivitySource.StartActivity("DefaultPersistedGrantService.RemoveAllGrants");
 
-        if (String.IsNullOrWhiteSpace(subjectId)) throw new ArgumentNullException(nameof(subjectId));
+        ArgumentNullException.ThrowIfNullOrWhiteSpace(subjectId);
 
         return _store.RemoveAllAsync(new PersistedGrantFilter
         {

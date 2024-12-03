@@ -41,15 +41,15 @@ public class Resources
     {
         if (identityResources?.Any() == true)
         {
-            IdentityResources = new HashSet<IdentityResource>(identityResources.ToArray());
+            IdentityResources = identityResources.ToHashSet();
         }
         if (apiResources?.Any() == true)
         {
-            ApiResources = new HashSet<ApiResource>(apiResources.ToArray());
+            ApiResources = apiResources.ToHashSet();
         }
         if (apiScopes?.Any() == true)
         {
-            ApiScopes = new HashSet<ApiScope>(apiScopes.ToArray());
+            ApiScopes = apiScopes.ToHashSet();
         }
     }
 

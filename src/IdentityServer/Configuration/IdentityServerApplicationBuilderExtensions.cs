@@ -61,8 +61,8 @@ public static class IdentityServerApplicationBuilderExtensions
     internal static void Validate(this IApplicationBuilder app)
     {
         var loggerFactory = app.ApplicationServices.GetService<ILoggerFactory>();
-        if (loggerFactory == null) throw new ArgumentNullException(nameof(loggerFactory));
-
+        ArgumentNullException.ThrowIfNull(loggerFactory);
+      
         var logger = loggerFactory.CreateLogger("Duende.IdentityServer.Startup");
         logger.LogInformation("Starting Duende IdentityServer version {version} ({netversion})", 
             typeof(IdentityServerMiddleware).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()!.InformationalVersion, 

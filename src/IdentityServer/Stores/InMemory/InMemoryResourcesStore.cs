@@ -60,10 +60,9 @@ public class InMemoryResourcesStore : IResourceStore
     /// <inheritdoc/>
     public Task<IEnumerable<ApiResource>> FindApiResourcesByNameAsync(IEnumerable<string> apiResourceNames)
     {
+        ArgumentNullException.ThrowIfNull(apiResourceNames);
         using var activity = Tracing.StoreActivitySource.StartActivity("InMemoryResourceStore.FindApiResourcesByName");
         activity?.SetTag(Tracing.Properties.ApiResourceNames, apiResourceNames.ToSpaceSeparatedString());
-        
-        if (apiResourceNames == null) throw new ArgumentNullException(nameof(apiResourceNames));
 
         var query = from a in _apiResources
             where apiResourceNames.Contains(a.Name)
@@ -74,10 +73,9 @@ public class InMemoryResourcesStore : IResourceStore
     /// <inheritdoc/>
     public Task<IEnumerable<IdentityResource>> FindIdentityResourcesByScopeNameAsync(IEnumerable<string> scopeNames)
     {
+        ArgumentNullException.ThrowIfNull(scopeNames);
         using var activity = Tracing.StoreActivitySource.StartActivity("InMemoryResourceStore.FindIdentityResourcesByScopeName");
         activity?.SetTag(Tracing.Properties.ScopeNames, scopeNames.ToSpaceSeparatedString());
-        
-        if (scopeNames == null) throw new ArgumentNullException(nameof(scopeNames));
 
         var identity = from i in _identityResources
             where scopeNames.Contains(i.Name)
@@ -89,10 +87,9 @@ public class InMemoryResourcesStore : IResourceStore
     /// <inheritdoc/>
     public Task<IEnumerable<ApiResource>> FindApiResourcesByScopeNameAsync(IEnumerable<string> scopeNames)
     {
+        ArgumentNullException.ThrowIfNull(scopeNames);
         using var activity = Tracing.StoreActivitySource.StartActivity("InMemoryResourceStore.FindApiResourcesByScopeName");
         activity?.SetTag(Tracing.Properties.ScopeNames, scopeNames.ToSpaceSeparatedString());
-        
-        if (scopeNames == null) throw new ArgumentNullException(nameof(scopeNames));
 
         var query = from a in _apiResources
             where a.Scopes.Any(x => scopeNames.Contains(x))
@@ -104,10 +101,9 @@ public class InMemoryResourcesStore : IResourceStore
     /// <inheritdoc/>
     public Task<IEnumerable<ApiScope>> FindApiScopesByNameAsync(IEnumerable<string> scopeNames)
     {
+        ArgumentNullException.ThrowIfNull(scopeNames);
         using var activity = Tracing.StoreActivitySource.StartActivity("InMemoryResourceStore.FindApiScopesByName");
         activity?.SetTag(Tracing.Properties.ScopeNames, scopeNames.ToSpaceSeparatedString());
-        
-        if (scopeNames == null) throw new ArgumentNullException(nameof(scopeNames));
 
         var query =
             from x in _apiScopes

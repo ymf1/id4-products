@@ -90,7 +90,7 @@ public class JwtRequestValidator : IJwtRequestValidator
     {
         using var activity = Tracing.BasicActivitySource.StartActivity("JwtRequestValidator.Validate");
         
-        if (context == null) throw new ArgumentNullException(nameof(context));
+        ArgumentNullException.ThrowIfNull(context);
         if (context.Client == null) throw new ArgumentNullException(nameof(context.Client));
         if (String.IsNullOrWhiteSpace(context.JwtTokenString)) throw new ArgumentNullException(nameof(context.JwtTokenString));
 

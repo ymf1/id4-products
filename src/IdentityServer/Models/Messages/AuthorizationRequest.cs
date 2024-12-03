@@ -128,10 +128,7 @@ public class AuthorizationRequest
     /// <exception cref="ArgumentNullException"><paramref name="request"/> is null.</exception>
     public AuthorizationRequest(ValidatedAuthorizeRequest request)
     {
-        if (request is null)
-        {
-            throw new ArgumentNullException(nameof(request));
-        }
+        ArgumentNullException.ThrowIfNull(request);
 
         Client = request.Client;
         RedirectUri = request.RedirectUri;

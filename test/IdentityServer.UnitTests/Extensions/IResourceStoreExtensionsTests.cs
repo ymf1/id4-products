@@ -159,7 +159,7 @@ public class IResourceStoreExtensionsTests
 
         public Task<IEnumerable<ApiResource>> FindApiResourcesByScopeNameAsync(IEnumerable<string> names)
         {
-            if (names == null) throw new ArgumentNullException(nameof(names));
+            ArgumentNullException.ThrowIfNull(names);
 
             var api = from a in ApiResources
                 where a.Scopes.Any(x => names.Contains(x))
@@ -170,7 +170,7 @@ public class IResourceStoreExtensionsTests
 
         public Task<IEnumerable<IdentityResource>> FindIdentityResourcesByScopeNameAsync(IEnumerable<string> names)
         {
-            if (names == null) throw new ArgumentNullException(nameof(names));
+            ArgumentNullException.ThrowIfNull(names);
 
             var identity = from i in IdentityResources
                 where names.Contains(i.Name)

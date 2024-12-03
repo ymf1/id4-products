@@ -525,7 +525,7 @@
         "type": "coreclr",
         "request": "launch",
         "preLaunchTask": "build-client-MvcAutomaticTokenManagement",
-        "program": "${workspaceFolder}/clients/src/MvcAutomaticTokenManagement/bin/Debug/net8.0/MvcAutomaticTokenManagement.dll",
+        "program": "${workspaceFolder}/clients/src/MvcAutomaticTokenManagement/bin/Debug/net9.0/MvcAutomaticTokenManagement.dll",
         "args": [],
         "cwd": "${workspaceFolder}/clients/src/MvcAutomaticTokenManagement",
         "env": {
@@ -542,7 +542,7 @@
         "type": "coreclr",
         "request": "launch",
         "preLaunchTask": "build-client-MvcCode",
-        "program": "${workspaceFolder}/clients/src/MvcCode/bin/Debug/net8.0/MvcCode.dll",
+        "program": "${workspaceFolder}/clients/src/MvcCode/bin/Debug/net9.0/MvcCode.dll",
         "args": [],
         "cwd": "${workspaceFolder}/clients/src/MvcCode",
         "env": {
@@ -559,7 +559,7 @@
         "type": "coreclr",
         "request": "launch",
         "preLaunchTask": "build-client-MvcDPoP",
-        "program": "${workspaceFolder}/clients/src/MvcDPoP/bin/Debug/net8.0/MvcDPoP.dll",
+        "program": "${workspaceFolder}/clients/src/MvcDPoP/bin/Debug/net9.0/MvcDPoP.dll",
         "args": [],
         "cwd": "${workspaceFolder}/clients/src/MvcDPoP",
         "env": {
@@ -572,30 +572,14 @@
         },
       },
       {
-        "name": "client: MvcJarPar",
-        "type": "coreclr",
-        "request": "launch",
-        "preLaunchTask": "build-client-MvcJarPar",
-        "program": "${workspaceFolder}/clients/src/MvcJarPar/bin/Debug/net8.0/MvcJarPar.dll",
-        "args": [],
-        "cwd": "${workspaceFolder}/clients/src/MvcJarPar",
-        "console": "externalTerminal",
-        "env": {
-            "ASPNETCORE_ENVIRONMENT": "Development"
-        },
-        "presentation": {
-          "hidden": false,
-          "group": "20-clients",
-        }
-      },
-      {
         "name": "client: MvcHybridBackChannel",
         "type": "coreclr",
         "request": "launch",
         "preLaunchTask": "build-client-MvcHybridBackChannel",
-        "program": "${workspaceFolder}/clients/src/MvcHybridBackChannel/bin/Debug/net8.0/MvcHybridBackChannel.dll",
+        "program": "${workspaceFolder}/clients/src/MvcHybridBackChannel/bin/Debug/net9.0/MvcHybridBackChannel.dll",
         "args": [],
         "cwd": "${workspaceFolder}/clients/src/MvcHybridBackChannel",
+        "console": "externalTerminal",
         "env": {
             "ASPNETCORE_ENVIRONMENT": "Development"
         },
@@ -609,9 +593,10 @@
         "type": "coreclr",
         "request": "launch",
         "preLaunchTask": "build-client-MvcJarJwt",
-        "program": "${workspaceFolder}/clients/src/MvcJarJwt/bin/Debug/net8.0/MvcJarJwt.dll",
+        "program": "${workspaceFolder}/clients/src/MvcJarJwt/bin/Debug/net9.0/MvcJarJwt.dll",
         "args": [],
         "cwd": "${workspaceFolder}/clients/src/MvcJarJwt",
+        "console": "externalTerminal",
         "env": {
             "ASPNETCORE_ENVIRONMENT": "Development"
         },
@@ -625,26 +610,9 @@
         "type": "coreclr",
         "request": "launch",
         "preLaunchTask": "build-client-MvcJarUriJwt",
-        "program": "${workspaceFolder}/clients/src/MvcJarUriJwt/bin/Debug/net8.0/MvcJarUriJwt.dll",
+        "program": "${workspaceFolder}/clients/src/MvcJarUriJwt/bin/Debug/net9.0/MvcJarUriJwt.dll",
         "args": [],
         "cwd": "${workspaceFolder}/clients/src/MvcJarUriJwt",
-        "env": {
-            "ASPNETCORE_ENVIRONMENT": "Development"
-        },
-        "console": "externalTerminal",
-        "presentation": {
-          "hidden": false,
-          "group": "20-clients",
-        }
-      },
-      {
-        "name": "client: MvcPar",
-        "type": "coreclr",
-        "request": "launch",
-        "preLaunchTask": "build-client-MvcPar",
-        "program": "${workspaceFolder}/clients/src/MvcPar/bin/Debug/net8.0/MvcPar.dll",
-        "args": [],
-        "cwd": "${workspaceFolder}/clients/src/MvcPar",
         "env": {
             "ASPNETCORE_ENVIRONMENT": "Development"
         },

@@ -82,10 +82,7 @@ public class Startup
                     RoleClaimType = JwtClaimTypes.Role,
                 };
 
-                options.Events.OnRedirectToIdentityProvider = ctx =>
-                {
-                    return Task.CompletedTask;
-                };
+                options.DisableTelemetry = true;
             });
         
         // var apiKey = _configuration["HoneyCombApiKey"];

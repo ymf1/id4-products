@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using Microsoft.Extensions.Configuration;
 using Duende.AccessTokenManagement;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 namespace MvcJarUriJwt;
 
@@ -75,6 +76,11 @@ public class Startup
                     NameClaimType = "name",
                     RoleClaimType = "role"
                 };
+
+                // Disable PAR because it is incompatible with sending JAR via request_uri
+                options.PushedAuthorizationBehavior = PushedAuthorizationBehavior.Disable;
+
+                options.DisableTelemetry = true;
             });
 
         // add automatic token management

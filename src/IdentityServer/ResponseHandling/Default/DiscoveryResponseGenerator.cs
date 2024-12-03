@@ -204,7 +204,7 @@ public class DiscoveryResponseGenerator : IDiscoveryResponseGenerator
                     }
 
                     // domain based
-                    if (Options.MutualTls.DomainName.Contains("."))
+                    if (Options.MutualTls.DomainName.Contains('.'))
                     {
                         return $"https://{Options.MutualTls.DomainName}/{endpoint}";
                     }

@@ -135,7 +135,7 @@ internal class TokenValidator : ITokenValidator
 
         TokenValidationResult result;
 
-        if (token.Contains("."))
+        if (token.Contains('.'))
         {
             if (token.Length > _options.InputLengthRestrictions.Jwt)
             {
@@ -347,7 +347,7 @@ internal class TokenValidator : ITokenValidator
         {
             foreach (var scope in scopes)
             {
-                if (scope.Value.Contains(" "))
+                if (scope.Value.Contains(' '))
                 {
                     claims.Remove(scope);
 

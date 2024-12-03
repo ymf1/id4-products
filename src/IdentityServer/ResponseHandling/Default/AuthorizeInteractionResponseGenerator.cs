@@ -81,7 +81,7 @@ public class AuthorizeInteractionResponseGenerator : IAuthorizeInteractionRespon
         
         Logger.LogTrace("ProcessInteractionAsync");
 
-        // handle the scenario where use choose to deny prior to even logging in
+        // handle the scenario where user choose to deny prior to even logging in
         if (consent != null && consent.Granted == false && consent.Error.HasValue)
         {
             // special case when anonymous user has issued an error prior to authenticating

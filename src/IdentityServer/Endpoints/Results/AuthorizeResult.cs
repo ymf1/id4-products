@@ -175,7 +175,7 @@ public class AuthorizeHttpWriter : IHttpResponseWriter<AuthorizeResult>
             uri = uri.AddHashFragment(query);
         }
 
-        if (response.IsError && !uri.Contains("#"))
+        if (response.IsError && !uri.Contains('#'))
         {
             // https://tools.ietf.org/html/draft-bradley-oauth-open-redirector-00
             uri += "#_=_";

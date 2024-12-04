@@ -41,8 +41,8 @@ public class CheckSessionResultTests
 
         _context.Response.StatusCode.Should().Be(200);
         _context.Response.ContentType.Should().StartWith("text/html");
-        _context.Response.Headers["Content-Security-Policy"].First().Should().Contain("default-src 'none';");
-        _context.Response.Headers["Content-Security-Policy"].First().Should().Contain($"script-src '{IdentityServerConstants.ContentSecurityPolicyHashes.CheckSessionScript}'");
+        _context.Response.Headers.ContentSecurityPolicy.First().Should().Contain("default-src 'none';");
+        _context.Response.Headers.ContentSecurityPolicy.First().Should().Contain($"script-src '{IdentityServerConstants.ContentSecurityPolicyHashes.CheckSessionScript}'");
         _context.Response.Headers["X-Content-Security-Policy"].First().Should().Contain("default-src 'none';");
         _context.Response.Headers["X-Content-Security-Policy"].First().Should().Contain($"script-src '{IdentityServerConstants.ContentSecurityPolicyHashes.CheckSessionScript}'");
         _context.Response.Body.Seek(0, SeekOrigin.Begin);
@@ -60,7 +60,7 @@ public class CheckSessionResultTests
 
         await _subject.WriteHttpResponse(new CheckSessionResult(), _context);
 
-        _context.Response.Headers["Content-Security-Policy"].First().Should().Contain($"script-src 'unsafe-inline' '{IdentityServerConstants.ContentSecurityPolicyHashes.CheckSessionScript}'");
+        _context.Response.Headers.ContentSecurityPolicy.First().Should().Contain($"script-src 'unsafe-inline' '{IdentityServerConstants.ContentSecurityPolicyHashes.CheckSessionScript}'");
         _context.Response.Headers["X-Content-Security-Policy"].First().Should().Contain($"script-src 'unsafe-inline' '{IdentityServerConstants.ContentSecurityPolicyHashes.CheckSessionScript}'");
     }
 
@@ -71,7 +71,7 @@ public class CheckSessionResultTests
 
         await _subject.WriteHttpResponse(new CheckSessionResult(), _context);
 
-        _context.Response.Headers["Content-Security-Policy"].First().Should().Contain($"script-src '{IdentityServerConstants.ContentSecurityPolicyHashes.CheckSessionScript}'");
+        _context.Response.Headers.ContentSecurityPolicy.First().Should().Contain($"script-src '{IdentityServerConstants.ContentSecurityPolicyHashes.CheckSessionScript}'");
         _context.Response.Headers["X-Content-Security-Policy"].Should().BeEmpty();
     }
 

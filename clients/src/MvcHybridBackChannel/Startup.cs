@@ -78,6 +78,8 @@ namespace MvcHybrid
                         NameClaimType = JwtClaimTypes.Name,
                         RoleClaimType = JwtClaimTypes.Role,
                     };
+
+                    options.DisableTelemetry = true;
                 });
             
             // var apiKey = _configuration["HoneyCombApiKey"];

@@ -30,15 +30,8 @@ public class ParsedScopeValue
     /// <param name="parsedParameter"></param>
     public ParsedScopeValue(string rawValue, string parsedName, string? parsedParameter)
     {
-        if (String.IsNullOrWhiteSpace(rawValue))
-        {
-            throw new ArgumentNullException(nameof(rawValue));
-        }
-
-        if (String.IsNullOrWhiteSpace(parsedName))
-        {
-            throw new ArgumentNullException(nameof(parsedName));
-        }
+        ArgumentNullException.ThrowIfNullOrWhiteSpace(rawValue);
+        ArgumentNullException.ThrowIfNullOrWhiteSpace(parsedName);
 
         RawValue = rawValue;
         ParsedName = parsedName;

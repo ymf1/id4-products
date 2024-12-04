@@ -68,6 +68,8 @@ public class Startup
                     NameClaimType = "name",
                     RoleClaimType = "role"
                 };
+
+                options.DisableTelemetry = true;
             });
 
         services.AddTransient<IDPoPProofService, CustomProofService>();

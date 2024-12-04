@@ -60,12 +60,12 @@ public class BrowserHandler : DelegatingHandler
 
     internal Cookie GetCookie(string uri, string name)
     {
-        return _cookieContainer.GetCookies(new Uri(uri)).Cast<Cookie>().Where(x => x.Name == name).FirstOrDefault();
+        return _cookieContainer.GetCookies(new Uri(uri)).FirstOrDefault(x => x.Name == name);
     }
 
     internal void RemoveCookie(string uri, string name)
     {
-        var cookie = _cookieContainer.GetCookies(new Uri(uri)).Cast<Cookie>().Where(x=>x.Name == name).FirstOrDefault();
+        var cookie = _cookieContainer.GetCookies(new Uri(uri)).FirstOrDefault(x => x.Name == name);
         if (cookie != null)
         {
             cookie.Expired = true;

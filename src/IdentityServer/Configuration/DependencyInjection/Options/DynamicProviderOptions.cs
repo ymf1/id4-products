@@ -76,7 +76,7 @@ public class DynamicProviderOptions
     /// <returns></returns>
     public DynamicProviderType? FindProviderType(string type)
     {
-        return _providers.ContainsKey(type) ? _providers[type] : null;
+        return _providers.GetValueOrDefault(type);
     }
 
     /// <summary>

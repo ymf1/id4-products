@@ -14,9 +14,7 @@ public class Program
 
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
-            .MinimumLevel.Override("IdentityModel", LogEventLevel.Debug)
-            .MinimumLevel.Override("System.Net.Http", LogEventLevel.Information)
-            .MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Information)
+            .MinimumLevel.Override("Duende.IdentityModel", LogEventLevel.Debug)
             .MinimumLevel.Override("MvcCode", LogEventLevel.Debug)
             .Enrich.FromLogContext()
             .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")

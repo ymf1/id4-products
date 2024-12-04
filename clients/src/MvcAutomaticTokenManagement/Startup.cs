@@ -74,6 +74,8 @@ public class Startup
                     NameClaimType = "name",
                     RoleClaimType = "role"
                 };
+
+                options.DisableTelemetry = true;
             });
 
         // add automatic token management

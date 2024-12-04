@@ -152,7 +152,7 @@ public static class ResourceExtensions
                     return false;
                 }
 
-                if (item.Contains("#"))
+                if (item.Contains('#'))
                 {
                     logger.LogDebug("Resource indicator {resource} must not contain a fragment component.", item);
                     return false;

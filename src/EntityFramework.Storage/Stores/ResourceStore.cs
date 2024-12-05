@@ -62,7 +62,7 @@ public class ResourceStore : IResourceStore
         using var activity = Tracing.StoreActivitySource.StartActivity("ResourceStore.FindApiResourcesByName");
         activity?.SetTag(Tracing.Properties.ApiResourceNames, apiResourceNames.ToSpaceSeparatedString());
         
-        if (apiResourceNames == null) throw new ArgumentNullException(nameof(apiResourceNames));
+        ArgumentNullException.ThrowIfNull(apiResourceNames);
 
         var query =
             from apiResource in Context.ApiResources

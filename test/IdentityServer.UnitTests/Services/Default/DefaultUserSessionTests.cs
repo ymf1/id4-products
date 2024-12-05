@@ -115,7 +115,7 @@ public class DefaultUserSessionTests
         cookieContainer.SetCookies(new Uri("http://server"), string.Join(',', cookies));
         _mockHttpContext.HttpContext.Response.Headers.Clear();
 
-        var cookie = cookieContainer.GetCookies(new Uri("http://server")).Cast<Cookie>().Where(x => x.Name == _options.Authentication.CheckSessionCookieName).FirstOrDefault();
+        var cookie = cookieContainer.GetCookies(new Uri("http://server")).FirstOrDefault(x => x.Name == _options.Authentication.CheckSessionCookieName);
         cookie.Value.Should().Be(_props.GetSessionId());
     }
 
@@ -132,7 +132,7 @@ public class DefaultUserSessionTests
         cookieContainer.SetCookies(new Uri("http://server"), string.Join(',', cookies));
         _mockHttpContext.HttpContext.Response.Headers.Clear();
 
-        var cookie = cookieContainer.GetCookies(new Uri("http://server")).Cast<Cookie>().Where(x => x.Name == _options.Authentication.CheckSessionCookieName).FirstOrDefault();
+        var cookie = cookieContainer.GetCookies(new Uri("http://server")).FirstOrDefault(x => x.Name == _options.Authentication.CheckSessionCookieName);
         cookie.Value.Should().Be("999");
     }
 
@@ -146,7 +146,7 @@ public class DefaultUserSessionTests
         cookieContainer.SetCookies(new Uri("http://server"), string.Join(',', cookies));
         _mockHttpContext.HttpContext.Response.Headers.Clear();
 
-        var cookie = cookieContainer.GetCookies(new Uri("http://server")).Cast<Cookie>().Where(x => x.Name == _options.Authentication.CheckSessionCookieName).FirstOrDefault();
+        var cookie = cookieContainer.GetCookies(new Uri("http://server")).FirstOrDefault(x => x.Name == _options.Authentication.CheckSessionCookieName);
         cookie.Should().BeNull();
     }
 

@@ -58,7 +58,7 @@ public class EndSessionResultTests
         await _subject.WriteHttpResponse(new EndSessionResult(_result), _context);
 
         _mockLogoutMessageStore.Messages.Count.Should().Be(1);
-        var location = _context.Response.Headers["Location"].Single();
+        var location = _context.Response.Headers.Location.Single();
         var query = QueryHelpers.ParseQuery(new Uri(location).Query);
 
         location.Should().StartWith("https://server/logout");
@@ -73,7 +73,7 @@ public class EndSessionResultTests
         await _subject.WriteHttpResponse(new EndSessionResult(_result), _context);
 
         _mockLogoutMessageStore.Messages.Count.Should().Be(0);
-        var location = _context.Response.Headers["Location"].Single();
+        var location = _context.Response.Headers.Location.Single();
         var query = QueryHelpers.ParseQuery(new Uri(location).Query);
 
         location.Should().StartWith("https://server/logout");
@@ -96,7 +96,7 @@ public class EndSessionResultTests
         await _subject.WriteHttpResponse(new EndSessionResult(_result), _context);
 
         _mockLogoutMessageStore.Messages.Count.Should().Be(0);
-        var location = _context.Response.Headers["Location"].Single();
+        var location = _context.Response.Headers.Location.Single();
         var query = QueryHelpers.ParseQuery(new Uri(location).Query);
 
         location.Should().StartWith("https://server/logout");

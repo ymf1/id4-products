@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.EntityFramework.Options;
+using Duende.IdentityServer.EntityFramework.Storage;
 
 namespace IntegrationTests.TestHosts;
 
@@ -39,8 +40,10 @@ public class ConfigurationHost : GenericHost
             })
             .AddClientConfigurationStore();
         services.AddSingleton(new ConfigurationStoreOptions());
-        services.AddDbContext<ConfigurationDbContext>(opt =>
-            opt.UseInMemoryDatabase("configurationDb", databaseRoot));
+        services.AddConfigurationDbContext(options => {
+            options.ConfigureDbContext = b =>
+                b.UseInMemoryDatabase("configurationDb", databaseRoot);
+        });
     }
 
     private void Configure(WebApplication app)

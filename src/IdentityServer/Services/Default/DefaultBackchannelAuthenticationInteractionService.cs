@@ -123,8 +123,8 @@ public class DefaultBackchannelAuthenticationInteractionService : IBackchannelAu
     public async Task CompleteLoginRequestAsync(CompleteBackchannelLoginRequest completionRequest)
     {
         using var activity = Tracing.ServiceActivitySource.StartActivity("DefaultBackchannelAuthenticationInteractionService.CompleteLoginRequest");
-        
-        if (completionRequest == null) throw new ArgumentNullException(nameof(completionRequest));
+
+        ArgumentNullException.ThrowIfNull(completionRequest);
 
         var request = await _requestStore.GetByInternalIdAsync(completionRequest.InternalId);
         if (request == null)

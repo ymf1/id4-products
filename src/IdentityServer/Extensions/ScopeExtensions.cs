@@ -16,7 +16,7 @@ internal static class ScopeExtensions
         var scopeNames = from s in apiScopes
             select s.Name;
 
-        return string.Join(' ', scopeNames.ToArray());
+        return string.Join(' ', scopeNames);
     }
 
     [DebuggerStepThrough]

@@ -92,7 +92,7 @@ public class TokenCreationRequest
     /// </summary>
     public void Validate()
     {
-        if (ValidatedResources == null) throw new ArgumentNullException(nameof(ValidatedResources));
-        if (ValidatedRequest == null) throw new ArgumentNullException(nameof(ValidatedRequest));
+        ArgumentNullException.ThrowIfNull(ValidatedResources);
+        ArgumentNullException.ThrowIfNull(ValidatedRequest);
     }
 }

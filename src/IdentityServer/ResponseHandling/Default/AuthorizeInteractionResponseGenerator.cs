@@ -314,8 +314,8 @@ public class AuthorizeInteractionResponseGenerator : IAuthorizeInteractionRespon
     protected internal virtual async Task<InteractionResponse> ProcessConsentAsync(ValidatedAuthorizeRequest request, ConsentResponse consent = null)
     {
         using var activity = Tracing.BasicActivitySource.StartActivity("AuthorizeInteractionResponseGenerator.ProcessConsent");
-            
-        if (request == null) throw new ArgumentNullException(nameof(request));
+
+        ArgumentNullException.ThrowIfNull(request);
 
         if (request.PromptModes.Any() &&
             !request.PromptModes.Contains(OidcConstants.PromptModes.None) &&

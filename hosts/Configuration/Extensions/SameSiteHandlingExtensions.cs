@@ -24,7 +24,7 @@ public static class SameSiteHandlingExtensions
     {
         if (options.SameSite == SameSiteMode.None)
         {
-            var userAgent = httpContext.Request.Headers["User-Agent"].ToString();
+            var userAgent = httpContext.Request.Headers.UserAgent.ToString();
             if (!httpContext.Request.IsHttps || DisallowsSameSiteNone(userAgent))
             {
                 // For .NET Core < 3.1 set SameSite = (SameSiteMode)(-1)

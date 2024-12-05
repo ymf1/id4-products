@@ -122,7 +122,7 @@ internal class DeviceAuthorizationEndpoint : IEndpointHandler
             Custom = custom
         };
 
-        _logger.LogError("Device authorization error: {error}:{errorDescriptions}", error, error ?? "-no message-");
+        _logger.LogError("Device authorization error: {error}:{errorDescriptions}", error, errorDescription ?? "-no message-");
 
         return new TokenErrorResult(response);
     }

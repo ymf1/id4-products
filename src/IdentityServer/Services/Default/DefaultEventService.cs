@@ -60,7 +60,7 @@ public class DefaultEventService : IEventService
     /// <exception cref="System.ArgumentNullException">evt</exception>
     public async Task RaiseAsync(Event evt)
     {
-        if (evt == null) throw new ArgumentNullException(nameof(evt));
+        ArgumentNullException.ThrowIfNull(evt);
 
         if (CanRaiseEvent(evt))
         {

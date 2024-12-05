@@ -90,7 +90,7 @@ public static class Telemetry
         }
 
         /// <summary>
-        /// Helper method to increase <see cref="Counters.ConsentDenied"/> counter. The scopes
+        /// Helper method to increase <see cref="Counters.Consent"/> counter. The scopes
         /// are expanded and called one by one to not cause a combinatory explosion of scopes.
         /// </summary>
         /// <param name="clientId">Client id</param>
@@ -123,7 +123,7 @@ public static class Telemetry
             => UserLoginCounter.Add(1, new(Tags.Client, clientId), new(Tags.Idp, idp));
 
         /// <summary>
-        /// Helper method to increase <see cref="Counters.UserLogin" counter on failure.
+        /// Helper method to increase <see cref="Counters.UserLogin"> counter on failure.
         /// </summary>
         /// <param name="clientId">Client Id, if available</param>
         /// <param name="error">Error message</param>

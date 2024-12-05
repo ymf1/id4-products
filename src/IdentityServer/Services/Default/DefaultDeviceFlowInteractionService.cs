@@ -56,8 +56,8 @@ internal class DefaultDeviceFlowInteractionService : IDeviceFlowInteractionServi
 
     public async Task<DeviceFlowInteractionResult> HandleRequestAsync(string userCode, ConsentResponse consent)
     {
-        if (userCode == null) throw new ArgumentNullException(nameof(userCode));
-        if (consent == null) throw new ArgumentNullException(nameof(consent));
+        ArgumentNullException.ThrowIfNull(userCode);
+        ArgumentNullException.ThrowIfNull(consent);
             
         var deviceAuth = await _devices.FindByUserCodeAsync(userCode);
         if (deviceAuth == null) return LogAndReturnError("Invalid user code", "Device authorization failure - user code is invalid");

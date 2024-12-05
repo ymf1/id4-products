@@ -87,7 +87,7 @@ internal class DeviceAuthorizationRequestValidator : IDeviceAuthorizationRequest
         //////////////////////////////////////////////////////////
         // set client & secret
         //////////////////////////////////////////////////////////
-        if (clientValidationResult == null) throw new ArgumentNullException(nameof(clientValidationResult));
+        ArgumentNullException.ThrowIfNull(clientValidationResult);
         request.SetClient(clientValidationResult.Client, clientValidationResult.Secret);
 
         //////////////////////////////////////////////////////////

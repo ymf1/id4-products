@@ -53,9 +53,9 @@ public class DistributedDeviceFlowThrottlingService : IDeviceFlowThrottlingServi
     public async Task<bool> ShouldSlowDown(string deviceCode, DeviceCode details)
     {
         using var activity = Tracing.ServiceActivitySource.StartActivity("DistributedDeviceFlowThrottlingService.ShouldSlowDown");
-        
-        if (deviceCode == null) throw new ArgumentNullException(nameof(deviceCode));
-            
+
+        ArgumentNullException.ThrowIfNull(deviceCode);
+
         var key = KeyPrefix + deviceCode;
         var options = new DistributedCacheEntryOptions {AbsoluteExpiration = _clock.UtcNow.AddSeconds(details.Lifetime)};
 

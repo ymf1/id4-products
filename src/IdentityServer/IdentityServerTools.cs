@@ -131,9 +131,9 @@ public class IdentityServerTools : IIdentityServerTools
     /// <inheritdoc/>
     public virtual async Task<string> IssueJwtAsync(int lifetime, string issuer, string tokenType, IEnumerable<Claim> claims)
     {
-        if (String.IsNullOrWhiteSpace(issuer)) throw new ArgumentNullException(nameof(issuer));
-        if (String.IsNullOrWhiteSpace(tokenType)) throw new ArgumentNullException(nameof(tokenType));
-        if (claims == null) throw new ArgumentNullException(nameof(claims));
+        ArgumentNullException.ThrowIfNullOrWhiteSpace(issuer);
+        ArgumentNullException.ThrowIfNullOrWhiteSpace(tokenType);
+        ArgumentNullException.ThrowIfNull(claims);
 
         var token = new Token(tokenType)
         {

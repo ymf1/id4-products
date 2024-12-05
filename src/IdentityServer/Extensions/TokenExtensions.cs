@@ -103,7 +103,7 @@ public static class TokenExtensions
                 {
                     var claims = token.Claims.Where(c => c.Type == claimType).ToArray();
 
-                    if (claims.Count() > 1)
+                    if (claims.Length > 1)
                     {
                         payload.Add(claimType, AddObjects(claims));
                     }

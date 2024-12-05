@@ -82,7 +82,7 @@ public class CustomTokenResponseClients
 
         // token content
         var payload = GetPayload(response);
-        payload.Count().Should().Be(12);
+        payload.Count.Should().Be(12);
         payload["iss"].GetString().Should().Be("https://idsvr4");
         payload["client_id"].GetString().Should().Be("roclient");
         payload["sub"].GetString().Should().Be("bob");
@@ -200,7 +200,7 @@ public class CustomTokenResponseClients
 
         // token content
         var payload = GetPayload(response);
-        payload.Count().Should().Be(12);
+        payload.Count.Should().Be(12);
         payload["iss"].GetString().Should().Be("https://idsvr4");
         payload["client_id"].GetString().Should().Be("client.custom");
         payload["sub"].GetString().Should().Be("bob");

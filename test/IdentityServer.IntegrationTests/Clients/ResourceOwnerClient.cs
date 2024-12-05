@@ -56,7 +56,7 @@ public class ResourceOwnerClient
 
         var payload = GetPayload(response);
 
-        payload.Count().Should().Be(12);
+        payload.Count.Should().Be(12);
         payload["iss"].GetString().Should().Be("https://idsvr4");
         payload["aud"].GetString().Should().Be("api");
         payload["client_id"].GetString().Should().Be("roclient");
@@ -142,7 +142,7 @@ public class ResourceOwnerClient
 
         var payload = GetPayload(response);
 
-        payload.Count().Should().Be(12);
+        payload.Count.Should().Be(12);
         payload["iss"].GetString().Should().Be("https://idsvr4");
         payload["aud"].GetString().Should().Be("api");
         payload["client_id"].GetString().Should().Be("roclient");
@@ -184,7 +184,7 @@ public class ResourceOwnerClient
 
         var payload = GetPayload(response);
 
-        payload.Count().Should().Be(12);
+        payload.Count.Should().Be(12);
         payload["iss"].GetString().Should().Be("https://idsvr4");
         payload["aud"].GetString().Should().Be("api");
         payload["client_id"].GetString().Should().Be("roclient");

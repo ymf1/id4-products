@@ -149,7 +149,7 @@ internal class TokenEndpoint : IEndpointHandler
         // DPoP header value
         if (context.Request.Headers.TryGetValue(OidcConstants.HttpHeaders.DPoP, out var dpopHeader))
         {
-            if (dpopHeader.Count() > 1)
+            if (dpopHeader.Count > 1)
             {
                 _logger.LogDebug("Too many DPoP headers provided.");
                 return Error(OidcConstants.TokenErrors.InvalidDPoPProof, "Too many DPoP headers provided.");

@@ -94,12 +94,9 @@ public class IdentityServerUser
             claims.Add(new Claim(JwtClaimTypes.AuthenticationTime, new DateTimeOffset(AuthenticationTime.Value).ToUnixTimeSeconds().ToString()));
         }
 
-        if (AuthenticationMethods.Any())
+        foreach (var amr in AuthenticationMethods)
         {
-            foreach (var amr in AuthenticationMethods)
-            {
-                claims.Add(new Claim(JwtClaimTypes.AuthenticationMethod, amr));
-            }
+            claims.Add(new Claim(JwtClaimTypes.AuthenticationMethod, amr));
         }
 
         claims.AddRange(AdditionalClaims);

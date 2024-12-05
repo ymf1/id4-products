@@ -118,10 +118,7 @@ public class DefaultKeyMaterialService : IKeyMaterialService
         foreach (var store in _validationKeysStores)
         {
             var validationKeys = await store.GetValidationKeysAsync();
-            if (validationKeys.Any())
-            {
-                keys.AddRange(validationKeys);
-            }
+            keys.AddRange(validationKeys);
         }
 
         return keys;

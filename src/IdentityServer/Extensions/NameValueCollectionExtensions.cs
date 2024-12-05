@@ -152,13 +152,13 @@ internal static class NameValueCollectionExtensions
         }
         else
         {
-            builder.Append("&");
+            builder.Append('&');
         }
 
         builder.Append(encodedName);
         if (!String.IsNullOrEmpty(encodedValue))
         {
-            builder.Append("=");
+            builder.Append('=');
             builder.Append(encodedValue);
         }
         return first;

@@ -112,7 +112,7 @@ public class DefaultUserSessionTests
 
         var cookieContainer = new CookieContainer();
         var cookies = _mockHttpContext.HttpContext.Response.Headers.Where(x => x.Key.Equals("Set-Cookie", StringComparison.OrdinalIgnoreCase)).Select(x => x.Value);
-        cookieContainer.SetCookies(new Uri("http://server"), string.Join(",", cookies));
+        cookieContainer.SetCookies(new Uri("http://server"), string.Join(',', cookies));
         _mockHttpContext.HttpContext.Response.Headers.Clear();
 
         var cookie = cookieContainer.GetCookies(new Uri("http://server")).FirstOrDefault(x => x.Name == _options.Authentication.CheckSessionCookieName);
@@ -129,7 +129,7 @@ public class DefaultUserSessionTests
 
         var cookieContainer = new CookieContainer();
         var cookies = _mockHttpContext.HttpContext.Response.Headers.Where(x => x.Key.Equals("Set-Cookie", StringComparison.OrdinalIgnoreCase)).Select(x => x.Value);
-        cookieContainer.SetCookies(new Uri("http://server"), string.Join(",", cookies));
+        cookieContainer.SetCookies(new Uri("http://server"), string.Join(',', cookies));
         _mockHttpContext.HttpContext.Response.Headers.Clear();
 
         var cookie = cookieContainer.GetCookies(new Uri("http://server")).FirstOrDefault(x => x.Name == _options.Authentication.CheckSessionCookieName);
@@ -143,7 +143,7 @@ public class DefaultUserSessionTests
 
         var cookieContainer = new CookieContainer();
         var cookies = _mockHttpContext.HttpContext.Response.Headers.Where(x => x.Key.Equals("Set-Cookie", StringComparison.OrdinalIgnoreCase)).Select(x => x.Value);
-        cookieContainer.SetCookies(new Uri("http://server"), string.Join(",", cookies));
+        cookieContainer.SetCookies(new Uri("http://server"), string.Join(',', cookies));
         _mockHttpContext.HttpContext.Response.Headers.Clear();
 
         var cookie = cookieContainer.GetCookies(new Uri("http://server")).FirstOrDefault(x => x.Name == _options.Authentication.CheckSessionCookieName);
@@ -160,7 +160,7 @@ public class DefaultUserSessionTests
 
         var cookieContainer = new CookieContainer();
         var cookies = _mockHttpContext.HttpContext.Response.Headers.Where(x => x.Key.Equals("Set-Cookie", StringComparison.OrdinalIgnoreCase)).Select(x => x.Value);
-        cookieContainer.SetCookies(new Uri("http://server"), string.Join(",", cookies));
+        cookieContainer.SetCookies(new Uri("http://server"), string.Join(',', cookies));
         _mockHttpContext.HttpContext.Response.Headers.Clear();
 
         string cookie = cookieContainer.GetCookieHeader(new Uri("http://server"));
@@ -169,7 +169,7 @@ public class DefaultUserSessionTests
         await _subject.RemoveSessionIdCookieAsync();
 
         cookies = _mockHttpContext.HttpContext.Response.Headers.Where(x => x.Key.Equals("Set-Cookie", StringComparison.OrdinalIgnoreCase)).Select(x => x.Value);
-        cookieContainer.SetCookies(new Uri("http://server"), string.Join(",", cookies));
+        cookieContainer.SetCookies(new Uri("http://server"), string.Join(',', cookies));
 
         var query = cookieContainer.GetCookies(new Uri("http://server")).Cast<Cookie>().Where(x => x.Name == _options.Authentication.CheckSessionCookieName);
         query.Count().Should().Be(0);

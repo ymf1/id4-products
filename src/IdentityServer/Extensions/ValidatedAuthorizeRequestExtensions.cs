@@ -29,7 +29,7 @@ public static class ValidatedAuthorizeRequestExtensions
         {
             if (suppress.Length > 0)
             {
-                suppress.Append(" ");
+                suppress.Append(' ');
             }
             suppress.Append(OidcConstants.PromptModes.SelectAccount);
         }
@@ -37,7 +37,7 @@ public static class ValidatedAuthorizeRequestExtensions
         {
             if (suppress.Length > 0)
             {
-                suppress.Append(" ");
+                suppress.Append(' ');
             }
             suppress.Append(OidcConstants.PromptModes.Create);
         }

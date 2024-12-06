@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Duende.IdentityServer;
 using Microsoft.AspNetCore.DataProtection;
 using Duende.IdentityServer.Extensions;
+using System.Security.Claims;
 
 namespace IntegrationTests.Hosting;
 
@@ -742,5 +743,25 @@ public class ServerSideSessionTests
             });
             response.IsError.Should().BeTrue();
         }
+    }
+
+    
+    [Fact]
+    public async Task claim_issuers_should_be_persisted()
+    {
+        var claimWithCustomIssuer = new Claim("Test", "true", ClaimValueTypes.Boolean, "Custom Issuer");
+        var claimWithDefaultIssuer = new Claim("Test", "false", ClaimValueTypes.Boolean, ClaimsIdentity.DefaultIssuer);
+
+        var user = new IdentityServerUser("alice").CreatePrincipal();
+        user.Identities.First().AddClaim(claimWithCustomIssuer);
+        user.Identities.First().AddClaim(claimWithDefaultIssuer);
+
+        await _pipeline.LoginAsync(user);
+
+        var ticket = (await _sessionStore.GetSessionsAsync(new SessionFilter { SubjectId = "alice" })).Single()
+            .Deserialize(_protector, null);
+        var claims = ticket.Principal.Claims;
+        claims.Should().Contain(c => c.Issuer == "Custom Issuer" && c.Type == "Test");
+        claims.Should().Contain(c => c.Issuer == ClaimsIdentity.DefaultIssuer && c.Type == "Test");
     }
 }

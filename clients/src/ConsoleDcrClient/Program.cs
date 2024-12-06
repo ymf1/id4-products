@@ -30,8 +30,21 @@ static async Task RegisterClient()
             Scope = "resource1.scope1 resource2.scope1 IdentityServerApi"
         }
     };
-    request.Document.Extensions.Add("client_id", "client");
-    request.Document.Extensions.Add("client_secret", "secret");
+
+    var json = JsonDocument.Parse(
+        """
+        {
+          "client_id": "client",
+          "client_secret": "secret"
+        }
+        """
+    );
+
+    var clientJson = json.RootElement.GetProperty("client_id");
+    var secretJson = json.RootElement.GetProperty("client_secret");
+    
+    request.Document.Extensions!.Add("client_id", clientJson);
+    request.Document.Extensions.Add("client_secret", secretJson);
 
 
     var serialized = JsonSerializer.Serialize(request.Document);

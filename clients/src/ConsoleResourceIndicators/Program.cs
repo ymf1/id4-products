@@ -1,13 +1,13 @@
 using Clients;
-using Duende.IdentityModel.OidcClient;
+using IdentityModel.OidcClient;
 using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Duende.IdentityModel;
-using Duende.IdentityModel.Client;
+using IdentityModel;
+using IdentityModel.Client;
 
 namespace ConsoleResourceIndicators
 {

@@ -35,7 +35,6 @@ internal static class IdentityServerExtensions
             .AddInMemoryIdentityResources(Resources.IdentityResources)
             .AddInMemoryApiScopes(Resources.ApiScopes)
             .AddInMemoryApiResources(Resources.ApiResources)
-            //.AddStaticSigningCredential()
             .AddExtensionGrantValidator<Extensions.ExtensionGrantValidator>()
             .AddExtensionGrantValidator<Extensions.NoSubjectExtensionGrantValidator>()
             .AddJwtBearerClientAuthentication()
@@ -66,35 +65,5 @@ internal static class IdentityServerExtensions
         builder.Services.AddTransient<IDynamicClientRegistrationRequestProcessor, CustomClientRegistrationProcessor>();
 
         return builder;
-    }
-    
-    private static IIdentityServerBuilder AddStaticSigningCredential(this IIdentityServerBuilder builder)
-    {
-        // create random RS256 key
-        //builder.AddDeveloperSigningCredential();
-
-
-#pragma warning disable SYSLIB0057 // Type or member is obsolete
-        // TODO - Use X509CertificateLoader in a future release (when we drop NET8 support)
-
-        // use an RSA-based certificate with RS256
-        using var rsaCert = new X509Certificate2("./testkeys/identityserver.test.rsa.p12", "changeit");
-        builder.AddSigningCredential(rsaCert, "RS256");
-
-        // ...and PS256
-        builder.AddSigningCredential(rsaCert, "PS256");
-
-        // or manually extract ECDSA key from certificate (directly using the certificate is not support by Microsoft right now)
-        using var ecCert = new X509Certificate2("./testkeys/identityserver.test.ecdsa.p12", "changeit");
-#pragma warning restore SYSLIB0057 // Type or member is obsolete
-
-        var key = new ECDsaSecurityKey(ecCert.GetECDsaPrivateKey())
-        {
-            KeyId = CryptoRandom.CreateUniqueId(16, CryptoRandom.OutputFormat.Hex)
-        };
-
-        return builder.AddSigningCredential(
-            key,
-            IdentityServerConstants.ECDsaSigningAlgorithm.ES256);
     }
 }

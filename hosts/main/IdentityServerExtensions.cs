@@ -77,33 +77,39 @@ internal static class IdentityServerExtensions
         return builder;
     }
 
+    // To use static signing credentials, create keys and add it to the certificate store.
+    // This shows how to create both rsa and ec keys, in case you had clients that were configured to use different algorithms
+    // You can create keys for dev use with the mkcert util:
+    //    mkcert -pkcs12 identityserver.test.rsa
+    //    mkcert -pkcs12 -ecdsa identityserver.test.ecdsa
+    // Then import the keys into the certificate manager. This code expect keys in the personal store of the current user.
     private static IIdentityServerBuilder AddStaticSigningCredential(this IIdentityServerBuilder builder)
     {
-        // create random RS256 key
-        //builder.AddDeveloperSigningCredential();
-
-
-#pragma warning disable SYSLIB0057 // Type or member is obsolete
-        // TODO - Use X509CertificateLoader in a future release (when we drop NET8 support)
-
-        // use an RSA-based certificate with RS256
-        using var rsaCert = new X509Certificate2("./testkeys/identityserver.test.rsa.p12", "changeit");
-        builder.AddSigningCredential(rsaCert, "RS256");
-
-        // ...and PS256
-        builder.AddSigningCredential(rsaCert, "PS256");
-
-        // or manually extract ECDSA key from certificate (directly using the certificate is not support by Microsoft right now)
-        using var ecCert = new X509Certificate2("./testkeys/identityserver.test.ecdsa.p12", "changeit");
-#pragma warning restore SYSLIB0057 // Type or member is obsolete
-
-        var key = new ECDsaSecurityKey(ecCert.GetECDsaPrivateKey())
+        var store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
+        try
         {
-            KeyId = CryptoRandom.CreateUniqueId(16, CryptoRandom.OutputFormat.Hex)
-        };
+            store.Open(OpenFlags.ReadOnly);
 
-        return builder.AddSigningCredential(
-            key,
-            IdentityServerConstants.ECDsaSigningAlgorithm.ES256);
+            var rsaCert = store.Certificates
+                .Find(X509FindType.FindBySubjectName, "identityserver.test.rsa", true)
+                .Single();
+            builder.AddSigningCredential(rsaCert, "RS256");
+            builder.AddSigningCredential(rsaCert, "PS256");
+
+            var ecCert = store.Certificates
+                .Find(X509FindType.FindBySubjectName, "identityserver.test.ecdsa", true)
+                .Single();  
+            var key = new ECDsaSecurityKey(ecCert.GetECDsaPrivateKey())
+            {
+                KeyId = CryptoRandom.CreateUniqueId(16, CryptoRandom.OutputFormat.Hex)
+            };
+            builder.AddSigningCredential(key, IdentityServerConstants.ECDsaSigningAlgorithm.ES256);
+        }
+        finally
+        {
+            store.Close();
+        }
+
+        return builder;
     }
 }

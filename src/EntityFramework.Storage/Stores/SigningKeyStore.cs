@@ -81,7 +81,7 @@ public class SigningKeyStore : ISigningKeyStore
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
-    public Task StoreKeyAsync(SerializedKey key)
+    public async Task StoreKeyAsync(SerializedKey key)
     {
         using var activity = Tracing.StoreActivitySource.StartActivity("SigningKeyStore.StoreKey");
         
@@ -97,7 +97,7 @@ public class SigningKeyStore : ISigningKeyStore
             IsX509Certificate = key.IsX509Certificate
         };
         Context.Keys.Add(entity);
-        return Context.SaveChangesAsync(CancellationTokenProvider.CancellationToken);
+        await Context.SaveChangesAsync(CancellationTokenProvider.CancellationToken);
     }
 
     /// <summary>

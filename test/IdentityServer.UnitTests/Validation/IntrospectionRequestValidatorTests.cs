@@ -3,9 +3,11 @@
 
 
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
+using Duende.IdentityModel;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Stores;
 using Duende.IdentityServer.Validation;
@@ -114,5 +116,77 @@ public class IntrospectionRequestValidatorTests
         result.IsActive.Should().Be(false);
         result.Claims.Should().BeNull();
         result.Token.Should().Be("invalid");
+    }
+
+    [Theory]
+    [MemberData(nameof(DuplicateClaimTestCases))]
+    [Trait("Category", Category)]
+    public async Task protocol_claims_should_not_be_duplicated(
+        string claimType,
+        System.Security.Claims.Claim duplicateClaim,
+        Func<Token, string> expectedValueSelector)
+    {
+        var token = new Token
+        {
+            CreationTime = DateTime.UtcNow,
+            Issuer = "http://op",
+            ClientId = "codeclient",
+            Lifetime = 1000,
+            Claims =
+            {
+                duplicateClaim
+            }
+        };
+
+        var handle = await _referenceTokenStore.StoreReferenceTokenAsync(token);
+        var param = new NameValueCollection
+        {
+            { "token", handle }
+        };
+
+        var result = await _subject.ValidateAsync(
+            new IntrospectionRequestValidationContext
+            {
+                Parameters = param,
+                Api = new ApiResource("api")
+            }
+        );
+
+        result.Claims.Where(c => c.Type == claimType)
+            .Should()
+            .HaveCount(1)
+            .And
+            .Contain(c => c.Value == expectedValueSelector(token));
+    }
+
+    public static IEnumerable<object[]> DuplicateClaimTestCases()
+    {
+        yield return new object[]
+        {
+            JwtClaimTypes.IssuedAt,
+            new System.Security.Claims.Claim(JwtClaimTypes.IssuedAt, "1234"),
+            (Func<Token, string>)(token => new DateTimeOffset(token.CreationTime).ToUnixTimeSeconds().ToString())
+        };
+
+        yield return new object[]
+        {
+            JwtClaimTypes.Issuer,
+            new System.Security.Claims.Claim(JwtClaimTypes.Issuer, "https://bogus.example.com"),
+            (Func<Token, string>)(token => token.Issuer)
+        };
+
+        yield return new object[]
+        {
+            JwtClaimTypes.NotBefore,
+            new System.Security.Claims.Claim(JwtClaimTypes.NotBefore, "1234"),
+            (Func<Token, string>)(token => new DateTimeOffset(token.CreationTime).ToUnixTimeSeconds().ToString())
+        };
+
+        yield return new object[]
+        {
+            JwtClaimTypes.Expiration,
+            new System.Security.Claims.Claim(JwtClaimTypes.Expiration, "1234"),
+            (Func<Token, string>)(token => new DateTimeOffset(token.CreationTime).AddSeconds(token.Lifetime).ToUnixTimeSeconds().ToString())
+        };
     }
 }

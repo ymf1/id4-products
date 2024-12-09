@@ -435,7 +435,12 @@ internal class TokenValidator : ITokenValidator
             claims.Add(new Claim(JwtClaimTypes.Audience, aud));
         }
 
-        claims.AddRange(token.Claims);
+        claims.AddRange(token.Claims.Where(c =>
+            c.Type != JwtClaimTypes.IssuedAt &&
+            c.Type != JwtClaimTypes.Issuer &&
+            c.Type != JwtClaimTypes.NotBefore &&
+            c.Type != JwtClaimTypes.Expiration
+        ));
         return claims;
     }
 

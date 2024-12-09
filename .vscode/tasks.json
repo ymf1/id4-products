@@ -21,12 +21,39 @@
     // Hosts
     //-------
     {
+      "label": "build-host-main-8",
+      "type": "process",
+      "command": "dotnet",
+      "args": [
+          "build",
+          "--framework=net8.0",
+          "${workspaceFolder}/hosts/main/Host.Main.csproj",
+          "/property:GenerateFullPaths=true",
+          "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
       "label": "build-host-main",
       "type": "process",
       "command": "dotnet",
       "args": [
           "build",
+          "--framework=net9.0",
           "${workspaceFolder}/hosts/main/Host.Main.csproj",
+          "/property:GenerateFullPaths=true",
+          "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "build-host-entityframework-8",
+      "type": "process",
+      "command": "dotnet",
+      "args": [
+          "build",
+          "--framework=net8.0",
+          "${workspaceFolder}/hosts/EntityFramework/Host.EntityFramework.csproj",
           "/property:GenerateFullPaths=true",
           "/consoleloggerparameters:NoSummary"
       ],
@@ -38,7 +65,21 @@
       "command": "dotnet",
       "args": [
           "build",
+          "--framework=net9.0",
           "${workspaceFolder}/hosts/EntityFramework/Host.EntityFramework.csproj",
+          "/property:GenerateFullPaths=true",
+          "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "build-host-aspnetidentity-8",
+      "type": "process",
+      "command": "dotnet",
+      "args": [
+          "build",
+          "--framework=net8.0",
+          "${workspaceFolder}/hosts/AspNetIdentity/Host.AspNetIdentity.csproj",
           "/property:GenerateFullPaths=true",
           "/consoleloggerparameters:NoSummary"
       ],
@@ -50,7 +91,21 @@
       "command": "dotnet",
       "args": [
           "build",
+          "--framework=net9.0",
           "${workspaceFolder}/hosts/AspNetIdentity/Host.AspNetIdentity.csproj",
+          "/property:GenerateFullPaths=true",
+          "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "build-host-configuration-8",
+      "type": "process",
+      "command": "dotnet",
+      "args": [
+          "build",
+          "--framework=net8.0",
+          "${workspaceFolder}/hosts/Configuration/Host.Configuration.csproj",
           "/property:GenerateFullPaths=true",
           "/consoleloggerparameters:NoSummary"
       ],
@@ -62,6 +117,7 @@
       "command": "dotnet",
       "args": [
           "build",
+          "--framework=net9.0",
           "${workspaceFolder}/hosts/Configuration/Host.Configuration.csproj",
           "/property:GenerateFullPaths=true",
           "/consoleloggerparameters:NoSummary"

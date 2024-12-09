@@ -125,7 +125,7 @@ public class DefaultEventService : IEventService
 
         if (Context.HttpContext?.Connection.LocalIpAddress != null)
         {
-            evt.LocalIpAddress = Context.HttpContext.Connection.LocalIpAddress.ToString() + ":" + Context.HttpContext.Connection.LocalPort;
+            evt.LocalIpAddress = Context.HttpContext.Connection.LocalIpAddress + ":" + Context.HttpContext.Connection.LocalPort;
         }
         else
         {

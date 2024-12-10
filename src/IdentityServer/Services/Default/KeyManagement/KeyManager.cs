@@ -214,7 +214,7 @@ public class KeyManager : IKeyManager
 
         var groupedKeys = allKeys.GroupBy(x => x.Algorithm).ToArray();
             
-        var success = groupedKeys.Count() == _options.KeyManagement.AllowedSigningAlgorithmNames.Count() &&
+        var success = groupedKeys.Length == _options.KeyManagement.AllowedSigningAlgorithmNames.Count() &&
                       groupedKeys.All(x => _options.KeyManagement.AllowedSigningAlgorithmNames.Contains(x.Key));
 
         if (!success)

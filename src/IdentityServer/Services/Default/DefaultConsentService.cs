@@ -122,7 +122,7 @@ public class DefaultConsentService : IConsentService
         if (consent.Scopes != null)
         {
             var intersect = scopes.Intersect(consent.Scopes);
-            var different = scopes.Count() != intersect.Count();
+            var different = scopes.Length != intersect.Count();
 
             if (different)
             {

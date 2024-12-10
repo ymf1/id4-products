@@ -275,7 +275,7 @@ public class KeyManagerTests
         allKeys.Count().Should().Be(1);
         allKeys.Single().Id.Should().Be(key);
         _mockKeyStoreCache.StoreKeysAsyncWasCalled.Should().BeTrue();
-        _mockKeyStoreCache.Cache.Count().Should().Be(1);
+        _mockKeyStoreCache.Cache.Count.Should().Be(1);
         _mockKeyStoreCache.Cache.Single().Id.Should().Be(key);
     }
 

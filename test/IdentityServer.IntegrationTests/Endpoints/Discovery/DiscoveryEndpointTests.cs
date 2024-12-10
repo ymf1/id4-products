@@ -81,7 +81,7 @@ public class DiscoveryEndpointTests
         var algorithmsSupported = data["id_token_signing_alg_values_supported"].EnumerateArray()
             .Select(x => x.GetString()).ToList();
 
-        algorithmsSupported.Count().Should().Be(2);
+        algorithmsSupported.Count.Should().Be(2);
         algorithmsSupported.Should().Contain(SecurityAlgorithms.RsaSha256);
         algorithmsSupported.Should().Contain(SecurityAlgorithms.EcdsaSha256);
     }

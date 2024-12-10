@@ -20,7 +20,7 @@ public class ApiResourceSigningAlgorithmSelectionTests
 
         var allowedAlgorithms = new List<ApiResource> { resource }.FindMatchingSigningAlgorithms();
 
-        allowedAlgorithms.Count().Should().Be(0);
+        allowedAlgorithms.Count.Should().Be(0);
     }
         
     [Fact]
@@ -31,7 +31,7 @@ public class ApiResourceSigningAlgorithmSelectionTests
 
         var allowedAlgorithms = new List<ApiResource> { resource1, resource2 }.FindMatchingSigningAlgorithms();
 
-        allowedAlgorithms.Count().Should().Be(0);
+        allowedAlgorithms.Count.Should().Be(0);
     }
         
     [Theory]

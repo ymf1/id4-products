@@ -70,7 +70,7 @@ public class ClientCredentialsClient
 
         var payload = GetPayload(response);
 
-        payload.Count().Should().Be(8);
+        payload.Count.Should().Be(8);
         payload["iss"].GetString().Should().Be("https://idsvr4");
         payload["aud"].GetString().Should().Be("api");
         payload["client_id"].GetString().Should().Be("client");
@@ -100,7 +100,7 @@ public class ClientCredentialsClient
 
         var payload = GetPayload(response);
 
-        payload.Count().Should().Be(8);
+        payload.Count.Should().Be(8);
         payload["iss"].GetString().Should().Be("https://idsvr4");
         payload["client_id"].GetString().Should().Be("client");
         payload.Keys.Should().Contain("jti");
@@ -134,7 +134,7 @@ public class ClientCredentialsClient
 
         var payload = GetPayload(response);
 
-        payload.Count().Should().Be(9);
+        payload.Count.Should().Be(9);
         payload["iss"].GetString().Should().Be("https://idsvr4");
         payload["aud"].GetString().Should().Be("api");
         payload["client_id"].GetString().Should().Be("client.cnf");
@@ -167,7 +167,7 @@ public class ClientCredentialsClient
 
         var payload = GetPayload(response);
 
-        payload.Count().Should().Be(8);
+        payload.Count.Should().Be(8);
         payload["iss"].GetString().Should().Be("https://idsvr4");
         payload["aud"].GetString().Should().Be("api");
         payload["client_id"].GetString().Should().Be("client");
@@ -198,7 +198,7 @@ public class ClientCredentialsClient
 
         var payload = GetPayload(response);
 
-        payload.Count().Should().Be(8);
+        payload.Count.Should().Be(8);
         payload["iss"].GetString().Should().Be("https://idsvr4");
         payload["client_id"].GetString().Should().Be("client");
         payload.Keys.Should().Contain("jti");

@@ -210,7 +210,7 @@ public class ClientAssertionClient
 
         var payload = GetPayload(response);
             
-        payload.Count().Should().Be(8);
+        payload.Count.Should().Be(8);
         payload["iss"].GetString().Should().Be("https://idsvr4");
         payload["aud"].GetString().Should().Be("api");
         payload["client_id"].GetString().Should().Be(ClientId);
@@ -218,8 +218,6 @@ public class ClientAssertionClient
 
         var scopes = payload["scope"].EnumerateArray();
         scopes.First().ToString().Should().Be("api1");
-
-            
     }
 
     private Dictionary<string, JsonElement> GetPayload(TokenResponse response)

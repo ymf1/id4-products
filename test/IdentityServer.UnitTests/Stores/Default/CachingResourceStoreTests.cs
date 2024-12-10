@@ -102,11 +102,11 @@ public class CachingResourceStoreTests
 
         {
             _apiCache.Items.Count.Should().Be(0);
-            _apiResourceNamesCache.Items.Count().Should().Be(0);
+            _apiResourceNamesCache.Items.Count.Should().Be(0);
             var items = await _subject.FindApiResourcesByScopeNameAsync(new[] { "invalid" });
             items.Count().Should().Be(0);
             _apiCache.Items.Count.Should().Be(0);
-            _apiResourceNamesCache.Items.Count().Should().Be(1);
+            _apiResourceNamesCache.Items.Count.Should().Be(1);
         }
 
         {
@@ -115,12 +115,12 @@ public class CachingResourceStoreTests
             _resourceCache.Items.Clear();
 
             _apiCache.Items.Count.Should().Be(0);
-            _apiResourceNamesCache.Items.Count().Should().Be(0);
+            _apiResourceNamesCache.Items.Count.Should().Be(0);
             var items = await _subject.FindApiResourcesByScopeNameAsync(new[] { "foo1" });
             items.Count().Should().Be(1);
             items.Select(x => x.Name).Should().BeEquivalentTo(new[] { "foo" });
             _apiCache.Items.Count.Should().Be(1);
-            _apiResourceNamesCache.Items.Count().Should().Be(1);
+            _apiResourceNamesCache.Items.Count.Should().Be(1);
         }
 
         {
@@ -128,7 +128,7 @@ public class CachingResourceStoreTests
             items.Count().Should().Be(1);
             items.Select(x => x.Name).Should().BeEquivalentTo(new[] { "foo" });
             _apiCache.Items.Count.Should().Be(1);
-            _apiResourceNamesCache.Items.Count().Should().Be(2);
+            _apiResourceNamesCache.Items.Count.Should().Be(2);
         }
 
         {
@@ -136,7 +136,7 @@ public class CachingResourceStoreTests
             items.Count().Should().Be(2);
             items.Select(x => x.Name).Should().BeEquivalentTo(new[] { "foo", "bar" });
             _apiCache.Items.Count.Should().Be(2);
-            _apiResourceNamesCache.Items.Count().Should().Be(3);
+            _apiResourceNamesCache.Items.Count.Should().Be(3);
         }
 
         {
@@ -144,7 +144,7 @@ public class CachingResourceStoreTests
             items.Count().Should().Be(2);
             items.Select(x => x.Name).Should().BeEquivalentTo(new[] { "foo", "bar" });
             _apiCache.Items.Count.Should().Be(2);
-            _apiResourceNamesCache.Items.Count().Should().Be(4);
+            _apiResourceNamesCache.Items.Count.Should().Be(4);
         }
 
         {
@@ -156,7 +156,7 @@ public class CachingResourceStoreTests
             items.Count().Should().Be(2);
             items.Select(x => x.Name).Should().BeEquivalentTo(new[] { "foo", "bar" });
             _apiCache.Items.Count.Should().Be(2);
-            _apiResourceNamesCache.Items.Count().Should().Be(4);
+            _apiResourceNamesCache.Items.Count.Should().Be(4);
         }
 
         {
@@ -169,7 +169,7 @@ public class CachingResourceStoreTests
             items.Count().Should().Be(2);
             items.Select(x => x.Name).Should().BeEquivalentTo(new[] { "foo", "bar" });
             _apiCache.Items.Count.Should().Be(2);
-            _apiResourceNamesCache.Items.Count().Should().Be(4);
+            _apiResourceNamesCache.Items.Count.Should().Be(4);
         }
     }
 

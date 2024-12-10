@@ -327,8 +327,8 @@ public class AuthorizeInteractionResponseGeneratorTests_Consent
             ScopesValuesConsented = new string[] { "openid", "read" }
         };
         var result = await _subject.ProcessConsentAsync(request, consent);
-        request.ValidatedResources.Resources.IdentityResources.Count().Should().Be(1);
-        request.ValidatedResources.Resources.ApiScopes.Count().Should().Be(1);
+        request.ValidatedResources.Resources.IdentityResources.Count.Should().Be(1);
+        request.ValidatedResources.Resources.ApiScopes.Count.Should().Be(1);
         "openid".Should().Be(request.ValidatedResources.Resources.IdentityResources.Select(x => x.Name).First());
         "read".Should().Be(request.ValidatedResources.Resources.ApiScopes.First().Name);
         request.WasConsentShown.Should().BeTrue();
@@ -357,8 +357,8 @@ public class AuthorizeInteractionResponseGeneratorTests_Consent
             ScopesValuesConsented = new string[] { "openid", "read" }
         };
         var result = await _subject.ProcessConsentAsync(request, consent);
-        request.ValidatedResources.Resources.IdentityResources.Count().Should().Be(1);
-        request.ValidatedResources.Resources.ApiScopes.Count().Should().Be(1);
+        request.ValidatedResources.Resources.IdentityResources.Count.Should().Be(1);
+        request.ValidatedResources.Resources.ApiScopes.Count.Should().Be(1);
         "read".Should().Be(request.ValidatedResources.Resources.ApiScopes.First().Name);
         request.WasConsentShown.Should().BeTrue();
         result.IsConsent.Should().BeFalse();

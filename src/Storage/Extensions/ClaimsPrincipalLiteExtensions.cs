@@ -19,7 +19,7 @@ public static class ClaimsPrincipalLiteExtensions
     /// </summary>
     public static ClaimsPrincipal ToClaimsPrincipal(this ClaimsPrincipalLite principal)
     {
-        var claims = principal.Claims.Select(x => new Claim(x.Type, x.Value, x.ValueType ?? ClaimValueTypes.String)).ToArray();
+        var claims = principal.Claims.Select(x => new Claim(x.Type, x.Value, x.ValueType ?? ClaimValueTypes.String, x.Issuer ?? ClaimsIdentity.DefaultIssuer)).ToArray();
         var id = new ClaimsIdentity(claims, principal.AuthenticationType, JwtClaimTypes.Name, JwtClaimTypes.Role);
 
         return new ClaimsPrincipal(id);
@@ -35,7 +35,9 @@ public static class ClaimsPrincipalLiteExtensions
                 {
                     Type = x.Type,
                     Value = x.Value,
-                    ValueType = x.ValueType == ClaimValueTypes.String ? null : x.ValueType
+                    // Leave out default values, to avoid bloat
+                    ValueType = x.ValueType == ClaimValueTypes.String ? null : x.ValueType,
+                    Issuer = x.Issuer == ClaimsIdentity.DefaultIssuer ? null : x.Issuer
                 }).ToArray();
 
         return new ClaimsPrincipalLite

@@ -463,26 +463,32 @@ internal class AuthorizeRequestValidator : IAuthorizeRequestValidator
         //////////////////////////////////////////////////////////
         // check for resource indicators and valid format
         //////////////////////////////////////////////////////////
-        var resourceIndicators = request.Raw.GetValues(OidcConstants.AuthorizeRequest.Resource) ?? Enumerable.Empty<string>();
-        
-        if (resourceIndicators?.Any(x => x.Length > _options.InputLengthRestrictions.ResourceIndicatorMaxLength) == true)
+        var resourceIndicators = request.Raw.GetValues(OidcConstants.AuthorizeRequest.Resource);
+        if (resourceIndicators == null)
         {
-            return Invalid(request, OidcConstants.AuthorizeErrors.InvalidTarget, "Resource indicator maximum length exceeded");
+            request.RequestedResourceIndicators = [];
         }
-            
-        if (!resourceIndicators.AreValidResourceIndicatorFormat(_logger))
+        else
         {
-            return Invalid(request, OidcConstants.AuthorizeErrors.InvalidTarget, "Invalid resource indicator format");
-        }
+            if (resourceIndicators.Any(x => x.Length > _options.InputLengthRestrictions.ResourceIndicatorMaxLength))
+            {
+                return Invalid(request, OidcConstants.AuthorizeErrors.InvalidTarget, "Resource indicator maximum length exceeded");
+            }
 
-        // we don't want to allow resource indicators when "token" is requested to authorize endpoint
-        if (request.GrantType == GrantType.Implicit && resourceIndicators.Any())
-        {
-            // todo: correct error?
-            return Invalid(request, OidcConstants.AuthorizeErrors.InvalidTarget, "Resource indicators not allowed for response_type 'token'.");
+            if (!resourceIndicators.AreValidResourceIndicatorFormat(_logger))
+            {
+                return Invalid(request, OidcConstants.AuthorizeErrors.InvalidTarget, "Invalid resource indicator format");
+            }
+
+            // we don't want to allow resource indicators when "token" is requested to authorize endpoint
+            if (request.GrantType == GrantType.Implicit && resourceIndicators.Length != 0)
+            {
+                // todo: correct error?
+                return Invalid(request, OidcConstants.AuthorizeErrors.InvalidTarget, "Resource indicators not allowed for response_type 'token'.");
+            }
+
+            request.RequestedResourceIndicators = resourceIndicators;
         }
-            
-        request.RequestedResourceIndicators = resourceIndicators;
 
         //////////////////////////////////////////////////////////
         // check if scopes are valid/supported and check for resource scopes

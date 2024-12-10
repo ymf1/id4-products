@@ -152,24 +152,31 @@ internal class TokenRequestValidator : ITokenRequestValidator
         //////////////////////////////////////////////////////////
         // check for resource indicator and basic formatting
         //////////////////////////////////////////////////////////
-        var resourceIndicators = parameters.GetValues(OidcConstants.TokenRequest.Resource) ?? Enumerable.Empty<string>();
-
-        if (resourceIndicators?.Any(x => x.Length > _options.InputLengthRestrictions.ResourceIndicatorMaxLength) == true)
+        var resourceIndicators = parameters.GetValues(OidcConstants.TokenRequest.Resource);
+        if (resourceIndicators == null)
         {
-            return Invalid(OidcConstants.AuthorizeErrors.InvalidTarget, "Resource indicator maximum length exceeded");
+            _validatedRequest.RequestedResourceIndicator = null;
         }
-
-        if (!resourceIndicators.AreValidResourceIndicatorFormat(_logger))
+        else
         {
-            return Invalid(OidcConstants.AuthorizeErrors.InvalidTarget, "Invalid resource indicator format");
-        }
+            if (resourceIndicators.Any(x => x.Length > _options.InputLengthRestrictions.ResourceIndicatorMaxLength))
+            {
+                return Invalid(OidcConstants.AuthorizeErrors.InvalidTarget, "Resource indicator maximum length exceeded");
+            }
 
-        if (resourceIndicators.Count() > 1)
-        {
-            return Invalid(OidcConstants.AuthorizeErrors.InvalidTarget, "Multiple resource indicators not supported on token endpoint.");
-        }
+            if (!resourceIndicators.AreValidResourceIndicatorFormat(_logger))
+            {
+                return Invalid(OidcConstants.AuthorizeErrors.InvalidTarget, "Invalid resource indicator format");
+            }
 
-        _validatedRequest.RequestedResourceIndicator = resourceIndicators.SingleOrDefault();
+            if (resourceIndicators.Length > 1)
+            {
+                return Invalid(OidcConstants.AuthorizeErrors.InvalidTarget,
+                    "Multiple resource indicators not supported on token endpoint.");
+            }
+
+            _validatedRequest.RequestedResourceIndicator = resourceIndicators.SingleOrDefault();
+        }
 
         //////////////////////////////////////////////////////////
         // proof token validation

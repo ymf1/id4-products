@@ -112,7 +112,8 @@ public class DefaultEventService : IEventService
     protected virtual async Task PrepareEventAsync(Event evt)
     {
         evt.TimeStamp = Clock.UtcNow.DateTime;
-        evt.ProcessId = Process.GetCurrentProcess().Id;
+        using var process = Process.GetCurrentProcess();
+        evt.ProcessId = process.Id;
 
         if (Context.HttpContext?.TraceIdentifier != null)
         {

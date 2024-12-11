@@ -34,6 +34,8 @@ using Duende.IdentityServer.Hosting.DynamicProviders;
 using Duende.IdentityServer.Internal;
 using Duende.IdentityServer.Stores.Empty;
 using Duende.IdentityServer.Endpoints.Results;
+using Duende.IdentityServer.Licensing;
+using Duende.IdentityServer.Licensing.V2;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -205,6 +207,10 @@ public static class IdentityServerBuilderExtensionsCore
         builder.Services.TryAddTransient<IResourceStore, EmptyResourceStore>();
 
         builder.Services.AddTransient(services => IdentityServerLicenseValidator.Instance.GetLicense());
+
+        builder.Services.AddSingleton<LicenseAccessor>();
+        builder.Services.AddSingleton<ProtocolRequestCounter>();
+        builder.Services.AddSingleton<LicenseUsageTracker>();
 
         return builder;
     }
@@ -389,6 +395,15 @@ public static class IdentityServerBuilderExtensionsCore
     {
         builder.Services.AddTransient<ISecretValidator, HashedSharedSecretValidator>();
 
+        return builder;
+    }
+
+    /// <summary>
+    /// Adds the license summary, which provides information about the current license usage.
+    /// </summary>
+    public static IIdentityServerBuilder AddLicenseSummary(this IIdentityServerBuilder builder)
+    {
+        builder.Services.AddTransient<LicenseUsageSummary>(services => services.GetRequiredService<LicenseUsageTracker>().GetSummary());
         return builder;
     }
 

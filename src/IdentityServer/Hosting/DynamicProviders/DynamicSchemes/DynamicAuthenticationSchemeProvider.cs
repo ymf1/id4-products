@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Duende.IdentityServer.Licensing.V2;
 
 namespace Duende.IdentityServer.Hosting.DynamicProviders;
 
@@ -18,12 +19,14 @@ class DynamicAuthenticationSchemeProvider : IAuthenticationSchemeProvider
 {
     private readonly IAuthenticationSchemeProvider _inner;
     private readonly DynamicProviderOptions _options;
+    private readonly LicenseUsageTracker _licenseUsageTracker;
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly ILogger<DynamicAuthenticationSchemeProvider> _logger;
 
     public DynamicAuthenticationSchemeProvider(
         Decorator<IAuthenticationSchemeProvider> inner,
         DynamicProviderOptions options,
+        LicenseUsageTracker licenseUsageTracker,
         IHttpContextAccessor httpContextAccessor,
         ILogger<DynamicAuthenticationSchemeProvider> logger)
     {
@@ -31,6 +34,7 @@ class DynamicAuthenticationSchemeProvider : IAuthenticationSchemeProvider
         _options = options;
         _httpContextAccessor = httpContextAccessor;
         _logger = logger;
+        _licenseUsageTracker = licenseUsageTracker;
     }
 
     public void AddScheme(AuthenticationScheme scheme)
@@ -115,6 +119,7 @@ class DynamicAuthenticationSchemeProvider : IAuthenticationSchemeProvider
                 if (providerType != null)
                 {
                     IdentityServerLicenseValidator.Instance.ValidateDynamicProviders();
+                    _licenseUsageTracker.FeatureUsed(LicenseFeature.DynamicProviders);
                     dynamicScheme = new DynamicAuthenticationScheme(idp, providerType.HandlerType);
                     cache.Add(name, dynamicScheme);
                 }

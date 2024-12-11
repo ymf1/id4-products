@@ -13,6 +13,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Duende.IdentityServer.Configuration;
+using Duende.IdentityServer.Licensing.V2;
 using Duende.IdentityServer.Logging.Models;
 using Duende.IdentityServer.Services;
 using static Duende.IdentityServer.IdentityServerConstants;
@@ -29,10 +30,12 @@ internal class AuthorizeRequestValidator : IAuthorizeRequestValidator
     private readonly IResourceValidator _resourceValidator;
     private readonly IUserSession _userSession;
     private readonly IRequestObjectValidator _requestObjectValidator;
+    private readonly LicenseUsageTracker _licenseUsage;
     private readonly ILogger _logger;
 
     private readonly ResponseTypeEqualityComparer
         _responseTypeEqualityComparer = new ResponseTypeEqualityComparer();
+
 
     public AuthorizeRequestValidator(
         IdentityServerOptions options,
@@ -43,6 +46,7 @@ internal class AuthorizeRequestValidator : IAuthorizeRequestValidator
         IResourceValidator resourceValidator,
         IUserSession userSession,
         IRequestObjectValidator requestObjectValidator,
+        LicenseUsageTracker licenseUsage,
         ILogger<AuthorizeRequestValidator> logger)
     {
         _options = options;
@@ -53,6 +57,7 @@ internal class AuthorizeRequestValidator : IAuthorizeRequestValidator
         _resourceValidator = resourceValidator;
         _requestObjectValidator = requestObjectValidator;
         _userSession = userSession;
+        _licenseUsage = licenseUsage;
         _logger = logger;
     }
 
@@ -141,6 +146,7 @@ internal class AuthorizeRequestValidator : IAuthorizeRequestValidator
 
         _logger.LogTrace("Authorize request protocol validation successful");
 
+        _licenseUsage.ClientUsed(request.ClientId);
         IdentityServerLicenseValidator.Instance.ValidateClient(request.ClientId);
 
         return Valid(request);
@@ -513,6 +519,7 @@ internal class AuthorizeRequestValidator : IAuthorizeRequestValidator
             }
         }
 
+        _licenseUsage.ResourceIndicatorsUsed(resourceIndicators);
         IdentityServerLicenseValidator.Instance.ValidateResourceIndicators(resourceIndicators);
 
         if (validatedResources.Resources.IdentityResources.Any() && !request.IsOpenIdRequest)

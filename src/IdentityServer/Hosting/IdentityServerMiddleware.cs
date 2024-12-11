@@ -12,8 +12,8 @@ using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Models;
 using System.Linq;
 using Duende.IdentityServer.Configuration;
-using Microsoft.AspNetCore.WebUtilities;
-using System.Collections.Generic;
+using Duende.IdentityServer.Licensing.V2;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Duende.IdentityServer.Hosting;
 
@@ -99,7 +99,10 @@ public class IdentityServerMiddleware
                     using var activity = Tracing.BasicActivitySource.StartActivity("IdentityServerProtocolRequest");
                     activity?.SetTag(Tracing.Properties.EndpointType, endpointType);
 
-                    IdentityServerLicenseValidator.Instance.ValidateIssuer(await issuerNameService.GetCurrentAsync());
+                    var issuer = await issuerNameService.GetCurrentAsync();
+                    var licenseUsage = context.RequestServices.GetRequiredService<LicenseUsageTracker>();
+                    licenseUsage.IssuerUsed(issuer);
+                    IdentityServerLicenseValidator.Instance.ValidateIssuer(issuer);
 
                     _logger.LogInformation("Invoking IdentityServer endpoint: {endpointType} for {url}", endpointType, requestPath);
 

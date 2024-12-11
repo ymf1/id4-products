@@ -20,6 +20,7 @@ using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using Duende.IdentityServer.Licensing.V2;
 
 namespace Microsoft.AspNetCore.Builder;
 
@@ -77,6 +78,12 @@ public static class IdentityServerApplicationBuilderExtensions
             var options = serviceProvider.GetRequiredService<IdentityServerOptions>();
             var env = serviceProvider.GetRequiredService<IHostEnvironment>();
             IdentityServerLicenseValidator.Instance.Initialize(loggerFactory, options, env.IsDevelopment());
+
+            if (options.KeyManagement.Enabled)
+            {
+                var licenseUsage = serviceProvider.GetRequiredService<LicenseUsageTracker>();
+                licenseUsage.FeatureUsed(LicenseFeature.KeyManagement);
+            }
 
             TestService(serviceProvider, typeof(IPersistedGrantStore), logger, "No storage mechanism for grants specified. Use the 'AddInMemoryPersistedGrants' extension method to register a development version.");
             TestService(serviceProvider, typeof(IClientStore), logger, "No storage mechanism for clients specified. Use the 'AddInMemoryClients' extension method to register a development version.");

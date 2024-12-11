@@ -38,7 +38,7 @@ internal static class IdentityServerExtensions
                     UseX509Certificate = true
                 });
             })
-            //.AddServerSideSessions()
+            .AddServerSideSessions()
             .AddInMemoryClients(Clients.Get().ToList())
             .AddInMemoryIdentityResources(Resources.IdentityResources)
             .AddInMemoryApiScopes(Resources.ApiScopes)
@@ -64,15 +64,16 @@ internal static class IdentityServerExtensions
                     ResponseType = "id_token",
                     Scope = "openid profile"
                 }
-            ]);
+            ])
+            .AddLicenseSummary();
 
 
         builder.Services.AddDistributedMemoryCache();
 
-        builder.Services.AddIdentityServerConfiguration(opt =>
-        {
-            // opt.DynamicClientRegistration.SecretLifetime = TimeSpan.FromHours(1);
-        }).AddInMemoryClientConfigurationStore();
+        // builder.Services.AddIdentityServerConfiguration(opt =>
+        // {
+        //     // opt.DynamicClientRegistration.SecretLifetime = TimeSpan.FromHours(1);
+        // }).AddInMemoryClientConfigurationStore();
 
         return builder;
     }

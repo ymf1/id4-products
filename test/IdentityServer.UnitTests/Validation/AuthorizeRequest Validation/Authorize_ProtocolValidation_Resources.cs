@@ -11,6 +11,8 @@ using Duende.IdentityServer.Stores;
 using Duende.IdentityServer.Validation;
 using FluentAssertions;
 using Duende.IdentityModel;
+using Duende.IdentityServer.Licensing.V2;
+using Microsoft.Extensions.Logging.Abstractions;
 using UnitTests.Common;
 using UnitTests.Validation.Setup;
 using Xunit;
@@ -56,6 +58,7 @@ public class Authorize_ProtocolValidation_Resources
             _mockResourceValidator,
             _mockUserSession,
             Factory.CreateRequestObjectValidator(),
+            new LicenseUsageTracker(new LicenseAccessor(new IdentityServerOptions(), NullLogger<LicenseAccessor>.Instance)),
             TestLogger.Create<AuthorizeRequestValidator>());
     }
 

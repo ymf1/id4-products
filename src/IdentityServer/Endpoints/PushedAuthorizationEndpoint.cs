@@ -16,6 +16,7 @@ using System;
 using System.Collections.Specialized;
 using System.Net;
 using System.Threading.Tasks;
+using Duende.IdentityServer.Licensing.V2;
 
 namespace Duende.IdentityServer.Endpoints;
 internal class PushedAuthorizationEndpoint : IEndpointHandler
@@ -23,14 +24,15 @@ internal class PushedAuthorizationEndpoint : IEndpointHandler
     private readonly IClientSecretValidator _clientValidator;
     private readonly IPushedAuthorizationRequestValidator _parValidator;
     private readonly IPushedAuthorizationResponseGenerator _responseGenerator;
+    private readonly LicenseUsageTracker _features;
     private readonly IdentityServerOptions _options;
     private readonly ILogger<PushedAuthorizationEndpoint> _logger;
 
     public PushedAuthorizationEndpoint(
         IClientSecretValidator clientValidator,
         IPushedAuthorizationRequestValidator parValidator,
-        IAuthorizeRequestValidator authorizeRequestValidator,
         IPushedAuthorizationResponseGenerator responseGenerator,
+        LicenseUsageTracker features,
         IdentityServerOptions options,
         ILogger<PushedAuthorizationEndpoint> logger
         )
@@ -38,6 +40,7 @@ internal class PushedAuthorizationEndpoint : IEndpointHandler
         _clientValidator = clientValidator;
         _parValidator = parValidator;
         _responseGenerator = responseGenerator;
+        _features = features;
         _options = options;
         _logger = logger;
     }
@@ -47,6 +50,8 @@ internal class PushedAuthorizationEndpoint : IEndpointHandler
         using var activity = Tracing.BasicActivitySource.StartActivity(IdentityServerConstants.EndpointNames.PushedAuthorization);
 
         _logger.LogDebug("Start pushed authorization request");
+
+        _features.FeatureUsed(LicenseFeature.PAR);
 
         NameValueCollection values;
         IFormCollection form;

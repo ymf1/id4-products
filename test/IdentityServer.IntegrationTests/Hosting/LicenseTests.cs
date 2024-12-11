@@ -80,6 +80,6 @@ public class LicenseTests : IDisposable
         }
 
         _mockPipeline.MockLogger.LogMessages.Should().Contain(
-            $"IdentityServer has handled {threshold + 1} protocol requests without a license. In future versions, unlicensed IdentityServer instances will shut down after {threshold} protocol requests. Please contact sales to obtain a license. If you are running in a test environment, please use a test license");
+            $"You are using IdentityServer in trial mode and have exceeded the trial threshold of {threshold} requests handled by IdentityServer. In a future version, you will need to restart the server or configure a license key to continue testing. For more information, please see https://docs.duendesoftware.com/trial-mode.");
     }
 }

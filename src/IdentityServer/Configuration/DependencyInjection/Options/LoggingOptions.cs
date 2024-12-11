@@ -70,5 +70,10 @@ public class LoggingOptions
     /// Called when the IdentityServer middleware detects an unhandled exception, and is used to determine if the exception is logged.
     /// Returns true to emit the log, false to suppress.
     /// </summary>
-    public Func<HttpContext, Exception, bool> UnhandledExceptionLoggingFilter = (context, exception) => !(context.RequestAborted.IsCancellationRequested && exception is TaskCanceledException);
+    public Func<HttpContext, Exception, bool> UnhandledExceptionLoggingFilter = (context, exception) =>
+    {
+        var result = !(context.RequestAborted.IsCancellationRequested && exception is OperationCanceledException);
+        return result;
+    };
+    
 }

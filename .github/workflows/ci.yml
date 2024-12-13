@@ -7,8 +7,11 @@ on:
     - features/**
     tags:
     - '*.*.*'
+    paths: 
+    - 'identity-server/**'
   pull_request:
-
+    paths: 
+    - 'identity-server/**'
 env:
   DOTNET_NOLOGO: true
 
@@ -23,6 +26,9 @@ jobs:
         runs-on: [macOS-latest, ubuntu-latest, windows-latest]
     name: ${{ matrix.runs-on }}
     runs-on: ${{ matrix.runs-on }}
+    defaults:
+      run:
+        working-directory: identity-server
     steps:
     - uses: actions/checkout@v3
       with:
@@ -46,4 +52,4 @@ jobs:
         SignClientSecret: ${{ secrets.SIGNCLIENTSECRET }}
       run: |
         ./build.ps1 sign
-        dotnet nuget push .\artifacts\*.nupkg -s https://www.myget.org/F/duende_identityserver/api/v2/package -k ${{ secrets.MYGET }}
+        dotnet nuget push .\identity-server\artifacts\*.nupkg -s https://www.myget.org/F/duende_identityserver/api/v2/package -k ${{ secrets.MYGET }}

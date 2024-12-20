@@ -142,7 +142,7 @@ internal static class StringExtensions
     }
 
     [DebuggerStepThrough]
-    public static bool IsLocalUrl([NotNullWhen(false)] this string? url)
+    public static bool IsLocalUrl([NotNullWhen(true)] this string? url)
     {
         // This implementation is a copy of a https://github.com/dotnet/aspnetcore/blob/3f1acb59718cadf111a0a796681e3d3509bb3381/src/Mvc/Mvc.Core/src/Routing/UrlHelperBase.cs#L315
         // We originally copied that code to avoid a dependency, but we could potentially remove this entirely by switching to the Microsoft.NET.Sdk.Web sdk.

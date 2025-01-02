@@ -5,8 +5,8 @@ on:
     branches:
     - main
     - features/**
-    tags:
-    - '*.*.*'
+    # tags:
+    # - '*.*.*'
     paths: 
     - 'identity-server/**'
   pull_request:

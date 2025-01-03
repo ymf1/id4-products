@@ -26,7 +26,9 @@ jobs:
         runs-on: [macOS-latest, ubuntu-latest, windows-latest]
     name: ${{ matrix.runs-on }}
     runs-on: ${{ matrix.runs-on }}
-    
+    defaults:
+      run:
+        working-directory: bff
     steps:
     - uses: actions/checkout@v2.4.0
       with:

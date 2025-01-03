@@ -4,11 +4,14 @@ on:
   push:
     branches:
     - main
-    - features/**
+    - releases/bff/**
+    paths: 
+      - 'bff/**'
     tags:
-    - '*.*.*'
+    - 'bff/*.*.*'
   pull_request:
-
+      paths: 
+      - 'bff/**'
 env:
   DOTNET_NOLOGO: true
 

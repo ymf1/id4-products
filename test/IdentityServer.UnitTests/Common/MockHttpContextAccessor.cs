@@ -2,6 +2,7 @@
 // See LICENSE in the project root for license information.
 
 
+using System;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Models;
@@ -24,7 +25,8 @@ internal class MockHttpContextAccessor : IHttpContextAccessor
         IdentityServerOptions options = null,
         IUserSession userSession = null,
         IMessageStore<LogoutNotificationContext> endSessionStore = null,
-        IServerUrls urls = null)
+        IServerUrls urls = null,
+        Action<ServiceCollection> configureServices = null)
     {
         options = options ?? TestIdentityServerOptions.Create();
 
@@ -61,6 +63,11 @@ internal class MockHttpContextAccessor : IHttpContextAccessor
         if (urls != null)
         {
             services.AddSingleton<IServerUrls>(urls);
+        }
+
+        if (configureServices != null)
+        {
+            configureServices(services);
         }
 
         _context.RequestServices = services.BuildServiceProvider();

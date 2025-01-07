@@ -38,12 +38,17 @@ try
         .ConfigureServices()
         .ConfigurePipeline();
 
-    app.Lifetime.ApplicationStopping.Register(() =>
+    if (app.Environment.IsDevelopment())
     {
-        var usage = app.Services.GetRequiredService<LicenseUsageSummary>();
-        Console.Write(Summary(usage));
-        Console.ReadKey();
-    });
+        app.Lifetime.ApplicationStopping.Register(() =>
+        {
+            var usage = app.Services.GetRequiredService<LicenseUsageSummary>();
+            Console.Write(Summary(usage));
+            {
+                Console.ReadKey();
+            }
+        });
+    }
 
     app.Run();
 }

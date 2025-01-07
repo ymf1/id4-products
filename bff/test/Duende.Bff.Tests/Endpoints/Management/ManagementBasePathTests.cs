@@ -2,13 +2,13 @@
 // See LICENSE in the project root for license information.
 
 using Duende.Bff.Tests.TestHosts;
-using FluentAssertions;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net;
+using Shouldly;
 
 namespace Duende.Bff.Tests.Endpoints.Management
 {
@@ -34,7 +34,7 @@ namespace Duende.Bff.Tests.Endpoints.Management
 
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.StatusCode.Should().NotBe(HttpStatusCode.NotFound);
+            response.StatusCode.ShouldNotBe(HttpStatusCode.NotFound);
         }
     }
 }

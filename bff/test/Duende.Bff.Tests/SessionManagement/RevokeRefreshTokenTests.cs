@@ -3,7 +3,7 @@
 
 using Duende.Bff.Tests.TestHosts;
 using Duende.IdentityServer.Stores;
-using FluentAssertions;
+using Shouldly;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,7 +25,7 @@ namespace Duende.Bff.Tests.SessionManagement
                     SubjectId = "alice"
                 });
                 var rt = grants.Single(x => x.Type == "refresh_token");
-                rt.Should().NotBeNull();
+                rt.ShouldNotBeNull();
             }
 
             await BffHost.BffLogoutAsync("sid");
@@ -36,7 +36,7 @@ namespace Duende.Bff.Tests.SessionManagement
                 {
                     SubjectId = "alice"
                 });
-                grants.Should().BeEmpty();
+                grants.ShouldBeEmpty();
             }
         }
         
@@ -59,7 +59,7 @@ namespace Duende.Bff.Tests.SessionManagement
                     SubjectId = "alice"
                 });
                 var rt = grants.Single(x => x.Type == "refresh_token");
-                rt.Should().NotBeNull();
+                rt.ShouldNotBeNull();
             }
 
             await BffHost.BffLogoutAsync("sid");
@@ -71,7 +71,7 @@ namespace Duende.Bff.Tests.SessionManagement
                     SubjectId = "alice"
                 });
                 var rt = grants.Single(x => x.Type == "refresh_token");
-                rt.Should().NotBeNull();
+                rt.ShouldNotBeNull();
             }
         }
 
@@ -87,7 +87,7 @@ namespace Duende.Bff.Tests.SessionManagement
                     SubjectId = "alice"
                 });
                 var rt = grants.Single(x => x.Type == "refresh_token");
-                rt.Should().NotBeNull();
+                rt.ShouldNotBeNull();
             }
 
             await IdentityServerHost.RevokeSessionCookieAsync();
@@ -98,7 +98,7 @@ namespace Duende.Bff.Tests.SessionManagement
                 {
                     SubjectId = "alice"
                 });
-                var rt = grants.Should().BeEmpty();
+                grants.ShouldBeEmpty();
             }
         }
 
@@ -121,7 +121,7 @@ namespace Duende.Bff.Tests.SessionManagement
                     SubjectId = "alice"
                 });
                 var rt = grants.Single(x => x.Type == "refresh_token");
-                rt.Should().NotBeNull();
+                rt.ShouldNotBeNull();
             }
 
             await IdentityServerHost.RevokeSessionCookieAsync();
@@ -133,7 +133,7 @@ namespace Duende.Bff.Tests.SessionManagement
                     SubjectId = "alice"
                 });
                 var rt = grants.Single(x => x.Type == "refresh_token");
-                rt.Should().NotBeNull();
+                rt.ShouldNotBeNull();
             }
         }
     }

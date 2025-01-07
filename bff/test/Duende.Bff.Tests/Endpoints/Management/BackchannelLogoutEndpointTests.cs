@@ -2,11 +2,11 @@
 // See LICENSE in the project root for license information.
 
 using Duende.Bff.Tests.TestHosts;
-using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Shouldly;
 using Xunit;
 
 namespace Duende.Bff.Tests.Endpoints.Management
@@ -29,7 +29,7 @@ namespace Duende.Bff.Tests.Endpoints.Management
             await BffHost.InitializeAsync();
 
             var response = await BffHost.HttpClient.PostAsync(BffHost.Url("/bff/backchannel"), null);
-            response.StatusCode.Should().NotBe(HttpStatusCode.Unauthorized);
+            response.StatusCode.ShouldNotBe(HttpStatusCode.Unauthorized);
         }
 
         [Fact]
@@ -39,7 +39,7 @@ namespace Duende.Bff.Tests.Endpoints.Management
 
             await IdentityServerHost.RevokeSessionCookieAsync();
 
-            (await BffHost.GetIsUserLoggedInAsync()).Should().BeFalse();
+            (await BffHost.GetIsUserLoggedInAsync()).ShouldBeFalse();
         }
 
         [Fact]
@@ -51,7 +51,7 @@ namespace Duende.Bff.Tests.Endpoints.Management
 
             await IdentityServerHost.RevokeSessionCookieAsync();
 
-            (await BffHost.GetIsUserLoggedInAsync()).Should().BeTrue();
+            (await BffHost.GetIsUserLoggedInAsync()).ShouldBeTrue();
         }
 
         [Fact]
@@ -63,7 +63,7 @@ namespace Duende.Bff.Tests.Endpoints.Management
 
             await IdentityServerHost.RevokeSessionCookieAsync();
 
-            (await BffHost.GetIsUserLoggedInAsync()).Should().BeTrue();
+            (await BffHost.GetIsUserLoggedInAsync()).ShouldBeTrue();
         }
 
 
@@ -79,7 +79,7 @@ namespace Duende.Bff.Tests.Endpoints.Management
             {
                 var store = BffHost.Resolve<IUserSessionStore>();
                 var sessions = await store.GetUserSessionsAsync(new UserSessionsFilter { SubjectId = "alice" });
-                sessions.Count().Should().Be(2);
+                sessions.Count().ShouldBe(2);
             }
             
             await IdentityServerHost.RevokeSessionCookieAsync();
@@ -88,7 +88,7 @@ namespace Duende.Bff.Tests.Endpoints.Management
                 var store = BffHost.Resolve<IUserSessionStore>();
                 var sessions = await store.GetUserSessionsAsync(new UserSessionsFilter { SubjectId = "alice" });
                 var session = sessions.Single();
-                session.SessionId.Should().Be("sid1");
+                session.SessionId.ShouldBe("sid1");
             }
         }
 
@@ -104,7 +104,7 @@ namespace Duende.Bff.Tests.Endpoints.Management
             {
                 var store = BffHost.Resolve<IUserSessionStore>();
                 var sessions = await store.GetUserSessionsAsync(new UserSessionsFilter { SubjectId = "alice" });
-                sessions.Count().Should().Be(2);
+                sessions.Count().ShouldBe(2);
             }
 
             await IdentityServerHost.RevokeSessionCookieAsync();
@@ -112,7 +112,7 @@ namespace Duende.Bff.Tests.Endpoints.Management
             {
                 var store = BffHost.Resolve<IUserSessionStore>();
                 var sessions = await store.GetUserSessionsAsync(new UserSessionsFilter { SubjectId = "alice" });
-                sessions.Should().BeEmpty();
+                sessions.ShouldBeEmpty();
             }
         }
     }

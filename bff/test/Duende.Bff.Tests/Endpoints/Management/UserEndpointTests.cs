@@ -3,12 +3,12 @@
 
 using System.Linq;
 using Duende.Bff.Tests.TestHosts;
-using FluentAssertions;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Xunit;
 using System.Net;
+using Shouldly;
 
 namespace Duende.Bff.Tests.Endpoints.Management
 {
@@ -24,15 +24,15 @@ namespace Duende.Bff.Tests.Endpoints.Management
 
             var data = await BffHost.CallUserEndpointAsync();
 
-            data.Count.Should().Be(4);
-            data.First(d => d.type == "sub").value.GetString().Should().Be("alice");
+            data.Count.ShouldBe(4);
+            data.First(d => d.type == "sub").value.GetString().ShouldBe("alice");
 
             var foos = data.Where(d => d.type == "foo");
-            foos.Count().Should().Be(2);
-            foos.First().value.GetString().Should().Be("foo1");
-            foos.Skip(1).First().value.GetString().Should().Be("foo2");
+            foos.Count().ShouldBe(2);
+            foos.First().value.GetString().ShouldBe("foo1");
+            foos.Skip(1).First().value.GetString().ShouldBe("foo2");
 
-            data.First(d => d.type == Constants.ClaimTypes.SessionExpiresIn).value.GetInt32().Should().BePositive();
+            data.First(d => d.type == Constants.ClaimTypes.SessionExpiresIn).value.GetInt32().ShouldBePositive();
         }
         
         [Fact]
@@ -44,11 +44,11 @@ namespace Duende.Bff.Tests.Endpoints.Management
         
             var data = await BffHost.CallUserEndpointAsync();
 
-            data.Count.Should().Be(4);
-            data.First(d => d.type == "sub").value.GetString().Should().Be("alice");
-            data.First(d => d.type == "sid").value.GetString().Should().Be("123");
-            data.First(d => d.type == Constants.ClaimTypes.LogoutUrl).value.GetString().Should().Be("/bff/logout?sid=123");
-            data.First(d => d.type == Constants.ClaimTypes.SessionExpiresIn).value.GetInt32().Should().BePositive();
+            data.Count.ShouldBe(4);
+            data.First(d => d.type == "sub").value.GetString().ShouldBe("alice");
+            data.First(d => d.type == "sid").value.GetString().ShouldBe("123");
+            data.First(d => d.type == Constants.ClaimTypes.LogoutUrl).value.GetString().ShouldBe("/bff/logout?sid=123");
+            data.First(d => d.type == Constants.ClaimTypes.SessionExpiresIn).value.GetInt32().ShouldBePositive();
         }
 
         [Fact]
@@ -59,7 +59,7 @@ namespace Duende.Bff.Tests.Endpoints.Management
             var req = new HttpRequestMessage(HttpMethod.Get, BffHost.Url("/bff/user"));
             var response = await BffHost.BrowserClient.SendAsync(req);
             
-            response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+            response.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
         }
 
         [Fact]
@@ -69,7 +69,7 @@ namespace Duende.Bff.Tests.Endpoints.Management
             req.Headers.Add("x-csrf", "1");
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+            response.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
         }
 
         [Fact]
@@ -78,7 +78,7 @@ namespace Duende.Bff.Tests.Endpoints.Management
             BffHost.BffOptions.AnonymousSessionResponse = AnonymousSessionResponse.Response200;
 
             var data = await BffHost.CallUserEndpointAsync();
-            data.Should().BeNull();
+            data.ShouldBeNull();
         }
     }
 }

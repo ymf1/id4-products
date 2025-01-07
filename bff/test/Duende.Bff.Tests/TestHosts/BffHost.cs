@@ -2,7 +2,7 @@
 // See LICENSE in the project root for license information.
 
 using Duende.Bff.Tests.TestFramework;
-using FluentAssertions;
+using Shouldly;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -455,8 +455,8 @@ public class BffHost : GenericHost
         req.Headers.Add("x-csrf", "1");
         var response = await BrowserClient.SendAsync(req);
 
-        (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Unauthorized).Should()
-            .BeTrue();
+        (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Unauthorized)
+            .ShouldBeTrue();
 
         return response.StatusCode == HttpStatusCode.OK;
     }
@@ -468,8 +468,8 @@ public class BffHost : GenericHost
 
         var response = await BrowserClient.SendAsync(req);
 
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
-        response.Content.Headers.ContentType.MediaType.Should().Be("application/json");
+        response.StatusCode.ShouldBe(HttpStatusCode.OK);
+        response.Content.Headers.ContentType.MediaType.ShouldBe("application/json");
 
         var json = await response.Content.ReadAsStringAsync();
         return JsonSerializer.Deserialize<List<JsonRecord>>(json);
@@ -484,19 +484,19 @@ public class BffHost : GenericHost
     public async Task<HttpResponseMessage> BffOidcLoginAsync()
     {
         var response = await BrowserClient.GetAsync(Url("/bff/login"));
-        response.StatusCode.Should().Be(HttpStatusCode.Redirect); // authorize
-        response.Headers.Location.ToString().ToLowerInvariant().Should()
-            .StartWith(_identityServerHost.Url("/connect/authorize"));
+        response.StatusCode.ShouldBe(HttpStatusCode.Redirect); // authorize
+        response.Headers.Location.ToString().ToLowerInvariant()
+            .ShouldStartWith(_identityServerHost.Url("/connect/authorize"));
 
         response = await _identityServerHost.BrowserClient.GetAsync(response.Headers.Location.ToString());
-        response.StatusCode.Should().Be(HttpStatusCode.Redirect); // client callback
-        response.Headers.Location.ToString().ToLowerInvariant().Should().StartWith(Url("/signin-oidc"));
+        response.StatusCode.ShouldBe(HttpStatusCode.Redirect); // client callback
+        response.Headers.Location.ToString().ToLowerInvariant().ShouldStartWith(Url("/signin-oidc"));
 
         response = await BrowserClient.GetAsync(response.Headers.Location.ToString());
-        response.StatusCode.Should().Be(HttpStatusCode.Redirect); // root
-        response.Headers.Location.ToString().ToLowerInvariant().Should().Be("/");
+        response.StatusCode.ShouldBe(HttpStatusCode.Redirect); // root
+        response.Headers.Location.ToString().ToLowerInvariant().ShouldBe("/");
 
-        (await GetIsUserLoggedInAsync()).Should().BeTrue();
+        (await GetIsUserLoggedInAsync()).ShouldBeTrue();
 
         response = await BrowserClient.GetAsync(Url(response.Headers.Location.ToString()));
         return response;
@@ -505,24 +505,22 @@ public class BffHost : GenericHost
     public async Task<HttpResponseMessage> BffLogoutAsync(string sid = null)
     {
         var response = await BrowserClient.GetAsync(Url("/bff/logout") + "?sid=" + sid);
-        response.StatusCode.Should().Be(HttpStatusCode.Redirect); // endsession
-        response.Headers.Location.ToString().ToLowerInvariant().Should()
-            .StartWith(_identityServerHost.Url("/connect/endsession"));
+        response.StatusCode.ShouldBe(HttpStatusCode.Redirect); // endsession
+        response.Headers.Location.ToString().ToLowerInvariant().ShouldStartWith(_identityServerHost.Url("/connect/endsession"));
 
         response = await _identityServerHost.BrowserClient.GetAsync(response.Headers.Location.ToString());
-        response.StatusCode.Should().Be(HttpStatusCode.Redirect); // logout
-        response.Headers.Location.ToString().ToLowerInvariant().Should()
-            .StartWith(_identityServerHost.Url("/account/logout"));
+        response.StatusCode.ShouldBe(HttpStatusCode.Redirect); // logout
+        response.Headers.Location.ToString().ToLowerInvariant().ShouldStartWith(_identityServerHost.Url("/account/logout"));
 
         response = await _identityServerHost.BrowserClient.GetAsync(response.Headers.Location.ToString());
-        response.StatusCode.Should().Be(HttpStatusCode.Redirect); // post logout redirect uri
-        response.Headers.Location.ToString().ToLowerInvariant().Should().StartWith(Url("/signout-callback-oidc"));
+        response.StatusCode.ShouldBe(HttpStatusCode.Redirect); // post logout redirect uri
+        response.Headers.Location.ToString().ToLowerInvariant().ShouldStartWith(Url("/signout-callback-oidc"));
 
         response = await BrowserClient.GetAsync(response.Headers.Location.ToString());
-        response.StatusCode.Should().Be(HttpStatusCode.Redirect); // root
-        response.Headers.Location.ToString().ToLowerInvariant().Should().Be("/");
+        response.StatusCode.ShouldBe(HttpStatusCode.Redirect); // root
+        response.Headers.Location.ToString().ToLowerInvariant().ShouldBe("/");
 
-        (await GetIsUserLoggedInAsync()).Should().BeFalse();
+        (await GetIsUserLoggedInAsync()).ShouldBeFalse();
 
         response = await BrowserClient.GetAsync(Url(response.Headers.Location.ToString()));
         return response;

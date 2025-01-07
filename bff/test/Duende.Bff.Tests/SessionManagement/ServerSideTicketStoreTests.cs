@@ -3,7 +3,7 @@
 
 using Duende.Bff.Tests.TestFramework;
 using Duende.Bff.Tests.TestHosts;
-using FluentAssertions;
+using Shouldly;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
@@ -31,11 +31,11 @@ namespace Duende.Bff.Tests.SessionManagement
             await BffHost.BffLoginAsync("alice");
 
             BffHost.BrowserClient.RemoveCookie("bff");
-            (await _sessionStore.GetUserSessionsAsync(new UserSessionsFilter { SubjectId = "alice" })).Count().Should().Be(1);
+            (await _sessionStore.GetUserSessionsAsync(new UserSessionsFilter { SubjectId = "alice" })).Count().ShouldBe(1);
             
             await BffHost.BffOidcLoginAsync();
 
-            (await _sessionStore.GetUserSessionsAsync(new UserSessionsFilter { SubjectId = "alice" })).Count().Should().Be(1);
+            (await _sessionStore.GetUserSessionsAsync(new UserSessionsFilter { SubjectId = "alice" })).Count().ShouldBe(1);
         }
     }
 }

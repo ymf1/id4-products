@@ -38,12 +38,19 @@ try
         .ConfigureServices()
         .ConfigurePipeline();
 
-    var usage = app.Services.GetRequiredService<LicenseUsageSummary>();
+    if (app.Environment.IsDevelopment())
+    {
+        app.Lifetime.ApplicationStopping.Register(() =>
+        {
+            var usage = app.Services.GetRequiredService<LicenseUsageSummary>();
+            Console.Write(Summary(usage));
+            {
+                Console.ReadKey();
+            }
+        });
+    }
 
     app.Run();
-
-    Console.Write(Summary(usage));
-    Console.ReadKey();
 }
 catch (Exception ex)
 {
@@ -55,7 +62,7 @@ finally
     Log.CloseAndFlush();
 }
 
-string Summary(LicenseUsageSummary usage)
+static string Summary(LicenseUsageSummary usage)
 {
     var sb = new StringBuilder();
     sb.AppendLine("IdentityServer Usage Summary:");
@@ -67,4 +74,3 @@ string Summary(LicenseUsageSummary usage)
 
     return sb.ToString();
 }
-    

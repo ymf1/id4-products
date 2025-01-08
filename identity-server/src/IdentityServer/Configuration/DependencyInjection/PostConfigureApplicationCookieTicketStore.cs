@@ -21,7 +21,6 @@ public class PostConfigureApplicationCookieTicketStore : IPostConfigureOptions<C
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly string _scheme;
-    private readonly LicenseUsageTracker _licenseUsage;
     private readonly ILogger<PostConfigureApplicationCookieTicketStore> _logger;
 
     /// <summary>
@@ -38,7 +37,6 @@ public class PostConfigureApplicationCookieTicketStore : IPostConfigureOptions<C
         ILogger<PostConfigureApplicationCookieTicketStore> logger)
     {
         _httpContextAccessor = httpContextAccessor;
-        _licenseUsage = httpContextAccessor.HttpContext?.RequestServices.GetRequiredService<LicenseUsageTracker>();
         _logger = logger;
 
         _scheme = identityServerOptions.Authentication.CookieAuthenticationScheme ??
@@ -69,7 +67,8 @@ public class PostConfigureApplicationCookieTicketStore : IPostConfigureOptions<C
             }
 
             IdentityServerLicenseValidator.Instance.ValidateServerSideSessions();
-            _licenseUsage.FeatureUsed(LicenseFeature.ServerSideSessions);
+            var licenseUsage = _httpContextAccessor.HttpContext?.RequestServices.GetRequiredService<LicenseUsageTracker>();
+            licenseUsage.FeatureUsed(LicenseFeature.ServerSideSessions);
 
             var sessionStore = _httpContextAccessor.HttpContext!.RequestServices.GetService<IServerSideSessionStore>();
             if (sessionStore is InMemoryServerSideSessionStore)

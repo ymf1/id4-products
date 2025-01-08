@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
 
-Console.Title = "Api";
+Console.Title = "BFF";
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()

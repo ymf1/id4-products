@@ -14,5 +14,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\src\Duende.Bff.Yarp\Duende.Bff.Yarp.csproj" />
     </ItemGroup>
-
+	<ItemGroup>
+		<ProjectReference Include="..\Hosts.ServiceDefaults\Hosts.ServiceDefaults.csproj" />
+	</ItemGroup>
 </Project>

@@ -22,6 +22,10 @@
     <ProjectReference Include="..\Bff.DPoP\Bff.DPoP.csproj" />
     <ProjectReference Include="..\Bff.EF\Bff.EF.csproj" />
     <ProjectReference Include="..\Bff\Bff.csproj" />
+    <ProjectReference Include="..\Blazor\PerComponent\PerComponent.Client\PerComponent.Client.csproj" />
+    <ProjectReference Include="..\Blazor\PerComponent\PerComponent\PerComponent.csproj" />
+    <ProjectReference Include="..\Blazor\WebAssembly\WebAssembly.Client\WebAssembly.Client.csproj" />
+    <ProjectReference Include="..\Blazor\WebAssembly\WebAssembly\WebAssembly.csproj" />
     <ProjectReference Include="..\IdentityServer\IdentityServer.csproj" />
   </ItemGroup>
 

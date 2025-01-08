@@ -4,17 +4,18 @@
 using System;
 using Duende.Bff;
 using Duende.Bff.Yarp;
+using Host8;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
-namespace Host8;
-
-public class Startup
+internal static class Extensions
 {
-    public void ConfigureServices(IServiceCollection services)
+    public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
+        var services = builder.Services;
+
         // Add BFF services to DI - also add server-side session management
         services.AddBff(options =>
             {
@@ -78,9 +79,12 @@ public class Startup
             { 
                 client.BaseAddress = new Uri("https://localhost:5010/api"); 
             });
+
+        return builder.Build();
+
     }
 
-    public void Configure(IApplicationBuilder app)
+    public static WebApplication ConfigurePipeline(this WebApplication app)
     {
         app.UseSerilogRequestLogging();
         app.UseDeveloperExceptionPage();
@@ -143,5 +147,7 @@ public class Startup
                 .WithUserAccessTokenParameter(new BffUserAccessTokenParameters(resource: "urn:isolated-api"));
 
         });
+
+        return app;
     }
 }

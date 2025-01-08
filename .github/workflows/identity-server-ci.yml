@@ -1,4 +1,4 @@
-name: "CI"
+name: "identity-server-ci"
 
 on:
   push:

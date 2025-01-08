@@ -3,13 +3,13 @@
 
 using Duende.Bff.Tests.TestFramework;
 using Duende.Bff.Tests.TestHosts;
-using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Shouldly;
 using Xunit;
 
 namespace Duende.Bff.Tests.Endpoints
@@ -25,13 +25,13 @@ namespace Duende.Bff.Tests.Endpoints
             req.Headers.Add("x-csrf", "1");
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.IsSuccessStatusCode.Should().BeTrue();
-            response.Content.Headers.ContentType.MediaType.Should().Be("application/json");
+            response.IsSuccessStatusCode.ShouldBeTrue();
+            response.Content.Headers.ContentType.MediaType.ShouldBe("application/json");
             var json = await response.Content.ReadAsStringAsync();
             var apiResult = JsonSerializer.Deserialize<ApiResponse>(json);
-            apiResult.Method.Should().Be("GET");
-            apiResult.Path.Should().Be("/local_authz");
-            apiResult.Sub.Should().Be("alice");
+            apiResult.Method.ShouldBe("GET");
+            apiResult.Path.ShouldBe("/local_authz");
+            apiResult.Sub.ShouldBe("alice");
         }
         
         [Fact]
@@ -42,13 +42,13 @@ namespace Duende.Bff.Tests.Endpoints
             var req = new HttpRequestMessage(HttpMethod.Get, BffHost.Url("/local_authz_no_csrf"));
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.IsSuccessStatusCode.Should().BeTrue();
-            response.Content.Headers.ContentType.MediaType.Should().Be("application/json");
+            response.IsSuccessStatusCode.ShouldBeTrue();
+            response.Content.Headers.ContentType.MediaType.ShouldBe("application/json");
             var json = await response.Content.ReadAsStringAsync();
             var apiResult = JsonSerializer.Deserialize<ApiResponse>(json);
-            apiResult.Method.Should().Be("GET");
-            apiResult.Path.Should().Be("/local_authz_no_csrf");
-            apiResult.Sub.Should().Be("alice");
+            apiResult.Method.ShouldBe("GET");
+            apiResult.Path.ShouldBe("/local_authz_no_csrf");
+            apiResult.Sub.ShouldBe("alice");
         }
         
         [Fact]
@@ -58,7 +58,7 @@ namespace Duende.Bff.Tests.Endpoints
             req.Headers.Add("x-csrf", "1");
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+            response.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
         }
 
         [Fact]
@@ -67,7 +67,7 @@ namespace Duende.Bff.Tests.Endpoints
             var req = new HttpRequestMessage(HttpMethod.Get, BffHost.Url("/local_anon"));
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+            response.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
         }
         
         [Fact]
@@ -76,7 +76,7 @@ namespace Duende.Bff.Tests.Endpoints
             var req = new HttpRequestMessage(HttpMethod.Get, BffHost.Url("/local_anon_no_csrf"));
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            response.StatusCode.ShouldBe(HttpStatusCode.OK);
         }
 
         [Fact]
@@ -86,13 +86,13 @@ namespace Duende.Bff.Tests.Endpoints
             req.Headers.Add("x-csrf", "1");
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.IsSuccessStatusCode.Should().BeTrue();
-            response.Content.Headers.ContentType.MediaType.Should().Be("application/json");
+            response.IsSuccessStatusCode.ShouldBeTrue();
+            response.Content.Headers.ContentType.MediaType.ShouldBe("application/json");
             var json = await response.Content.ReadAsStringAsync();
             var apiResult = JsonSerializer.Deserialize<ApiResponse>(json);
-            apiResult.Method.Should().Be("GET");
-            apiResult.Path.Should().Be("/local_anon");
-            apiResult.Sub.Should().BeNull();
+            apiResult.Method.ShouldBe("GET");
+            apiResult.Path.ShouldBe("/local_anon");
+            apiResult.Sub.ShouldBeNull();
         }
 
         [Fact]
@@ -105,15 +105,15 @@ namespace Duende.Bff.Tests.Endpoints
             req.Content = new StringContent(JsonSerializer.Serialize(new TestPayload("hello test api")), Encoding.UTF8, "application/json");
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.IsSuccessStatusCode.Should().BeTrue();
-            response.Content.Headers.ContentType.MediaType.Should().Be("application/json");
+            response.IsSuccessStatusCode.ShouldBeTrue();
+            response.Content.Headers.ContentType.MediaType.ShouldBe("application/json");
             var json = await response.Content.ReadAsStringAsync();
             var apiResult = JsonSerializer.Deserialize<ApiResponse>(json);
-            apiResult.Method.Should().Be("PUT");
-            apiResult.Path.Should().Be("/local_authz");
-            apiResult.Sub.Should().Be("alice");
+            apiResult.Method.ShouldBe("PUT");
+            apiResult.Path.ShouldBe("/local_authz");
+            apiResult.Sub.ShouldBe("alice");
             var body = JsonSerializer.Deserialize<TestPayload>(apiResult.Body);
-            body.message.Should().Be("hello test api");
+            body.message.ShouldBe("hello test api");
         }
 
         [Fact]
@@ -123,8 +123,8 @@ namespace Duende.Bff.Tests.Endpoints
             req.Headers.Add("x-csrf", "1");
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.StatusCode.Should().Be(HttpStatusCode.Redirect);
-            response.Headers.Location.ToString().ToLowerInvariant().Should().StartWith(IdentityServerHost.Url("/connect/authorize"));
+            response.StatusCode.ShouldBe(HttpStatusCode.Redirect);
+            response.Headers.Location.ToString().ToLowerInvariant().ShouldStartWith(IdentityServerHost.Url("/connect/authorize"));
         }
 
         [Fact]
@@ -134,7 +134,7 @@ namespace Duende.Bff.Tests.Endpoints
             req.Headers.Add("x-csrf", "1");
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+            response.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
         }
         
         [Fact]
@@ -146,7 +146,7 @@ namespace Duende.Bff.Tests.Endpoints
             req.Headers.Add("x-csrf", "1");
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+            response.StatusCode.ShouldBe(HttpStatusCode.Forbidden);
         }
 
         [Fact]
@@ -159,7 +159,7 @@ namespace Duende.Bff.Tests.Endpoints
             req.Headers.Add("x-csrf", "1");
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+            response.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
         }
 
         [Fact]
@@ -172,7 +172,7 @@ namespace Duende.Bff.Tests.Endpoints
             req.Headers.Add("x-csrf", "1");
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+            response.StatusCode.ShouldBe(HttpStatusCode.Forbidden);
         }
 
         [Fact]
@@ -184,7 +184,7 @@ namespace Duende.Bff.Tests.Endpoints
             var req = new HttpRequestMessage(HttpMethod.Get, BffHost.Url("/local_anon_no_csrf_no_response_handling"));
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.StatusCode.Should().Be(HttpStatusCode.Redirect);
+            response.StatusCode.ShouldBe(HttpStatusCode.Redirect);
         }
 
 
@@ -204,7 +204,7 @@ namespace Duende.Bff.Tests.Endpoints
             await BffHost.InitializeAsync();
 
             var response = await BffHost.HttpClient.GetAsync(BffHost.Url("/not-found"));
-            response.StatusCode.Should().NotBe(HttpStatusCode.InternalServerError);
+            response.StatusCode.ShouldNotBe(HttpStatusCode.InternalServerError);
         }
     }
 }

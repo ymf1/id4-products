@@ -4,7 +4,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Duende.Bff.Tests.TestFramework;
 using Duende.Bff.Tests.TestHosts;
-using FluentAssertions;
+using Shouldly;
 using Xunit;
 
 namespace Duende.Bff.Tests.Headers
@@ -18,13 +18,13 @@ namespace Duende.Bff.Tests.Headers
             req.Headers.Add("x-csrf", "1");
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.IsSuccessStatusCode.Should().BeTrue();
+            response.IsSuccessStatusCode.ShouldBeTrue();
             var json = await response.Content.ReadAsStringAsync();
             var apiResult = JsonSerializer.Deserialize<ApiResponse>(json);
 
-            apiResult.RequestHeaders.Count.Should().Be(2);
-            apiResult.RequestHeaders["Host"].Single().Should().Be("app");
-            apiResult.RequestHeaders["x-csrf"].Single().Should().Be("1");
+            apiResult.RequestHeaders.Count.ShouldBe(2);
+            apiResult.RequestHeaders["Host"].Single().ShouldBe("app");
+            apiResult.RequestHeaders["x-csrf"].Single().ShouldBe("1");
         }
         
         [Fact]
@@ -37,12 +37,12 @@ namespace Duende.Bff.Tests.Headers
             req.Headers.Add("x-custom", "custom");
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.IsSuccessStatusCode.Should().BeTrue();
+            response.IsSuccessStatusCode.ShouldBeTrue();
             var json = await response.Content.ReadAsStringAsync();
             var apiResult = JsonSerializer.Deserialize<ApiResponse>(json);
 
-            apiResult.RequestHeaders["Host"].Single().Should().Be("api");
-            apiResult.RequestHeaders["x-custom"].Single().Should().Be("custom");
+            apiResult.RequestHeaders["Host"].Single().ShouldBe("api");
+            apiResult.RequestHeaders["x-custom"].Single().ShouldBe("custom");
         }
         
         [Fact]
@@ -55,14 +55,14 @@ namespace Duende.Bff.Tests.Headers
             req.Headers.Add("x-custom", "custom");
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.IsSuccessStatusCode.Should().BeTrue();
+            response.IsSuccessStatusCode.ShouldBeTrue();
             var json = await response.Content.ReadAsStringAsync();
             var apiResult = JsonSerializer.Deserialize<ApiResponse>(json);
             
-            apiResult.RequestHeaders["X-Forwarded-Host"].Single().Should().Be("app");
-            apiResult.RequestHeaders["X-Forwarded-Proto"].Single().Should().Be("https");
-            apiResult.RequestHeaders["Host"].Single().Should().Be("api");
-            apiResult.RequestHeaders["x-custom"].Single().Should().Be("custom");
+            apiResult.RequestHeaders["X-Forwarded-Host"].Single().ShouldBe("app");
+            apiResult.RequestHeaders["X-Forwarded-Proto"].Single().ShouldBe("https");
+            apiResult.RequestHeaders["Host"].Single().ShouldBe("api");
+            apiResult.RequestHeaders["x-custom"].Single().ShouldBe("custom");
         }
     }
 }

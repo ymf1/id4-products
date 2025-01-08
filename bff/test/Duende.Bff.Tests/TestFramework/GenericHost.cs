@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
-using FluentAssertions;
+using Shouldly;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -131,7 +131,7 @@ namespace Duende.Bff.Tests.TestFramework
         public async Task RevokeSessionCookieAsync()
         {
             var response = await BrowserClient.GetAsync(Url("__signout"));
-            response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+            response.StatusCode.ShouldBe(HttpStatusCode.NoContent);
         }
 
         void ConfigureSignin(IApplicationBuilder app)
@@ -164,7 +164,7 @@ namespace Duende.Bff.Tests.TestFramework
         {
             _userToSignIn = new ClaimsPrincipal(new ClaimsIdentity(claims, "test", "name", "role"));
             var response = await BrowserClient.GetAsync(Url("__signin"));
-            response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+            response.StatusCode.ShouldBe(HttpStatusCode.NoContent);
         }
         public Task IssueSessionCookieAsync(AuthenticationProperties props, params Claim[] claims)
         {

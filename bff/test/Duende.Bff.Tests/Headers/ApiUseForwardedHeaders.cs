@@ -4,7 +4,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Duende.Bff.Tests.TestFramework;
 using Duende.Bff.Tests.TestHosts;
-using FluentAssertions;
+using Shouldly;
 using Xunit;
 
 namespace Duende.Bff.Tests.Headers
@@ -27,12 +27,12 @@ namespace Duende.Bff.Tests.Headers
             req.Headers.Add("x-csrf", "1");
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.IsSuccessStatusCode.Should().BeTrue();
+            response.IsSuccessStatusCode.ShouldBeTrue();
             var json = await response.Content.ReadAsStringAsync();
             var apiResult = JsonSerializer.Deserialize<ApiResponse>(json);
 
             var host = apiResult.RequestHeaders["Host"].Single();
-            host.Should().Be("app");
+            host.ShouldBe("app");
         }
         
         [Fact]
@@ -43,12 +43,12 @@ namespace Duende.Bff.Tests.Headers
             req.Headers.Add("X-Forwarded-Host", "external");
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.IsSuccessStatusCode.Should().BeTrue();
+            response.IsSuccessStatusCode.ShouldBeTrue();
             var json = await response.Content.ReadAsStringAsync();
             var apiResult = JsonSerializer.Deserialize<ApiResponse>(json);
 
             var host = apiResult.RequestHeaders["Host"].Single();
-            host.Should().Be("app");
+            host.ShouldBe("app");
         }
     }
 }

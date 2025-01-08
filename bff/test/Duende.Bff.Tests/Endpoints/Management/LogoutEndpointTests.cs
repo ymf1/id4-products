@@ -2,11 +2,11 @@
 // See LICENSE in the project root for license information.
 
 using Duende.Bff.Tests.TestHosts;
-using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using Shouldly;
 using Xunit;
 
 namespace Duende.Bff.Tests.Endpoints.Management
@@ -29,7 +29,7 @@ namespace Duende.Bff.Tests.Endpoints.Management
             await BffHost.InitializeAsync();
 
             var response = await BffHost.BrowserClient.GetAsync(BffHost.Url("/bff/logout"));
-            response.StatusCode.Should().NotBe(HttpStatusCode.Unauthorized);
+            response.StatusCode.ShouldNotBe(HttpStatusCode.Unauthorized);
         }
 
         [Fact]
@@ -39,7 +39,7 @@ namespace Duende.Bff.Tests.Endpoints.Management
             
             await BffHost.BffLogoutAsync("sid123");
 
-            (await BffHost.GetIsUserLoggedInAsync()).Should().BeFalse();
+            (await BffHost.GetIsUserLoggedInAsync()).ShouldBeFalse();
         }
 
         [Fact]
@@ -48,9 +48,9 @@ namespace Duende.Bff.Tests.Endpoints.Management
             await BffHost.BffLoginAsync("alice", "sid123");
 
             Func<Task> f = () => BffHost.BffLogoutAsync();
-            await f.Should().ThrowAsync<Exception>();
+            await f.ShouldThrowAsync<Exception>();
 
-            (await BffHost.GetIsUserLoggedInAsync()).Should().BeTrue();
+            (await BffHost.GetIsUserLoggedInAsync()).ShouldBeTrue();
         }
         
         [Fact]
@@ -61,8 +61,8 @@ namespace Duende.Bff.Tests.Endpoints.Management
             BffHost.BffOptions.RequireLogoutSessionId = false;
 
             var response = await BffHost.BrowserClient.GetAsync(BffHost.Url("/bff/logout"));
-            response.StatusCode.Should().Be(HttpStatusCode.Redirect); // endsession
-            response.Headers.Location.ToString().ToLowerInvariant().Should().StartWith(IdentityServerHost.Url("/connect/endsession"));
+            response.StatusCode.ShouldBe(HttpStatusCode.Redirect); // endsession
+            response.Headers.Location.ToString().ToLowerInvariant().ShouldStartWith(IdentityServerHost.Url("/connect/endsession"));
         }
 
         [Fact]
@@ -79,16 +79,16 @@ namespace Duende.Bff.Tests.Endpoints.Management
             await BffHost.IssueSessionCookieAsync("alice");
 
             var response = await BffHost.BrowserClient.GetAsync(BffHost.Url("/bff/logout"));
-            response.StatusCode.Should().Be(HttpStatusCode.Redirect); // endsession
-            response.Headers.Location.ToString().ToLowerInvariant().Should().StartWith(IdentityServerHost.Url("/connect/endsession"));
+            response.StatusCode.ShouldBe(HttpStatusCode.Redirect); // endsession
+            response.Headers.Location.ToString().ToLowerInvariant().ShouldStartWith(IdentityServerHost.Url("/connect/endsession"));
         }
 
         [Fact]
         public async Task logout_endpoint_for_anonymous_user_without_sid_should_succeed()
         {
             var response = await BffHost.BrowserClient.GetAsync(BffHost.Url("/bff/logout"));
-            response.StatusCode.Should().Be(HttpStatusCode.Redirect); // endsession
-            response.Headers.Location.ToString().ToLowerInvariant().Should().StartWith(IdentityServerHost.Url("/connect/endsession"));
+            response.StatusCode.ShouldBe(HttpStatusCode.Redirect); // endsession
+            response.Headers.Location.ToString().ToLowerInvariant().ShouldStartWith(IdentityServerHost.Url("/connect/endsession"));
         }
 
         [Fact]
@@ -98,8 +98,8 @@ namespace Duende.Bff.Tests.Endpoints.Management
             
             await BffHost.BffLogoutAsync("sid123");
             
-            BffHost.BrowserClient.CurrentUri.ToString().ToLowerInvariant().Should().Be(BffHost.Url("/"));
-            (await BffHost.GetIsUserLoggedInAsync()).Should().BeFalse();
+            BffHost.BrowserClient.CurrentUri.ToString().ToLowerInvariant().ShouldBe(BffHost.Url("/"));
+            (await BffHost.GetIsUserLoggedInAsync()).ShouldBeFalse();
         }
 
         [Fact]
@@ -108,20 +108,20 @@ namespace Duende.Bff.Tests.Endpoints.Management
             await BffHost.BffLoginAsync("alice", "sid123");
 
             var response = await BffHost.BrowserClient.GetAsync(BffHost.Url("/bff/logout") + "?sid=sid123&returnUrl=/foo");
-            response.StatusCode.Should().Be(HttpStatusCode.Redirect); // endsession
-            response.Headers.Location.ToString().ToLowerInvariant().Should().StartWith(IdentityServerHost.Url("/connect/endsession"));
+            response.StatusCode.ShouldBe(HttpStatusCode.Redirect); // endsession
+            response.Headers.Location.ToString().ToLowerInvariant().ShouldStartWith(IdentityServerHost.Url("/connect/endsession"));
 
             response = await IdentityServerHost.BrowserClient.GetAsync(response.Headers.Location.ToString());
-            response.StatusCode.Should().Be(HttpStatusCode.Redirect); // logout
-            response.Headers.Location.ToString().ToLowerInvariant().Should().StartWith(IdentityServerHost.Url("/account/logout"));
+            response.StatusCode.ShouldBe(HttpStatusCode.Redirect); // logout
+            response.Headers.Location.ToString().ToLowerInvariant().ShouldStartWith(IdentityServerHost.Url("/account/logout"));
 
             response = await IdentityServerHost.BrowserClient.GetAsync(response.Headers.Location.ToString());
-            response.StatusCode.Should().Be(HttpStatusCode.Redirect); // post logout redirect uri
-            response.Headers.Location.ToString().ToLowerInvariant().Should().StartWith(BffHost.Url("/signout-callback-oidc"));
+            response.StatusCode.ShouldBe(HttpStatusCode.Redirect); // post logout redirect uri
+            response.Headers.Location.ToString().ToLowerInvariant().ShouldStartWith(BffHost.Url("/signout-callback-oidc"));
 
             response = await BffHost.BrowserClient.GetAsync(response.Headers.Location.ToString());
-            response.StatusCode.Should().Be(HttpStatusCode.Redirect); // root
-            response.Headers.Location.ToString().ToLowerInvariant().Should().Be("/foo");
+            response.StatusCode.ShouldBe(HttpStatusCode.Redirect); // root
+            response.Headers.Location.ToString().ToLowerInvariant().ShouldBe("/foo");
         }
 
         [Fact]
@@ -130,7 +130,9 @@ namespace Duende.Bff.Tests.Endpoints.Management
             await BffHost.BffLoginAsync("alice", "sid123");
 
             Func<Task> f = () => BffHost.BrowserClient.GetAsync(BffHost.Url("/bff/logout") + "?sid=sid123&returnUrl=https://foo");
-            (await f.Should().ThrowAsync<Exception>()).And.Message.Should().Contain("returnUrl");
+            var exception = await f.ShouldThrowAsync<Exception>();
+
+            exception.Message.ShouldContain("returnUrl");
         }
     }
 }

@@ -3,7 +3,7 @@
 
 using Duende.Bff.Tests.TestFramework;
 using Duende.Bff.Tests.TestHosts;
-using FluentAssertions;
+using Shouldly;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.DependencyInjection;
@@ -47,22 +47,22 @@ namespace Duende.Bff.Tests.SessionManagement
             await BffHost.BffLoginAsync("alice");
 
             var sessions = await _sessionStore.GetUserSessionsAsync(new UserSessionsFilter { SubjectId = "alice" });
-            sessions.Count().Should().Be(1);
+            sessions.Count().ShouldBe(1);
 
             var session = sessions.Single();
 
             var ticketStore = BffHost.Resolve<IServerTicketStore>();
             var firstTicket = await ticketStore.RetrieveAsync(session.Key);
-            firstTicket.Should().NotBeNull();
+            firstTicket.ShouldNotBeNull();
 
             SetClock(TimeSpan.FromMinutes(8));
-            (await BffHost.GetIsUserLoggedInAsync()).Should().BeTrue();
+            (await BffHost.GetIsUserLoggedInAsync()).ShouldBeTrue();
 
             var secondTicket = await ticketStore.RetrieveAsync(session.Key);
-            secondTicket.Should().NotBeNull();
+            secondTicket.ShouldNotBeNull();
 
-            (secondTicket.Properties.IssuedUtc > firstTicket.Properties.IssuedUtc).Should().BeTrue();
-            (secondTicket.Properties.ExpiresUtc > firstTicket.Properties.ExpiresUtc).Should().BeTrue();
+            (secondTicket.Properties.IssuedUtc > firstTicket.Properties.IssuedUtc).ShouldBeTrue();
+            (secondTicket.Properties.ExpiresUtc > firstTicket.Properties.ExpiresUtc).ShouldBeTrue();
         }
 
         [Fact]
@@ -71,22 +71,22 @@ namespace Duende.Bff.Tests.SessionManagement
             await BffHost.BffLoginAsync("alice");
 
             var sessions = await _sessionStore.GetUserSessionsAsync(new UserSessionsFilter { SubjectId = "alice" });
-            sessions.Count().Should().Be(1);
+            sessions.Count().ShouldBe(1);
 
             var session = sessions.Single();
 
             var ticketStore = BffHost.Resolve<IServerTicketStore>();
             var firstTicket = await ticketStore.RetrieveAsync(session.Key);
-            firstTicket.Should().NotBeNull();
+            firstTicket.ShouldNotBeNull();
 
             SetClock(TimeSpan.FromMinutes(8));
-            (await BffHost.GetIsUserLoggedInAsync("slide=false")).Should().BeTrue();
+            (await BffHost.GetIsUserLoggedInAsync("slide=false")).ShouldBeTrue();
 
             var secondTicket = await ticketStore.RetrieveAsync(session.Key);
-            secondTicket.Should().NotBeNull();
+            secondTicket.ShouldNotBeNull();
 
-            (secondTicket.Properties.IssuedUtc == firstTicket.Properties.IssuedUtc).Should().BeTrue();
-            (secondTicket.Properties.ExpiresUtc == firstTicket.Properties.ExpiresUtc).Should().BeTrue();
+            (secondTicket.Properties.IssuedUtc == firstTicket.Properties.IssuedUtc).ShouldBeTrue();
+            (secondTicket.Properties.ExpiresUtc == firstTicket.Properties.ExpiresUtc).ShouldBeTrue();
         }
 
         [Fact]
@@ -110,23 +110,23 @@ namespace Duende.Bff.Tests.SessionManagement
             await BffHost.BffLoginAsync("alice");
 
             var sessions = await _sessionStore.GetUserSessionsAsync(new UserSessionsFilter { SubjectId = "alice" });
-            sessions.Count().Should().Be(1);
+            sessions.Count().ShouldBe(1);
 
             var session = sessions.Single();
 
             var ticketStore = BffHost.Resolve<IServerTicketStore>();
             var firstTicket = await ticketStore.RetrieveAsync(session.Key);
-            firstTicket.Should().NotBeNull();
+            firstTicket.ShouldNotBeNull();
 
             shouldRenew = true;
             SetClock(TimeSpan.FromSeconds(1));
-            (await BffHost.GetIsUserLoggedInAsync()).Should().BeTrue();
+            (await BffHost.GetIsUserLoggedInAsync()).ShouldBeTrue();
 
             var secondTicket = await ticketStore.RetrieveAsync(session.Key);
-            secondTicket.Should().NotBeNull();
+            secondTicket.ShouldNotBeNull();
 
-            (secondTicket.Properties.IssuedUtc > firstTicket.Properties.IssuedUtc).Should().BeTrue();
-            (secondTicket.Properties.ExpiresUtc > firstTicket.Properties.ExpiresUtc).Should().BeTrue();
+            (secondTicket.Properties.IssuedUtc > firstTicket.Properties.IssuedUtc).ShouldBeTrue();
+            (secondTicket.Properties.ExpiresUtc > firstTicket.Properties.ExpiresUtc).ShouldBeTrue();
         }
 
         [Fact]
@@ -151,23 +151,23 @@ namespace Duende.Bff.Tests.SessionManagement
             await BffHost.BffLoginAsync("alice");
 
             var sessions = await _sessionStore.GetUserSessionsAsync(new UserSessionsFilter { SubjectId = "alice" });
-            sessions.Count().Should().Be(1);
+            sessions.Count().ShouldBe(1);
 
             var session = sessions.Single();
 
             var ticketStore = BffHost.Resolve<IServerTicketStore>();
             var firstTicket = await ticketStore.RetrieveAsync(session.Key);
-            firstTicket.Should().NotBeNull();
+            firstTicket.ShouldNotBeNull();
 
             shouldRenew = true;
             SetClock(TimeSpan.FromSeconds(1));
-            (await BffHost.GetIsUserLoggedInAsync("slide=false")).Should().BeTrue();
+            (await BffHost.GetIsUserLoggedInAsync("slide=false")).ShouldBeTrue();
 
             var secondTicket = await ticketStore.RetrieveAsync(session.Key);
-            secondTicket.Should().NotBeNull();
+            secondTicket.ShouldNotBeNull();
 
-            (secondTicket.Properties.IssuedUtc == firstTicket.Properties.IssuedUtc).Should().BeTrue();
-            (secondTicket.Properties.ExpiresUtc == firstTicket.Properties.ExpiresUtc).Should().BeTrue();
+            (secondTicket.Properties.IssuedUtc == firstTicket.Properties.IssuedUtc).ShouldBeTrue();
+            (secondTicket.Properties.ExpiresUtc == firstTicket.Properties.ExpiresUtc).ShouldBeTrue();
         }
     }
 }

@@ -2,10 +2,10 @@
 // See LICENSE in the project root for license information.
 
 using Duende.Bff.Tests.TestFramework;
-using FluentAssertions;
 using Microsoft.AspNetCore.Builder;
 using System.Net;
 using System.Threading.Tasks;
+using Shouldly;
 using Xunit;
 
 namespace Duende.Bff.Tests
@@ -24,7 +24,7 @@ namespace Duende.Bff.Tests
 
             var response = await host.HttpClient.GetAsync("/test");
 
-            response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+            response.StatusCode.ShouldBe(HttpStatusCode.NoContent);
         }
     }
 }

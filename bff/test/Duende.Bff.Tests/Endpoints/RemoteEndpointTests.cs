@@ -3,7 +3,6 @@
 
 using Duende.Bff.Tests.TestFramework;
 using Duende.Bff.Tests.TestHosts;
-using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -14,6 +13,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Shouldly;
 using Xunit;
 
 namespace Duende.Bff.Tests.Endpoints
@@ -27,7 +27,7 @@ namespace Duende.Bff.Tests.Endpoints
             req.Headers.Add("x-csrf", "1");
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+            response.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
         }
 
         [Fact]
@@ -39,14 +39,14 @@ namespace Duende.Bff.Tests.Endpoints
             req.Headers.Add("x-csrf", "1");
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.IsSuccessStatusCode.Should().BeTrue();
-            response.Content.Headers.ContentType.MediaType.Should().Be("application/json");
+            response.IsSuccessStatusCode.ShouldBeTrue();
+            response.Content.Headers.ContentType.MediaType.ShouldBe("application/json");
             var json = await response.Content.ReadAsStringAsync();
             var apiResult = JsonSerializer.Deserialize<ApiResponse>(json);
-            apiResult.Method.Should().Be("GET");
-            apiResult.Path.Should().Be("/test");
-            apiResult.Sub.Should().Be("alice");
-            apiResult.ClientId.Should().Be("spa");
+            apiResult.Method.ShouldBe("GET");
+            apiResult.Path.ShouldBe("/test");
+            apiResult.Sub.ShouldBe("alice");
+            apiResult.ClientId.ShouldBe("spa");
         }
 
         [Fact]
@@ -58,14 +58,14 @@ namespace Duende.Bff.Tests.Endpoints
             req.Headers.Add("x-csrf", "1");
             var response = await BffHostWithNamedTokens.BrowserClient.SendAsync(req);
 
-            response.IsSuccessStatusCode.Should().BeTrue();
-            response.Content.Headers.ContentType.MediaType.Should().Be("application/json");
+            response.IsSuccessStatusCode.ShouldBeTrue();
+            response.Content.Headers.ContentType.MediaType.ShouldBe("application/json");
             var json = await response.Content.ReadAsStringAsync();
             var apiResult = JsonSerializer.Deserialize<ApiResponse>(json);
-            apiResult.Method.Should().Be("GET");
-            apiResult.Path.Should().Be("/test");
-            apiResult.Sub.Should().Be("alice");
-            apiResult.ClientId.Should().Be("spa");
+            apiResult.Method.ShouldBe("GET");
+            apiResult.Path.ShouldBe("/test");
+            apiResult.Sub.ShouldBe("alice");
+            apiResult.ClientId.ShouldBe("spa");
         }
 
         [Fact]
@@ -77,7 +77,7 @@ namespace Duende.Bff.Tests.Endpoints
             req.Headers.Add("x-csrf", "1");
 
             var response = await BffHostWithNamedTokens.BrowserClient.SendAsync(req);
-            response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+            response.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
         }
 
         [Fact]
@@ -90,16 +90,16 @@ namespace Duende.Bff.Tests.Endpoints
             req.Content = new StringContent(JsonSerializer.Serialize(new TestPayload("hello test api")), Encoding.UTF8, "application/json");
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.IsSuccessStatusCode.Should().BeTrue();
-            response.Content.Headers.ContentType.MediaType.Should().Be("application/json");
+            response.IsSuccessStatusCode.ShouldBeTrue();
+            response.Content.Headers.ContentType.MediaType.ShouldBe("application/json");
             var json = await response.Content.ReadAsStringAsync();
             var apiResult = JsonSerializer.Deserialize<ApiResponse>(json);
-            apiResult.Method.Should().Be("PUT");
-            apiResult.Path.Should().Be("/test");
-            apiResult.Sub.Should().Be("alice");
-            apiResult.ClientId.Should().Be("spa");
+            apiResult.Method.ShouldBe("PUT");
+            apiResult.Path.ShouldBe("/test");
+            apiResult.Sub.ShouldBe("alice");
+            apiResult.ClientId.ShouldBe("spa");
             var body = JsonSerializer.Deserialize<TestPayload>(apiResult.Body);
-            body.message.Should().Be("hello test api");
+            body.message.ShouldBe("hello test api");
         }
         
         [Fact]
@@ -112,16 +112,16 @@ namespace Duende.Bff.Tests.Endpoints
             req.Content = new StringContent(JsonSerializer.Serialize(new TestPayload("hello test api")), Encoding.UTF8, "application/json");
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.IsSuccessStatusCode.Should().BeTrue();
-            response.Content.Headers.ContentType.MediaType.Should().Be("application/json");
+            response.IsSuccessStatusCode.ShouldBeTrue();
+            response.Content.Headers.ContentType.MediaType.ShouldBe("application/json");
             var json = await response.Content.ReadAsStringAsync();
             var apiResult = JsonSerializer.Deserialize<ApiResponse>(json);
-            apiResult.Method.Should().Be("POST");
-            apiResult.Path.Should().Be("/test");
-            apiResult.Sub.Should().Be("alice");
-            apiResult.ClientId.Should().Be("spa");
+            apiResult.Method.ShouldBe("POST");
+            apiResult.Path.ShouldBe("/test");
+            apiResult.Sub.ShouldBe("alice");
+            apiResult.ClientId.ShouldBe("spa");
             var body = JsonSerializer.Deserialize<TestPayload>(apiResult.Body);
-            body.message.Should().Be("hello test api");
+            body.message.ShouldBe("hello test api");
         }
 
 
@@ -134,14 +134,14 @@ namespace Duende.Bff.Tests.Endpoints
                 req.Headers.Add("x-csrf", "1");
                 var response = await BffHost.BrowserClient.SendAsync(req);
 
-                response.IsSuccessStatusCode.Should().BeTrue();
-                response.Content.Headers.ContentType.MediaType.Should().Be("application/json");
+                response.IsSuccessStatusCode.ShouldBeTrue();
+                response.Content.Headers.ContentType.MediaType.ShouldBe("application/json");
                 var json = await response.Content.ReadAsStringAsync();
                 var apiResult = JsonSerializer.Deserialize<ApiResponse>(json);
-                apiResult.Method.Should().Be("GET");
-                apiResult.Path.Should().Be("/test");
-                apiResult.Sub.Should().BeNull();
-                apiResult.ClientId.Should().BeNull();
+                apiResult.Method.ShouldBe("GET");
+                apiResult.Path.ShouldBe("/test");
+                apiResult.Sub.ShouldBeNull();
+                apiResult.ClientId.ShouldBeNull();
             }
 
             {
@@ -151,14 +151,14 @@ namespace Duende.Bff.Tests.Endpoints
                 req.Headers.Add("x-csrf", "1");
                 var response = await BffHost.BrowserClient.SendAsync(req);
 
-                response.IsSuccessStatusCode.Should().BeTrue();
-                response.Content.Headers.ContentType.MediaType.Should().Be("application/json");
+                response.IsSuccessStatusCode.ShouldBeTrue();
+                response.Content.Headers.ContentType.MediaType.ShouldBe("application/json");
                 var json = await response.Content.ReadAsStringAsync();
                 var apiResult = JsonSerializer.Deserialize<ApiResponse>(json);
-                apiResult.Method.Should().Be("GET");
-                apiResult.Path.Should().Be("/test");
-                apiResult.Sub.Should().Be("alice");
-                apiResult.ClientId.Should().Be("spa");
+                apiResult.Method.ShouldBe("GET");
+                apiResult.Path.ShouldBe("/test");
+                apiResult.Sub.ShouldBe("alice");
+                apiResult.ClientId.ShouldBe("spa");
             }
         }
 
@@ -171,14 +171,14 @@ namespace Duende.Bff.Tests.Endpoints
             req.Headers.Add("x-csrf", "1");
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.IsSuccessStatusCode.Should().BeTrue();
-            response.Content.Headers.ContentType.MediaType.Should().Be("application/json");
+            response.IsSuccessStatusCode.ShouldBeTrue();
+            response.Content.Headers.ContentType.MediaType.ShouldBe("application/json");
             var json = await response.Content.ReadAsStringAsync();
             var apiResult = JsonSerializer.Deserialize<ApiResponse>(json);
-            apiResult.Method.Should().Be("GET");
-            apiResult.Path.Should().Be("/test");
-            apiResult.Sub.Should().BeNull();
-            apiResult.ClientId.Should().Be("spa");
+            apiResult.Method.ShouldBe("GET");
+            apiResult.Path.ShouldBe("/test");
+            apiResult.Sub.ShouldBeNull();
+            apiResult.ClientId.ShouldBe("spa");
         }
 
         [Fact]
@@ -190,7 +190,7 @@ namespace Duende.Bff.Tests.Endpoints
             req.Headers.Add("x-csrf", "1");
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+            response.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
         }
 
         [Fact]
@@ -204,8 +204,8 @@ namespace Duende.Bff.Tests.Endpoints
 
             var json = await response.Content.ReadAsStringAsync();
             var apiResult = JsonSerializer.Deserialize<ApiResponse>(json);
-            apiResult.Sub.Should().Be("123");
-            apiResult.ClientId.Should().Be("fake-client");
+            apiResult.Sub.ShouldBe("123");
+            apiResult.ClientId.ShouldBe("fake-client");
         }
 
         [Fact]
@@ -216,14 +216,14 @@ namespace Duende.Bff.Tests.Endpoints
                 req.Headers.Add("x-csrf", "1");
                 var response = await BffHost.BrowserClient.SendAsync(req);
 
-                response.IsSuccessStatusCode.Should().BeTrue();
-                response.Content.Headers.ContentType.MediaType.Should().Be("application/json");
+                response.IsSuccessStatusCode.ShouldBeTrue();
+                response.Content.Headers.ContentType.MediaType.ShouldBe("application/json");
                 var json = await response.Content.ReadAsStringAsync();
                 var apiResult = JsonSerializer.Deserialize<ApiResponse>(json);
-                apiResult.Method.Should().Be("GET");
-                apiResult.Path.Should().Be("/test");
-                apiResult.Sub.Should().BeNull();
-                apiResult.ClientId.Should().Be("spa");
+                apiResult.Method.ShouldBe("GET");
+                apiResult.Path.ShouldBe("/test");
+                apiResult.Sub.ShouldBeNull();
+                apiResult.ClientId.ShouldBe("spa");
             }
 
             {
@@ -233,14 +233,14 @@ namespace Duende.Bff.Tests.Endpoints
                 req.Headers.Add("x-csrf", "1");
                 var response = await BffHost.BrowserClient.SendAsync(req);
 
-                response.IsSuccessStatusCode.Should().BeTrue();
-                response.Content.Headers.ContentType.MediaType.Should().Be("application/json");
+                response.IsSuccessStatusCode.ShouldBeTrue();
+                response.Content.Headers.ContentType.MediaType.ShouldBe("application/json");
                 var json = await response.Content.ReadAsStringAsync();
                 var apiResult = JsonSerializer.Deserialize<ApiResponse>(json);
-                apiResult.Method.Should().Be("GET");
-                apiResult.Path.Should().Be("/test");
-                apiResult.Sub.Should().Be("alice");
-                apiResult.ClientId.Should().Be("spa");
+                apiResult.Method.ShouldBe("GET");
+                apiResult.Path.ShouldBe("/test");
+                apiResult.Sub.ShouldBe("alice");
+                apiResult.ClientId.ShouldBe("spa");
             }
         }
 
@@ -252,14 +252,14 @@ namespace Duende.Bff.Tests.Endpoints
                 req.Headers.Add("x-csrf", "1");
                 var response = await BffHost.BrowserClient.SendAsync(req);
 
-                response.IsSuccessStatusCode.Should().BeTrue();
-                response.Content.Headers.ContentType.MediaType.Should().Be("application/json");
+                response.IsSuccessStatusCode.ShouldBeTrue();
+                response.Content.Headers.ContentType.MediaType.ShouldBe("application/json");
                 var json = await response.Content.ReadAsStringAsync();
                 var apiResult = JsonSerializer.Deserialize<ApiResponse>(json);
-                apiResult.Method.Should().Be("GET");
-                apiResult.Path.Should().Be("/test");
-                apiResult.Sub.Should().BeNull();
-                apiResult.ClientId.Should().BeNull();
+                apiResult.Method.ShouldBe("GET");
+                apiResult.Path.ShouldBe("/test");
+                apiResult.Sub.ShouldBeNull();
+                apiResult.ClientId.ShouldBeNull();
             }
 
             {
@@ -269,14 +269,14 @@ namespace Duende.Bff.Tests.Endpoints
                 req.Headers.Add("x-csrf", "1");
                 var response = await BffHost.BrowserClient.SendAsync(req);
 
-                response.IsSuccessStatusCode.Should().BeTrue();
-                response.Content.Headers.ContentType.MediaType.Should().Be("application/json");
+                response.IsSuccessStatusCode.ShouldBeTrue();
+                response.Content.Headers.ContentType.MediaType.ShouldBe("application/json");
                 var json = await response.Content.ReadAsStringAsync();
                 var apiResult = JsonSerializer.Deserialize<ApiResponse>(json);
-                apiResult.Method.Should().Be("GET");
-                apiResult.Path.Should().Be("/test");
-                apiResult.Sub.Should().BeNull();
-                apiResult.ClientId.Should().BeNull();
+                apiResult.Method.ShouldBe("GET");
+                apiResult.Path.ShouldBe("/test");
+                apiResult.Sub.ShouldBeNull();
+                apiResult.ClientId.ShouldBeNull();
             }
         }
 
@@ -292,7 +292,7 @@ namespace Duende.Bff.Tests.Endpoints
                 req.Headers.Add("x-csrf", "1");
                 var response = await BffHost.BrowserClient.SendAsync(req);
 
-                response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+                response.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
             }
 
             {
@@ -300,7 +300,7 @@ namespace Duende.Bff.Tests.Endpoints
                 req.Headers.Add("x-csrf", "1");
                 var response = await BffHost.BrowserClient.SendAsync(req);
 
-                response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+                response.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
             }
         }
 
@@ -315,7 +315,7 @@ namespace Duende.Bff.Tests.Endpoints
             req.Headers.Add("x-csrf", "1");
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+            response.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
         }
 
         [Fact]
@@ -328,7 +328,7 @@ namespace Duende.Bff.Tests.Endpoints
             req.Headers.Add("x-csrf", "1");
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+            response.StatusCode.ShouldBe(HttpStatusCode.Forbidden);
         }
 
 
@@ -339,7 +339,7 @@ namespace Duende.Bff.Tests.Endpoints
             var req = new HttpRequestMessage(HttpMethod.Get, BffHost.Url("/api_user_or_client/test"));
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+            response.StatusCode.ShouldBe(HttpStatusCode.Unauthorized);
         }
 
         [Fact]
@@ -350,14 +350,14 @@ namespace Duende.Bff.Tests.Endpoints
             var req = new HttpRequestMessage(HttpMethod.Get, BffHost.Url("/api_user_no_csrf/test"));
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.IsSuccessStatusCode.Should().BeTrue();
-            response.Content.Headers.ContentType.MediaType.Should().Be("application/json");
+            response.IsSuccessStatusCode.ShouldBeTrue();
+            response.Content.Headers.ContentType.MediaType.ShouldBe("application/json");
             var json = await response.Content.ReadAsStringAsync();
             var apiResult = JsonSerializer.Deserialize<ApiResponse>(json);
-            apiResult.Method.Should().Be("GET");
-            apiResult.Path.Should().Be("/test");
-            apiResult.Sub.Should().Be("alice");
-            apiResult.ClientId.Should().Be("spa");
+            apiResult.Method.ShouldBe("GET");
+            apiResult.Path.ShouldBe("/test");
+            apiResult.Sub.ShouldBe("alice");
+            apiResult.ClientId.ShouldBe("spa");
         }
 
         [Fact]
@@ -366,7 +366,7 @@ namespace Duende.Bff.Tests.Endpoints
             var req = new HttpRequestMessage(HttpMethod.Get, BffHost.Url("/not_bff_endpoint"));
 
             Func<Task> f = () => BffHost.BrowserClient.SendAsync(req);
-            await f.Should().ThrowAsync<Exception>();
+            await f.ShouldThrowAsync<Exception>();
         }
         
         [Fact]
@@ -375,7 +375,7 @@ namespace Duende.Bff.Tests.Endpoints
             var req = new HttpRequestMessage(HttpMethod.Get, BffHost.Url("/invalid_endpoint/test"));
 
             Func<Task> f = () => BffHost.BrowserClient.SendAsync(req);
-            await f.Should().ThrowAsync<Exception>();
+            await f.ShouldThrowAsync<Exception>();
         }
 
         [Fact]
@@ -399,12 +399,12 @@ namespace Duende.Bff.Tests.Endpoints
             req.Headers.Add("x-csrf", "1");
             var response = await BffHost.BrowserClient.SendAsync(req);
 
-            response.IsSuccessStatusCode.Should().BeTrue();
-            response.Content.Headers.ContentType.MediaType.Should().Be("application/json");
+            response.IsSuccessStatusCode.ShouldBeTrue();
+            response.Content.Headers.ContentType.MediaType.ShouldBe("application/json");
             var json = await response.Content.ReadAsStringAsync();
             var apiResult = JsonSerializer.Deserialize<ApiResponse>(json);
-            apiResult.RequestHeaders["DPoP"].First().Should().NotBeNullOrEmpty();
-            apiResult.RequestHeaders["Authorization"].First().StartsWith("DPoP ").Should().BeTrue();
+            apiResult.RequestHeaders["DPoP"].First().ShouldNotBeNullOrEmpty();
+            apiResult.RequestHeaders["Authorization"].First().StartsWith("DPoP ").ShouldBeTrue();
         }
     }
 }

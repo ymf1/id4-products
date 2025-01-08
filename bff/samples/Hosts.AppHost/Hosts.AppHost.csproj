@@ -20,6 +20,7 @@
     <ProjectReference Include="..\Apis\Api.Isolated\Api.Isolated.csproj" />
     <ProjectReference Include="..\Apis\Api\Api.csproj" />
     <ProjectReference Include="..\Bff.DPoP\Bff.DPoP.csproj" />
+    <ProjectReference Include="..\Bff.EF\Bff.EF.csproj" />
     <ProjectReference Include="..\Bff\Bff.csproj" />
     <ProjectReference Include="..\IdentityServer\IdentityServer.csproj" />
   </ItemGroup>

@@ -9,6 +9,11 @@ builder.AddProject<Projects.Bff>("bff")
     .WithReference(idServer)
     .WithReference(api);
 
+builder.AddProject<Projects.Bff_EF>("bff-ef")
+    .WithExternalHttpEndpoints()
+    .WithReference(idServer)
+    .WithReference(api);
+
 var apiDPop = builder.AddProject<Projects.Api_DPoP>("api-dpop");
 
 builder.AddProject<Projects.Bff_DPoP>("bff-dpop")

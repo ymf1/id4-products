@@ -1,5 +1,8 @@
-﻿using IdentityServerEmpty;
+﻿using Duende.IdentityServer.Licensing;
+using IdentityServerEmpty;
 using Serilog;
+using System.Globalization;
+using System.Text;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -19,7 +22,17 @@ try
     var app = builder
         .ConfigureServices()
         .ConfigurePipeline();
-    
+
+    if (app.Environment.IsDevelopment())
+    {
+        app.Lifetime.ApplicationStopping.Register(() =>
+        {
+            var usage = app.Services.GetRequiredService<LicenseUsageSummary>();
+            Console.Write(Summary(usage));
+            Console.ReadKey();
+        });
+    }
+
     app.Run();
 }
 catch (Exception ex)
@@ -30,4 +43,17 @@ finally
 {
     Log.Information("Shut down complete");
     Log.CloseAndFlush();
+}
+
+static string Summary(LicenseUsageSummary usage)
+{
+    var sb = new StringBuilder();
+    sb.AppendLine("IdentityServer Usage Summary:");
+    sb.AppendLine(CultureInfo.InvariantCulture, $"  License: {usage.LicenseEdition}");
+    var features = usage.FeaturesUsed.Count > 0 ? string.Join(", ", usage.FeaturesUsed) : "None";
+    sb.AppendLine(CultureInfo.InvariantCulture, $"  Business and Enterprise Edition Features Used: {features}");
+    sb.AppendLine(CultureInfo.InvariantCulture, $"  {usage.ClientsUsed.Count} Client Id(s) Used");
+    sb.AppendLine(CultureInfo.InvariantCulture, $"  {usage.IssuersUsed.Count} Issuer(s) Used");
+
+    return sb.ToString();
 }

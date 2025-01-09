@@ -109,8 +109,8 @@ namespace IdentityServerHost
                         OidcConstants.GrantTypes.TokenExchange
                     },
 
-                    RedirectUris = { "https://localhost:5005/signin-oidc" },
-                    PostLogoutRedirectUris = { "https://localhost:5005/signout-callback-oidc" },
+                    RedirectUris = { "https://localhost:5005/signin-oidc", "https://localhost:5105/signin-oidc" },
+                    PostLogoutRedirectUris = { "https://localhost:5005/signout-callback-oidc", "https://localhost:5105/signout-callback-oidc" },
 
                     AllowOfflineAccess = true,
                     AllowedScopes = { "openid", "profile", "api", "scope-for-isolated-api" },

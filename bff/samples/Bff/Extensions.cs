@@ -4,17 +4,18 @@
 using System;
 using Duende.Bff;
 using Duende.Bff.Yarp;
+using Host8;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
-namespace Host8;
-
-public class Startup
+internal static class Extensions
 {
-    public void ConfigureServices(IServiceCollection services)
+    public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
+        var services = builder.Services;
+
         // Add BFF services to DI - also add server-side session management
         services.AddBff(options =>
             {
@@ -78,9 +79,12 @@ public class Startup
             { 
                 client.BaseAddress = new Uri("https://localhost:5010/api"); 
             });
+
+        return builder.Build();
+
     }
 
-    public void Configure(IApplicationBuilder app)
+    public static WebApplication ConfigurePipeline(this WebApplication app)
     {
         app.UseSerilogRequestLogging();
         app.UseDeveloperExceptionPage();
@@ -97,51 +101,50 @@ public class Startup
         // adds authorization for local and remote API endpoints
         app.UseAuthorization();
 
-        app.UseEndpoints(endpoints =>
-        {
-            // local APIs
-            endpoints.MapControllers()
-                .RequireAuthorization()
-                .AsBffApiEndpoint();
+        // local APIs
+        app.MapControllers()
+            .RequireAuthorization()
+            .AsBffApiEndpoint();
 
-            // login, logout, user, backchannel logout...
-            endpoints.MapBffManagementEndpoints();
+        // login, logout, user, backchannel logout...
+        app.MapBffManagementEndpoints();
 
-            //////////////////////////////////////
-            // proxy endpoints for cross-site APIs
-            //////////////////////////////////////
+        //////////////////////////////////////
+        // proxy app for cross-site APIs
+        //////////////////////////////////////
 
-            // On this path, we use a client credentials token
-            endpoints.MapRemoteBffApiEndpoint("/api/client-token", "https://localhost:5010")
-                .RequireAccessToken(TokenType.Client);
+        // On this path, we use a client credentials token
+        app.MapRemoteBffApiEndpoint("/api/client-token", "https://localhost:5010")
+            .RequireAccessToken(TokenType.Client);
 
-            // On this path, we use a user token if logged in, and fall back to a client credentials token if not
-            endpoints.MapRemoteBffApiEndpoint("/api/user-or-client-token", "https://localhost:5010")
-                .RequireAccessToken(TokenType.UserOrClient);
+        // On this path, we use a user token if logged in, and fall back to a client credentials token if not
+        app.MapRemoteBffApiEndpoint("/api/user-or-client-token", "https://localhost:5010")
+            .RequireAccessToken(TokenType.UserOrClient);
 
-            // On this path, we make anonymous requests
-            endpoints.MapRemoteBffApiEndpoint("/api/anonymous", "https://localhost:5010");
+        // On this path, we make anonymous requests
+        app.MapRemoteBffApiEndpoint("/api/anonymous", "https://localhost:5010");
 
-            // On this path, we use the client token only if the user is logged in
-            endpoints.MapRemoteBffApiEndpoint("/api/optional-user-token", "https://localhost:5010")
-                .WithOptionalUserAccessToken();
+        // On this path, we use the client token only if the user is logged in
+        app.MapRemoteBffApiEndpoint("/api/optional-user-token", "https://localhost:5010")
+            .WithOptionalUserAccessToken();
 
-            // On this path, we require the user token
-            endpoints.MapRemoteBffApiEndpoint("/api/user-token", "https://localhost:5010")
-                .RequireAccessToken(TokenType.User);
+        // On this path, we require the user token
+        app.MapRemoteBffApiEndpoint("/api/user-token", "https://localhost:5010")
+            .RequireAccessToken(TokenType.User);
 
-            // On this path, we perform token exchange to impersonate a different user
-            // before making the api request
-            endpoints.MapRemoteBffApiEndpoint("/api/impersonation", "https://localhost:5010")
-                .RequireAccessToken(TokenType.User)
-                .WithAccessTokenRetriever<ImpersonationAccessTokenRetriever>();
+        // On this path, we perform token exchange to impersonate a different user
+        // before making the api request
+        app.MapRemoteBffApiEndpoint("/api/impersonation", "https://localhost:5010")
+            .RequireAccessToken(TokenType.User)
+            .WithAccessTokenRetriever<ImpersonationAccessTokenRetriever>();
 
-            // On this path, we obtain an audience constrained token and invoke
-            // a different api that requires such a token
-            endpoints.MapRemoteBffApiEndpoint("/api/audience-constrained", "https://localhost:5012")
-                .RequireAccessToken(TokenType.User)
-                .WithUserAccessTokenParameter(new BffUserAccessTokenParameters(resource: "urn:isolated-api"));
+        // On this path, we obtain an audience constrained token and invoke
+        // a different api that requires such a token
+        app.MapRemoteBffApiEndpoint("/api/audience-constrained", "https://localhost:5012")
+            .RequireAccessToken(TokenType.User)
+            .WithUserAccessTokenParameter(new BffUserAccessTokenParameters(resource: "urn:isolated-api"));
 
-        });
+
+        return app;
     }
 }

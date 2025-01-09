@@ -1,29 +1,23 @@
 using Duende.Bff;
 using Duende.Bff.Yarp;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Microsoft.AspNetCore.DataProtection;
+using UserSessionDb.Migrations.UserSessions;
 
 namespace Bff.EntityFramework
 {
-    public class Startup
+    internal static class Extensions
     {
-        private readonly IConfiguration _configuration;
-        private readonly IWebHostEnvironment _environment;
 
-        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
+        public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
         {
-            _configuration = configuration;
-            _environment = environment;
-        }
-
-        public void ConfigureServices(IServiceCollection services)
-        {
+            var services = builder.Services;
+            var _configuration = builder.Configuration;
             services.AddDataProtection()
                 .SetApplicationName("JS-EF-Sample");
 
@@ -37,7 +31,7 @@ namespace Bff.EntityFramework
                 .AddRemoteApis()
                 .AddEntityFrameworkServerSideSessions(options=> {
                     //options.UseSqlServer(cn);
-                    options.UseSqlite(cn);
+                    options.UseSqlite(cn, opt => opt.MigrationsAssembly(typeof(UserSessions).Assembly.FullName));
                 });
 
             // local APIs
@@ -79,9 +73,11 @@ namespace Bff.EntityFramework
                     options.Scope.Add("api");
                     options.Scope.Add("offline_access");
                 });
+
+            return builder.Build();
         }
 
-        public void Configure(IApplicationBuilder app)
+        public static WebApplication ConfigurePipeline(this WebApplication app)
         {
             app.UseSerilogRequestLogging();
             app.UseDeveloperExceptionPage();
@@ -98,23 +94,24 @@ namespace Bff.EntityFramework
             // adds authorization for local and remote API endpoints
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                // local APIs
-                endpoints.MapControllers()
-                    .RequireAuthorization()
-                    .AsBffApiEndpoint();
+            // local APIs
 
-                // login, logout, user, backchannel logout...
-                endpoints.MapBffManagementEndpoints();
+            app.MapControllers()
+                .RequireAuthorization()
+                .AsBffApiEndpoint();
 
-                // proxy endpoint for cross-site APIs
-                // all calls to /api/* will be forwarded to the remote API
-                // user or client access token will be attached in API call
-                // user access token will be managed automatically using the refresh token
-                endpoints.MapRemoteBffApiEndpoint("/api", "https://localhost:5010")
-                    .RequireAccessToken(TokenType.UserOrClient);
-            });
+            // login, logout, user, backchannel logout...
+            app.MapBffManagementEndpoints();
+
+            // proxy endpoint for cross-site APIs
+            // all calls to /api/* will be forwarded to the remote API
+            // user or client access token will be attached in API call
+            // user access token will be managed automatically using the refresh token
+            app.MapRemoteBffApiEndpoint("/api", "https://localhost:5010")
+                .RequireAccessToken(TokenType.UserOrClient);
+
+            return app;
+
         }
     }
 }

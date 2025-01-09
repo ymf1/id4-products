@@ -2,7 +2,6 @@
 // See LICENSE in the project root for license information.
 
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -11,12 +10,13 @@ using Serilog;
 
 namespace Api.Isolated
 {
-    public class Startup
+    internal static class Extensions
     {
-        public void ConfigureServices(IServiceCollection services)
+        public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
         {
+            var services = builder.Services;
             services.AddControllers();
-            
+
             services.AddAuthentication("token")
                 .AddJwtBearer("token", options =>
                 {
@@ -28,7 +28,7 @@ namespace Api.Isolated
                         ValidateAudience = true,
                         ValidAudience = "urn:isolated-api",
                         ValidTypes = new[] { "at+jwt" },
-                        
+
                         NameClaimType = "name",
                         RoleClaimType = "role"
                     };
@@ -40,24 +40,25 @@ namespace Api.Isolated
                 {
                     policy.RequireClaim("scope", "scope-for-isolated-api");
                 });
-                
+
                 options.AddPolicy("RequireInteractiveUser", policy =>
                 {
                     policy.RequireClaim("sub");
                 });
             });
+            return builder.Build();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public static WebApplication ConfigurePipeline(this WebApplication app)
         {
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost,
             });
-            
+
             app.UseSerilogRequestLogging();
-            
-            if (env.IsDevelopment())
+
+            if (app.Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -66,11 +67,10 @@ namespace Api.Isolated
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers()
-                    .RequireAuthorization("ApiCaller");
-            });
+            app.MapControllers()
+                .RequireAuthorization("ApiCaller");
+            return app;
+
         }
     }
 }

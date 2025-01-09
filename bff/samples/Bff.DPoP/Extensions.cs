@@ -167,47 +167,44 @@ internal static class Extensions
         // adds authorization for local and remote API endpoints
         app.UseAuthorization();
 
-        app.UseEndpoints(endpoints =>
+        // local APIs
+        app.MapControllers()
+            .RequireAuthorization()
+            .AsBffApiEndpoint();
+
+        // login, logout, user, backchannel logout...
+        app.MapBffManagementEndpoints();
+
+        // proxy endpoints using yarp
+        app.MapReverseProxy(proxyApp =>
         {
-            // local APIs
-            endpoints.MapControllers()
-                .RequireAuthorization()
-                .AsBffApiEndpoint();
-
-            // login, logout, user, backchannel logout...
-            endpoints.MapBffManagementEndpoints();
-
-            // proxy endpoints using yarp
-            endpoints.MapReverseProxy(proxyApp =>
-            {
-                proxyApp.UseAntiforgeryCheck();
-            });
-
-            // proxy endpoints using BFF's simplified wrapper
-            MapRemoteUrls(endpoints);
+            proxyApp.UseAntiforgeryCheck();
         });
+
+        // proxy endpoints using BFF's simplified wrapper
+        MapRemoteUrls(app);
         return app;
     }
 
-    private static void MapRemoteUrls(IEndpointRouteBuilder endpoints)
+    private static void MapRemoteUrls(IEndpointRouteBuilder app)
     {
         // On this path, we use a client credentials token
-        endpoints.MapRemoteBffApiEndpoint("/api/client-token", "https://localhost:5011")
+        app.MapRemoteBffApiEndpoint("/api/client-token", "https://localhost:5011")
             .RequireAccessToken(TokenType.Client);
 
         // On this path, we use a user token if logged in, and fall back to a client credentials token if not
-        endpoints.MapRemoteBffApiEndpoint("/api/user-or-client-token", "https://localhost:5011")
+        app.MapRemoteBffApiEndpoint("/api/user-or-client-token", "https://localhost:5011")
             .RequireAccessToken(TokenType.UserOrClient);
 
         // On this path, we make anonymous requests
-        endpoints.MapRemoteBffApiEndpoint("/api/anonymous", "https://localhost:5011");
+        app.MapRemoteBffApiEndpoint("/api/anonymous", "https://localhost:5011");
 
         // On this path, we use the client token only if the user is logged in
-        endpoints.MapRemoteBffApiEndpoint("/api/optional-user-token", "https://localhost:5011")
+        app.MapRemoteBffApiEndpoint("/api/optional-user-token", "https://localhost:5011")
             .WithOptionalUserAccessToken();
 
         // On this path, we require the user token
-        endpoints.MapRemoteBffApiEndpoint("/api/user-token", "https://localhost:5011")
+        app.MapRemoteBffApiEndpoint("/api/user-token", "https://localhost:5011")
             .RequireAccessToken(TokenType.User);
     }
 }

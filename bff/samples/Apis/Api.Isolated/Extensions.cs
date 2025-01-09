@@ -67,11 +67,8 @@ namespace Api.Isolated
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers()
-                    .RequireAuthorization("ApiCaller");
-            });
+            app.MapControllers()
+                .RequireAuthorization("ApiCaller");
             return app;
 
         }

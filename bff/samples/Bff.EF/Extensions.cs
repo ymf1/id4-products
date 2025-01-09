@@ -94,23 +94,21 @@ namespace Bff.EntityFramework
             // adds authorization for local and remote API endpoints
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                // local APIs
-                endpoints.MapControllers()
-                    .RequireAuthorization()
-                    .AsBffApiEndpoint();
+            // local APIs
 
-                // login, logout, user, backchannel logout...
-                endpoints.MapBffManagementEndpoints();
+            app.MapControllers()
+                .RequireAuthorization()
+                .AsBffApiEndpoint();
 
-                // proxy endpoint for cross-site APIs
-                // all calls to /api/* will be forwarded to the remote API
-                // user or client access token will be attached in API call
-                // user access token will be managed automatically using the refresh token
-                endpoints.MapRemoteBffApiEndpoint("/api", "https://localhost:5010")
-                    .RequireAccessToken(TokenType.UserOrClient);
-            });
+            // login, logout, user, backchannel logout...
+            app.MapBffManagementEndpoints();
+
+            // proxy endpoint for cross-site APIs
+            // all calls to /api/* will be forwarded to the remote API
+            // user or client access token will be attached in API call
+            // user access token will be managed automatically using the refresh token
+            app.MapRemoteBffApiEndpoint("/api", "https://localhost:5010")
+                .RequireAccessToken(TokenType.UserOrClient);
 
             return app;
 

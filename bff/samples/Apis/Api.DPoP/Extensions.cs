@@ -78,11 +78,8 @@ internal static class Extensions
         app.UseAuthentication();
         app.UseAuthorization();
 
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapControllers()
-                .RequireAuthorization("ApiCaller");
-        });
+        app.MapControllers()
+            .RequireAuthorization("ApiCaller");
 
         return app;
     }

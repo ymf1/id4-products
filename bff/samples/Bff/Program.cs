@@ -1,6 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Events;
 
@@ -27,11 +28,17 @@ try
         .MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Information)
         .ReadFrom.Configuration(ctx.Configuration));
 
+    var serviceProviderAccessor = new ServiceProviderAccessor();
+
     var app = builder
-        .ConfigureServices()
+        .ConfigureServices(() => serviceProviderAccessor.ServiceProvider ?? throw new InvalidOperationException("Service Provider must be set"))
         .ConfigurePipeline();
 
+    serviceProviderAccessor.ServiceProvider = app.Services;
+
     app.Run();
+
+    
 }
 catch (Exception ex)
 {
@@ -41,4 +48,13 @@ finally
 {
     Log.Information("Shut down complete");
     Log.CloseAndFlush();
+}
+
+/// <summary>
+/// A workaround to get the service provider available in the ConfigureServices method
+/// </summary>
+class ServiceProviderAccessor
+{
+    public IServiceProvider? ServiceProvider { get; set; }
+
 }

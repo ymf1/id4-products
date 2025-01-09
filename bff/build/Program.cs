@@ -1,5 +1,8 @@
-﻿using System;
+﻿    using System;
 using System.IO;
+using System.Net.Http;
+using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 
 using static Bullseye.Targets;
@@ -43,7 +46,16 @@ namespace build
 
             Target(Targets.Test, DependsOn(Targets.Build), () =>
             {
-                Run("dotnet", "test -c Release --no-build --nologo");
+                // Only running the tests on linux on the build agents because trusting the SSL Cert doesn't work there. 
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    Run("dotnet", "dev-certs https --trust");
+                    Run("dotnet", "test -c Release --no-build --nologo");
+                }
+                else
+                {
+                    Console.WriteLine("Skipping tests on windows and mac-os");
+                }
             });
 
             Target(Targets.CleanPackOutput, () =>

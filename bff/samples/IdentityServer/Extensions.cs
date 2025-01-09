@@ -1,6 +1,9 @@
 // // Copyright (c) Duende Software. All rights reserved.
 // // See LICENSE in the project root for license information.
 
+using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Stores;
+using IdentityServer;
 using IdentityServerHost;
 using Serilog;
 
@@ -24,7 +27,7 @@ internal static class Extensions
         // in-memory, code config
         isBuilder.AddInMemoryIdentityResources(Config.IdentityResources);
         isBuilder.AddInMemoryApiScopes(Config.ApiScopes);
-        isBuilder.AddInMemoryClients(Config.Clients);
+        isBuilder.AddClientStore<ServiceDiscoveringClientStore>();
         isBuilder.AddInMemoryApiResources(Config.ApiResources);
         isBuilder.AddExtensionGrantValidator<TokenExchangeGrantValidator>();
 

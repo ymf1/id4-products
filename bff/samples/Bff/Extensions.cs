@@ -2,17 +2,24 @@
 // See LICENSE in the project root for license information.
 
 using System;
+using System.Threading;
 using Duende.Bff;
 using Duende.Bff.Yarp;
 using Host8;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.ServiceDiscovery;
 using Serilog;
 
 internal static class Extensions
 {
-    public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
+    public static WebApplication ConfigureServices(
+        this WebApplicationBuilder builder,
+        
+        // The serviceprovider is needed to do service discovery
+        Func<IServiceProvider> getServiceProvider
+        )
     {
         var services = builder.Services;
 
@@ -48,40 +55,51 @@ internal static class Extensions
                 // strict SameSite handling
                 options.Cookie.SameSite = SameSiteMode.Strict;
             })
-            .AddOpenIdConnect("oidc", options =>
-            {
-                options.Authority = "https://localhost:5001";
+        .AddOpenIdConnect("oidc", options =>
+        {
+            // Normally, here you simply configure the authority. But here we want to
+            // use service discovery, because aspire can change the url's at run-time. 
+            // So, it needs to be discovered at runtime. 
+            var authority = DiscoverAuthorityByName(getServiceProvider, "identity-server");
+            options.Authority = authority;
 
-                // confidential client using code flow + PKCE
-                options.ClientId = "bff";
-                options.ClientSecret = "secret";
-                options.ResponseType = "code";
-                options.ResponseMode = "query";
+            // confidential client using code flow + PKCE
+            options.ClientId = "bff";
+            options.ClientSecret = "secret";
+            options.ResponseType = "code";
+            options.ResponseMode = "query";
 
-                options.MapInboundClaims = false;
-                options.GetClaimsFromUserInfoEndpoint = true;
-                options.SaveTokens = true;
+            options.MapInboundClaims = false;
+            options.GetClaimsFromUserInfoEndpoint = true;
+            options.SaveTokens = true;
 
-                // request scopes + refresh tokens
-                options.Scope.Clear();
-                options.Scope.Add("openid");
-                options.Scope.Add("profile");
-                options.Scope.Add("api");
-                options.Scope.Add("scope-for-isolated-api");
-                options.Scope.Add("offline_access");
+            // request scopes + refresh tokens
+            options.Scope.Clear();
+            options.Scope.Add("openid");
+            options.Scope.Add("profile");
+            options.Scope.Add("api");
+            options.Scope.Add("scope-for-isolated-api");
+            options.Scope.Add("offline_access");
 
-                options.Resource = "urn:isolated-api";
-            });
+            options.Resource = "urn:isolated-api";
+        });
         services.AddSingleton<ImpersonationAccessTokenRetriever>();
 
         services.AddUserAccessTokenHttpClient("api",
-            configureClient: client => 
-            { 
-                client.BaseAddress = new Uri("https://localhost:5010/api"); 
-            });
+            configureClient: client => { client.BaseAddress = new Uri("https://localhost:5010/api"); });
 
         return builder.Build();
 
+    }
+
+    private static string DiscoverAuthorityByName(Func<IServiceProvider> getServiceProvider, string serviceName)
+    {
+        // Use the ServiceEndpointResolver to perform service discovery
+        var resolver = getServiceProvider().GetRequiredService<ServiceEndpointResolver>();
+        var authorityEndpoint = resolver.GetEndpointsAsync("https://" + serviceName, CancellationToken.None)
+            .GetAwaiter().GetResult(); // Right now I have no way to add this async. 
+        var authority = authorityEndpoint.Endpoints[0].ToString()!.TrimEnd('/');
+        return authority;
     }
 
     public static WebApplication ConfigurePipeline(this WebApplication app)
@@ -144,7 +162,7 @@ internal static class Extensions
             .RequireAccessToken(TokenType.User)
             .WithUserAccessTokenParameter(new BffUserAccessTokenParameters(resource: "urn:isolated-api"));
 
-
         return app;
     }
+
 }

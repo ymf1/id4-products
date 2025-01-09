@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\migrations\UserSessionDb\UserSessionDb.csproj" />
     <ProjectReference Include="..\Apis\Api.DPoP\Api.DPoP.csproj" />
     <ProjectReference Include="..\Apis\Api.Isolated\Api.Isolated.csproj" />
     <ProjectReference Include="..\Apis\Api\Api.csproj" />

@@ -38,5 +38,6 @@ builder.AddProject<Projects.Bff_DPoP>("bff-dpop")
     .WithReference(idServer)
     .WithReference(apiDPop);
 
+builder.AddProject<Projects.UserSessionDb>("migrations");
 
 builder.Build().Run();

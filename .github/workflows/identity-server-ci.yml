@@ -1,13 +1,14 @@
-name: "IdentityServer 7.1"
+name: "identity-server-ci"
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:  
   push:
     branches:
-    - main
-    - features/**
+      - main
+      - releases/is/**
     tags:
-    - '*.*.*'
+      - 'is/*.*.*'
+
   pull_request:
 
 env:

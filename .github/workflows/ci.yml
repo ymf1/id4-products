@@ -1,6 +1,7 @@
-name: "CI"
+name: "IdentityServer 7.1"
 
 on:
+  workflow_dispatch:
   push:
     branches:
     - main

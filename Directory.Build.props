@@ -29,6 +29,7 @@
 
     <PropertyGroup>
         <MinVerAutoIncrement>minor</MinVerAutoIncrement>
+        <MinVerTagPrefix>is/</MinVerTagPrefix>
         <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     </PropertyGroup>
 </Project>

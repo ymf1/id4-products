@@ -8,7 +8,7 @@ on:
     paths: 
       - 'bff/**'
     tags:
-    - 'bff/*.*.*'
+    - 'bff-*.*.*'
   pull_request:
       paths: 
       - 'bff/**'

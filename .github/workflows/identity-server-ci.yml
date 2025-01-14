@@ -8,12 +8,8 @@ on:
       - releases/is/**
     tags:
       - 'is-*.*.*'
-    paths: 
-    - 'identity-server/**'
-
   pull_request:
-    paths: 
-    - 'identity-server/**'
+
 env:
   DOTNET_NOLOGO: true
 
@@ -28,9 +24,6 @@ jobs:
         runs-on: [macOS-latest, ubuntu-latest, windows-latest]
     name: ${{ matrix.runs-on }}
     runs-on: ${{ matrix.runs-on }}
-    defaults:
-      run:
-        working-directory: identity-server
     steps:
     - uses: actions/checkout@v3
       with:

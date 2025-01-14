@@ -220,3 +220,4 @@ keys
 Duende.BFF.db
 *.db-shm
 *.db-wal
+.vs/

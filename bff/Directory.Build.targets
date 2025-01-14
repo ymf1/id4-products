@@ -58,15 +58,20 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Update="FluentAssertions" Version="6.7.0" />
+        <PackageReference Update="AngleSharp" Version="1.2.0"  />
         <PackageReference Update="Microsoft.AspNetCore.TestHost" Version="$(AspNetCoreVersion)" />
+        <PackageReference Update="Aspire.Hosting.Testing" Version="$(AspNetCoreVersion)" />
         <PackageReference Update="Microsoft.Extensions.TimeProvider.Testing" Version="8.8.0" />
         <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+        <PackageReference Update="Serilog" Version="4.2.0" />
+        <PackageReference Update="Serilog.Sinks.TextWriter" Version="3.0.0" />
+        <PackageReference Update="Serilog.Sinks.XUnit" Version="3.0.19" />
+        <PackageReference Update="Serilog.Extensions.Logging" Version="9.0.0" />
+        <PackageReference Update="Shouldly" Version="4.2.1" />
         <PackageReference Update="xunit" Version="2.9.2" />
-        <PackageReference Update="xunit.runner.visualstudio" Version="2.8.2">
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-            <PrivateAssets>all</PrivateAssets>
-        </PackageReference>
+        <PackageReference Update="xunit.core" Version="2.9.2" />
+        <PackageReference Update="xunit.runner.visualstudio" Version="2.8.2"/>
+        <PackageReference Update="Xunit.SkippableFact" Version="1.5.23" />
     </ItemGroup>
 
     <Target Name="SetAssemblyVersion" AfterTargets="MinVer">

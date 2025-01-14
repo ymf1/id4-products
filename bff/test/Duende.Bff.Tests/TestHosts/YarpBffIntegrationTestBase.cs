@@ -12,16 +12,16 @@ namespace Duende.Bff.Tests.TestHosts
 {
     public class YarpBffIntegrationTestBase
     {
-        protected readonly IdentityServerHost IdentityServerHost;
-        protected ApiHost ApiHost;
-        protected YarpBffHost BffHost;
-        protected BffHostUsingResourceNamedTokens BffHostWithNamedTokens;
+        private readonly IdentityServerHost _identityServerHost;
+        protected readonly ApiHost ApiHost;
+        protected readonly YarpBffHost BffHost;
+        private BffHostUsingResourceNamedTokens _bffHostWithNamedTokens;
 
-        public YarpBffIntegrationTestBase()
+        protected YarpBffIntegrationTestBase()
         {
-            IdentityServerHost = new IdentityServerHost();
+            _identityServerHost = new IdentityServerHost();
             
-            IdentityServerHost.Clients.Add(new Client
+            _identityServerHost.Clients.Add(new Client
             {
                 ClientId = "spa",
                 ClientSecrets = { new Secret("secret".Sha256()) },
@@ -34,7 +34,7 @@ namespace Duende.Bff.Tests.TestHosts
             });
             
             
-            IdentityServerHost.OnConfigureServices += services => {
+            _identityServerHost.OnConfigureServices += services => {
                 services.AddTransient<IBackChannelLogoutHttpClient>(provider => 
                     new DefaultBackChannelLogoutHttpClient(
                         BffHost.HttpClient, 
@@ -42,21 +42,21 @@ namespace Duende.Bff.Tests.TestHosts
                         provider.GetRequiredService<ICancellationTokenProvider>()));
             };
             
-            IdentityServerHost.InitializeAsync().Wait();
+            _identityServerHost.InitializeAsync().Wait();
 
-            ApiHost = new ApiHost(IdentityServerHost, "scope1");
+            ApiHost = new ApiHost(_identityServerHost, "scope1");
             ApiHost.InitializeAsync().Wait();
 
-            BffHost = new YarpBffHost(IdentityServerHost, ApiHost, "spa");
+            BffHost = new YarpBffHost(_identityServerHost, ApiHost, "spa");
             BffHost.InitializeAsync().Wait();
 
-            BffHostWithNamedTokens = new BffHostUsingResourceNamedTokens(IdentityServerHost, ApiHost, "spa");
-            BffHostWithNamedTokens.InitializeAsync().Wait();
+            _bffHostWithNamedTokens = new BffHostUsingResourceNamedTokens(_identityServerHost, ApiHost, "spa");
+            _bffHostWithNamedTokens.InitializeAsync().Wait();
         }
 
         public async Task Login(string sub)
         {
-            await IdentityServerHost.IssueSessionCookieAsync(new Claim("sub", sub));
+            await _identityServerHost.IssueSessionCookieAsync(new Claim("sub", sub));
         }
     }
 }

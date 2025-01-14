@@ -1,4 +1,4 @@
-﻿// Copyright (c) Duende Software. All rights reserved.
+// Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +15,7 @@ namespace Api.DPoP
     {
         private readonly ILogger<ToDoController> _logger;
 
-        private static readonly List<ToDo> __data = new List<ToDo>()
+        private static readonly List<ToDo> Data = new List<ToDo>()
         {
             new ToDo { Id = ToDo.NewId(), Date = DateTimeOffset.UtcNow, Name = "Demo ToDo API", User = "bob" },
             new ToDo { Id = ToDo.NewId(), Date = DateTimeOffset.UtcNow.AddHours(1), Name = "Stop Demo", User = "bob" },
@@ -32,13 +32,13 @@ namespace Api.DPoP
         {
             _logger.LogInformation("GetAll");
             
-            return Ok(__data.AsEnumerable());
+            return Ok(Data.AsEnumerable());
         }
 
         [HttpGet("todos/{id}")]
         public IActionResult Get(int id)
         {
-            var item = __data.FirstOrDefault(x => x.Id == id);
+            var item = Data.FirstOrDefault(x => x.Id == id);
             if (item == null) return NotFound();
             
             _logger.LogInformation("Get {id}", id);
@@ -51,7 +51,7 @@ namespace Api.DPoP
             model.Id = ToDo.NewId();
             model.User = $"{User.FindFirst("sub").Value} ({User.FindFirst("name").Value})";
             
-            __data.Add(model);
+            Data.Add(model);
             _logger.LogInformation("Add {name}", model.Name);
 
             return Created(Url.Action(nameof(Get), new { id = model.Id }), model);
@@ -60,7 +60,7 @@ namespace Api.DPoP
         [HttpPut("todos/{id}")]
         public IActionResult Put(int id, [FromBody] ToDo model)
         {
-            var item = __data.FirstOrDefault(x => x.Id == id);
+            var item = Data.FirstOrDefault(x => x.Id == id);
             if (item == null) return NotFound();
 
             item.Date = model.Date;
@@ -74,10 +74,10 @@ namespace Api.DPoP
         [HttpDelete("todos/{id}")]
         public IActionResult Delete(int id)
         {
-            var item = __data.FirstOrDefault(x => x.Id == id);
+            var item = Data.FirstOrDefault(x => x.Id == id);
             if (item == null) return NotFound();
 
-            __data.Remove(item);
+            Data.Remove(item);
             _logger.LogInformation("Delete {id}", id);
 
             return NoContent();
@@ -86,10 +86,10 @@ namespace Api.DPoP
     
     public class ToDo
     {
-        static int _nextId = 1;
+        static int NextId = 1;
         public static int NewId()
         {
-            return _nextId++;
+            return NextId++;
         }
         
         public int Id { get; set; }

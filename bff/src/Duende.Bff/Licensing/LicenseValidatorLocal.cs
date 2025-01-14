@@ -20,7 +20,7 @@ internal partial class LicenseValidator
     // this should just add to the error list
     public static void ValidateProductFeaturesForLicense(IList<string> errors)
     {
-        if (!_license.BffFeature)
+        if (!License.BffFeature)
         {
             errors.Add($"Your Duende software license does not include the BFF feature.");
         }

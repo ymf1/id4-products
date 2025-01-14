@@ -205,6 +205,6 @@ internal static class Extensions
 
         // On this path, we require the user token
         app.MapRemoteBffApiEndpoint("/api/user-token", "https://localhost:5011")
-            .RequireAccessToken(TokenType.User);
+            .RequireAccessToken();
     }
 }

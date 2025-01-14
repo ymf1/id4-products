@@ -27,5 +27,6 @@
 
     <PropertyGroup>
         <MinVerAutoIncrement>minor</MinVerAutoIncrement>
+        <MinVerPrefix>bff-</MinVerPrefix>
     </PropertyGroup>
 </Project>

@@ -54,4 +54,4 @@ jobs:
         SignClientSecret: ${{ secrets.SIGNCLIENTSECRET }}
       run: |
         ./build.ps1 sign
-        dotnet nuget push .\identity-server\artifacts\*.nupkg -s https://www.myget.org/F/duende_identityserver/api/v2/package -k ${{ secrets.MYGET }}
+        dotnet nuget push .\artifacts\*.nupkg -s https://www.myget.org/F/duende_identityserver/api/v2/package -k ${{ secrets.MYGET }}

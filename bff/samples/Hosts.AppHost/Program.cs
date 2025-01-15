@@ -1,3 +1,6 @@
+using System.Runtime.CompilerServices;
+using Projects;
+
 var builder = DistributedApplication.CreateBuilder(args);
 
 var idServer = builder.AddProject<Projects.IdentityServer>("identity-server");
@@ -5,39 +8,51 @@ var idServer = builder.AddProject<Projects.IdentityServer>("identity-server");
 var api = builder.AddProject<Projects.Api>("api");
 var isolatedApi = builder.AddProject<Projects.Api_Isolated>("api-isolated");
 
-builder.AddProject<Projects.Bff>("bff")
+var bff = builder.AddProject<Projects.Bff>("bff")
     .WithExternalHttpEndpoints()
-    .WithReference(idServer)
-    .WithReference(isolatedApi)
-    .WithReference(api);
+    .WithAwaitedReference(idServer)
+    .WithAwaitedReference(isolatedApi)
+    .WithAwaitedReference(api)
+    ;
 
 builder.AddProject<Projects.Bff_EF>("bff-ef")
     .WithExternalHttpEndpoints()
-    .WithReference(idServer)
-    .WithReference(isolatedApi)
-    .WithReference(api);
+    .WithAwaitedReference(idServer)
+    .WithAwaitedReference(isolatedApi)
+    .WithAwaitedReference(api);
 
 builder.AddProject<Projects.WebAssembly>("bff-webassembly-per-component")
     .WithExternalHttpEndpoints()
-    .WithReference(idServer)
-    .WithReference(isolatedApi)
-    .WithReference(api);
+    .WithAwaitedReference(idServer)
+    .WithAwaitedReference(isolatedApi)
+    .WithAwaitedReference(api);
 
 
 
 builder.AddProject<Projects.PerComponent>("bff-blazor-per-component")
     .WithExternalHttpEndpoints()
-    .WithReference(idServer)
-    .WithReference(isolatedApi)
-    .WithReference(api);
+    .WithAwaitedReference(idServer)
+    .WithAwaitedReference(isolatedApi)
+    .WithAwaitedReference(api);
 
 var apiDPop = builder.AddProject<Projects.Api_DPoP>("api-dpop");
 
 builder.AddProject<Projects.Bff_DPoP>("bff-dpop")
     .WithExternalHttpEndpoints()
-    .WithReference(idServer)
-    .WithReference(apiDPop);
+    .WithAwaitedReference(idServer)
+    .WithAwaitedReference(apiDPop);
 
 builder.AddProject<Projects.UserSessionDb>("migrations");
 
+idServer.WithReference(bff);
+
 builder.Build().Run();
+
+public static class Extensions
+{
+    public static IResourceBuilder<TDestination> WithAwaitedReference<TDestination>(this IResourceBuilder<TDestination> builder, IResourceBuilder<IResourceWithServiceDiscovery> source)
+        where TDestination : IResourceWithEnvironment, IResourceWithWaitSupport
+    {
+        return builder.WithReference(source).WaitFor(source);
+    }
+}

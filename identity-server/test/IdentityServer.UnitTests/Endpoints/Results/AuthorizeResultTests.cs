@@ -267,4 +267,67 @@ public class AuthorizeResultTests
         _context.Response.Headers.ContentSecurityPolicy.First().Should().Contain($"script-src '{IdentityServerConstants.ContentSecurityPolicyHashes.AuthorizeScript}'");
         _context.Response.Headers["X-Content-Security-Policy"].Should().BeEmpty();
     }
+    
+    [InlineData(OidcConstants.AuthorizeErrors.AccessDenied)]
+    [InlineData(OidcConstants.AuthorizeErrors.AccountSelectionRequired)]
+    [InlineData(OidcConstants.AuthorizeErrors.LoginRequired)]
+    [InlineData(OidcConstants.AuthorizeErrors.ConsentRequired)]
+    [InlineData(OidcConstants.AuthorizeErrors.InteractionRequired)]
+    [InlineData(OidcConstants.AuthorizeErrors.TemporarilyUnavailable)]
+    [InlineData(OidcConstants.AuthorizeErrors.UnmetAuthenticationRequirements)]
+    [Theory]
+    public async Task error_resulting_in_redirect_should_attach_fragment_to_location_header(string error)
+    {
+        _response.Error = error;
+        _response.Request = new ValidatedAuthorizeRequest
+        {
+            ClientId = "client",
+            GrantType = OidcConstants.GrantTypes.Implicit,
+            ResponseMode = OidcConstants.ResponseModes.Query,
+            RedirectUri = "http://client/callback",
+            ResponseType = OidcConstants.ResponseTypes.Token,
+        };
+        
+        await _subject.WriteHttpResponse(new AuthorizeResult(_response), _context);
+        
+        _context.Response.StatusCode.Should().Be(302);
+        var location = _context.Response.Headers.Location.First();
+        location.Should().StartWith("http://client/callback");
+        location.Should().Contain("#_");
+    }
+
+    [InlineData(OidcConstants.AuthorizeErrors.InvalidRequest)]
+    [InlineData(OidcConstants.AuthorizeErrors.UnauthorizedClient)]
+    [InlineData(OidcConstants.AuthorizeErrors.UnsupportedResponseType)]
+    [InlineData(OidcConstants.AuthorizeErrors.InvalidScope)]
+    [InlineData(OidcConstants.AuthorizeErrors.ServerError)]
+    [InlineData(OidcConstants.AuthorizeErrors.InvalidRequestUri)]
+    [InlineData(OidcConstants.AuthorizeErrors.InvalidRequestObject)]
+    [InlineData(OidcConstants.AuthorizeErrors.RequestNotSupported)]
+    [InlineData(OidcConstants.AuthorizeErrors.RequestUriNotSupported)]
+    [InlineData(OidcConstants.AuthorizeErrors.RegistrationNotSupported)]
+    [InlineData(OidcConstants.AuthorizeErrors.InvalidTarget)]
+    [Theory]
+    public async Task error_resulting_in_error_page_should_attach_fragment_to_error_model_redirect_uri(string error)
+    {
+        _response.Error = error;
+        _response.Request = new ValidatedAuthorizeRequest
+        {
+            ClientId = "client",
+            GrantType = OidcConstants.GrantTypes.Implicit,
+            ResponseMode = OidcConstants.ResponseModes.Query,
+            RedirectUri = "http://client/callback",
+            ResponseType = OidcConstants.ResponseTypes.Token,
+        };
+        
+        await _subject.WriteHttpResponse(new AuthorizeResult(_response), _context);
+        
+        _context.Response.StatusCode.Should().Be(302);
+        var location = _context.Response.Headers.Location.First();
+        var queryString = new Uri(location).Query;
+        var queryParams = QueryHelpers.ParseQuery(queryString);
+        var errorId = queryParams.First(kvp => kvp.Key == _options.UserInteraction.ErrorIdParameter).Value;
+        var errorMessage = await _mockErrorMessageStore.ReadAsync(errorId);
+        errorMessage.Data.RedirectUri.Should().Contain("#_");
+    }
 }

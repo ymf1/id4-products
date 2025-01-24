@@ -101,7 +101,7 @@ public class CachingIdentityProviderStore<T> : IIdentityProviderStore
                 var optionsMonitorType = typeof(IOptionsMonitorCache<>).MakeGenericType(provider.OptionsType);
                 // need to resolve the provide type dynamically, thus the need for the http context accessor
                 // this will throw if attempted outside an http request, but that is checked in the caller
-                var optionsCache = _httpContextAccessor.HttpContext.RequestServices.GetService(optionsMonitorType);
+                var optionsCache = _httpContextAccessor.HttpContext?.RequestServices.GetService(optionsMonitorType);
                 if (optionsCache != null)
                 {
                     var mi = optionsMonitorType.GetMethod("TryRemove");

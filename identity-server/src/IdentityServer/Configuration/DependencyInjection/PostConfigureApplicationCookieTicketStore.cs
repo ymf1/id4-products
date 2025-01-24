@@ -68,7 +68,7 @@ public class PostConfigureApplicationCookieTicketStore : IPostConfigureOptions<C
 
             IdentityServerLicenseValidator.Instance.ValidateServerSideSessions();
             var licenseUsage = _httpContextAccessor.HttpContext?.RequestServices.GetRequiredService<LicenseUsageTracker>();
-            licenseUsage.FeatureUsed(LicenseFeature.ServerSideSessions);
+            licenseUsage?.FeatureUsed(LicenseFeature.ServerSideSessions);
 
             var sessionStore = _httpContextAccessor.HttpContext!.RequestServices.GetService<IServerSideSessionStore>();
             if (sessionStore is InMemoryServerSideSessionStore)

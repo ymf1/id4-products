@@ -1,4 +1,4 @@
-﻿// Copyright (c) Duende Software. All rights reserved.
+// Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
 using Duende.Bff.Tests.TestHosts;
@@ -8,10 +8,11 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Duende.Bff.Tests.SessionManagement
 {
-    public class RevokeRefreshTokenTests : BffIntegrationTestBase
+    public class RevokeRefreshTokenTests(ITestOutputHelper output) : BffIntegrationTestBase(output)
     {
         [Fact]
         public async Task logout_should_revoke_refreshtoken()

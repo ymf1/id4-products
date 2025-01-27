@@ -1,4 +1,4 @@
-﻿// Copyright (c) Duende Software. All rights reserved.
+// Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
 using Duende.Bff.Tests.TestHosts;
@@ -9,10 +9,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net;
 using Shouldly;
+using Xunit.Abstractions;
 
 namespace Duende.Bff.Tests.Endpoints.Management
 {
-    public class ManagementBasePathTests : BffIntegrationTestBase
+    public class ManagementBasePathTests(ITestOutputHelper output) : BffIntegrationTestBase(output)
     {
         [Theory]
         [InlineData(Constants.ManagementEndpoints.Login)]

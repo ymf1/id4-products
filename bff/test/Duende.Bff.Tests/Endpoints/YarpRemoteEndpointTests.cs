@@ -1,4 +1,4 @@
-﻿// Copyright (c) Duende Software. All rights reserved.
+// Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
 using Duende.Bff.Tests.TestHosts;
@@ -9,10 +9,11 @@ using System.Threading.Tasks;
 using Duende.Bff.Tests.TestFramework;
 using Shouldly;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Duende.Bff.Tests.Endpoints
 {
-    public class YarpRemoteEndpointTests : YarpBffIntegrationTestBase
+    public class YarpRemoteEndpointTests(ITestOutputHelper output) : YarpBffIntegrationTestBase(output)
     {
         [Fact]
         public async Task anonymous_call_with_no_csrf_header_to_no_token_requirement_no_csrf_route_should_succeed()

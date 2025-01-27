@@ -1,4 +1,4 @@
-﻿// Copyright (c) Duende Software. All rights reserved.
+// Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
 using Duende.Bff.Tests.TestFramework;
@@ -16,6 +16,7 @@ using Duende.Bff.Yarp;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Xunit.Abstractions;
 
 namespace Duende.Bff.Tests.TestHosts
 {
@@ -30,9 +31,14 @@ namespace Duende.Bff.Tests.TestHosts
 
         public BffOptions BffOptions { get; private set; }
 
-        public BffHostUsingResourceNamedTokens(IdentityServerHost identityServerHost, ApiHost apiHost, string clientId,
-            string baseAddress = "https://app", bool useForwardedHeaders = false)
-            : base(baseAddress)
+        public BffHostUsingResourceNamedTokens(
+            WriteTestOutput output,
+            IdentityServerHost identityServerHost, 
+            ApiHost apiHost, 
+            string clientId,
+            string baseAddress = "https://app", 
+            bool useForwardedHeaders = false)
+            : base(output, baseAddress)
         {
             _identityServerHost = identityServerHost;
             _apiHost = apiHost;

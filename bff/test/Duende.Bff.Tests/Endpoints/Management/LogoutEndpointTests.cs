@@ -1,4 +1,4 @@
-﻿// Copyright (c) Duende Software. All rights reserved.
+// Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
 using Duende.Bff.Tests.TestHosts;
@@ -8,10 +8,11 @@ using System.Net;
 using System.Threading.Tasks;
 using Shouldly;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Duende.Bff.Tests.Endpoints.Management
 {
-    public class LogoutEndpointTests : BffIntegrationTestBase
+    public class LogoutEndpointTests(ITestOutputHelper output) : BffIntegrationTestBase(output)
     {
         [Fact]
         public async Task logout_endpoint_should_allow_anonymous()

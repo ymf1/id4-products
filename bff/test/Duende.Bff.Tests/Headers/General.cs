@@ -6,10 +6,11 @@ using Duende.Bff.Tests.TestFramework;
 using Duende.Bff.Tests.TestHosts;
 using Shouldly;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Duende.Bff.Tests.Headers
 {
-    public class General : BffIntegrationTestBase
+    public class General(ITestOutputHelper output) : BffIntegrationTestBase(output)
     {
         [Fact]
         public async Task local_endpoint_should_receive_standard_headers()

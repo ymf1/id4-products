@@ -1,4 +1,4 @@
-﻿// Copyright (c) Duende Software. All rights reserved.
+// Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
 using Duende.Bff.Tests.TestHosts;
@@ -10,6 +10,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 
 namespace Duende.Bff.Tests.SessionManagement
@@ -19,7 +20,7 @@ namespace Duende.Bff.Tests.SessionManagement
         InMemoryUserSessionStore _sessionStore = new InMemoryUserSessionStore();
         FakeTimeProvider _clock = new(DateTime.UtcNow);
 
-        public CookieSlidingTests()
+        public CookieSlidingTests(ITestOutputHelper output) : base(output)
         {
             BffHost.OnConfigureServices += services => 
             {

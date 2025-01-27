@@ -1,4 +1,4 @@
-﻿// Copyright (c) Duende Software. All rights reserved.
+// Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
 using Duende.Bff.Tests.TestFramework;
@@ -18,8 +18,8 @@ namespace Duende.Bff.Tests.TestHosts;
 
 public class IdentityServerHost : GenericHost
 {
-    public IdentityServerHost(string baseAddress = "https://identityserver")
-        : base(baseAddress)
+    public IdentityServerHost(WriteTestOutput output, string baseAddress = "https://identityserver")
+        : base(output, baseAddress)
     {
         OnConfigureServices += ConfigureServices;
         OnConfigure += Configure;

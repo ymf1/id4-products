@@ -1,17 +1,15 @@
-﻿// // Copyright (c) Duende Software. All rights reserved.
+// // Copyright (c) Duende Software. All rights reserved.
 // // See LICENSE in the project root for license information.
 
-using System.Net.Http.Json;
-using System.Security.Claims;
 using System.Text.Json;
-using System.Web;
-using HtmlAgilityPack;
+using AngleSharp;
+using AngleSharp.Html.Dom;
 using Shouldly;
 
 namespace Hosts.Tests.TestInfra;
 
 /// <summary>
-/// Client for the BFF. All the methods that can be invoked are here. 
+///     Client for the BFF. All the methods that can be invoked are here.
 /// </summary>
 public class BffClient
 {
@@ -31,58 +29,65 @@ public class BffClient
 
         triggerLoginResponse.StatusCode.ShouldBe(HttpStatusCode.OK);
 
-        var loginPage = triggerLoginResponse.RequestMessage?.RequestUri ?? throw new InvalidOperationException("Can't find the login page.");
+        var loginPage = triggerLoginResponse.RequestMessage?.RequestUri ??
+                        throw new InvalidOperationException("Can't find the login page.");
         loginPage.AbsolutePath.ShouldBe("/Account/Login");
 
         var html = await triggerLoginResponse.Content.ReadAsStringAsync();
-        var form = ExtractForm(html);
+        var form = await ExtractFormFieldsAsync(html);
 
         form.Fields["Input.Username"] = "alice";
         form.Fields["Input.Password"] = "alice";
         form.Fields["Input.Button"] = "login";
 
-        var postLoginResponse = await _client.PostAsync(new Uri(loginPage, form.FormUrl), new FormUrlEncodedContent(form.Fields), ct);
+        var postLoginResponse =
+            await _client.PostAsync(new Uri(loginPage, form.FormUrl), new FormUrlEncodedContent(form.Fields), ct);
 
         postLoginResponse.StatusCode.ShouldBe(HttpStatusCode.OK);
-        postLoginResponse.RequestMessage?.RequestUri?.Authority.ShouldBe(_client.BaseAddress?.Authority, await postLoginResponse.Content.ReadAsStringAsync(ct));
+        postLoginResponse.RequestMessage?.RequestUri?.Authority.ShouldBe(_client.BaseAddress?.Authority,
+            await postLoginResponse.Content.ReadAsStringAsync(ct));
     }
 
-
-    /// Parses the HTML content and extracts all form fields into a dictionary.
-    /// </summary>
-    /// <param name="htmlContent">The HTML content to parse.</param>
-    /// <returns>A dictionary where the keys are field names and the values are their default values.</returns>
-    private Form ExtractForm(string htmlContent)
+    private async Task<Form> ExtractFormFieldsAsync(string htmlContent)
     {
-        var formFields = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        // Create a configuration for AngleSharp
+        var config = Configuration.Default.WithDefaultLoader();
 
-        // Load the HTML content
-        var htmlDoc = new HtmlDocument();
-        htmlDoc.LoadHtml(htmlContent);
+        // Load the HTML content into an AngleSharp browsing context
+        var context = BrowsingContext.New(config);
+        var document = await context.OpenAsync(req => req.Content(htmlContent));
 
-        var form = htmlDoc.DocumentNode.SelectSingleNode("//form");
+        // Find the first form on the page
+        var form = document.QuerySelector("form");
+        if (form == null) throw new InvalidOperationException("No form found in the provided HTML content.");
 
-        // Select all input elements
-        var inputNodes = form.SelectNodes("//input");
-        if (inputNodes != null)
+        // Extract all form fields and their values
+        var formFields = new Dictionary<string, string>();
+        foreach (var element in form.QuerySelectorAll("input"))
         {
-            foreach (var inputNode in inputNodes)
+            var name = element.GetAttribute("name") ?? throw new InvalidOperationException("input doesn't have a name");
+            if (string.IsNullOrEmpty(name)) continue; // Skip elements without a name attribute
+
+            var value = element.GetAttribute("value") ?? string.Empty;
+
+            if (element is IHtmlSelectElement selectElement)
             {
-                var name = inputNode.GetAttributeValue("name", null);
-                var value = inputNode.GetAttributeValue("value", string.Empty);
-
-                if (!string.IsNullOrEmpty(name))
-                {
-
-                    formFields[name] = HttpUtility.HtmlDecode(value);
-                }
+                // Handle <select> elements by extracting the selected option's value
+                var selectedOption = selectElement.SelectedOptions.Length > 0
+                    ? selectElement.SelectedOptions[0].GetAttribute("value")
+                    : string.Empty;
+                value = selectedOption ?? string.Empty;
             }
+
+            // Add the field to the dictionary
+            formFields[name] = value;
         }
 
-        return new Form()
+        return new Form
         {
-            Fields = formFields,
-            FormUrl = form.Attributes["action"].Value
+            FormUrl = form.GetAttribute("action") ??
+                      throw new InvalidOperationException("Failed to find the 'action' on the form"),
+            Fields = formFields
         };
     }
 
@@ -101,7 +106,7 @@ public class BffClient
     public async Task<UserClaim[]> GetUserClaims()
     {
         var userClaimsString = await _client.GetStringAsync("/bff/user");
-        var userClaims = JsonSerializer.Deserialize<UserClaim[]>(userClaimsString, new JsonSerializerOptions()
+        var userClaims = JsonSerializer.Deserialize<UserClaim[]>(userClaimsString, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
         })!;
@@ -126,6 +131,4 @@ public class BffClient
         public required string FormUrl { get; init; }
         public required Dictionary<string, string> Fields { get; init; }
     }
-
-
 }

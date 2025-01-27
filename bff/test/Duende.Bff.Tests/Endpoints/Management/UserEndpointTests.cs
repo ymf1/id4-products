@@ -25,14 +25,14 @@ namespace Duende.Bff.Tests.Endpoints.Management
             var data = await BffHost.CallUserEndpointAsync();
 
             data.Count.ShouldBe(4);
-            data.First(d => d.type == "sub").value.GetString().ShouldBe("alice");
+            data.First(d => d.Type == "sub").Value.GetString().ShouldBe("alice");
 
-            var foos = data.Where(d => d.type == "foo");
+            var foos = data.Where(d => d.Type == "foo");
             foos.Count().ShouldBe(2);
-            foos.First().value.GetString().ShouldBe("foo1");
-            foos.Skip(1).First().value.GetString().ShouldBe("foo2");
+            foos.First().Value.GetString().ShouldBe("foo1");
+            foos.Skip(1).First().Value.GetString().ShouldBe("foo2");
 
-            data.First(d => d.type == Constants.ClaimTypes.SessionExpiresIn).value.GetInt32().ShouldBePositive();
+            data.First(d => d.Type == Constants.ClaimTypes.SessionExpiresIn).Value.GetInt32().ShouldBePositive();
         }
         
         [Fact]
@@ -45,10 +45,10 @@ namespace Duende.Bff.Tests.Endpoints.Management
             var data = await BffHost.CallUserEndpointAsync();
 
             data.Count.ShouldBe(4);
-            data.First(d => d.type == "sub").value.GetString().ShouldBe("alice");
-            data.First(d => d.type == "sid").value.GetString().ShouldBe("123");
-            data.First(d => d.type == Constants.ClaimTypes.LogoutUrl).value.GetString().ShouldBe("/bff/logout?sid=123");
-            data.First(d => d.type == Constants.ClaimTypes.SessionExpiresIn).value.GetInt32().ShouldBePositive();
+            data.First(d => d.Type == "sub").Value.GetString().ShouldBe("alice");
+            data.First(d => d.Type == "sid").Value.GetString().ShouldBe("123");
+            data.First(d => d.Type == Constants.ClaimTypes.LogoutUrl).Value.GetString().ShouldBe("/bff/logout?sid=123");
+            data.First(d => d.Type == Constants.ClaimTypes.SessionExpiresIn).Value.GetInt32().ShouldBePositive();
         }
 
         [Fact]

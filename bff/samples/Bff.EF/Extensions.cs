@@ -1,15 +1,15 @@
 using Duende.Bff;
 using Duende.Bff.Yarp;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
-using Microsoft.AspNetCore.DataProtection;
 using UserSessionDb.Migrations.UserSessions;
 
-namespace Bff.EntityFramework
+namespace Bff.EF
 {
     internal static class Extensions
     {
@@ -17,12 +17,12 @@ namespace Bff.EntityFramework
         public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
         {
             var services = builder.Services;
-            var _configuration = builder.Configuration;
+            var configuration = builder.Configuration;
             services.AddDataProtection()
                 .SetApplicationName("JS-EF-Sample");
 
             // Add BFF services to DI - also add server-side session management
-            var cn = _configuration.GetConnectionString("db");
+            var cn = configuration.GetConnectionString("db");
             services.AddBff(options =>
             {
                 options.BackchannelLogoutAllUserSessions = true;

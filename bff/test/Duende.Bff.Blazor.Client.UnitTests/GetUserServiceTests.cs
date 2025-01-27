@@ -14,7 +14,7 @@ namespace Duende.Bff.Blazor.Client.UnitTests;
 
 public class GetUserServiceTests
 {
-    record ClaimRecord(string type, object value);
+    record ClaimRecord(string Type, object Value);
 
     [Fact]
     public async Task FetchUser_maps_claims_into_ClaimsPrincipal()

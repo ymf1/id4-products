@@ -1,50 +1,52 @@
 ﻿using Xunit.Abstractions;
-using SkipException = Xunit.Sdk.SkipException;
 
 namespace Hosts.Tests.TestInfra;
 
 public class IntegrationTestBase : IClassFixture<AppHostFixture>, IDisposable
 {
     private readonly IDisposable _loggingScope;
-    private readonly ITestOutputHelper _output;
-    private readonly AppHostFixture _fixture;
 
     public IntegrationTestBase(ITestOutputHelper output, AppHostFixture fixture)
     {
-        _output = output;
-        _fixture = fixture;
+        Output = output;
+        Fixture = fixture;
         _loggingScope = fixture.ConnectLogger(output.WriteLine);
-        if (_fixture.UsingAlreadyRunningInstance)
+        if (Fixture.UsingAlreadyRunningInstance)
         {
             output.WriteLine("Running tests against locally running instance");
         }
         else
         {
 #if DEBUG_NCRUNCH
-            Skip.If(true, "already attached");
+            // Running in NCrunch. NCrunch cannot build the aspire project, so it needs
+            // to be started manually. 
+            Skip.If(true, "When running the Host.Tests using NCrunch, you must start the Hosts.AppHost project manually. IE: dotnet run -p bff/samples/Hosts.AppHost. Or start without debugging from the UI. ");
 #endif
-
         }
     }
 
-    public AppHostFixture Fixture => _fixture;
-    public ITestOutputHelper Output => _output;
+    public AppHostFixture Fixture { get; }
 
-    public HttpClient CreateHttpClient(string clientName) => _fixture.CreateHttpClient(clientName);
+    public ITestOutputHelper Output { get; }
 
     public void Dispose()
     {
-        if (!_fixture.UsingAlreadyRunningInstance)
+        if (!Fixture.UsingAlreadyRunningInstance)
         {
-            _output.WriteLine(Environment.NewLine);
-            _output.WriteLine(Environment.NewLine);
-            _output.WriteLine(Environment.NewLine);
-            _output.WriteLine("*************************************************");
-            _output.WriteLine("** Startup logs ***");
-            _output.WriteLine("*************************************************");
-            _output.WriteLine(_fixture.StartupLogs);
+            Output.WriteLine(Environment.NewLine);
+            Output.WriteLine(Environment.NewLine);
+            Output.WriteLine(Environment.NewLine);
+            Output.WriteLine("*************************************************");
+            Output.WriteLine("** Startup logs ***");
+            Output.WriteLine("*************************************************");
+            Output.WriteLine(Fixture.StartupLogs);
         }
 
         _loggingScope.Dispose();
+    }
+
+    public HttpClient CreateHttpClient(string clientName)
+    {
+        return Fixture.CreateHttpClient(clientName);
     }
 }

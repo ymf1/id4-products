@@ -4,7 +4,7 @@
 
 using Duende.IdentityServer.Models;
 
-namespace IdentityServerHost
+namespace IdentityServer
 {
     public static class Config
     {
@@ -16,13 +16,13 @@ namespace IdentityServerHost
 
         public static IEnumerable<ApiScope> ApiScopes =>
             [
-                new ApiScope("api", ["name"]),
-                new ApiScope("scope-for-isolated-api", ["name"]),
+                new("api", ["name"]),
+                new("scope-for-isolated-api", ["name"]),
             ];
 
         public static IEnumerable<ApiResource> ApiResources =>
             [
-                new ApiResource("urn:isolated-api", "isolated api")
+                new("urn:isolated-api", "isolated api")
                 {
                     RequireResourceIndicator = true,
                     Scopes = { "scope-for-isolated-api" }

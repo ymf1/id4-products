@@ -11,12 +11,12 @@ public static class WeatherEndpoints
             {
                 Date = startDate.AddDays(index),
                 TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = summaries[Random.Shared.Next(summaries.Length)]
+                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             }).ToArray();
         }).RequireAuthorization().AsBffApiEndpoint();
     }
 
-    private static readonly string[] summaries =
+    private static readonly string[] Summaries =
     [
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     ];

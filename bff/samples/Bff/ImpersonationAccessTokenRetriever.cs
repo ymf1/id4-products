@@ -8,7 +8,7 @@ using Duende.IdentityModel;
 using Duende.IdentityModel.Client;
 using Microsoft.Extensions.Logging;
 
-namespace Host8;
+namespace Bff;
 
 public class ImpersonationAccessTokenRetriever : DefaultAccessTokenRetriever
 {

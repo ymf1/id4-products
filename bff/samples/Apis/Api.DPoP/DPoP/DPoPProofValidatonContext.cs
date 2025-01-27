@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Security.Claims;
-
 namespace Api.DPoP;
 
 public class DPoPProofValidatonContext

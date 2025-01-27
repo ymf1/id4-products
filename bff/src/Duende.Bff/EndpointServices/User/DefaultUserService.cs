@@ -1,4 +1,4 @@
-﻿// Copyright (c) Duende Software. All rights reserved.
+// Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
 using Duende.IdentityModel;
@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Duende.Bff.Logging;
 using Microsoft.Extensions.Options;
@@ -137,7 +138,16 @@ public class DefaultUserService : IUserService
     /// <summary>
     /// Serialization-friendly claim
     /// </summary>
-    /// <param name="type"></param>
-    /// <param name="value"></param>
-    protected record ClaimRecord(string type, object value);
+    /// <param name="Type"></param>
+    /// <param name="Value"></param>
+    protected record ClaimRecord(string Type, object Value)
+    {
+        /// <summary></summary>
+        [JsonPropertyName("type")]
+        public string Type { get; init; } = Type;
+
+        /// <summary></summary>
+        [JsonPropertyName("value")]
+        public object Value { get; init; } = Value;
+    }
 }

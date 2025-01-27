@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>net9.0</TargetFramework>
-		<RootNamespace>Bff.DPoP</RootNamespace>
+		<RootNamespace>Bff.EF</RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>

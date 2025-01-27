@@ -20,17 +20,21 @@ public class CookieHandler : DelegatingHandler
         {
             request.Headers.Add(HeaderNames.Cookie, header);
         }
+
         var response = await base.SendAsync(request, ct);
 
-        if (response.Headers.TryGetValues(HeaderNames.SetCookie, out IEnumerable<string>? setCookieHeaders))
+        if (response.Headers.TryGetValues(HeaderNames.SetCookie, out var setCookieHeaders))
         {
             foreach (var cookieHeader in SetCookieHeaderValue.ParseList(setCookieHeaders.ToList()))
             {
-                Cookie cookie = new Cookie(cookieHeader.Name.Value!, cookieHeader.Value.Value, cookieHeader.Path.Value);
+                var cookie = new Cookie(cookieHeader.Name.Value!,
+                    cookieHeader.Value.Value,
+                    cookieHeader.Path.Value);
                 if (cookieHeader.Expires.HasValue)
                 {
                     cookie.Expires = cookieHeader.Expires.Value.UtcDateTime;
                 }
+
                 _cookieContainer.Add(requestUri!, cookie);
             }
         }

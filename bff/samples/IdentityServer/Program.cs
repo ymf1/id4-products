@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using IdentityServer;
+using Serilog;
 using Serilog.Events;
 
 Console.Title = "IdentityServer";

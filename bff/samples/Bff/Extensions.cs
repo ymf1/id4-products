@@ -5,12 +5,13 @@ using System;
 using System.Threading;
 using Duende.Bff;
 using Duende.Bff.Yarp;
-using Host8;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.ServiceDiscovery;
 using Serilog;
+
+namespace Bff;
 
 internal static class Extensions
 {
@@ -19,15 +20,12 @@ internal static class Extensions
         
         // The serviceprovider is needed to do service discovery
         Func<IServiceProvider> getServiceProvider
-        )
+    )
     {
         var services = builder.Services;
 
         // Add BFF services to DI - also add server-side session management
-        services.AddBff(options =>
-            {
-                //options.UserEndpointReturnNullForAnonymousUser = true;
-            })
+        services.AddBff()
             .AddRemoteApis()
             .AddServerSideSessions();
 
@@ -55,34 +53,34 @@ internal static class Extensions
                 // strict SameSite handling
                 options.Cookie.SameSite = SameSiteMode.Strict;
             })
-        .AddOpenIdConnect("oidc", options =>
-        {
-            // Normally, here you simply configure the authority. But here we want to
-            // use service discovery, because aspire can change the url's at run-time. 
-            // So, it needs to be discovered at runtime. 
-            var authority = DiscoverAuthorityByName(getServiceProvider, "identity-server");
-            options.Authority = authority;
+            .AddOpenIdConnect("oidc", options =>
+            {
+                // Normally, here you simply configure the authority. But here we want to
+                // use service discovery, because aspire can change the url's at run-time. 
+                // So, it needs to be discovered at runtime. 
+                var authority = DiscoverAuthorityByName(getServiceProvider, "identity-server");
+                options.Authority = authority;
 
-            // confidential client using code flow + PKCE
-            options.ClientId = "bff";
-            options.ClientSecret = "secret";
-            options.ResponseType = "code";
-            options.ResponseMode = "query";
+                // confidential client using code flow + PKCE
+                options.ClientId = "bff";
+                options.ClientSecret = "secret";
+                options.ResponseType = "code";
+                options.ResponseMode = "query";
 
-            options.MapInboundClaims = false;
-            options.GetClaimsFromUserInfoEndpoint = true;
-            options.SaveTokens = true;
+                options.MapInboundClaims = false;
+                options.GetClaimsFromUserInfoEndpoint = true;
+                options.SaveTokens = true;
 
-            // request scopes + refresh tokens
-            options.Scope.Clear();
-            options.Scope.Add("openid");
-            options.Scope.Add("profile");
-            options.Scope.Add("api");
-            options.Scope.Add("scope-for-isolated-api");
-            options.Scope.Add("offline_access");
+                // request scopes + refresh tokens
+                options.Scope.Clear();
+                options.Scope.Add("openid");
+                options.Scope.Add("profile");
+                options.Scope.Add("api");
+                options.Scope.Add("scope-for-isolated-api");
+                options.Scope.Add("offline_access");
 
-            options.Resource = "urn:isolated-api";
-        });
+                options.Resource = "urn:isolated-api";
+            });
         services.AddSingleton<ImpersonationAccessTokenRetriever>();
 
         services.AddUserAccessTokenHttpClient("api",
@@ -148,18 +146,18 @@ internal static class Extensions
 
         // On this path, we require the user token
         app.MapRemoteBffApiEndpoint("/api/user-token", "https://localhost:5010")
-            .RequireAccessToken(TokenType.User);
+            .RequireAccessToken();
 
         // On this path, we perform token exchange to impersonate a different user
         // before making the api request
         app.MapRemoteBffApiEndpoint("/api/impersonation", "https://localhost:5010")
-            .RequireAccessToken(TokenType.User)
+            .RequireAccessToken()
             .WithAccessTokenRetriever<ImpersonationAccessTokenRetriever>();
 
         // On this path, we obtain an audience constrained token and invoke
         // a different api that requires such a token
         app.MapRemoteBffApiEndpoint("/api/audience-constrained", "https://localhost:5012")
-            .RequireAccessToken(TokenType.User)
+            .RequireAccessToken()
             .WithUserAccessTokenParameter(new BffUserAccessTokenParameters(resource: "urn:isolated-api"));
 
         return app;

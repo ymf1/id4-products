@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Duende.AccessTokenManagement;
 
 namespace Duende.Bff.Tests.TestHosts;
 

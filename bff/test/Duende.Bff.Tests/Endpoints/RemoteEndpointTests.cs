@@ -99,7 +99,7 @@ namespace Duende.Bff.Tests.Endpoints
             apiResult.Sub.ShouldBe("alice");
             apiResult.ClientId.ShouldBe("spa");
             var body = JsonSerializer.Deserialize<TestPayload>(apiResult.Body);
-            body.message.ShouldBe("hello test api");
+            body.Message.ShouldBe("hello test api");
         }
         
         [Fact]
@@ -121,7 +121,7 @@ namespace Duende.Bff.Tests.Endpoints
             apiResult.Sub.ShouldBe("alice");
             apiResult.ClientId.ShouldBe("spa");
             var body = JsonSerializer.Deserialize<TestPayload>(apiResult.Body);
-            body.message.ShouldBe("hello test api");
+            body.Message.ShouldBe("hello test api");
         }
 
 

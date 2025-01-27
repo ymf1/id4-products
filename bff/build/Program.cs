@@ -1,8 +1,6 @@
-﻿    using System;
+﻿using System;
 using System.IO;
-using System.Net.Http;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Threading.Tasks;
 
 using static Bullseye.Targets;
@@ -12,8 +10,8 @@ namespace build
 {
     internal static class Program
     {
-        private const string packOutput = "./artifacts";
-        private const string envVarMissing = " environment variable is missing. Aborting.";
+        private const string PackOutput = "./artifacts";
+        private const string EnvVarMissing = " environment variable is missing. Aborting.";
 
         private static class Targets
         {
@@ -23,7 +21,6 @@ namespace build
             public const string Build = "build";
             public const string Test = "test";
             public const string Pack = "pack";
-            public const string SignBinary = "sign-binary";
             public const string SignPackage = "sign-package";
         }
 
@@ -60,19 +57,19 @@ namespace build
 
             Target(Targets.CleanPackOutput, () =>
             {
-                if (Directory.Exists(packOutput))
+                if (Directory.Exists(PackOutput))
                 {
-                    Directory.Delete(packOutput, true);
+                    Directory.Delete(PackOutput, true);
                 }
             });
 
             Target(Targets.Pack, DependsOn(Targets.Build, Targets.CleanPackOutput), () =>
             {
-                Run("dotnet", $"pack ./src/Duende.Bff/Duende.Bff.csproj -c Release -o {Directory.CreateDirectory(packOutput).FullName} --no-build --nologo");
-                Run("dotnet", $"pack ./src/Duende.Bff.EntityFramework/Duende.Bff.EntityFramework.csproj -c Release -o {Directory.CreateDirectory(packOutput).FullName} --no-build --nologo");
-                Run("dotnet", $"pack ./src/Duende.Bff.Yarp/Duende.Bff.Yarp.csproj -c Release -o {Directory.CreateDirectory(packOutput).FullName} --no-build --nologo");
-                Run("dotnet", $"pack ./src/Duende.Bff.Blazor/Duende.Bff.Blazor.csproj -c Release -o {Directory.CreateDirectory(packOutput).FullName} --no-build --nologo");
-                Run("dotnet", $"pack ./src/Duende.Bff.Blazor.Client/Duende.Bff.Blazor.Client.csproj -c Release -o {Directory.CreateDirectory(packOutput).FullName} --no-build --nologo");
+                Run("dotnet", $"pack ./src/Duende.Bff/Duende.Bff.csproj -c Release -o {Directory.CreateDirectory(PackOutput).FullName} --no-build --nologo");
+                Run("dotnet", $"pack ./src/Duende.Bff.EntityFramework/Duende.Bff.EntityFramework.csproj -c Release -o {Directory.CreateDirectory(PackOutput).FullName} --no-build --nologo");
+                Run("dotnet", $"pack ./src/Duende.Bff.Yarp/Duende.Bff.Yarp.csproj -c Release -o {Directory.CreateDirectory(PackOutput).FullName} --no-build --nologo");
+                Run("dotnet", $"pack ./src/Duende.Bff.Blazor/Duende.Bff.Blazor.csproj -c Release -o {Directory.CreateDirectory(PackOutput).FullName} --no-build --nologo");
+                Run("dotnet", $"pack ./src/Duende.Bff.Blazor.Client/Duende.Bff.Blazor.Client.csproj -c Release -o {Directory.CreateDirectory(PackOutput).FullName} --no-build --nologo");
             });
 
             Target(Targets.SignPackage, DependsOn(Targets.Pack, Targets.RestoreTools), () =>
@@ -84,7 +81,7 @@ namespace build
 
             Target("sign", DependsOn(Targets.Test, Targets.SignPackage));
 
-            await RunTargetsAndExitAsync(args, ex => ex is SimpleExec.ExitCodeException || ex.Message.EndsWith(envVarMissing));
+            await RunTargetsAndExitAsync(args, ex => ex is SimpleExec.ExitCodeException || ex.Message.EndsWith(EnvVarMissing));
         }
 
         private static void SignNuGet()
@@ -93,10 +90,10 @@ namespace build
 
             if (string.IsNullOrWhiteSpace(signClientSecret))
             {
-                throw new Exception($"SignClientSecret{envVarMissing}");
+                throw new Exception($"SignClientSecret{EnvVarMissing}");
             }
 
-            foreach (var file in Directory.GetFiles(packOutput, "*.nupkg", SearchOption.AllDirectories))
+            foreach (var file in Directory.GetFiles(PackOutput, "*.nupkg", SearchOption.AllDirectories))
             {
                 Console.WriteLine($"  Signing {file}");
 

@@ -1,5 +1,5 @@
 using System;
-using Bff.EntityFramework;
+using Bff.EF;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
 using Serilog;

@@ -86,10 +86,10 @@ namespace Api
     
     public class ToDo
     {
-        static int _nextId = 1;
+        static int NextId = 1;
         public static int NewId()
         {
-            return _nextId++;
+            return NextId++;
         }
         
         public int Id { get; set; }

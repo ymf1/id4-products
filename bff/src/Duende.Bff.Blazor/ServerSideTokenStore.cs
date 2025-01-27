@@ -20,7 +20,7 @@ public class ServerSideTokenStore(
     ILogger<ServerSideTokenStore> logger,
     AuthenticationStateProvider authenticationStateProvider) : IUserTokenStore
 {
-    private readonly IDataProtector protector =
+    private readonly IDataProtector _protector =
         dataProtectionProvider.CreateProtector(ServerSideTicketStore.DataProtectorPurpose);
 
     private readonly IHostEnvironmentAuthenticationStateProvider _authenticationStateProvider = authenticationStateProvider as IHostEnvironmentAuthenticationStateProvider
@@ -37,7 +37,7 @@ public class ServerSideTokenStore(
             _authenticationStateProvider.SetAuthenticationState(loggedOutTask);
             return new UserToken();   
         }
-        var ticket = session.Deserialize(protector, logger) ??
+        var ticket = session.Deserialize(_protector, logger) ??
                      throw new InvalidOperationException("Failed to deserialize authentication ticket from session");
 
         return tokensInAuthProperties.GetUserToken(ticket.Properties, parameters);
@@ -87,12 +87,12 @@ public class ServerSideTokenStore(
             logger.LogDebug("Failed to find a session to update, bailing out");
             return;
         }
-        var ticket = session.Deserialize(protector, logger) ??
+        var ticket = session.Deserialize(_protector, logger) ??
                      throw new InvalidOperationException("Failed to deserialize authentication ticket from session");
 
         updateAction(ticket);
 
-        session.Ticket = ticket.Serialize(protector);
+        session.Ticket = ticket.Serialize(_protector);
 
         await sessionStore.UpdateUserSessionAsync(session.Key, session);
     }

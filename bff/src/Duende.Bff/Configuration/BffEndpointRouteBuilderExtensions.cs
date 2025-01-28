@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
-using Duende.Bff.Endpoints;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Duende;
@@ -18,7 +17,7 @@ namespace Microsoft.AspNetCore.Builder;
 /// </summary>
 public static class BffEndpointRouteBuilderExtensions
 {
-    internal static bool _licenseChecked;
+    internal static bool LicenseChecked;
 
     private static Task ProcessWith<T>(HttpContext context)
         where T : IBffEndpointService
@@ -134,7 +133,7 @@ public static class BffEndpointRouteBuilderExtensions
         
     internal static void CheckLicense(this IEndpointRouteBuilder endpoints)
     {
-        if (_licenseChecked == false)
+        if (LicenseChecked == false)
         {
             var loggerFactory = endpoints.ServiceProvider.GetRequiredService<ILoggerFactory>();
             var options = endpoints.ServiceProvider.GetRequiredService<IOptions<BffOptions>>().Value;
@@ -143,6 +142,6 @@ public static class BffEndpointRouteBuilderExtensions
             LicenseValidator.ValidateLicense();
         }
 
-        _licenseChecked = true;
+        LicenseChecked = true;
     }
 }

@@ -23,32 +23,32 @@ internal partial class LicenseValidator
         "Duende_IdentityServer_License.key",
     };
 
-    static ILogger _logger;
-    static Action<string, object[]> _errorLog;
-    static Action<string, object[]> _informationLog;
-    static Action<string, object[]> _warningLog;
-    static Action<string, object[]> _debugLog;
+    static ILogger Logger;
+    static Action<string, object[]> ErrorLog;
+    static Action<string, object[]> InformationLog;
+    static Action<string, object[]> WarningLog;
+    static Action<string, object[]> DebugLog;
 
-    static License _license;
+    static License License;
 
     static void Initalize(ILoggerFactory loggerFactory, string productName, string key, bool isDevelopment = false)
     {
-        _logger = loggerFactory.CreateLogger($"Duende.{productName}.License");
+        Logger = loggerFactory.CreateLogger($"Duende.{productName}.License");
 
         key ??= LoadFromFile();
-        _license = ValidateKey(key);
+        License = ValidateKey(key);
 
-        if (_license?.RedistributionFeature == true && !isDevelopment)
+        if (License?.RedistributionFeature == true && !isDevelopment)
         {
             // for redistribution/prod scenarios, we want most of these to be at trace level
-            _errorLog = _warningLog = _informationLog = _debugLog = LogToTrace;
+            ErrorLog = WarningLog = InformationLog = DebugLog = LogToTrace;
         }
         else
         {
-            _errorLog = LogToError;
-            _warningLog = LogToWarning;
-            _informationLog = LogToInformation;
-            _debugLog = LogToDebug;
+            ErrorLog = LogToError;
+            WarningLog = LogToWarning;
+            InformationLog = LogToInformation;
+            DebugLog = LogToDebug;
         }
     }
 
@@ -68,11 +68,11 @@ internal partial class LicenseValidator
 
     public static void ValidateLicense()
     {
-        if (_logger == null) throw new Exception("LicenseValidator.Initalize has not yet been called.");
+        if (Logger == null) throw new Exception("LicenseValidator.Initalize has not yet been called.");
 
         var errors = new List<string>();
 
-        if (_license == null)
+        if (License == null)
         {
             var message = "You do not have a valid license key for the Duende software. " +
                           "This is allowed for development and testing scenarios. " +
@@ -80,17 +80,17 @@ internal partial class LicenseValidator
                           "Please start a conversation with us: https://duendesoftware.com/contact";
 
             // we're not using our _warningLog because we always want this emitted regardless of the context
-            _logger.LogWarning(message);
+            Logger.LogWarning(message);
             WarnForProductFeaturesWhenMissingLicense();
             return;
         }
 
-        _debugLog.Invoke("The Duende license key details: {@license}", new[] { _license });
+        DebugLog.Invoke("The Duende license key details: {@license}", new[] { License });
 
-        if (_license.Expiration.HasValue)
+        if (License.Expiration.HasValue)
         {
-            var diff = DateTime.UtcNow.Date.Subtract(_license.Expiration.Value.Date).TotalDays;
-            if (diff > 0 && !_license.RedistributionFeature)
+            var diff = DateTime.UtcNow.Date.Subtract(License.Expiration.Value.Date).TotalDays;
+            if (diff > 0 && !License.RedistributionFeature)
             {
                 errors.Add($"Your license for the Duende software expired {diff} days ago.");
             }
@@ -102,25 +102,25 @@ internal partial class LicenseValidator
         {
             foreach (var err in errors)
             {
-                _errorLog.Invoke(err, Array.Empty<object>());
+                ErrorLog.Invoke(err, Array.Empty<object>());
             }
 
-            _errorLog.Invoke(
+            ErrorLog.Invoke(
                 "Please contact {licenseContact} from {licenseCompany} to obtain a valid license for the Duende software.",
-                new[] { _license.ContactInfo, _license.CompanyName });
+                new[] { License.ContactInfo, License.CompanyName });
         }
         else
         {
-            if (_license.Expiration.HasValue)
+            if (License.Expiration.HasValue)
             {
-                _informationLog.Invoke("You have a valid license key for the Duende software {edition} edition for use at {licenseCompany}. The license expires on {licenseExpiration}.",
-                    new object[] { _license.Edition, _license.CompanyName, _license.Expiration.Value.ToLongDateString() });
+                InformationLog.Invoke("You have a valid license key for the Duende software {edition} edition for use at {licenseCompany}. The license expires on {licenseExpiration}.",
+                    new object[] { License.Edition, License.CompanyName, License.Expiration.Value.ToLongDateString() });
             }
             else
             {
-                _informationLog.Invoke(
+                InformationLog.Invoke(
                     "You have a valid license key for the Duende software {edition} edition for use at {licenseCompany}.",
-                    new object[] { _license.Edition, _license.CompanyName });
+                    new object[] { License.Edition, License.CompanyName });
             }
         }
     }
@@ -157,7 +157,7 @@ internal partial class LicenseValidator
             }
             else
             {
-                _logger.LogCritical(validateResult.Exception, "Error validating the Duende software license key");
+                Logger.LogCritical(validateResult.Exception, "Error validating the Duende software license key");
             }
         }
 
@@ -166,41 +166,41 @@ internal partial class LicenseValidator
 
     private static void LogToTrace(string message, params object[] args)
     {
-        if (_logger.IsEnabled(LogLevel.Trace))
+        if (Logger.IsEnabled(LogLevel.Trace))
         {
-            LoggerExtensions.LogTrace(_logger, message, args);
+            LoggerExtensions.LogTrace(Logger, message, args);
         }
     }
 
     private static void LogToDebug(string message, params object[] args)
     {
-        if (_logger.IsEnabled(LogLevel.Debug))
+        if (Logger.IsEnabled(LogLevel.Debug))
         {
-            LoggerExtensions.LogDebug(_logger, message, args);
+            LoggerExtensions.LogDebug(Logger, message, args);
         }
     }
 
     private static void LogToInformation(string message, params object[] args)
     {
-        if (_logger.IsEnabled(LogLevel.Information))
+        if (Logger.IsEnabled(LogLevel.Information))
         {
-            LoggerExtensions.LogInformation(_logger, message, args);
+            LoggerExtensions.LogInformation(Logger, message, args);
         }
     }
 
     private static void LogToWarning(string message, params object[] args)
     {
-        if (_logger.IsEnabled(LogLevel.Warning))
+        if (Logger.IsEnabled(LogLevel.Warning))
         {
-            LoggerExtensions.LogWarning(_logger, message, args);
+            LoggerExtensions.LogWarning(Logger, message, args);
         }
     }
 
     private static void LogToError(string message, params object[] args)
     {
-        if (_logger.IsEnabled(LogLevel.Error))
+        if (Logger.IsEnabled(LogLevel.Error))
         {
-            LoggerExtensions.LogError(_logger, message, args);
+            LoggerExtensions.LogError(Logger, message, args);
         }
     }
 }

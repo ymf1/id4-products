@@ -1,6 +1,3 @@
-using System.Runtime.CompilerServices;
-using Projects;
-
 var builder = DistributedApplication.CreateBuilder(args);
 
 var idServer = builder.AddProject<Projects.IdentityServer>("identity-server");

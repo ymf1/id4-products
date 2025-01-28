@@ -125,7 +125,7 @@ public class ServerSideSessionCleanupHost : IHostedService
 
         try
         {
-            using (var serviceScope = _serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            await using (var serviceScope = _serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateAsyncScope())
             {
                 var logger = serviceScope.ServiceProvider.GetRequiredService<ILogger<ServerSideSessionCleanupHost>>();
                 var options = serviceScope.ServiceProvider.GetRequiredService<IdentityServerOptions>();

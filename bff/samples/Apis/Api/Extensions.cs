@@ -8,6 +8,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 
+namespace Api;
+
 internal static class Extensions
 {
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)

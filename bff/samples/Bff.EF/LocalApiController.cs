@@ -3,7 +3,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace Bff.EntityFramework
+namespace Bff.EF
 {
     [Route("local")]
     public class LocalApiController : ControllerBase

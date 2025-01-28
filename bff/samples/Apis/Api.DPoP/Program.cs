@@ -1,4 +1,5 @@
 using System;
+using Api.DPoP;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
 using Serilog;

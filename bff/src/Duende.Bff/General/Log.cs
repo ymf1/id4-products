@@ -23,53 +23,53 @@ internal static class EventIds
     
 internal static class Log
 {
-    private static readonly Action<ILogger, string, Exception?> _antiForgeryValidationFailed = LoggerMessage.Define<string>(
+    private static readonly Action<ILogger, string, Exception?> AntiForgeryValidationFailedMessage = LoggerMessage.Define<string>(
         LogLevel.Error,
         EventIds.AntiForgeryValidationFailed,
         "Anti-forgery validation failed. local path: '{localPath}'");
         
-    private static readonly Action<ILogger, string, string, Exception?> _backChannelLogout = LoggerMessage.Define<string, string>(
+    private static readonly Action<ILogger, string, string, Exception?> BackChannelLogoutMessage = LoggerMessage.Define<string, string>(
         LogLevel.Information,
         EventIds.BackChannelLogout,
         "Back-channel logout. sub: '{sub}', sid: '{sid}'");
         
-    private static readonly Action<ILogger, string, Exception?> _backChannelLogoutError = LoggerMessage.Define<string>(
+    private static readonly Action<ILogger, string, Exception?> BackChannelLogoutErrorMessage = LoggerMessage.Define<string>(
         LogLevel.Information,
         EventIds.BackChannelLogoutError,
         "Back-channel logout error. error: '{error}'");
 
-    private static readonly Action<ILogger, string, string, string, Exception?> _accessTokenMissing = LoggerMessage.Define<string, string, string>(
+    private static readonly Action<ILogger, string, string, string, Exception?> AccessTokenMissingMessage = LoggerMessage.Define<string, string, string>(
         LogLevel.Warning,
         EventIds.AccessTokenMissing,
         "Access token is missing. token type: '{tokenType}', local path: '{localpath}', detail: '{detail}'");
 
-    private static readonly Action<ILogger, string, string, Exception?> _invalidRouteConfiguration = LoggerMessage.Define<string, string>(
+    private static readonly Action<ILogger, string, string, Exception?> InvalidRouteConfigurationMessage = LoggerMessage.Define<string, string>(
         LogLevel.Warning,
         EventIds.InvalidRouteConfiguration,
         "Invalid route configuration. Cannot combine a required access token (a call to WithAccessToken) and an optional access token (a call to WithOptionalUserAccessToken). clusterId: '{clusterId}', routeId: '{routeId}'");
 
     public static void AntiForgeryValidationFailed(this ILogger logger, string localPath)
     {
-        _antiForgeryValidationFailed(logger, localPath, null);
+        AntiForgeryValidationFailedMessage(logger, localPath, null);
     }
         
     public static void BackChannelLogout(this ILogger logger, string sub, string sid)
     { 
-        _backChannelLogout(logger, sub, sid, null);
+        BackChannelLogoutMessage(logger, sub, sid, null);
     }
         
     public static void BackChannelLogoutError(this ILogger logger, string error)
     { 
-        _backChannelLogoutError(logger, error, null);
+        BackChannelLogoutErrorMessage(logger, error, null);
     }
 
     public static void AccessTokenMissing(this ILogger logger, string tokenType, string localPath, string detail)
     {
-        _accessTokenMissing(logger, tokenType, localPath, detail, null);
+        AccessTokenMissingMessage(logger, tokenType, localPath, detail, null);
     }
 
     public static void InvalidRouteConfiguration(this ILogger logger, string? clusterId, string routeId)
     {
-        _invalidRouteConfiguration(logger, clusterId ?? "no cluster id", routeId, null);
+        InvalidRouteConfigurationMessage(logger, clusterId ?? "no cluster id", routeId, null);
     }
 }

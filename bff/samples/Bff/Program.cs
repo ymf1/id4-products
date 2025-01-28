@@ -1,7 +1,7 @@
 using System;
+using Bff;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Events;
 

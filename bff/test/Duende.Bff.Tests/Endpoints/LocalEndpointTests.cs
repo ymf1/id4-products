@@ -113,7 +113,7 @@ namespace Duende.Bff.Tests.Endpoints
             apiResult.Path.ShouldBe("/local_authz");
             apiResult.Sub.ShouldBe("alice");
             var body = JsonSerializer.Deserialize<TestPayload>(apiResult.Body);
-            body.message.ShouldBe("hello test api");
+            body.Message.ShouldBe("hello test api");
         }
 
         [Fact]

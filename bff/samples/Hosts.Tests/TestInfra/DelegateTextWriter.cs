@@ -1,8 +1,10 @@
-﻿namespace Hosts.Tests.TestInfra;
+﻿using System.Text;
+
+namespace Hosts.Tests.TestInfra;
 
 public class DelegateTextWriter : TextWriter
 {
-    private WriteTestOutput _writeAction;
+    private readonly WriteTestOutput _writeAction;
     private string _currentLine;
 
     public DelegateTextWriter(WriteTestOutput writeAction)
@@ -11,11 +13,13 @@ public class DelegateTextWriter : TextWriter
         _currentLine = string.Empty;
     }
 
+    public override Encoding Encoding => Encoding.Default;
+
     public override void Write(char value)
     {
         if (value == '\r')
-        {
             // let's ignore carriage returns
+        {
             return;
         }
 
@@ -33,14 +37,17 @@ public class DelegateTextWriter : TextWriter
     public override void Write(string? value)
     {
         if (value == null)
+        {
             return;
+        }
+
         _currentLine += value.Replace("\r\n", "\n");
 
-        if (_currentLine.Contains('\n'))
+        if (_currentLine.Contains(value: '\n'))
         {
             string[] lines = _currentLine.Split(new[] { '\n' }, StringSplitOptions.None);
 
-            for (int i = 0; i < lines.Length- 1; i++)
+            for (var i = 0; i < lines.Length - 1; i++)
             {
                 _writeAction(lines[i]);
             }
@@ -52,11 +59,11 @@ public class DelegateTextWriter : TextWriter
     public override void WriteLine(string? value)
     {
         if (value == null)
+        {
             return;
+        }
 
         _writeAction(value + Environment.NewLine);
         _currentLine = string.Empty;
     }
-
-    public override System.Text.Encoding Encoding => System.Text.Encoding.Default;
 }

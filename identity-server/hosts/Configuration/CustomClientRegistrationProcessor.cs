@@ -49,14 +49,14 @@ internal sealed class CustomClientRegistrationProcessor : DynamicClientRegistrat
     protected override async Task<(Secret, string)> GenerateSecret(DynamicClientRegistrationContext context)
     {
          if(context.Request.Extensions.TryGetValue("client_secret", out var secretParam))
-        {
-            var plainText = secretParam.ToString();
-            ArgumentNullException.ThrowIfNull(plainText);
-            var secret = new Secret(plainText.Sha256());
+         {
+             var plainText = secretParam.ToString();
+             ArgumentNullException.ThrowIfNull(plainText);
+             var secret = new Secret(plainText.Sha256());
 
-            return (secret, plainText);
-        }
-        return await base.GenerateSecret(context);
+             return (secret, plainText);
+         }
+         return await base.GenerateSecret(context);
 
     }
 }

@@ -70,6 +70,11 @@ public class IdentityServerOptions
     public bool StrictJarValidation { get; set; } = false;
 
     /// <summary>
+    /// When clients authenticate with private_key_jwt assertions, validate the audience of the assertion strictly: the audience must be this IdentityServer's issuer identifier as a single string.
+    /// </summary>
+    public bool StrictClientAssertionAudienceValidation { get; set; } = false;
+
+    /// <summary>
     /// Specifies if a user's tenant claim is compared to the tenant acr_values parameter value to determine if the login page is displayed. Defaults to false.
     /// </summary>
     public bool ValidateTenantOnAuthorization { get; set; } = false;

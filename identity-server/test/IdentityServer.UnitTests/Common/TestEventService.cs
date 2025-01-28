@@ -29,6 +29,12 @@ public class TestEventService : IEventService
         return (T)_events.Where(x => x.Key == typeof(T)).Select(x=>x.Value).First();
     }
 
+    public void AssertEventWasNotRaised<T>()
+        where T : class
+    {
+        _events.ContainsKey(typeof(T)).Should().BeFalse();
+    }
+
     public bool CanRaiseEventType(EventTypes evtType)
     {
         return true;

@@ -120,7 +120,17 @@ internal class TokenEndpoint : IEndpointHandler
         var requestResult = await _requestValidator.ValidateRequestAsync(requestContext);
         if (requestResult.IsError)
         {
-            await _events.RaiseAsync(new TokenIssuedFailureEvent(requestResult));
+            //INFO: this is expected case in the normal DPoP flow and is not a real failure event.
+            //Keeping a debug log to help with troubleshooting in the case of a buggy client.
+            if (requestResult.Error == OidcConstants.TokenErrors.UseDPoPNonce)
+            {
+                _logger.LogDebug("Token request validation failed with: {tokenFailureReason}", OidcConstants.TokenErrors.UseDPoPNonce);
+            }
+            else
+            {
+                await _events.RaiseAsync(new TokenIssuedFailureEvent(requestResult));
+            }
+            
             Telemetry.Metrics.TokenIssuedFailure(
                 clientResult.Client.ClientId, requestResult.ValidatedRequest?.GrantType, null, requestResult.Error);
             var err = Error(requestResult.Error, requestResult.ErrorDescription, requestResult.CustomResponse);

@@ -7,15 +7,16 @@ using System.Net;
 using System.Threading.Tasks;
 using Shouldly;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Duende.Bff.Tests
 {
-    public class GenericHostTests
+    public class GenericHostTests(ITestOutputHelper output)
     {
         [Fact]
         public async Task Test1()
         {
-            var host = new GenericHost();
+            var host = new GenericHost(output.WriteLine);
             host.OnConfigure += app => app.Run(ctx => {
                 ctx.Response.StatusCode = 204;
                 return Task.CompletedTask;

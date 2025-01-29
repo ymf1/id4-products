@@ -1,4 +1,4 @@
-﻿// Copyright (c) Duende Software. All rights reserved.
+// Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
 using Duende.Bff.Tests.TestFramework;
@@ -35,9 +35,14 @@ public class BffHost : GenericHost
 
     public BffOptions BffOptions { get; private set; }
 
-    public BffHost(IdentityServerHost identityServerHost, ApiHost apiHost, string clientId,
-        string baseAddress = "https://app", bool useForwardedHeaders = false)
-        : base(baseAddress)
+    public BffHost(
+        WriteTestOutput output,
+        IdentityServerHost identityServerHost, 
+        ApiHost apiHost, 
+        string clientId,
+        string baseAddress = "https://app", 
+        bool useForwardedHeaders = false)
+        : base(output, baseAddress)
     {
         _identityServerHost = identityServerHost;
         _apiHost = apiHost;

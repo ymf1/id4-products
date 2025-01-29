@@ -1,4 +1,4 @@
-﻿// Copyright (c) Duende Software. All rights reserved.
+// Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
 using Duende.Bff.Tests.TestFramework;
@@ -34,9 +34,14 @@ namespace Duende.Bff.Tests.TestHosts
 
         public BffOptions BffOptions { get; private set; }
 
-        public YarpBffHost(IdentityServerHost identityServerHost, ApiHost apiHost, string clientId,
-            string baseAddress = "https://app", bool useForwardedHeaders = false)
-            : base(baseAddress)
+        public YarpBffHost(
+            WriteTestOutput output, 
+            IdentityServerHost identityServerHost, 
+            ApiHost apiHost, 
+            string clientId,
+            string baseAddress = "https://app", 
+            bool useForwardedHeaders = false)
+            : base(output, baseAddress)
         {
             _identityServerHost = identityServerHost;
             _apiHost = apiHost;

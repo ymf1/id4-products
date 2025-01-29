@@ -6,17 +6,18 @@ using Duende.Bff.Tests.TestFramework;
 using Duende.Bff.Tests.TestHosts;
 using Shouldly;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Duende.Bff.Tests.Headers
 {
     public class ApiUseForwardedHeaders : BffIntegrationTestBase
     {
-        public ApiUseForwardedHeaders()
+        public ApiUseForwardedHeaders(ITestOutputHelper output) : base(output)
         {
-            ApiHost = new ApiHost(IdentityServerHost, "scope1", useForwardedHeaders: true);
+            ApiHost = new ApiHost(output.WriteLine, IdentityServerHost, "scope1", useForwardedHeaders: true);
             ApiHost.InitializeAsync().Wait();
 
-            BffHost = new BffHost(IdentityServerHost, ApiHost, "spa", useForwardedHeaders: false);
+            BffHost = new BffHost(output.WriteLine, IdentityServerHost, ApiHost, "spa", useForwardedHeaders: false);
             BffHost.InitializeAsync().Wait();
         }
         

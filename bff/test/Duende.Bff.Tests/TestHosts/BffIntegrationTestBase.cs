@@ -1,4 +1,4 @@
-﻿// Copyright (c) Duende Software. All rights reserved.
+// Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
 using Duende.IdentityServer.Models;
@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Xunit.Abstractions;
 
 namespace Duende.Bff.Tests.TestHosts
 {
@@ -17,9 +18,9 @@ namespace Duende.Bff.Tests.TestHosts
         protected BffHost BffHost;
         protected BffHostUsingResourceNamedTokens BffHostWithNamedTokens;
 
-        public BffIntegrationTestBase()
+        public BffIntegrationTestBase(ITestOutputHelper output)
         {
-            IdentityServerHost = new IdentityServerHost();
+            IdentityServerHost = new IdentityServerHost(output.WriteLine);
             
             IdentityServerHost.Clients.Add(new Client
             {
@@ -46,13 +47,13 @@ namespace Duende.Bff.Tests.TestHosts
             
             IdentityServerHost.InitializeAsync().Wait();
 
-            ApiHost = new ApiHost(IdentityServerHost, "scope1");
+            ApiHost = new ApiHost(output.WriteLine, IdentityServerHost, "scope1");
             ApiHost.InitializeAsync().Wait();
 
-            BffHost = new BffHost(IdentityServerHost, ApiHost, "spa");
+            BffHost = new BffHost(output.WriteLine, IdentityServerHost, ApiHost, "spa");
             BffHost.InitializeAsync().Wait();
 
-            BffHostWithNamedTokens = new BffHostUsingResourceNamedTokens(IdentityServerHost, ApiHost, "spa");
+            BffHostWithNamedTokens = new BffHostUsingResourceNamedTokens(output.WriteLine, IdentityServerHost, ApiHost, "spa");
             BffHostWithNamedTokens.InitializeAsync().Wait();
         }
 

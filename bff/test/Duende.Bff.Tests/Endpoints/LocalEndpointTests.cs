@@ -1,4 +1,4 @@
-﻿// Copyright (c) Duende Software. All rights reserved.
+// Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
 using Duende.Bff.Tests.TestFramework;
@@ -11,10 +11,11 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Shouldly;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Duende.Bff.Tests.Endpoints
 {
-    public class LocalEndpointTests : BffIntegrationTestBase
+    public class LocalEndpointTests(ITestOutputHelper output) : BffIntegrationTestBase(output)
     {
         [Fact]
         public async Task calls_to_authorized_local_endpoint_should_succeed()

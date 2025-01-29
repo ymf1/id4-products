@@ -1,4 +1,4 @@
-﻿// Copyright (c) Duende Software. All rights reserved.
+// Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
 using Shouldly;
@@ -19,15 +19,12 @@ using System.Threading.Tasks;
 
 namespace Duende.Bff.Tests.TestFramework
 {
-    public class GenericHost
+    public class GenericHost(WriteTestOutput writeOutput, string baseAddress = "https://server")
     {
-        public GenericHost(string baseAddress = "https://server")
-        {
-            if (baseAddress.EndsWith("/")) baseAddress = baseAddress.Substring(0, baseAddress.Length - 1);
-            _baseAddress = baseAddress;
-        }
+        private readonly string _baseAddress = baseAddress.EndsWith("/")
+            ? baseAddress.Substring(0, baseAddress.Length - 1)
+            : baseAddress;
 
-        private readonly string _baseAddress;
         IServiceProvider _appServices;
 
         public Assembly HostAssembly { get; set; }
@@ -37,7 +34,7 @@ namespace Duende.Bff.Tests.TestFramework
         public TestBrowserClient BrowserClient { get; set; }
         public HttpClient HttpClient { get; set; }
 
-        public TestLoggerProvider Logger { get; set; } = new TestLoggerProvider();
+        public TestLoggerProvider Logger { get; set; } = new TestLoggerProvider(writeOutput, baseAddress + " - ");
 
 
         public T Resolve<T>()

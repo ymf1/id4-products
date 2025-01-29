@@ -1,4 +1,4 @@
-﻿// Copyright (c) Duende Software. All rights reserved.
+// Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
 using System.Linq;
@@ -9,10 +9,11 @@ using System.Threading.Tasks;
 using Xunit;
 using System.Net;
 using Shouldly;
+using Xunit.Abstractions;
 
 namespace Duende.Bff.Tests.Endpoints.Management
 {
-    public class UserEndpointTests : BffIntegrationTestBase
+    public class UserEndpointTests(ITestOutputHelper output) : BffIntegrationTestBase(output)
     {
         [Fact]
         public async Task user_endpoint_for_authenticated_user_should_return_claims()

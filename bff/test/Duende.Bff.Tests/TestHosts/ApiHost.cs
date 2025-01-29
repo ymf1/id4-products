@@ -1,4 +1,4 @@
-﻿// Copyright (c) Duende Software. All rights reserved.
+// Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
 using System.Collections.Generic;
@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using Duende.IdentityServer.Extensions;
 using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Duende.Bff.Tests.TestHosts
@@ -21,8 +22,13 @@ namespace Duende.Bff.Tests.TestHosts
         private readonly IdentityServerHost _identityServerHost;
         private readonly bool _useForwardedHeaders;
 
-        public ApiHost(IdentityServerHost identityServerHost, string scope, string baseAddress = "https://api", bool useForwardedHeaders = false) 
-            : base(baseAddress)
+        public ApiHost(
+            WriteTestOutput output,
+            IdentityServerHost identityServerHost, 
+            string scope, 
+            string baseAddress = "https://api", 
+            bool useForwardedHeaders = false) 
+            : base(output, baseAddress)
         {
             _identityServerHost = identityServerHost;
             _useForwardedHeaders = useForwardedHeaders;

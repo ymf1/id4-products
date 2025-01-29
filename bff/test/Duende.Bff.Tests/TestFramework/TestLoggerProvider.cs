@@ -1,4 +1,4 @@
-﻿// Copyright (c) Duende Software. All rights reserved.
+// Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
 using Microsoft.Extensions.Logging;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Duende.Bff.Tests.TestFramework
 {
-    public class TestLoggerProvider : ILoggerProvider
+    public class TestLoggerProvider(WriteTestOutput? writeOutput = null, string? name = null) : ILoggerProvider
     {
         public class DebugLogger : ILogger, IDisposable
         {
@@ -45,6 +45,7 @@ namespace Duende.Bff.Tests.TestFramework
 
         private void Log(string msg)
         {
+            writeOutput?.Invoke(name + msg);
             LogEntries.Add(msg);
         }
 
@@ -57,4 +58,6 @@ namespace Duende.Bff.Tests.TestFramework
         {
         }
     }
+
+    public delegate void WriteTestOutput(string message);
 }

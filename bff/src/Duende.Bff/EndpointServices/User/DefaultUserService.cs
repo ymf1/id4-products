@@ -72,8 +72,8 @@ public class DefaultUserService : IUserService
         else
         {
             var claims = new List<ClaimRecord>();
-            claims.AddRange(GetUserClaims(result));
-            claims.AddRange(GetManagementClaims(context, result));
+            claims.AddRange(await GetUserClaimsAsync(result));
+            claims.AddRange(await GetManagementClaimsAsync(context, result));
 
             var json = JsonSerializer.Serialize(claims);
 
@@ -90,9 +90,9 @@ public class DefaultUserService : IUserService
     /// </summary>
     /// <param name="authenticateResult"></param>
     /// <returns></returns>
-    protected virtual IEnumerable<ClaimRecord> GetUserClaims(AuthenticateResult authenticateResult)
+    protected virtual Task<IEnumerable<ClaimRecord>> GetUserClaimsAsync(AuthenticateResult authenticateResult)
     {
-        return authenticateResult.Principal?.Claims.Select(x => new ClaimRecord(x.Type, x.Value)) ?? Enumerable.Empty<ClaimRecord>();
+        return Task.FromResult(authenticateResult.Principal?.Claims.Select(x => new ClaimRecord(x.Type, x.Value)) ?? Enumerable.Empty<ClaimRecord>());
     }
 
     /// <summary>
@@ -101,7 +101,7 @@ public class DefaultUserService : IUserService
     /// <param name="context"></param>
     /// <param name="authenticateResult"></param>
     /// <returns></returns>
-    protected virtual IEnumerable<ClaimRecord> GetManagementClaims(HttpContext context, AuthenticateResult authenticateResult)
+    protected virtual Task<IEnumerable<ClaimRecord>> GetManagementClaimsAsync(HttpContext context, AuthenticateResult authenticateResult)
     {
         var claims = new List<ClaimRecord>();
 
@@ -132,7 +132,7 @@ public class DefaultUserService : IUserService
             }
         }
 
-        return claims;
+        return Task.FromResult((IEnumerable<ClaimRecord>)claims);
     }
         
     /// <summary>

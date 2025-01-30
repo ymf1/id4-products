@@ -3,7 +3,7 @@
 
 <div class="welcome-page">
     <h1>
-        <img src="~/duende-logo.svg" class="logo">
+        <img alt="Duende Logo" src="~/duende-logo.svg" class="logo">
         Welcome to Duende IdentityServer
         <small class="text-muted">(version @Model.Version)</small>
     </h1>
@@ -11,17 +11,17 @@
     <ul>
         <li>
             IdentityServer publishes a
-            <a href="~/.well-known/openid-configuration">discovery document</a>
+            <a href="@Url.Content("~/.well-known/openid-configuration")">discovery document</a>
             where you can find metadata and links to all the endpoints, key material, etc.
         </li>
         <li>
-            Click <a href="~/diagnostics">here</a> to see the claims for your current session.
+            Click <a asp-page="/Diagnostics/Index">here</a> to see the claims for your current session.
         </li>
         <li>
-            Click <a href="~/grants">here</a> to manage your stored grants.
+            Click <a asp-page="/Grants/Index">here</a> to manage your stored grants.
         </li>
         <li>
-            Click <a href="~/ciba/all">here</a> to view your pending CIBA login requests.
+            Click <a asp-page="/Ciba/All">here</a> to view your pending CIBA login requests.
         </li>
         <li>
             Here are links to the

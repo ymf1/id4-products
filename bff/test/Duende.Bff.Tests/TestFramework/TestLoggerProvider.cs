@@ -7,8 +7,11 @@ using System.Collections.Generic;
 
 namespace Duende.Bff.Tests.TestFramework
 {
-    public class TestLoggerProvider(WriteTestOutput? writeOutput = null, string? name = null) : ILoggerProvider
+    public class TestLoggerProvider(WriteTestOutput writeOutput, string name) : ILoggerProvider
     {
+        private readonly WriteTestOutput _writeOutput = writeOutput ?? throw new ArgumentNullException(nameof(writeOutput));
+        private readonly string _name = name ?? throw new ArgumentNullException(nameof(name));
+
         public class DebugLogger : ILogger, IDisposable
         {
             private readonly TestLoggerProvider _parent;
@@ -41,11 +44,11 @@ namespace Duende.Bff.Tests.TestFramework
             }
         }
 
-        public List<string> LogEntries = new List<string>();
+        public List<string> LogEntries { get; } = new();
 
         private void Log(string msg)
         {
-            writeOutput?.Invoke(name + msg);
+            _writeOutput?.Invoke(_name + msg);
             LogEntries.Add(msg);
         }
 

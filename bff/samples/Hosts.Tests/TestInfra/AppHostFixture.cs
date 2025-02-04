@@ -1,6 +1,10 @@
 using Aspire.Hosting;
 using Microsoft.Extensions.Logging;
+
+#if !DEBUG_NCRUNCH
 using Projects;
+#endif
+
 using Serilog;
 using Serilog.Core;
 using Serilog.Extensions.Logging;

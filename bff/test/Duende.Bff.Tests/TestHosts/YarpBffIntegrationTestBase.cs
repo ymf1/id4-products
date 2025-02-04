@@ -17,7 +17,7 @@ namespace Duende.Bff.Tests.TestHosts
     {
         private readonly IdentityServerHost _identityServerHost;
         protected readonly ApiHost ApiHost;
-        protected readonly YarpBffHost BffHost;
+        protected readonly YarpBffHost YarpBasedBffHost;
         private BffHostUsingResourceNamedTokens _bffHostWithNamedTokens;
 
         protected YarpBffIntegrationTestBase(ITestOutputHelper output) : base(output)
@@ -40,15 +40,14 @@ namespace Duende.Bff.Tests.TestHosts
             _identityServerHost.OnConfigureServices += services => {
                 services.AddTransient<IBackChannelLogoutHttpClient>(provider => 
                     new DefaultBackChannelLogoutHttpClient(
-                        BffHost!.HttpClient, 
+                        YarpBasedBffHost!.HttpClient, 
                         provider.GetRequiredService<ILoggerFactory>(), 
                         provider.GetRequiredService<ICancellationTokenProvider>()));
             };
             
             ApiHost = new ApiHost(WriteLine, _identityServerHost, "scope1");
 
-            BffHost = new YarpBffHost(WriteLine, _identityServerHost, ApiHost, "spa");
-
+            YarpBasedBffHost = new YarpBffHost(output.WriteLine, _identityServerHost, ApiHost, "spa");
             _bffHostWithNamedTokens = new BffHostUsingResourceNamedTokens(WriteLine, _identityServerHost, ApiHost, "spa");
         }
 
@@ -61,7 +60,7 @@ namespace Duende.Bff.Tests.TestHosts
         {
             await _identityServerHost.InitializeAsync();
             await ApiHost.InitializeAsync();
-            await BffHost.InitializeAsync();
+            await YarpBasedBffHost.InitializeAsync();
             await _bffHostWithNamedTokens.InitializeAsync();
             await base.InitializeAsync();
         }
@@ -70,7 +69,7 @@ namespace Duende.Bff.Tests.TestHosts
         {
             await _identityServerHost.DisposeAsync();
             await ApiHost.DisposeAsync();
-            await BffHost.DisposeAsync();
+            await YarpBasedBffHost.DisposeAsync();
             await _bffHostWithNamedTokens.DisposeAsync();
             await base.DisposeAsync();
         }

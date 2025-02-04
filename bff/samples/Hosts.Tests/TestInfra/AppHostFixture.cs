@@ -1,4 +1,5 @@
 using Aspire.Hosting;
+using Hosts.ServiceDefaults;
 using Microsoft.Extensions.Logging;
 
 #if !DEBUG_NCRUNCH
@@ -81,33 +82,16 @@ public class AppHostFixture : IAsyncLifetime
         await (await appHost.BuildAsync()).StartAsync();
 
         // Wait for all the services so that their logs are mostly written. 
-        await resourceNotificationService.WaitForResourceAsync(
-                "bff",
-                KnownResourceStates.Running
-            )
-            .WaitAsync(TimeSpan.FromSeconds(30));
 
-        await resourceNotificationService.WaitForResourceAsync(
-                "bff-ef",
-                KnownResourceStates.Running
-            )
-            .WaitAsync(TimeSpan.FromSeconds(30));
+        foreach (var resource in AppHostServices.All)
+        {
+            await resourceNotificationService.WaitForResourceAsync(
+                    resource,
+                    KnownResourceStates.Running
+                )
+                .WaitAsync(TimeSpan.FromSeconds(30));
+        }
 
-        await resourceNotificationService.WaitForResourceAsync(
-                "bff-webassembly-per-component",
-                KnownResourceStates.Running
-            )
-            .WaitAsync(TimeSpan.FromSeconds(30));
-        await resourceNotificationService.WaitForResourceAsync(
-                "bff-dpop",
-                KnownResourceStates.Running
-            )
-            .WaitAsync(TimeSpan.FromSeconds(30));
-        await resourceNotificationService.WaitForResourceAsync(
-                "migrations",
-                KnownResourceStates.Running
-            )
-            .WaitAsync(TimeSpan.FromSeconds(30));
 
 #endif //#DEBUG_NCRUNCH
     }
@@ -166,7 +150,9 @@ public class AppHostFixture : IAsyncLifetime
             // so build a http client that directly points to this host. 
             var url = clientName switch
             {
-                "bff" => "https://localhost:5002",
+                AppHostServices.Bff => "https://localhost:5002",
+                AppHostServices.BffBlazorPerComponent => "https://localhost:5105",
+                AppHostServices.BffBlazorWebassembly => "https://localhost:5005",
                 _ => throw new InvalidOperationException("client not configured")
             };
             baseAddress = new Uri(url);

@@ -79,7 +79,7 @@ internal class ConfigureInternalCookieOptions : IConfigureNamedOptions<CookieAut
 
         async Task Callback(CookieSlidingExpirationContext context)
         {
-            await ServerSideSessionCookieHelpers.OnCheckSlidingExpiration(context);
+            await ServerSideSessionCookieEvents.OnCheckSlidingExpiration(context);
             await inner?.Invoke(context)!;
         }
     }

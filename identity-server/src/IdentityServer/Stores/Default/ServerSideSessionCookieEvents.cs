@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Duende.IdentityServer.Stores.Default;
 
-internal static class ServerSideSessionCookieHelpers
+internal static class ServerSideSessionCookieEvents
 {
     public static Task OnCheckSlidingExpiration(CookieSlidingExpirationContext context)
     {

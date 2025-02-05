@@ -12,14 +12,14 @@ using UnitTests.Common;
 
 namespace UnitTests.Stores.Default;
 
-public class ServerSideSessionCookieHelpersTests
+public class ServerSideSessionCookieEventsTests
 {
     [Fact]
     public async Task OnCheckSlidingExpiration_if_force_renewal_cookie_flag_not_present_does_not_change_should_renew()
     {
         var context = CreateSlidingExpirationContext(DateTime.UtcNow.AddMinutes(1));
         
-        await ServerSideSessionCookieHelpers.OnCheckSlidingExpiration(context);
+        await ServerSideSessionCookieEvents.OnCheckSlidingExpiration(context);
 
         context.ShouldRenew.Should().BeFalse();
     }
@@ -29,7 +29,7 @@ public class ServerSideSessionCookieHelpersTests
     {
         var context = CreateSlidingExpirationContext(DateTime.UtcNow.AddMinutes(5), true);
         
-        await ServerSideSessionCookieHelpers.OnCheckSlidingExpiration(context);
+        await ServerSideSessionCookieEvents.OnCheckSlidingExpiration(context);
 
         context.ShouldRenew.Should().BeTrue();
     }
@@ -39,7 +39,7 @@ public class ServerSideSessionCookieHelpersTests
     {
         var context = CreateSlidingExpirationContext(DateTime.UtcNow.AddMinutes(5), true);
         
-        await ServerSideSessionCookieHelpers.OnCheckSlidingExpiration(context);
+        await ServerSideSessionCookieEvents.OnCheckSlidingExpiration(context);
 
         context.Properties.Items.Keys.Should().NotContain(IdentityServerConstants.ForceCookieRenewalFlag);
     }
@@ -50,7 +50,7 @@ public class ServerSideSessionCookieHelpersTests
     {
         var context = CreateSlidingExpirationContext(DateTime.UtcNow.AddMinutes(-1), true);
         
-        await ServerSideSessionCookieHelpers.OnCheckSlidingExpiration(context);
+        await ServerSideSessionCookieEvents.OnCheckSlidingExpiration(context);
         
         context.ShouldRenew.Should().BeFalse();
     }

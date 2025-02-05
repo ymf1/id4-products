@@ -10,12 +10,13 @@ internal static class ServerSideSessionCookieHelpers
 {
     public static Task OnCheckSlidingExpiration(CookieSlidingExpirationContext context)
     {
-        if (context.Properties.Items.ContainsKey(IdentityServerConstants.ForceCookieRenewalFlag))
+        if (context.Properties.Items.ContainsKey(IdentityServerConstants.ForceCookieRenewalFlag) &&
+            (context.Properties.ExpiresUtc == null || DateTimeOffset.UtcNow < context.Properties.ExpiresUtc))
         {
             context.ShouldRenew = true;
             context.Properties.Items.Remove(IdentityServerConstants.ForceCookieRenewalFlag);
         }
-        
+
         return Task.CompletedTask;
     }
 }

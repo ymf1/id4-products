@@ -480,6 +480,45 @@ public class ServerSideSessionTests
 
     [Fact]
     [Trait("Category", Category)]
+    public async Task request_to_identity_server_with_expired_session_which_has_not_been_cleaned_up_should_invoke_backchannel_logout()
+    {
+        _pipeline.Options.ServerSideSessions.ExpiredSessionsTriggerBackchannelLogout = true;
+        //simulate a scenario where a session has expired and a request is made to identity server before the job runs
+        _pipeline.Options.ServerSideSessions.RemoveExpiredSessions = false;
+
+        await _pipeline.LoginAsync("alice");
+
+        var authzResponse = await _pipeline.RequestAuthorizationEndpointAsync("client", "code", "openid api offline_access", "https://client/callback");
+        var tokenResponse = await _pipeline.BackChannelClient.RequestAuthorizationCodeTokenAsync(new AuthorizationCodeTokenRequest
+        {
+            Address = IdentityServerPipeline.TokenEndpoint,
+            ClientId = "client",
+            Code = authzResponse.Code,
+            RedirectUri = "https://client/callback"
+        });
+
+        _pipeline.BackChannelMessageHandler.OnInvoke = async msg => 
+        {
+            var form = await msg.Content.ReadAsStringAsync();
+            var jwt = form.Substring("login_token=".Length + 1);
+            var handler = new JsonWebTokenHandler();
+            var token = handler.ReadJsonWebToken(jwt);
+            token.Issuer.Should().Be(IdentityServerPipeline.BaseUrl);
+            token.GetClaim("sub").Value.Should().Be("alice");
+        };
+        _pipeline.BackChannelMessageHandler.InvokeWasCalled.Should().BeFalse();
+
+        var session = (await _sessionStore.GetSessionsAsync(new SessionFilter { SubjectId = "alice" })).Single();
+        session.Expires = System.DateTime.UtcNow.AddMinutes(-1);
+        await _sessionStore.UpdateSessionAsync(session);
+
+        await _pipeline.RequestAuthorizationEndpointAsync("client", "code", "openid api offline_access", "https://client/callback");
+
+        _pipeline.BackChannelMessageHandler.InvokeWasCalled.Should().BeTrue();
+    }
+
+    [Fact]
+    [Trait("Category", Category)]
     public async Task expired_sessions_should_revoke_refresh_token()
     {
         await _pipeline.LoginAsync("alice");

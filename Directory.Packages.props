@@ -71,6 +71,7 @@
     <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="9.0.0" />
     <PackageVersion Include="Microsoft.Extensions.TimeProvider.Testing" Version="9.0.0" />
     <PackageVersion Include="Microsoft.IdentityModel.JsonWebTokens" Version="$(WilsonVersion)" />
+    <PackageVersion Include="Microsoft.IdentityModel.Logging" Version="$(WilsonVersion)" />
     <PackageVersion Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="$(WilsonVersion)" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
     <PackageVersion Include="Microsoft.NETCore.Jit" Version="2.0.8" />
@@ -91,6 +92,7 @@
     <PackageVersion Include="RichardSzalay.MockHttp" Version="7.0.0" />
     <PackageVersion Include="Serilog" Version="4.2.0" />
     <PackageVersion Include="Serilog.AspNetCore" Version="8.0.3" />
+    <PackageVersion Include="Serilog.Sinks.Console" Version="6.0.0" />
     <PackageVersion Include="Serilog.Sinks.TextWriter" Version="3.0.0" />
     <PackageVersion Include="Serilog.Sinks.XUnit" Version="3.0.19" />
     <PackageVersion Include="Serilog.Extensions.Logging" Version="9.0.0" />

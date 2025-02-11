@@ -36,8 +36,6 @@
     <PackageVersion Include="Duende.IdentityModel" Version="7.0.0" />
     <PackageVersion Include="Duende.IdentityModel.OidcClient" Version="6.0.0-rc.1" />
     <PackageVersion Include="Duende.IdentityServer" Version="$(IdentityServerVersion)" />
-    <PackageVersion Include="FluentAssertions" Version="6.5.1" />
-    <PackageVersion Include="FluentAssertions.Web" Version="1.5.0" />
     <PackageVersion Include="IdentityModel.AspNetCore.OAuth2Introspection" Version="6.2.0" />
     <PackageVersion Include="Microsoft.AspNetCore.Authentication.Certificate" Version="$(AspNetCoreVersion)" />
     <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="$(AspNetCoreVersion)" />

@@ -2,22 +2,21 @@
 // See LICENSE in the project root for license information.
 
 
+using Duende.IdentityModel.Client;
+using Duende.IdentityServer;
+using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores;
 using Duende.IdentityServer.Test;
-using Shouldly;
 using IntegrationTests.Common;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Duende.IdentityModel.Client;
-using Microsoft.IdentityModel.JsonWebTokens;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Duende.IdentityServer;
-using Microsoft.AspNetCore.DataProtection;
-using Duende.IdentityServer.Extensions;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.JsonWebTokens;
+using System.Security.Claims;
 
 namespace IntegrationTests.Hosting;
 
@@ -503,10 +502,10 @@ public class ServerSideSessionTests
             var jwt = form.Substring("login_token=".Length + 1);
             var handler = new JsonWebTokenHandler();
             var token = handler.ReadJsonWebToken(jwt);
-            token.Issuer.Should().Be(IdentityServerPipeline.BaseUrl);
-            token.GetClaim("sub").Value.Should().Be("alice");
+            token.Issuer.ShouldBe(IdentityServerPipeline.BaseUrl);
+            token.GetClaim("sub").Value.ShouldBe("alice");
         };
-        _pipeline.BackChannelMessageHandler.InvokeWasCalled.Should().BeFalse();
+        _pipeline.BackChannelMessageHandler.InvokeWasCalled.ShouldBeFalse();
 
         var session = (await _sessionStore.GetSessionsAsync(new SessionFilter { SubjectId = "alice" })).Single();
         session.Expires = System.DateTime.UtcNow.AddMinutes(-1);
@@ -514,7 +513,7 @@ public class ServerSideSessionTests
 
         await _pipeline.RequestAuthorizationEndpointAsync("client", "code", "openid api offline_access", "https://client/callback");
 
-        _pipeline.BackChannelMessageHandler.InvokeWasCalled.Should().BeTrue();
+        _pipeline.BackChannelMessageHandler.InvokeWasCalled.ShouldBeTrue();
     }
 
     [Fact]

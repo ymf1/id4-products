@@ -2,7 +2,8 @@
 
 namespace Hosts.Tests.TestInfra;
 
-public class IntegrationTestBase : IClassFixture<AppHostFixture>, IDisposable
+[Collection(AppHostCollection.CollectionName)]
+public class IntegrationTestBase : IDisposable
 {
     private readonly IDisposable _loggingScope;
 

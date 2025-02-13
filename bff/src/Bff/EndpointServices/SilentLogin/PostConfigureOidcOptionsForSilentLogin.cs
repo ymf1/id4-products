@@ -57,7 +57,7 @@ public class PostConfigureOidcOptionsForSilentLogin : IPostConfigureOptions<Open
                     await inner.Invoke(ctx);
                 }
             }
-        };
+        }
 
         return Callback;
     }
@@ -73,7 +73,7 @@ public class PostConfigureOidcOptionsForSilentLogin : IPostConfigureOptions<Open
                     await inner.Invoke(ctx);
                 }
             }
-        };
+        }
 
         return Callback;
     }
@@ -89,7 +89,7 @@ public class PostConfigureOidcOptionsForSilentLogin : IPostConfigureOptions<Open
                     await inner.Invoke(ctx);
                 }
             }
-        };
+        }
 
         return Callback;
     }

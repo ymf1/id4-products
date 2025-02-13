@@ -59,7 +59,7 @@ namespace Duende.Bff
                 }
 
                 return result;
-            };
+            }
 
             return Callback;
         }

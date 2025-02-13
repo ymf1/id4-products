@@ -52,7 +52,7 @@ public class PostConfigureApplicationCookieRevokeRefreshToken : IPostConfigureOp
             {
                 await inner.Invoke(ctx);
             }
-        };
+        }
 
         return Callback;
     }

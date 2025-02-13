@@ -2,20 +2,14 @@
 // See LICENSE in the project root for license information.
 
 
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using Shouldly;
 using Duende.IdentityModel;
 using Duende.IdentityModel.Client;
 using IntegrationTests.Clients.Setup;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using Xunit;
 
 namespace IntegrationTests.Clients;
 
@@ -265,7 +259,7 @@ public class ClientCredentialsClient
 
 
     [Fact]
-    public async Task Request_For_client_with_no_secret_and_basic_authentication_should_succeed()
+    public async Task Request_For_client_with_no_secret_and_basic_authentication_should_fail()
     {
         var response = await _client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
         {
@@ -274,20 +268,8 @@ public class ClientCredentialsClient
             Scope = "api1"
         });
 
-        response.IsError.ShouldBe(false);
-        response.ExpiresIn.ShouldBe(3600);
-        response.TokenType.ShouldBe("Bearer");
-        response.IdentityToken.ShouldBeNull();
-        response.RefreshToken.ShouldBeNull();
-
-        var payload = GetPayload(response);
-            
-        payload["iss"].GetString().ShouldBe("https://idsvr4");
-        payload["aud"].GetString().ShouldBe("api");
-        payload["client_id"].GetString().ShouldBe("client.no_secret");
-
-        var scopes = payload["scope"].EnumerateArray();
-        scopes.First().ToString().ShouldBe("api1");
+        response.IsError.ShouldBeTrue();
+        response.Error.ShouldBe("invalid_client");
     }
 
     [Fact]

@@ -2,14 +2,10 @@
 // See LICENSE in the project root for license information.
 
 
-using System;
-using System.Threading.Tasks;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Validation;
-using Shouldly;
 using UnitTests.Validation.Setup;
-using Xunit;
 
 namespace UnitTests.Validation;
 
@@ -200,6 +196,24 @@ public class ClientConfigurationValidation
 
         var context = await ValidateAsync(client);
         context.IsValid.ShouldBeTrue();
+    }
+
+    [Theory]
+    [MemberData(nameof(GrantTypesWithClientCredentialsTestData))]
+    [Trait("Category", Category)]
+    public async Task not_required_client_secret_for_client_credentials_should_fail(ICollection<string> allowedGrantTypes)
+    {
+        var client = new Client
+        {
+            ClientId = "id",
+            ClientSecrets = { new Secret("secret") },
+            AllowedGrantTypes = allowedGrantTypes,
+            RequireClientSecret = false,
+            RedirectUris = { "https://foo" },
+            AllowedScopes = { "foo" }
+        };
+        
+        await ShouldFailAsync(client, "RequireClientSecret is false, but client is using client credentials grant type.");
     }
 
     [Fact]
@@ -496,4 +510,14 @@ public class ClientConfigurationValidation
         context.IsValid.ShouldBeFalse();
         context.ErrorMessage.ShouldBe(expectedError);
     }
+
+    public static TheoryData<ICollection<string>> GrantTypesWithClientCredentialsTestData =>
+    [
+        GrantTypes.ImplicitAndClientCredentials,
+        GrantTypes.CodeAndClientCredentials,
+        GrantTypes.HybridAndClientCredentials,
+        GrantTypes.ClientCredentials,
+        GrantTypes.ResourceOwnerPasswordAndClientCredentials
+    ];
+    
 }

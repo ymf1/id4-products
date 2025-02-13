@@ -62,7 +62,7 @@ public class PostConfigureApplicationValidatePrincipal : IPostConfigureOptions<C
             }
 
             return result;
-        };
+        }
 
         return Callback;
     }

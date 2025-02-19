@@ -10,12 +10,14 @@ var contexts = Instance;
     SystemDescription identityServer = new("identity-server", "identity-server.slnf", "is");
     GenerateIdentityServerWorkflow(identityServer);
     GenerateIdentityServerReleaseWorkflow(identityServer);
+    GenerateCodeQlWorkflow(identityServer, "38 15 * * 0");
 }
 
 {
     SystemDescription bff = new("bff", "bff.slnf", "bff");
     GenerateBffWorkflow(bff);
     GenerateBffReleaseWorkflow(bff);
+    GenerateCodeQlWorkflow(bff, "38 16 * * 0");
 }
 
 
@@ -270,6 +272,49 @@ void GenerateBffReleaseWorkflow(SystemDescription system)
     WriteWorkflow(workflow, fileName);
 }
 
+void GenerateCodeQlWorkflow(SystemDescription system, string cronSchedule)
+{
+    var workflow = new Workflow($"{system.Name}/codeql");
+    var branches = new[] { "main" };
+    var paths = new[] { $"{system.Name}/**" };
+
+    workflow.On
+        .WorkflowDispatch();
+    workflow.On
+        .Push()
+        .Branches(branches)
+        .Paths(paths);
+    workflow.On
+        .PullRequest()
+        .Paths(paths);
+    workflow.On
+        .Schedule(cronSchedule);
+    
+    var job = workflow
+        .Job("analyze")
+        .Name("Analyze")
+        .RunsOn(GitHubHostedRunners.UbuntuLatest)
+        .Defaults().Run("bash", system.Name)
+        .Job;
+
+    job.Permissions(
+        actions: Permission.Read,
+        contents: Permission.Read,
+        securityEvents: Permission.Write);
+
+    job.Step()
+        .ActionsCheckout();
+    
+    job.StepInitializeCodeQl();
+    
+    job.StepAutoBuildCodeQl();
+    
+    job.StepPerformCodeQlAnalysis();
+    
+    var fileName = $"{system.Name}-codeql-analysis";
+    WriteWorkflow(workflow, fileName);
+}
+
 
 void WriteWorkflow(Workflow workflow, string fileName)
 {
@@ -355,7 +400,6 @@ public static class StepExtensions
                 ("fail-on-error", "true"),
                 ("fail-on-empty", "true"));
     }
-
 
     public static Step StepPushToNuget(this Job job, bool pushAlways = false)
         => job.StepPush("nuget.org", "https://api.nuget.org/v3/index.json", "NUGET_ORG_API_KEY", pushAlways);
@@ -487,6 +531,31 @@ public static class StepExtensions
     public static Job RunEitherOnBranchOrAsPR(this Job job)
         => job.If(
             "(github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository) || (github.event_name == 'push')");
+    
+    public static void StepInitializeCodeQl(this Job job)
+    {
+        job.Step()
+            .Name("Initialize CodeQL")
+            .Uses("github/codeql-action/init@9e8d0789d4a0fa9ceb6b1738f7e269594bdd67f0") // 3.28.9
+            .With(
+                ("languages", "csharp"));
+    }
+    
+    public static void StepAutoBuildCodeQl(this Job job)
+    {
+        job.Step()
+            .Name("Auto Build")
+            .Uses("github/codeql-action/autobuild@9e8d0789d4a0fa9ceb6b1738f7e269594bdd67f0"); // 3.28.9
+    }
+    
+    public static void StepPerformCodeQlAnalysis(this Job job)
+    {
+        job.Step()
+            .Name("Perform CodeQL Analysis")
+            .Uses("github/codeql-action/analyze@9e8d0789d4a0fa9ceb6b1738f7e269594bdd67f0") // 3.28.9
+            .With(
+                ("category", "/language:csharp"));
+    }
 }
 
 public class GitHubContexts

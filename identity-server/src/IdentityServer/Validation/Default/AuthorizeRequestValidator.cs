@@ -681,7 +681,7 @@ internal class AuthorizeRequestValidator : IAuthorizeRequestValidator
                 request.DisplayMode = display;
             }
 
-            _logger.LogDebug("Unsupported display mode - ignored: " + display);
+            _logger.LogSanitizedDebug("Unsupported display mode - ignored: {display}", display);
         }
 
         //////////////////////////////////////////////////////////

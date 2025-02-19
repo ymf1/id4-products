@@ -64,6 +64,14 @@ internal static class ILoggerDevExtensions
         }
     }
 
+    public static void LogSanitizedDebug<T0>(this ILogger logger, string message, T0 arg0)
+    {
+        if (logger.IsEnabled(LogLevel.Debug))
+        {
+            LoggerExtensions.LogDebug(logger, message, System.Web.HttpUtility.UrlEncode(arg0?.ToString()));
+        }
+    }
+
     public static void LogDebug<T0, T1>(this ILogger logger, string message, T0 arg0, T1 arg1)
     {
         if (logger.IsEnabled(LogLevel.Debug))

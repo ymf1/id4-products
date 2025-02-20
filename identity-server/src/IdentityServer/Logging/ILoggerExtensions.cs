@@ -68,7 +68,7 @@ internal static class ILoggerDevExtensions
     {
         if (logger.IsEnabled(LogLevel.Debug))
         {
-            LoggerExtensions.LogDebug(logger, message, System.Web.HttpUtility.UrlEncode(arg0?.ToString()));
+            LoggerExtensions.LogDebug(logger, message, arg0?.ToString()?.ReplaceLineEndings(string.Empty));
         }
     }
 

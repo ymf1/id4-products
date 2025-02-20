@@ -57,7 +57,7 @@ public class DefaultJwtRequestUriHttpClient : IJwtRequestUriHttpClient
                         $"application/{JwtClaimTypes.JwtTypes.AuthorizationRequest}", StringComparison.Ordinal))
                 {
                     _logger.LogSanitizedError("Invalid content type {type} from jwt url {url}",
-                        response.Content.Headers.ContentType.MediaType, url);
+                        response.Content.Headers.ContentType.MediaType, url.ReplaceLineEndings(string.Empty));
                     return null;
                 }
             }

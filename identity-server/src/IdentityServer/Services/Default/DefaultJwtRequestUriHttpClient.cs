@@ -56,19 +56,19 @@ public class DefaultJwtRequestUriHttpClient : IJwtRequestUriHttpClient
                 if (!string.Equals(response.Content.Headers.ContentType.MediaType,
                         $"application/{JwtClaimTypes.JwtTypes.AuthorizationRequest}", StringComparison.Ordinal))
                 {
-                    _logger.LogError("Invalid content type {type} from jwt url {url}",
+                    _logger.LogSanitizedError("Invalid content type {type} from jwt url {url}",
                         response.Content.Headers.ContentType.MediaType, url);
                     return null;
                 }
             }
 
-            _logger.LogDebug("Success http response from jwt url {url}", url);
+            _logger.LogSanitizedDebug("Success http response from jwt url {url}", url);
 
             var json = await response.Content.ReadAsStringAsync();
             return json;
         }
 
-        _logger.LogError("Invalid http status code {status} from jwt url {url}", response.StatusCode, url);
+        _logger.LogSanitizedError("Invalid http status code {status} from jwt url {url}", response.StatusCode, url);
         return null;
     }
 }

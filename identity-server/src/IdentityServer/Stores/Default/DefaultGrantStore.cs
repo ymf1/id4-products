@@ -118,7 +118,7 @@ public class DefaultGrantStore<T>
         var item = await GetItemByHashedKeyAsync(hashedKey);
         if (item == null)
         {
-            Logger.LogDebug("{grantType} grant with value: {key} not found in store.", GrantType, key);
+            Logger.LogSanitizedDebug("{grantType} grant with value: {key} not found in store.", GrantType, key);
         }
         return item;
     }

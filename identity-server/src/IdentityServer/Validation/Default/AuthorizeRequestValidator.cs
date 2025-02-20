@@ -757,7 +757,7 @@ internal class AuthorizeRequestValidator : IAuthorizeRequestValidator
             {
                 if (!request.Client.IdentityProviderRestrictions.Contains(idp))
                 {
-                    _logger.LogWarning("idp requested ({idp}) is not in client restriction list.", idp);
+                    _logger.LogSanitizedWarning("idp requested ({idp}) is not in client restriction list.", idp);
                     request.RemoveIdP();
                 }
             }
@@ -820,6 +820,6 @@ internal class AuthorizeRequestValidator : IAuthorizeRequestValidator
     private void LogError(string message, string detail, ValidatedAuthorizeRequest request)
     {
         var requestDetails = new AuthorizeRequestValidationLog(request, _options.Logging.AuthorizeRequestSensitiveValuesFilter);
-        _logger.LogError(message + ": {detail}\n{@requestDetails}", detail, requestDetails);
+        _logger.LogSanitizedError(message + ": {detail}\n{@requestDetails}", detail, requestDetails);
     }
 }

@@ -14,6 +14,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Licensing.V2;
+using Duende.IdentityServer.Logging;
 using Duende.IdentityServer.Logging.Models;
 using Duende.IdentityServer.Services;
 using static Duende.IdentityServer.IdentityServerConstants;
@@ -32,6 +33,7 @@ internal class AuthorizeRequestValidator : IAuthorizeRequestValidator
     private readonly IRequestObjectValidator _requestObjectValidator;
     private readonly LicenseUsageTracker _licenseUsage;
     private readonly ILogger _logger;
+    private readonly ISanitizedLogger<AuthorizeRequestValidator> _sanitizedLogger;
 
     private readonly ResponseTypeEqualityComparer
         _responseTypeEqualityComparer = new ResponseTypeEqualityComparer();
@@ -47,7 +49,8 @@ internal class AuthorizeRequestValidator : IAuthorizeRequestValidator
         IUserSession userSession,
         IRequestObjectValidator requestObjectValidator,
         LicenseUsageTracker licenseUsage,
-        ILogger<AuthorizeRequestValidator> logger)
+        ILogger<AuthorizeRequestValidator> logger,
+        ISanitizedLogger<AuthorizeRequestValidator> sanitizedLogger)
     {
         _options = options;
         _issuerNameService = issuerNameService;
@@ -59,6 +62,7 @@ internal class AuthorizeRequestValidator : IAuthorizeRequestValidator
         _userSession = userSession;
         _licenseUsage = licenseUsage;
         _logger = logger;
+        _sanitizedLogger = sanitizedLogger;
     }
 
     public async Task<AuthorizeRequestValidationResult> ValidateAsync(
@@ -757,7 +761,7 @@ internal class AuthorizeRequestValidator : IAuthorizeRequestValidator
             {
                 if (!request.Client.IdentityProviderRestrictions.Contains(idp))
                 {
-                    _logger.LogSanitizedWarning("idp requested ({idp}) is not in client restriction list.", idp);
+                    _sanitizedLogger.LogWarning("idp requested ({idp}) is not in client restriction list.", idp);
                     request.RemoveIdP();
                 }
             }

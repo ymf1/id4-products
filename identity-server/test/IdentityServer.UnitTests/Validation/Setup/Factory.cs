@@ -277,7 +277,6 @@ internal static class Factory
             userSession,
             requestObjectValidator,
             new LicenseUsageTracker(new LicenseAccessor(new IdentityServerOptions(), NullLogger<LicenseAccessor>.Instance)),
-            TestLogger.Create<AuthorizeRequestValidator>(),
             new SanitizedLogger<AuthorizeRequestValidator>(TestLogger.Create<AuthorizeRequestValidator>()));
     }
 

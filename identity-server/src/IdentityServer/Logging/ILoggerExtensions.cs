@@ -64,27 +64,11 @@ internal static class ILoggerDevExtensions
         }
     }
 
-    public static void LogSanitizedDebug<T0>(this ILogger logger, string message, T0 arg0)
-    {
-        if (logger.IsEnabled(LogLevel.Debug))
-        {
-            LoggerExtensions.LogDebug(logger, message, SanitizedInput(arg0));
-        }
-    }
-
     public static void LogDebug<T0, T1>(this ILogger logger, string message, T0 arg0, T1 arg1)
     {
         if (logger.IsEnabled(LogLevel.Debug))
         {
             LoggerExtensions.LogDebug(logger, message, arg0, arg1);
-        }
-    }
-
-    public static void LogSanitizedDebug<T0, T1>(this ILogger logger, string message, T0 arg0, T1 arg1)
-    {
-        if (logger.IsEnabled(LogLevel.Debug))
-        {
-            LoggerExtensions.LogDebug(logger, message, SanitizedInput(arg0), SanitizedInput(arg1));
         }
     }
     
@@ -101,22 +85,6 @@ internal static class ILoggerDevExtensions
         if (logger.IsEnabled(LogLevel.Debug))
         {
             LoggerExtensions.LogDebug(logger, message, arg0, arg1, arg2, arg3);
-        }
-    }
-
-    public static void LogSanitizedWarning<T0>(this ILogger logger, string message, T0 arg0)
-    {
-        if (logger.IsEnabled(LogLevel.Warning))
-        {
-            logger.LogWarning(message, SanitizedInput(arg0));
-        }
-    }
-
-    public static void LogSanitizedError<T0, T1>(this ILogger logger, string message, T0 arg0, T1 arg1)
-    {
-        if (logger.IsEnabled(LogLevel.Error))
-        {
-            logger.LogError(message, SanitizedInput(arg0), SanitizedInput(arg1));
         }
     }
 

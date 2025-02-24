@@ -87,9 +87,4 @@ internal static class ILoggerDevExtensions
             LoggerExtensions.LogDebug(logger, message, arg0, arg1, arg2, arg3);
         }
     }
-
-    private static string SanitizedInput<T>(T input)
-    {
-        return input?.ToString()?.ReplaceLineEndings(string.Empty);
-    }
 }

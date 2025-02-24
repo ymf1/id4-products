@@ -478,7 +478,7 @@ internal class AuthorizeRequestValidator : IAuthorizeRequestValidator
                 return Invalid(request, OidcConstants.AuthorizeErrors.InvalidTarget, "Resource indicator maximum length exceeded");
             }
 
-            if (!resourceIndicators.AreValidResourceIndicatorFormat(_sanitizedLogger.Logger))
+            if (!resourceIndicators.AreValidResourceIndicatorFormat(_sanitizedLogger.ToILogger()))
             {
                 return Invalid(request, OidcConstants.AuthorizeErrors.InvalidTarget, "Invalid resource indicator format");
             }

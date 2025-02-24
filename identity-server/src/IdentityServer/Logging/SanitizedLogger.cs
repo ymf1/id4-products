@@ -14,7 +14,7 @@ internal interface ISanitizedLogger
     void LogWarning(string message, params object[] args);
     void LogError(string message, params object[] args);
     void LogCritical(Exception exception, string message, params object[] args);
-    ILogger Logger { get; }
+    ILogger ToILogger();
 }
 
 internal interface ISanitizedLogger<T> : ISanitizedLogger
@@ -23,65 +23,70 @@ internal interface ISanitizedLogger<T> : ISanitizedLogger
 
 internal class SanitizedLogger<T> : ISanitizedLogger<T>
 {
+    private readonly ILogger _logger;
+    
     public SanitizedLogger(ILogger<T> logger)
     {
-        Logger = logger;
+        _logger = logger;
     }
     
     public SanitizedLogger(ILogger logger)
     {
-        Logger = logger;
+        _logger = logger;
     }
     
     public void LogTrace(string message, params object[] args)
     {
-        if (Logger.IsEnabled(LogLevel.Trace))
+        if (_logger.IsEnabled(LogLevel.Trace))
         {
-            Logger.LogTrace(message, args.Select(SanitizeLogParameter).ToArray());
+            _logger.LogTrace(message, args.Select(SanitizeLogParameter).ToArray());
         }
     }
     
     public void LogDebug(string message, params object[] args)
     {
-        if (Logger.IsEnabled(LogLevel.Debug))
+        if (_logger.IsEnabled(LogLevel.Debug))
         {
-            LoggerExtensions.LogDebug(Logger, message, args.Select(SanitizeLogParameter).ToArray());
+            LoggerExtensions.LogDebug(_logger, message, args.Select(SanitizeLogParameter).ToArray());
         }
     }
     
     public void LogInformation(string message, params object[] args)
     {
-        if (Logger.IsEnabled(LogLevel.Information))
+        if (_logger.IsEnabled(LogLevel.Information))
         {
-            Logger.LogInformation(message, args.Select(SanitizeLogParameter).ToArray());
+            _logger.LogInformation(message, args.Select(SanitizeLogParameter).ToArray());
         }
     }
 
     public void LogWarning(string message, params object[] args)
     {
-        if (Logger.IsEnabled(LogLevel.Warning))
+        if (_logger.IsEnabled(LogLevel.Warning))
         {
-            Logger.LogWarning(message, args.Select(SanitizeLogParameter).ToArray());
+            _logger.LogWarning(message, args.Select(SanitizeLogParameter).ToArray());
         }
     }
     
     public void LogError(string message, params object[] args)
     {
-        if (Logger.IsEnabled(LogLevel.Error))
+        if (_logger.IsEnabled(LogLevel.Error))
         {
-            Logger.LogError(message, args.Select(SanitizeLogParameter).ToArray());
+            _logger.LogError(message, args.Select(SanitizeLogParameter).ToArray());
         }
     }
 
     public void LogCritical(Exception exception, string message, params object[] args)
     {
-        if (Logger.IsEnabled(LogLevel.Critical))
+        if (_logger.IsEnabled(LogLevel.Critical))
         {
-            Logger.LogCritical(exception, message, args.Select(SanitizeLogParameter).ToArray());
+            _logger.LogCritical(exception, message, args.Select(SanitizeLogParameter).ToArray());
         }
     }
 
-    public ILogger Logger { get; }
+    public ILogger ToILogger()
+    {
+        return _logger;
+    }
 
     private static object SanitizeLogParameter(object value)
     {

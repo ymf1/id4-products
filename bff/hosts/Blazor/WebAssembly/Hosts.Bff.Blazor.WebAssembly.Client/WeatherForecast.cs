@@ -1,3 +1,6 @@
+// Copyright (c) Duende Software. All rights reserved.
+// See LICENSE in the project root for license information.
+
 internal class WeatherForecast
 {
     public DateOnly Date { get; set; }

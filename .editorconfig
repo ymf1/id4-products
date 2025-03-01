@@ -7,5 +7,6 @@ dotnet_diagnostic.IDE0073.severity = warning
 
 
 
+
 # Unnecessary Using
 dotnet_diagnostic.IDE0005.severity=warning

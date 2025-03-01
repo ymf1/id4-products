@@ -1,3 +1,6 @@
+// Copyright (c) Duende Software. All rights reserved.
+// See LICENSE in the project root for license information.
+
 using Duende.Bff;
 using Duende.Bff.Yarp;
 using Microsoft.AspNetCore.Builder;

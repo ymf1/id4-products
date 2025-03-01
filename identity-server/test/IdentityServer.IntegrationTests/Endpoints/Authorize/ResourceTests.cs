@@ -496,7 +496,7 @@ public class ResourceTests
             claims.Where(x => x.Type == "aud").Select(x => x.Value).ShouldBe(["urn:resource1"]);
             claims.Where(x => x.Type == "scope").Select(x => x.Value).ShouldBe(["scope1", "scope3", "offline_access"]);
         }
-        
+
         tokenResponse = await _mockPipeline.BackChannelClient.RequestRefreshTokenAsync(new RefreshTokenRequest
         {
             Address = IdentityServerPipeline.TokenEndpoint,
@@ -565,7 +565,7 @@ public class ResourceTests
             clientId: "client2",
             responseType: "id_token token",
             scope: "openid profile scope1 scope2 scope3 scope4",
-            nonce:"nonce",
+            nonce: "nonce",
             redirectUri: "https://client2/callback");
 
         url += "&resource=urn:resource1";

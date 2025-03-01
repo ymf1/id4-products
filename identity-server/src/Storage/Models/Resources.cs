@@ -61,7 +61,7 @@ public class Resources
     /// Gets or sets the API resources.
     /// </summary>
     public ICollection<ApiResource> ApiResources { get; set; }
-        
+
     /// <summary>
     /// Gets or sets the API scopes.
     /// </summary>

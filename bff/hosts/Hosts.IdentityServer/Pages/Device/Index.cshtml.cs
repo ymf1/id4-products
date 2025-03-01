@@ -59,7 +59,8 @@ namespace IdentityServerHost.Pages.Device
                 return Page();
             }
 
-            Input = new InputModel { 
+            Input = new InputModel
+            {
                 UserCode = userCode,
             };
 

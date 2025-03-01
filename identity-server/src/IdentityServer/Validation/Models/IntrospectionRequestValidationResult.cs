@@ -29,7 +29,7 @@ public class IntrospectionRequestValidationResult : ValidationResult
     /// The API.
     /// </value>
     public ApiResource Api { get; set; }
- 
+
     /// <summary>
     /// Gets or sets the client.
     /// </summary>

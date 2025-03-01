@@ -55,7 +55,7 @@ public class ServiceCollectionExtensionsTests
     public void AddLocalApiHttpClient_configures_HttpClient_base_address()
     {
         var sut = new ServiceCollection();
-        
+
         sut.AddBffBlazorClient();
         sut.AddLocalApiHttpClient("clientName");
         sut.AddSingleton<IWebAssemblyHostEnvironment>(new FakeWebAssemblyHostEnvironment());
@@ -137,7 +137,7 @@ public class ServiceCollectionExtensionsTests
         httpClient.BaseAddress.ShouldNotBeNull();
         httpClient.BaseAddress.AbsoluteUri.ShouldBe(expectedBaseAddress);
     }
-    
+
     [Fact]
     public void When_base_address_option_is_default_AddRemoteApiHttpClient_configures_HttpClient_base_address_from_host_env_and_config_callback_is_respected()
     {
@@ -160,7 +160,7 @@ public class ServiceCollectionExtensionsTests
         httpClient.BaseAddress.AbsoluteUri.ShouldBe(expectedBaseAddress);
         httpClient.Timeout.ShouldBe(TimeSpan.FromSeconds(321));
     }
-    
+
     [Fact]
     public void When_base_address_option_is_default_AddRemoteApiHttpClient_for_typed_clients_configures_HttpClient_base_address_from_host_env()
     {
@@ -183,7 +183,7 @@ public class ServiceCollectionExtensionsTests
         httpClient.BaseAddress.ShouldNotBeNull();
         httpClient.BaseAddress.AbsoluteUri.ShouldBe(expectedBaseAddress);
     }
-    
+
     [Fact]
     public void When_base_address_option_is_default_AddRemoteApiHttpClient_for_typed_clients_configures_HttpClient_base_address_from_host_env_and_config_callback_is_respected()
     {

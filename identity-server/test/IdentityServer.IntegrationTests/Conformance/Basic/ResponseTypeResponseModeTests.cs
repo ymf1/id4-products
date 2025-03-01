@@ -107,7 +107,7 @@ public class ResponseTypeResponseModeTests
         };
         var request = new RequestUrl(IdentityServerPipeline.AuthorizeEndpoint);
         var url = request.Create(values);
-        
+
         _mockPipeline.BrowserClient.AllowAutoRedirect = true;
         var _ = await _mockPipeline.BrowserClient.GetAsync(url);
 

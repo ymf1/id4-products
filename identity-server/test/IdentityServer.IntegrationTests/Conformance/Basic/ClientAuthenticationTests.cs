@@ -10,7 +10,7 @@ using IntegrationTests.Common;
 
 namespace IntegrationTests.Conformance.Basic;
 
-public class ClientAuthenticationTests 
+public class ClientAuthenticationTests
 {
     private const string Category = "Conformance.Basic.ClientAuthenticationTests";
 

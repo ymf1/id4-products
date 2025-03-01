@@ -73,7 +73,7 @@ public class DefaultResourceValidator : IResourceValidator
             var invalidRequestedResourceIndicators = request.ResourceIndicators.Except(matchedApiResourceNames);
             if (invalidRequestedResourceIndicators.Any())
             {
-                foreach(var invalid in invalidRequestedResourceIndicators)
+                foreach (var invalid in invalidRequestedResourceIndicators)
                 {
                     _logger.LogError("Invalid resource identifier {resource}. It is either not found, not enabled, or does not support any of the requested scopes.", invalid);
                     result.InvalidResourceIndicators.Add(invalid);

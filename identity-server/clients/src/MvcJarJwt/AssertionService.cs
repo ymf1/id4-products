@@ -29,7 +29,7 @@ public class AssertionService
             "qi":"pG6J4dcUDrDndMxa-ee1yG4KjZqqyCQcmPAfqklI2LmnpRIjcK78scclvpboI3JQyg6RCEKVMwAhVtQM6cBcIO3JrHgqeYDblp5wXHjto70HVW6Z8kBruNx1AH9E8LzNvSRL-JVTFzBkJuNgzKQfD0G77tQRgJ-Ri7qu3_9o1M4"
         }
         """;
-    
+
     public string CreateClientToken()
     {
         var now = DateTime.UtcNow;
@@ -50,7 +50,7 @@ public class AssertionService
 
         var tokenHandler = new JwtSecurityTokenHandler();
         tokenHandler.OutboundClaimTypeMap.Clear();
-        
+
         return tokenHandler.WriteToken(token);
     }
 
@@ -72,10 +72,10 @@ public class AssertionService
             now.AddMinutes(1),
             new SigningCredentials(new JsonWebKey(rsaKey), "RS256")
         );
-        
+
         var tokenHandler = new JwtSecurityTokenHandler();
         tokenHandler.OutboundClaimTypeMap.Clear();
-        
+
         return tokenHandler.WriteToken(token);
     }
 }

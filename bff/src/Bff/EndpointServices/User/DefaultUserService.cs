@@ -22,7 +22,7 @@ public class DefaultUserService : IUserService
     /// The options
     /// </summary>
     protected readonly BffOptions Options;
-        
+
     /// <summary>
     /// The logger
     /// </summary>
@@ -43,7 +43,7 @@ public class DefaultUserService : IUserService
     public virtual async Task ProcessRequestAsync(HttpContext context)
     {
         Logger.LogDebug("Processing user request");
-        
+
         context.CheckForBffMiddleware(Options);
 
         var result = await context.AuthenticateAsync();

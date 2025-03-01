@@ -68,7 +68,7 @@ public class DefaultGrantStore<T>
     }
 
     private const string KeySeparator = ":";
-    
+
     /// <summary>
     /// The suffix added to keys to indicate that hex encoding should be used.
     /// </summary>
@@ -234,7 +234,7 @@ public class DefaultGrantStore<T>
         key = GetHashedKey(key);
         return RemoveItemByHashedKeyAsync(key);
     }
-        
+
     /// <summary>
     /// Removes the item.
     /// </summary>

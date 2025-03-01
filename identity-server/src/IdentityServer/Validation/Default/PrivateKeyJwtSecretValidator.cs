@@ -30,7 +30,7 @@ public class PrivateKeyJwtSecretValidator : ISecretValidator
     /// Instantiates an instance of private_key_jwt secret validator
     /// </summary>
     public PrivateKeyJwtSecretValidator(
-        IIssuerNameService issuerNameService, 
+        IIssuerNameService issuerNameService,
         IReplayCache replayCache,
         IServerUrls urls,
         IdentityServerOptions options,
@@ -94,13 +94,13 @@ public class PrivateKeyJwtSecretValidator : ISecretValidator
 
             ValidIssuer = parsedSecret.Id,
             ValidateIssuer = true,
-            
+
             RequireSignedTokens = true,
             RequireExpirationTime = true,
 
             ClockSkew = TimeSpan.FromMinutes(5)
         };
-        
+
         if (_options.StrictClientAssertionAudienceValidation)
         {
             // New strict audience validation requires that the audience be the issuer identifier, disallows multiple
@@ -131,7 +131,7 @@ public class PrivateKeyJwtSecretValidator : ISecretValidator
                 string.Concat(_urls.BaseUrl.EnsureTrailingSlash(), ProtocolRoutePaths.BackchannelAuthentication),
                 // PAR endpoint: https://datatracker.ietf.org/doc/html/rfc9126#name-request
                 string.Concat(_urls.BaseUrl.EnsureTrailingSlash(), ProtocolRoutePaths.PushedAuthorization),
-            
+
             }.Distinct();
         }
 
@@ -143,7 +143,7 @@ public class PrivateKeyJwtSecretValidator : ISecretValidator
             return fail;
         }
 
-        var jwtToken = (JsonWebToken) result.SecurityToken;
+        var jwtToken = (JsonWebToken)result.SecurityToken;
         if (jwtToken.Subject != jwtToken.Issuer)
         {
             _logger.LogError("Both 'sub' and 'iss' in the client assertion token must have a value of client_id.");
@@ -176,7 +176,7 @@ public class PrivateKeyJwtSecretValidator : ISecretValidator
 
         return success;
     }
-    
+
     // AudiencesMatch and AudiencesMatchIgnoringTrailingSlash are based on code from 
     // https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet/blob/bef98ca10ae55603ce6d37dfb7cd5af27791527c/src/Microsoft.IdentityModel.Tokens/Validators.cs#L158-L193
     private bool AudiencesMatch(string tokenAudience, string validAudience)
@@ -191,7 +191,7 @@ public class PrivateKeyJwtSecretValidator : ISecretValidator
 
         return AudiencesMatchIgnoringTrailingSlash(tokenAudience, validAudience);
     }
-            
+
     private bool AudiencesMatchIgnoringTrailingSlash(string tokenAudience, string validAudience)
     {
         int length = -1;

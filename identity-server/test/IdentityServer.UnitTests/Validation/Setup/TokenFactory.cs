@@ -13,7 +13,7 @@ internal static class TokenFactory
 {
     public static Token CreateAccessToken(Client client, string subjectId, int lifetime, params string[] scopes)
     {
-        var claims = new List<Claim> 
+        var claims = new List<Claim>
         {
             new Claim("client_id", client.ClientId),
             new Claim("sub", subjectId)
@@ -68,7 +68,7 @@ internal static class TokenFactory
     {
         var clients = Factory.CreateClientStore();
 
-        var claims = new List<Claim> 
+        var claims = new List<Claim>
         {
             new Claim("sub", subjectId)
         };

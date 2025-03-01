@@ -43,7 +43,7 @@ internal class TokenRequestValidationLog
         GrantType = request.GrantType;
         AuthorizationCode = request.AuthorizationCodeHandle.Obfuscate();
         RefreshToken = request.RefreshTokenHandle.Obfuscate();
-        
+
         if (!sensitiveValuesFilter.Contains(OidcConstants.TokenRequest.UserName, StringComparer.OrdinalIgnoreCase))
         {
             UserName = request.UserName;

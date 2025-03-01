@@ -54,7 +54,8 @@ public class CustomTokenCreationServiceTests
     public async Task custom_aud_should_be_in_access_token()
     {
         var result = await _mockPipeline.BackChannelClient.RequestClientCredentialsTokenAsync(
-            new ClientCredentialsTokenRequest { 
+            new ClientCredentialsTokenRequest
+            {
                 Address = IdentityServerPipeline.TokenEndpoint,
                 ClientId = "test",
                 ClientSecret = "secret"

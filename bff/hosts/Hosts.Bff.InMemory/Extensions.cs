@@ -17,7 +17,7 @@ internal static class Extensions
 {
     public static WebApplication ConfigureServices(
         this WebApplicationBuilder builder,
-        
+
         // The serviceprovider is needed to do service discovery
         Func<IServiceProvider> getServiceProvider
     )

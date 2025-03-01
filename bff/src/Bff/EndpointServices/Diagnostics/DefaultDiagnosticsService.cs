@@ -35,7 +35,7 @@ public class DefaultDiagnosticsService : IDiagnosticsService
         Environment = environment;
         Options = options;
     }
-        
+
     /// <inheritdoc />
     public virtual async Task ProcessRequestAsync(HttpContext context)
     {
@@ -53,7 +53,7 @@ public class DefaultDiagnosticsService : IDiagnosticsService
             UserAccessToken = usertoken.AccessToken,
             ClientAccessToken = clientToken.AccessToken
         };
-            
+
         var options = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull

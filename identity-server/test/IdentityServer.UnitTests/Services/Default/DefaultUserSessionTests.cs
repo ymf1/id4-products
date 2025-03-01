@@ -31,10 +31,10 @@ public class DefaultUserSessionTests
 
         _user = new IdentityServerUser("123").CreatePrincipal();
         _subject = new DefaultUserSession(
-            _mockHttpContext, 
+            _mockHttpContext,
             _mockAuthenticationHandlerProvider,
             _options,
-            new StubClock(), 
+            new StubClock(),
             new MockServerUrls { Origin = "https://server" },
             TestLogger.Create<DefaultUserSession>());
     }
@@ -86,7 +86,7 @@ public class DefaultUserSessionTests
         newProps.GetSessionId().ShouldNotBeNull();
         newProps.GetSessionId().ShouldNotBe("999");
     }
-        
+
     [Fact]
     public async Task CreateSessionId_when_user_is_authenticated_and_same_sub_should_preserve_sid()
     {
@@ -205,7 +205,7 @@ public class DefaultUserSessionTests
         var user = await _subject.GetUserAsync();
         user.GetSubjectId().ShouldBe("123");
     }
-    
+
     [Fact]
     public async Task when_handler_successful_and_identity_is_anonymous_GetIdentityServerUserAsync_should_should_return_null()
     {
@@ -266,9 +266,9 @@ public class DefaultUserSessionTests
         const string clientId = "client";
         await _subject.AddClientIdAsync(clientId);
         await _subject.AddClientIdAsync(clientId);
-        
+
         var clients = await _subject.GetClientListAsync();
-        
+
         _props.Items.Count.ShouldBe(1);
         clients.ShouldBe([clientId]);
     }

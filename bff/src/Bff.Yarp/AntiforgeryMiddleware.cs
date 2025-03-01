@@ -37,7 +37,7 @@ public class AntiforgeryMiddleware
     public async Task Invoke(HttpContext context)
     {
         var route = context.GetRouteModel();
-            
+
         if (route.Config.Metadata != null)
         {
             if (route.Config.Metadata.TryGetValue(Constants.Yarp.AntiforgeryCheckMetadata, out var value))

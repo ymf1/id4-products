@@ -43,7 +43,7 @@ public class ProtectedDataMessageStore<TModel> : IMessageStore<TModel>
     public virtual Task<Message<TModel>> ReadAsync(string value)
     {
         using var activity = Tracing.StoreActivitySource.StartActivity("ProtectedDataMessageStore.Read");
-        
+
         Message<TModel> result = null;
 
         if (!String.IsNullOrWhiteSpace(value))
@@ -55,7 +55,7 @@ public class ProtectedDataMessageStore<TModel> : IMessageStore<TModel>
                 var json = Encoding.UTF8.GetString(bytes);
                 result = ObjectSerializer.FromString<Message<TModel>>(json);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Logger.LogError(ex, "Exception reading protected message");
             }
@@ -68,7 +68,7 @@ public class ProtectedDataMessageStore<TModel> : IMessageStore<TModel>
     public virtual Task<string> WriteAsync(Message<TModel> message)
     {
         using var activity = Tracing.StoreActivitySource.StartActivity("ProtectedDataMessageStore.Write");
-        
+
         string value = null;
 
         try
@@ -78,7 +78,7 @@ public class ProtectedDataMessageStore<TModel> : IMessageStore<TModel>
             bytes = Protector.Protect(bytes);
             value = Base64Url.Encode(bytes);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Logger.LogError(ex, "Exception writing protected message");
         }

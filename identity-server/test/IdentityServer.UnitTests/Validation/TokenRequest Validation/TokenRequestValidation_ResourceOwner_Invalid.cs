@@ -165,7 +165,7 @@ public class TokenRequestValidation_ResourceOwner_Invalid
         result.Error.ShouldBe(OidcConstants.TokenErrors.InvalidGrant);
         result.ErrorDescription.ShouldBe("invalid_username_or_password");
     }
-        
+
     [Fact]
     [Trait("Category", Category)]
     public async Task Missing_ResourceOwner_password_for_user_with_password_should_fail()
@@ -248,8 +248,8 @@ public class TokenRequestValidation_ResourceOwner_Invalid
     {
         var client = (await _clients.FindEnabledClientByIdAsync("roclient")).ToValidationResult();
         var mockResourceValidator = new MockResourceValidator();
-        var validator = Factory.CreateTokenRequestValidator(resourceValidator:mockResourceValidator);
-            
+        var validator = Factory.CreateTokenRequestValidator(resourceValidator: mockResourceValidator);
+
         var parameters = new NameValueCollection();
         parameters.Add(OidcConstants.TokenRequest.GrantType, OidcConstants.GrantTypes.Password);
         parameters.Add(OidcConstants.TokenRequest.Scope, "scope1");

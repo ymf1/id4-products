@@ -17,7 +17,7 @@ public class RequestUriService
 
         return id;
     }
-    
+
     public string Get(string id)
     {
         if (_requestObjects.TryGetValue(id, out var value))

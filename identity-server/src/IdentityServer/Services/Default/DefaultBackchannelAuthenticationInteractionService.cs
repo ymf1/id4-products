@@ -81,7 +81,7 @@ public class DefaultBackchannelAuthenticationInteractionService : IBackchannelAu
     public async Task<BackchannelUserLoginRequest> GetLoginRequestByInternalIdAsync(string id)
     {
         using var activity = Tracing.ServiceActivitySource.StartActivity("DefaultBackchannelAuthenticationInteractionService.GetLoginRequestByInternalId");
-        
+
         var request = await _requestStore.GetByInternalIdAsync(id);
         return await CreateAsync(request);
     }
@@ -90,7 +90,7 @@ public class DefaultBackchannelAuthenticationInteractionService : IBackchannelAu
     public async Task<IEnumerable<BackchannelUserLoginRequest>> GetPendingLoginRequestsForCurrentUserAsync()
     {
         using var activity = Tracing.ServiceActivitySource.StartActivity("DefaultBackchannelAuthenticationInteractionService.GetPendingLoginRequestsForCurrentUser");
-        
+
         var list = new List<BackchannelUserLoginRequest>();
 
         var user = await _session.GetUserAsync();
@@ -133,7 +133,7 @@ public class DefaultBackchannelAuthenticationInteractionService : IBackchannelAu
         {
             throw new InvalidOperationException("Invalid subject.");
         }
-            
+
         if (subject.GetSubjectId() != request.Subject.GetSubjectId())
         {
             throw new InvalidOperationException($"User's subject id: '{subject.GetSubjectId()}' does not match subject id for backchannel authentication request: '{request.Subject.GetSubjectId()}'.");

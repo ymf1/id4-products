@@ -38,5 +38,5 @@ public class ExtensionGrantValidator : IExtensionGrantValidator
         return Task.CompletedTask;
     }
 
-    public string GrantType =>  "custom";
+    public string GrantType => "custom";
 }

@@ -30,18 +30,18 @@ public class DynamicProviderOptions
     /// <summary>
     /// Scheme for signout. Defaults to the constant IdentityServerConstants.DefaultCookieAuthenticationScheme.
     /// </summary>
-    public string SignOutScheme 
-    { 
-        get 
+    public string SignOutScheme
+    {
+        get
         {
             return _signOutScheme ?? IdentityServerConstants.DefaultCookieAuthenticationScheme;
-        } 
-        set 
+        }
+        set
         {
             _signOutScheme = value;
         }
     }
-    
+
     private string? _signOutScheme;
 
     /// <summary>
@@ -58,10 +58,10 @@ public class DynamicProviderOptions
         where TIdentityProvider : IdentityProvider
     {
         if (_providers.ContainsKey(type)) throw new Exception($"Type '{type}' already configured.");
-            
+
         _providers.Add(type, new DynamicProviderType
         {
-            HandlerType = typeof(THandler), 
+            HandlerType = typeof(THandler),
             OptionsType = typeof(TOptions),
             IdentityProviderType = typeof(TIdentityProvider),
         });

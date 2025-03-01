@@ -13,7 +13,7 @@ namespace MvcHybrid
 
         public void Add(string sub, string sid)
         {
-            _sessions.Add(new Session { Sub = sub, Sid = sid }); 
+            _sessions.Add(new Session { Sub = sub, Sid = sid });
         }
 
         public bool IsLoggedOut(string sub, string sid)

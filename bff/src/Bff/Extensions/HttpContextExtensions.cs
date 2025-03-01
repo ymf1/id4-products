@@ -56,7 +56,7 @@ internal static class HttpContextExtensions
                  new MissingDPopTokenError("Missing DPoP Json Web Key for DPoP token"),
             { AccessTokenType: string accessTokenType } =>
                 new UnexpectedAccessTokenError($"Unexpected access token type: {accessTokenType} - should be one of 'DPoP' or 'Bearer'"),
-            { AccessTokenType: null } => 
+            { AccessTokenType: null } =>
                 // Fall back to bearer tokens when the access token type is absent.
                 // In some edge cases, we've seen bearer tokens not have their type specified.
                 // But that wouldn't be the case if you had a DPoP token.

@@ -16,7 +16,7 @@ namespace Duende.IdentityServer.Models;
 public class IdentityResource : Resource
 {
     private string DebuggerDisplay => Name ?? $"{{{typeof(IdentityResource)}}}";
-        
+
     /// <summary>
     /// Initializes a new instance of the <see cref="IdentityResource"/> class.
     /// </summary>
@@ -50,7 +50,7 @@ public class IdentityResource : Resource
         Name = name;
         DisplayName = displayName;
 
-        foreach(var type in userClaims)
+        foreach (var type in userClaims)
         {
             UserClaims.Add(type);
         }

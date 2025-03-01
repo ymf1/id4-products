@@ -25,7 +25,7 @@ public class DeviceAuthorizationFailureEvent : Event
             ClientId = result.ValidatedRequest.Client?.ClientId;
             ClientName = result.ValidatedRequest.Client?.ClientName;
             Scopes = result.ValidatedRequest.RequestedScopes?.ToSpaceSeparatedString();
-                
+
         }
 
         Endpoint = IdentityServerConstants.EndpointNames.DeviceAuthorization;
@@ -75,7 +75,7 @@ public class DeviceAuthorizationFailureEvent : Event
     /// The scopes.
     /// </value>
     public string Scopes { get; set; }
-        
+
     /// <summary>
     /// Gets or sets the error.
     /// </summary>

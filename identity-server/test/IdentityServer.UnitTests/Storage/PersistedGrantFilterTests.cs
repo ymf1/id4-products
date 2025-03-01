@@ -31,9 +31,9 @@ namespace IdentityServer.UnitTests.Storage
             filter = new PersistedGrantFilter { SubjectId = "sub" };
             filter.Validate();
 
-            filter = new PersistedGrantFilter 
-            { 
-                SessionId  = "sid",
+            filter = new PersistedGrantFilter
+            {
+                SessionId = "sid",
                 SubjectId = "sub",
                 ClientId = "client-id",
                 Type = IdentityServerConstants.PersistedGrantTypes.RefreshToken

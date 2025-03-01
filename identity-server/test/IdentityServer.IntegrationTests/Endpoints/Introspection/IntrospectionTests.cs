@@ -148,8 +148,8 @@ public class IntrospectionTests
         introspectionResponse.IsError.ShouldBe(false);
 
         var scopes = from c in introspectionResponse.Claims
-            where c.Type == "scope"
-            select c;
+                     where c.Type == "scope"
+                     select c;
 
         scopes.Count().ShouldBe(1);
         scopes.First().Value.ShouldBe("api1");
@@ -191,19 +191,19 @@ public class IntrospectionTests
         introspectionResponse.IsError.ShouldBe(false);
 
         var scopes = from c in introspectionResponse.Claims
-                        where c.Type == "scope"
-                        select c.Value;
+                     where c.Type == "scope"
+                     select c.Value;
         scopes.ShouldContain("api1");
     }
 
     [Theory]
     [Trait("Category", Category)]
-    
+
     // Validate that refresh tokens can be introspected with any hint by the client they were issued to
     [InlineData("ro.client", Constants.TokenTypeHints.RefreshToken, true)]
     [InlineData("ro.client", Constants.TokenTypeHints.AccessToken, true)]
     [InlineData("ro.client", "bogus", true)]
-    
+
     // Validate that APIs cannot introspect refresh tokens and that we always return isActive: false
     [InlineData("api1", Constants.TokenTypeHints.RefreshToken, false)]
     [InlineData("api1", Constants.TokenTypeHints.AccessToken, false)]
@@ -222,7 +222,7 @@ public class IntrospectionTests
             Password = "bob",
             Scope = "api1 offline_access"
         });
-     
+
         var introspectionResponse = await _client.IntrospectTokenAsync(new TokenIntrospectionRequest
         {
             Address = IntrospectionEndpoint,
@@ -277,8 +277,8 @@ public class IntrospectionTests
         introspectionResponse.IsError.ShouldBe(false);
 
         var scopes = from c in introspectionResponse.Claims
-            where c.Type == "scope"
-            select c;
+                     where c.Type == "scope"
+                     select c;
 
         scopes.Count().ShouldBe(1);
         scopes.First().Value.ShouldBe("api1");
@@ -306,7 +306,7 @@ public class IntrospectionTests
         });
 
         var values = GetFields(introspectionResponse);
-            
+
         values["iss"].ValueKind.ShouldBe(JsonValueKind.String);
         values["aud"].ValueKind.ShouldBe(JsonValueKind.String);
         values["nbf"].ValueKind.ShouldBe(JsonValueKind.Number);
@@ -346,7 +346,7 @@ public class IntrospectionTests
         });
 
         var values = GetFields(introspectionResponse);
-            
+
         values["iss"].ValueKind.ShouldBe(JsonValueKind.String);
         values["aud"].ValueKind.ShouldBe(JsonValueKind.String);
         values["nbf"].ValueKind.ShouldBe(JsonValueKind.Number);
@@ -470,8 +470,8 @@ public class IntrospectionTests
         introspectionResponse.IsError.ShouldBeFalse();
 
         var scopes = from c in introspectionResponse.Claims
-            where c.Type == "scope"
-            select c.Value;
+                     where c.Type == "scope"
+                     select c.Value;
 
         scopes.Count().ShouldBe(1);
         scopes.First().ShouldBe("api3-a");
@@ -503,8 +503,8 @@ public class IntrospectionTests
         introspectionResponse.IsError.ShouldBe(false);
 
         var scopes = from c in introspectionResponse.Claims
-            where c.Type == "scope"
-            select c;
+                     where c.Type == "scope"
+                     select c;
 
         scopes.Count().ShouldBe(1);
         scopes.First().Value.ShouldBe("api1");

@@ -359,7 +359,7 @@ public class TokenRequestValidation_Code_Invalid
         // request second time
         validator = Factory.CreateTokenRequestValidator(
             authorizationCodeStore: store);
-            
+
         result = await validator.ValidateRequestAsync(parameters, client.ToValidationResult());
 
         result.IsError.ShouldBeTrue();
@@ -495,8 +495,8 @@ public class TokenRequestValidation_Code_Invalid
             parameters.Add(OidcConstants.TokenRequest.GrantType, OidcConstants.GrantTypes.AuthorizationCode);
             parameters.Add(OidcConstants.TokenRequest.Code, handle);
             parameters.Add(OidcConstants.TokenRequest.RedirectUri, "https://server/cb");
-            parameters.Add(OidcConstants.TokenRequest.Resource, "urn:api1"); 
-                
+            parameters.Add(OidcConstants.TokenRequest.Resource, "urn:api1");
+
             mockResourceValidator.Result = new ResourceValidationResult
             {
                 InvalidScopes = { "foo" }
@@ -529,8 +529,8 @@ public class TokenRequestValidation_Code_Invalid
             parameters.Add(OidcConstants.TokenRequest.GrantType, OidcConstants.GrantTypes.AuthorizationCode);
             parameters.Add(OidcConstants.TokenRequest.Code, handle);
             parameters.Add(OidcConstants.TokenRequest.RedirectUri, "https://server/cb");
-            parameters.Add(OidcConstants.TokenRequest.Resource, "urn:api1"); 
-                
+            parameters.Add(OidcConstants.TokenRequest.Resource, "urn:api1");
+
             mockResourceValidator.Result = new ResourceValidationResult
             {
                 InvalidResourceIndicators = { "foo" }

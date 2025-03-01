@@ -28,7 +28,7 @@ public class BrowserHandler : DelegatingHandler
 
         int redirectCount = 0;
 
-        while (AllowAutoRedirect && 
+        while (AllowAutoRedirect &&
                (300 <= (int)response.StatusCode && (int)response.StatusCode < 400) &&
                redirectCount < StopRedirectingAfter)
         {

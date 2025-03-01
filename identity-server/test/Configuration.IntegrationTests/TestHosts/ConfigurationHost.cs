@@ -39,7 +39,8 @@ public class ConfigurationHost : GenericHost
             })
             .AddClientConfigurationStore();
         services.AddSingleton(new ConfigurationStoreOptions());
-        services.AddConfigurationDbContext(options => {
+        services.AddConfigurationDbContext(options =>
+        {
             options.ConfigureDbContext = b =>
                 b.UseInMemoryDatabase("configurationDb", databaseRoot);
         });

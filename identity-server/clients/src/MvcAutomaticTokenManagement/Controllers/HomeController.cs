@@ -39,7 +39,7 @@ public class HomeController : Controller
 
         var response = await client.GetStringAsync("identity");
         ViewBag.Json = response.PrettyPrintJson();
-        
+
         return View();
     }
 

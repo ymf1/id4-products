@@ -44,12 +44,13 @@ public class DefaultTokenServiceTests
     [Fact]
     public async Task CreateAccessTokenAsync_should_include_aud_for_each_ApiResource()
     {
-        var request = new TokenCreationRequest { 
+        var request = new TokenCreationRequest
+        {
             ValidatedResources = new ResourceValidationResult()
             {
                 Resources = new Resources()
                 {
-                    ApiResources = 
+                    ApiResources =
                     {
                         new ApiResource("api1"){ Scopes = { "scope1" } },
                         new ApiResource("api2"){ Scopes = { "scope2" } },
@@ -126,7 +127,7 @@ public class DefaultTokenServiceTests
 
         result.Claims.SingleOrDefault(x => x.Type == JwtClaimTypes.SessionId).ShouldBeNull();
     }
-        
+
     [Fact]
     public async Task CreateAccessTokenAsync_when_session_should_include_sid()
     {
@@ -186,9 +187,9 @@ public class DefaultTokenServiceTests
     {
         var token = new Token
         {
-            Claims = 
-            { 
-                new Claim("sub", "123") 
+            Claims =
+            {
+                new Claim("sub", "123")
             },
             Version = 4,
             Type = OidcConstants.TokenTypes.AccessToken,

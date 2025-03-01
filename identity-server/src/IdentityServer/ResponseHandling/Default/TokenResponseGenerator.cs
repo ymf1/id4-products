@@ -84,7 +84,7 @@ public class TokenResponseGenerator : ITokenResponseGenerator
         using var activity = Tracing.BasicActivitySource.StartActivity("TokenResponseGenerator.Process");
         activity?.SetTag(Tracing.Properties.GrantType, request.ValidatedRequest.GrantType);
         activity?.SetTag(Tracing.Properties.ClientId, request.ValidatedRequest.Client.ClientId);
-        
+
         switch (request.ValidatedRequest.GrantType)
         {
             case OidcConstants.GrantTypes.ClientCredentials:
@@ -200,7 +200,7 @@ public class TokenResponseGenerator : ITokenResponseGenerator
             // todo: do we want a new JTI?
             accessToken.CreationTime = Clock.UtcNow.UtcDateTime;
             accessToken.Lifetime = request.ValidatedRequest.AccessTokenLifetime;
-            
+
             // always take the current request confirmation values (this would be because the proof token changed from last time)
             if (request.ValidatedRequest.Confirmation.IsPresent() && accessToken.Confirmation != request.ValidatedRequest.Confirmation)
             {
@@ -212,9 +212,10 @@ public class TokenResponseGenerator : ITokenResponseGenerator
         var accessTokenString = await TokenService.CreateSecurityTokenAsync(accessToken);
         request.ValidatedRequest.RefreshToken.SetAccessToken(accessToken, request.ValidatedRequest.RequestedResourceIndicator);
 
-        var handle = await RefreshTokenService.UpdateRefreshTokenAsync(new RefreshTokenUpdateRequest{
-            Handle = request.ValidatedRequest.RefreshTokenHandle, 
-            RefreshToken = request.ValidatedRequest.RefreshToken, 
+        var handle = await RefreshTokenService.UpdateRefreshTokenAsync(new RefreshTokenUpdateRequest
+        {
+            Handle = request.ValidatedRequest.RefreshTokenHandle,
+            RefreshToken = request.ValidatedRequest.RefreshToken,
             Client = request.ValidatedRequest.Client,
             MustUpdate = mustUpdate
         });
@@ -223,7 +224,7 @@ public class TokenResponseGenerator : ITokenResponseGenerator
         {
             IdentityToken = await CreateIdTokenFromRefreshTokenRequestAsync(request.ValidatedRequest, accessTokenString),
             AccessToken = accessTokenString,
-            AccessTokenType = request.ValidatedRequest.ProofType == ProofType.DPoP ? OidcConstants.TokenResponse.DPoPTokenType : OidcConstants.TokenResponse.BearerTokenType, 
+            AccessTokenType = request.ValidatedRequest.ProofType == ProofType.DPoP ? OidcConstants.TokenResponse.DPoPTokenType : OidcConstants.TokenResponse.BearerTokenType,
             AccessTokenLifetime = request.ValidatedRequest.AccessTokenLifetime,
             RefreshToken = handle,
             Custom = request.CustomResponse,
@@ -382,7 +383,7 @@ public class TokenResponseGenerator : ITokenResponseGenerator
 
             tokenRequest.Subject = request.AuthorizationCode.Subject;
             tokenRequest.Description = request.AuthorizationCode.Description;
-                
+
             authorizedScopes = request.AuthorizationCode.RequestedScopes;
             authorizedResourceIndicators = request.AuthorizationCode.RequestedResourceIndicators;
         }
@@ -422,7 +423,7 @@ public class TokenResponseGenerator : ITokenResponseGenerator
 
             tokenRequest.Subject = request.DeviceCode.Subject;
             tokenRequest.Description = request.DeviceCode.Description;
-                
+
             authorizedScopes = request.DeviceCode.AuthorizedScopes;
         }
         else

@@ -20,7 +20,7 @@ internal class FederatedSignoutAuthenticationHandlerProvider : IAuthenticationHa
     private readonly IHttpContextAccessor _httpContextAccessor;
 
     public FederatedSignoutAuthenticationHandlerProvider(
-        Decorator<IAuthenticationHandlerProvider> decorator, 
+        Decorator<IAuthenticationHandlerProvider> decorator,
         IHttpContextAccessor httpContextAccessor)
     {
         _provider = decorator.Instance;

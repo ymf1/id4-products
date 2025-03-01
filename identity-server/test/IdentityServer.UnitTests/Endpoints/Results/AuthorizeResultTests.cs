@@ -25,7 +25,7 @@ public class AuthorizeResultTests
     private IdentityServerOptions _options = new IdentityServerOptions();
     private MockUserSession _mockUserSession = new MockUserSession();
     private MockMessageStore<Duende.IdentityServer.Models.ErrorMessage> _mockErrorMessageStore = new MockMessageStore<Duende.IdentityServer.Models.ErrorMessage>();
-        
+
     private DefaultServerUrls _urls;
     private DefaultHttpContext _context = new DefaultHttpContext();
 
@@ -260,7 +260,7 @@ public class AuthorizeResultTests
         _context.Response.Headers.ContentSecurityPolicy.First().ShouldContain($"script-src '{IdentityServerConstants.ContentSecurityPolicyHashes.AuthorizeScript}'");
         _context.Response.Headers["X-Content-Security-Policy"].ShouldBeEmpty();
     }
-    
+
     [InlineData(OidcConstants.AuthorizeErrors.AccessDenied)]
     [InlineData(OidcConstants.AuthorizeErrors.AccountSelectionRequired)]
     [InlineData(OidcConstants.AuthorizeErrors.LoginRequired)]
@@ -280,9 +280,9 @@ public class AuthorizeResultTests
             RedirectUri = "http://client/callback",
             ResponseType = OidcConstants.ResponseTypes.Token,
         };
-        
+
         await _subject.WriteHttpResponse(new AuthorizeResult(_response), _context);
-        
+
         _context.Response.StatusCode.ShouldBe(302);
         var location = _context.Response.Headers.Location.First();
         location.ShouldStartWith("http://client/callback");
@@ -312,9 +312,9 @@ public class AuthorizeResultTests
             RedirectUri = "http://client/callback",
             ResponseType = OidcConstants.ResponseTypes.Token,
         };
-        
+
         await _subject.WriteHttpResponse(new AuthorizeResult(_response), _context);
-        
+
         _context.Response.StatusCode.ShouldBe(302);
         var location = _context.Response.Headers.Location.First();
         var queryString = new Uri(location).Query;

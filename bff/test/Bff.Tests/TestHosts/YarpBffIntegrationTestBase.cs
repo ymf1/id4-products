@@ -20,7 +20,7 @@ namespace Duende.Bff.Tests.TestHosts
         protected YarpBffIntegrationTestBase(ITestOutputHelper output) : base(output)
         {
             _identityServerHost = new IdentityServerHost(WriteLine);
-            
+
             _identityServerHost.Clients.Add(new Client
             {
                 ClientId = "spa",
@@ -32,16 +32,17 @@ namespace Duende.Bff.Tests.TestHosts
                 AllowOfflineAccess = true,
                 AllowedScopes = { "openid", "profile", "scope1" }
             });
-            
-            
-            _identityServerHost.OnConfigureServices += services => {
-                services.AddTransient<IBackChannelLogoutHttpClient>(provider => 
+
+
+            _identityServerHost.OnConfigureServices += services =>
+            {
+                services.AddTransient<IBackChannelLogoutHttpClient>(provider =>
                     new DefaultBackChannelLogoutHttpClient(
-                        YarpBasedBffHost!.HttpClient, 
-                        provider.GetRequiredService<ILoggerFactory>(), 
+                        YarpBasedBffHost!.HttpClient,
+                        provider.GetRequiredService<ILoggerFactory>(),
                         provider.GetRequiredService<ICancellationTokenProvider>()));
             };
-            
+
             ApiHost = new ApiHost(WriteLine, _identityServerHost, "scope1");
 
             YarpBasedBffHost = new YarpBffHost(output.WriteLine, _identityServerHost, ApiHost, "spa");

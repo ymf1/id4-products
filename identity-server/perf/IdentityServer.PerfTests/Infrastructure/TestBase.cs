@@ -8,7 +8,7 @@ using BenchmarkDotNet.Attributes;
 
 namespace IdentityServer.PerfTest.Infrastructure
 {
-    public class TestBase<T> 
+    public class TestBase<T>
         where T : IdentityServerContainer, new()
     {
         public static X509Certificate2 Cert { get; }

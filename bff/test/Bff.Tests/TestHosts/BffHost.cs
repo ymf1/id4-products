@@ -30,10 +30,10 @@ public class BffHost : GenericHost
 
     public BffHost(
         WriteTestOutput output,
-        IdentityServerHost identityServerHost, 
-        ApiHost apiHost, 
+        IdentityServerHost identityServerHost,
+        ApiHost apiHost,
         string clientId,
-        string baseAddress = "https://app", 
+        string baseAddress = "https://app",
         bool useForwardedHeaders = false)
         : base(output, baseAddress)
     {

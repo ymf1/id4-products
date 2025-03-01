@@ -32,7 +32,7 @@ public class PushedAuthorizationSerializer : IPushedAuthorizationSerializer
             .FromString<Dictionary<string, string[]>>(unprotected)
             .FromFullDictionary();
     }
-    
+
     /// <inheritdoc />
     public string Serialize(NameValueCollection raw)
     {

@@ -17,7 +17,7 @@ public interface IIdentityProviderStore
     /// Gets all identity providers name.
     /// </summary>
     Task<IEnumerable<IdentityProviderName>> GetAllSchemeNamesAsync();
-        
+
     /// <summary>
     /// Gets the identity provider by scheme name.
     /// </summary>

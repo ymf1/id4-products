@@ -53,7 +53,7 @@ public class ServerSideSessionStore : IServerSideSessionStore
     public virtual async Task CreateSessionAsync(ServerSideSession session, CancellationToken cancellationToken = default)
     {
         using var activity = Tracing.StoreActivitySource.StartActivity("ServerSideSessionStore.CreateSession");
-        
+
         cancellationToken = cancellationToken == CancellationToken.None ? CancellationTokenProvider.CancellationToken : cancellationToken;
 
         var entity = new Entities.ServerSideSession
@@ -85,7 +85,7 @@ public class ServerSideSessionStore : IServerSideSessionStore
     public virtual async Task<ServerSideSession> GetSessionAsync(string key, CancellationToken cancellationToken = default)
     {
         using var activity = Tracing.StoreActivitySource.StartActivity("ServerSideSessionStore.GetSession");
-        
+
         cancellationToken = cancellationToken == CancellationToken.None ? CancellationTokenProvider.CancellationToken : cancellationToken;
 
         var entity = (await Context.ServerSideSessions.AsNoTracking().Where(x => x.Key == key)
@@ -118,7 +118,7 @@ public class ServerSideSessionStore : IServerSideSessionStore
     public virtual async Task UpdateSessionAsync(ServerSideSession session, CancellationToken cancellationToken = default)
     {
         using var activity = Tracing.StoreActivitySource.StartActivity("ServerSideSessionStore.UpdateSession");
-        
+
         cancellationToken = cancellationToken == CancellationToken.None ? CancellationTokenProvider.CancellationToken : cancellationToken;
 
         var entity = (await Context.ServerSideSessions.Where(x => x.Key == session.Key)
@@ -155,9 +155,9 @@ public class ServerSideSessionStore : IServerSideSessionStore
     public virtual async Task DeleteSessionAsync(string key, CancellationToken cancellationToken = default)
     {
         using var activity = Tracing.StoreActivitySource.StartActivity("ServerSideSessionStore.DeleteSession");
-        
+
         cancellationToken = cancellationToken == CancellationToken.None ? CancellationTokenProvider.CancellationToken : cancellationToken;
-        
+
         var entity = (await Context.ServerSideSessions.Where(x => x.Key == key)
                         .ToArrayAsync(cancellationToken))
                     .SingleOrDefault(x => x.Key == key);
@@ -187,9 +187,9 @@ public class ServerSideSessionStore : IServerSideSessionStore
     public virtual async Task<IReadOnlyCollection<ServerSideSession>> GetSessionsAsync(SessionFilter filter, CancellationToken cancellationToken = default)
     {
         using var activity = Tracing.StoreActivitySource.StartActivity("ServerSideSessionStore.GetSessions");
-        
+
         cancellationToken = cancellationToken == CancellationToken.None ? CancellationTokenProvider.CancellationToken : cancellationToken;
-        
+
         filter.Validate();
 
         var entities = await Filter(Context.ServerSideSessions.AsNoTracking().AsQueryable(), filter)
@@ -218,9 +218,9 @@ public class ServerSideSessionStore : IServerSideSessionStore
     public virtual async Task DeleteSessionsAsync(SessionFilter filter, CancellationToken cancellationToken = default)
     {
         using var activity = Tracing.StoreActivitySource.StartActivity("ServerSideSessionStore.DeleteSessions");
-        
+
         cancellationToken = cancellationToken == CancellationToken.None ? CancellationTokenProvider.CancellationToken : cancellationToken;
-        
+
         filter.Validate();
 
         var entities = await Filter(Context.ServerSideSessions.AsQueryable(), filter)
@@ -259,9 +259,9 @@ public class ServerSideSessionStore : IServerSideSessionStore
     public virtual async Task<IReadOnlyCollection<ServerSideSession>> GetAndRemoveExpiredSessionsAsync(int count, CancellationToken cancellationToken = default)
     {
         using var activity = Tracing.StoreActivitySource.StartActivity("ServerSideSessionStore.GetAndRemoveExpiredSessions");
-        
+
         cancellationToken = cancellationToken == CancellationToken.None ? CancellationTokenProvider.CancellationToken : cancellationToken;
-        
+
         var entities = await Context.ServerSideSessions
                             .Where(x => x.Expires < DateTime.UtcNow)
                             .OrderBy(x => x.Id)
@@ -271,10 +271,10 @@ public class ServerSideSessionStore : IServerSideSessionStore
         if (entities.Length > 0)
         {
             Context.ServerSideSessions.RemoveRange(entities);
-            
+
             var list = await Context.SaveChangesWithConcurrencyCheckAsync<Entities.ServerSideSession>(Logger, cancellationToken);
             entities = entities.Except(list).ToArray();
-            
+
             Logger.LogDebug("Found and removed {serverSideSessionCount} expired server-side sessions", entities.Length);
         }
 
@@ -319,7 +319,7 @@ public class ServerSideSessionStore : IServerSideSessionStore
         {
             CountRequested = countRequested,
             TotalCount = totalCount,
-            TotalPages = (int) Math.Max(1, Math.Ceiling(totalCount / (countRequested * 1.0))),
+            TotalPages = (int)Math.Max(1, Math.Ceiling(totalCount / (countRequested * 1.0))),
             First = first,
             Last = last,
         };
@@ -427,7 +427,7 @@ public class ServerSideSessionStore : IServerSideSessionStore
             var priorCountId = pagination.Items[0].Id;
             var priorCount = await query.CountAsync(x => x.Id < last, cancellationToken);
             pagination.HasPrev = priorCount > 0;
-            pagination.CurrentPage = 1 + (int) Math.Ceiling((1.0 * priorCount) / pagination.CountRequested);
+            pagination.CurrentPage = 1 + (int)Math.Ceiling((1.0 * priorCount) / pagination.CountRequested);
         }
     }
 
@@ -458,7 +458,7 @@ public class ServerSideSessionStore : IServerSideSessionStore
             var postCountId = pagination.Items[pagination.Items.Length - 1].Id;
             var postCount = await query.CountAsync(x => x.Id > postCountId, cancellationToken);
             pagination.HasNext = postCount > 0;
-            pagination.CurrentPage = pagination.TotalPages - (int) Math.Ceiling((1.0 * postCount) / pagination.CountRequested);
+            pagination.CurrentPage = pagination.TotalPages - (int)Math.Ceiling((1.0 * postCount) / pagination.CountRequested);
         }
     }
 

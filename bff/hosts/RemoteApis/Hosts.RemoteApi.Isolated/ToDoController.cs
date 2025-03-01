@@ -31,7 +31,7 @@ namespace Api.Isolated
         public IActionResult GetAll()
         {
             _logger.LogInformation("GetAll");
-            
+
             return Ok(Data.AsEnumerable());
         }
 
@@ -40,7 +40,7 @@ namespace Api.Isolated
         {
             var item = Data.FirstOrDefault(x => x.Id == id);
             if (item == null) return NotFound();
-            
+
             _logger.LogInformation("Get {id}", id);
             return Ok(item);
         }
@@ -50,7 +50,7 @@ namespace Api.Isolated
         {
             model.Id = ToDo.NewId();
             model.User = $"{User.FindFirst("sub").Value} ({User.FindFirst("name").Value})";
-            
+
             Data.Add(model);
             _logger.LogInformation("Add {name}", model.Name);
 
@@ -67,10 +67,10 @@ namespace Api.Isolated
             item.Name = model.Name;
 
             _logger.LogInformation("Update {name}", model.Name);
-            
+
             return NoContent();
         }
-        
+
         [HttpDelete("todos/{id}")]
         public IActionResult Delete(int id)
         {
@@ -83,7 +83,7 @@ namespace Api.Isolated
             return NoContent();
         }
     }
-    
+
     public class ToDo
     {
         static int NextId = 1;
@@ -91,7 +91,7 @@ namespace Api.Isolated
         {
             return NextId++;
         }
-        
+
         public int Id { get; set; }
         public DateTimeOffset Date { get; set; }
         public string Name { get; set; }

@@ -28,7 +28,7 @@ public class ValidatedTokenRequest : ValidatedRequest
     /// The scopes.
     /// </value>
     public IEnumerable<string>? RequestedScopes { get; set; }
-        
+
     /// <summary>
     /// Gets or sets the resource indicator.
     /// </summary>
@@ -41,7 +41,7 @@ public class ValidatedTokenRequest : ValidatedRequest
     /// The name of the user.
     /// </value>
     public string? UserName { get; set; }
-        
+
     /// <summary>
     /// Gets or sets the refresh token.
     /// </summary>
@@ -49,7 +49,7 @@ public class ValidatedTokenRequest : ValidatedRequest
     /// The refresh token.
     /// </value>
     public RefreshToken? RefreshToken { get; set; }
-        
+
     /// <summary>
     /// Gets or sets the refresh token handle.
     /// </summary>

@@ -28,7 +28,7 @@ builder.Services.AddAuthentication(options =>
         options.Authority = config.Authority;
         options.ClientId = config.ClientId;
         options.ClientSecret = config.ClientSecret;
-        
+
         options.ResponseType = "code";
         options.ResponseMode = "query";
 

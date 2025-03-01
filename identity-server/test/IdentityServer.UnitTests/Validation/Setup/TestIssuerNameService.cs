@@ -12,9 +12,9 @@ internal class TestIssuerNameService : IIssuerNameService
 
     public TestIssuerNameService(string value = null)
     {
-        _value = value ?? "https://identityserver";         
+        _value = value ?? "https://identityserver";
     }
-        
+
     public Task<string> GetCurrentAsync()
     {
         return Task.FromResult(_value);

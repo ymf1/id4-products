@@ -20,7 +20,7 @@ public class BearerTokenUsageValidation
         var ctx = new DefaultHttpContext();
         ctx.Request.Method = "GET";
 
-        var validator = new BearerTokenUsageValidator(TestLogger.Create< BearerTokenUsageValidator>());
+        var validator = new BearerTokenUsageValidator(TestLogger.Create<BearerTokenUsageValidator>());
         var result = await validator.ValidateAsync(ctx);
 
         result.TokenFound.ShouldBeFalse();

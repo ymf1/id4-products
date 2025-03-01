@@ -42,7 +42,7 @@ public abstract class KeyContainer
     /// Indicates if key is contained in X509 certificate.
     /// </summary>
     public bool HasX509Certificate { get; set; }
-        
+
     /// <summary>
     /// Date key was created.
     /// </summary>

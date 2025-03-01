@@ -15,7 +15,7 @@ public class ROController : Controller
     {
         _requestUriService = requestUriService;
     }
-    
+
     public IActionResult Index(string id)
     {
         var value = _requestUriService.Get(id);

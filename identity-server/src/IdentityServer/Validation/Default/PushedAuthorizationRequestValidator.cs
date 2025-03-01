@@ -42,14 +42,14 @@ internal class PushedAuthorizationRequestValidator : IPushedAuthorizationRequest
         _features.FeatureUsed(LicenseFeature.PAR);
         IdentityServerLicenseValidator.Instance.ValidatePar();
         var validatedRequest = await ValidateRequestUriAsync(context);
-        if(validatedRequest.IsError)
+        if (validatedRequest.IsError)
         {
             return validatedRequest;
         }
 
-        var authorizeRequestValidation = await _authorizeRequestValidator.ValidateAsync(context.RequestParameters, 
+        var authorizeRequestValidation = await _authorizeRequestValidator.ValidateAsync(context.RequestParameters,
             authorizeRequestType: AuthorizeRequestType.PushedAuthorization);
-        if(authorizeRequestValidation.IsError)
+        if (authorizeRequestValidation.IsError)
         {
             return new PushedAuthorizationValidationResult(
                 authorizeRequestValidation.Error,

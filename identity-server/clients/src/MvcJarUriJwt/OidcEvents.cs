@@ -17,7 +17,7 @@ public class OidcEvents : OpenIdConnectEvents
         _assertionService = assertionService;
         _requestUriService = requestUriService;
     }
-    
+
     public override Task AuthorizationCodeReceived(AuthorizationCodeReceivedContext context)
     {
         context.TokenEndpointRequest.ClientAssertionType = OidcConstants.ClientAssertionTypes.JwtBearer;
@@ -30,10 +30,10 @@ public class OidcEvents : OpenIdConnectEvents
     {
         var request = _assertionService.SignAuthorizationRequest(context.ProtocolMessage);
         var id = _requestUriService.Set(request);
-        
+
         var clientId = context.ProtocolMessage.ClientId;
         var redirectUri = context.ProtocolMessage.RedirectUri;
-        
+
         context.ProtocolMessage.Parameters.Clear();
         context.ProtocolMessage.ClientId = clientId;
         context.ProtocolMessage.RedirectUri = redirectUri;

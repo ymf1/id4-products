@@ -12,7 +12,7 @@ class MockSigningKeyProtector : ISigningKeyProtector
 {
     private IDataProtector _dataProtector;
     public bool ProtectWasCalled { get; set; }
-    
+
     public MockSigningKeyProtector()
     {
         var provider = new EphemeralDataProtectionProvider();

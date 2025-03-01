@@ -33,7 +33,7 @@ namespace IdentityServerHost.Pages.Grants
         }
 
         public ViewModel View { get; set; }
-        
+
         public async Task OnGet()
         {
             var grants = await _interaction.GetAllUserGrantsAsync();

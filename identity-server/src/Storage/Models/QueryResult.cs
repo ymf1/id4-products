@@ -2,7 +2,7 @@
 // See LICENSE in the project root for license information.
 
 
- #nullable enable
+#nullable enable
 
 namespace Duende.IdentityServer.Models;
 
@@ -36,7 +36,7 @@ public class QueryResult<T>
     /// The total pages (if available).
     /// </summary>
     public int? TotalPages { get; init; }
-    
+
     /// <summary>
     /// The current (if available).
     /// </summary>

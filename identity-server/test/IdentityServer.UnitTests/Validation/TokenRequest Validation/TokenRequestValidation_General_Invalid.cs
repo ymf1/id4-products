@@ -87,7 +87,7 @@ public class TokenRequestValidation_General_Invalid
         var codeStore = Factory.CreateAuthorizationCodeStore();
 
         var validator = Factory.CreateTokenRequestValidator(
-            authorizationCodeStore:codeStore);
+            authorizationCodeStore: codeStore);
 
         var parameters = new NameValueCollection();
         parameters.Add(OidcConstants.TokenRequest.GrantType, "client_credentials");

@@ -49,7 +49,7 @@ public class IntrospectionResponseGenerator : IIntrospectionResponseGenerator
     public virtual async Task<Dictionary<string, object>> ProcessAsync(IntrospectionRequestValidationResult validationResult)
     {
         using var activity = Tracing.BasicActivitySource.StartActivity("IntrospectionResponseGenerator.Process");
-        
+
         Logger.LogTrace("Creating introspection response");
 
         // standard response
@@ -90,7 +90,7 @@ public class IntrospectionResponseGenerator : IIntrospectionResponseGenerator
 
         // get all claims (without scopes)
         response = validationResult.Claims.Where(c => c.Type != JwtClaimTypes.Scope).ToClaimsDictionary();
-        
+
         // add active flag
         response.Add("active", true);
 

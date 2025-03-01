@@ -53,7 +53,7 @@ internal class PushedAuthorizationEndpoint : IEndpointHandler
 
         NameValueCollection values;
         IFormCollection form;
-        if(HttpMethods.IsPost(context.Request.Method))
+        if (HttpMethods.IsPost(context.Request.Method))
         {
             form = await context.Request.ReadFormAsync();
             values = form.AsNameValueCollection();
@@ -65,7 +65,7 @@ internal class PushedAuthorizationEndpoint : IEndpointHandler
 
         // Authenticate Client
         var client = await _clientValidator.ValidateAsync(context);
-        if(client.IsError)
+        if (client.IsError)
         {
             return CreateErrorResult(
                 logMessage: "Client secret validation failed",
@@ -87,7 +87,7 @@ internal class PushedAuthorizationEndpoint : IEndpointHandler
 
         var response = await _responseGenerator.CreateResponseAsync(parValidationResult.ValidatedRequest);
 
-        switch(response)
+        switch (response)
         {
             case PushedAuthorizationSuccess success:
                 Telemetry.Metrics.PushedAuthorizationRequest(parValidationResult.ValidatedRequest.Client.ClientId);

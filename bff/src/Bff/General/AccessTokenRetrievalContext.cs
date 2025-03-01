@@ -16,7 +16,7 @@ public class AccessTokenRetrievalContext
     /// the remote API.
     /// </summary>
     public required HttpContext HttpContext { get; set; }
-    
+
     /// <summary>
     /// Metadata that describes the remote API.
     /// </summary>

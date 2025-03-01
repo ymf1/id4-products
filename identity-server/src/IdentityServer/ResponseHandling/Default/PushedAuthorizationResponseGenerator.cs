@@ -40,10 +40,10 @@ public class PushedAuthorizationResponseGenerator : IPushedAuthorizationResponse
     public async Task<PushedAuthorizationResponse> CreateResponseAsync(ValidatedPushedAuthorizationRequest request)
     {
         // Create a reference value
-        var referenceValue = await _handleGeneration.GenerateAsync(); 
-        
+        var referenceValue = await _handleGeneration.GenerateAsync();
+
         var requestUri = $"{IdentityServerConstants.PushedAuthorizationRequestUri}:{referenceValue}";
-        
+
         // Calculate the expiration
         var expiration = request.Client.PushedAuthorizationLifetime ?? _options.PushedAuthorization.Lifetime;
         var expiresAt = DateTime.UtcNow.AddSeconds(expiration);

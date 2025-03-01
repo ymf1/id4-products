@@ -25,7 +25,7 @@ namespace Duende.Bff.Tests.Headers
             apiResult.RequestHeaders["Host"].Single().ShouldBe("app");
             apiResult.RequestHeaders["x-csrf"].Single().ShouldBe("1");
         }
-        
+
         [Fact]
         public async Task custom_header_should_be_forwarded()
         {
@@ -43,7 +43,7 @@ namespace Duende.Bff.Tests.Headers
             apiResult.RequestHeaders["Host"].Single().ShouldBe("api");
             apiResult.RequestHeaders["x-custom"].Single().ShouldBe("custom");
         }
-        
+
         [Fact]
         public async Task custom_header_should_be_forwarded_and_xforwarded_headers_should_be_created()
         {
@@ -57,7 +57,7 @@ namespace Duende.Bff.Tests.Headers
             response.IsSuccessStatusCode.ShouldBeTrue();
             var json = await response.Content.ReadAsStringAsync();
             var apiResult = JsonSerializer.Deserialize<ApiResponse>(json).ShouldNotBeNull();
-            
+
             apiResult.RequestHeaders["X-Forwarded-Host"].Single().ShouldBe("app");
             apiResult.RequestHeaders["X-Forwarded-Proto"].Single().ShouldBe("https");
             apiResult.RequestHeaders["Host"].Single().ShouldBe("api");

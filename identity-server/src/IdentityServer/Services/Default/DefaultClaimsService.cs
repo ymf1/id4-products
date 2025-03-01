@@ -50,7 +50,7 @@ public class DefaultClaimsService : IClaimsService
     public virtual async Task<IEnumerable<Claim>> GetIdentityTokenClaimsAsync(ClaimsPrincipal subject, ResourceValidationResult resources, bool includeAllIdentityClaims, ValidatedRequest request)
     {
         using var activity = Tracing.ServiceActivitySource.StartActivity("DefaultClaimsService.GetIdentityTokenClaims");
-        
+
         Logger.LogDebug("Getting claims for identity token for subject: {subject} and client: {clientId}",
             subject.GetSubjectId(),
             request.Client.ClientId);
@@ -112,7 +112,7 @@ public class DefaultClaimsService : IClaimsService
     public virtual async Task<IEnumerable<Claim>> GetAccessTokenClaimsAsync(ClaimsPrincipal subject, ResourceValidationResult resourceResult, ValidatedRequest request)
     {
         using var activity = Tracing.ServiceActivitySource.StartActivity("DefaultClaimsService.GetAccessTokenClaims");
-        
+
         Logger.LogDebug("Getting claims for access token for client: {clientId}", request.Client.ClientId);
 
         var outputClaims = new List<Claim>
@@ -180,7 +180,7 @@ public class DefaultClaimsService : IClaimsService
                 }
             }
 
-            foreach(var scope in resourceResult.Resources.ApiScopes)
+            foreach (var scope in resourceResult.Resources.ApiScopes)
             {
                 // add claims configured on scopes
                 if (scope.UserClaims != null)

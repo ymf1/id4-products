@@ -49,7 +49,7 @@ public class TestBackchannelLoginUserValidator : IBackchannelAuthenticationUserV
             var ci = new ClaimsIdentity(claims, "ciba");
             result.Subject = new ClaimsPrincipal(ci);
         }
- 
+
         return Task.FromResult(result);
     }
 }

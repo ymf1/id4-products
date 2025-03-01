@@ -59,12 +59,12 @@ internal class AuthorizeRequestValidator : IAuthorizeRequestValidator
     }
 
     public async Task<AuthorizeRequestValidationResult> ValidateAsync(
-        NameValueCollection parameters, 
-        ClaimsPrincipal subject = null, 
+        NameValueCollection parameters,
+        ClaimsPrincipal subject = null,
         AuthorizeRequestType authorizeRequestType = AuthorizeRequestType.Authorize)
     {
         using var activity = Tracing.BasicActivitySource.StartActivity("AuthorizeRequestValidator.Validate");
-        
+
         _logger.LogDebug("Start authorize request protocol validation");
 
         var request = new ValidatedAuthorizeRequest
@@ -707,7 +707,7 @@ internal class AuthorizeRequestValidator : IAuthorizeRequestValidator
         }
 
         var processed_max_age = request.Raw.Get(Constants.ProcessedMaxAge);
-        if(processed_max_age.IsPresent())
+        if (processed_max_age.IsPresent())
         {
             request.MaxAge = null;
             // TODO - Consider adding an OriginalMaxAge property for consistency with prompt.

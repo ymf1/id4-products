@@ -16,7 +16,7 @@ namespace Duende;
 internal class LicenseValidator<T>
     where T : License, new()
 {
-    static readonly string[] LicenseFileNames = new[] 
+    static readonly string[] LicenseFileNames = new[]
     {
         "Duende_License.key",
         "Duende_IdentityServer_License.key",
@@ -29,7 +29,7 @@ internal class LicenseValidator<T>
     protected Action<string, object[]> DebugLog;
 
     protected T License { get; private set; }
-    
+
     // cloned copy meant to be accessible in DI
     T _copy;
     public T GetLicense()
@@ -50,7 +50,7 @@ internal class LicenseValidator<T>
 
         key ??= LoadFromFile();
         License = ValidateKey(key);
-       
+
         ErrorLog = LogToError;
         WarningLog = LogToWarning;
         InformationLog = LogToInformation;
@@ -183,7 +183,7 @@ internal class LicenseValidator<T>
 
         return null;
     }
-    
+
     protected void LogToTrace(string message, params object[] args)
     {
         if (Logger.IsEnabled(LogLevel.Trace))

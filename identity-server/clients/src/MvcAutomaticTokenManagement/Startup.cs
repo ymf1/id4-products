@@ -89,7 +89,7 @@ public class Startup
         {
             client.BaseAddress = new Uri(Constants.SampleApi);
         });
-        
+
         // var apiKey = _configuration["HoneyCombApiKey"];
         // var dataset = "IdentityServerDev";
         //

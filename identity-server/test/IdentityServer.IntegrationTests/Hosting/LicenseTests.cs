@@ -44,7 +44,7 @@ public class LicenseTests : IDisposable
             File.Delete(path2);
         }
     }
-    
+
     [Fact]
     public async Task unlicensed_protocol_requests_log_a_warning()
     {
@@ -55,7 +55,7 @@ public class LicenseTests : IDisposable
             counter.Threshold = threshold;
         };
         _mockPipeline.Initialize(enableLogging: true);
-        
+
         // The actual protocol parameters aren't the point of this test, this could be any protocol request 
         var data = new Dictionary<string, string>
         {
@@ -65,7 +65,7 @@ public class LicenseTests : IDisposable
             { "scope", scope_name },
         };
         var form = new FormUrlEncodedContent(data);
-        
+
         for (int i = 0; i < threshold + 1; i++)
         {
             await _mockPipeline.BackChannelClient.PostAsync(IdentityServerPipeline.TokenEndpoint, form);

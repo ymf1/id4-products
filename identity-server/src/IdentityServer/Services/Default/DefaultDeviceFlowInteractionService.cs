@@ -39,8 +39,8 @@ internal class DefaultDeviceFlowInteractionService : IDeviceFlowInteractionServi
         var client = await _clients.FindEnabledClientByIdAsync(deviceAuth.ClientId);
         if (client == null) return null;
 
-        var validatedResources = await _resourceValidator.ValidateRequestedResourcesAsync(new ResourceValidationRequest 
-        { 
+        var validatedResources = await _resourceValidator.ValidateRequestedResourcesAsync(new ResourceValidationRequest
+        {
             Client = client,
             Scopes = deviceAuth.RequestedScopes,
         });
@@ -56,7 +56,7 @@ internal class DefaultDeviceFlowInteractionService : IDeviceFlowInteractionServi
     {
         ArgumentNullException.ThrowIfNull(userCode);
         ArgumentNullException.ThrowIfNull(consent);
-            
+
         var deviceAuth = await _devices.FindByUserCodeAsync(userCode);
         if (deviceAuth == null) return LogAndReturnError("Invalid user code", "Device authorization failure - user code is invalid");
 
@@ -65,7 +65,7 @@ internal class DefaultDeviceFlowInteractionService : IDeviceFlowInteractionServi
 
         var subject = await _session.GetUserAsync();
         if (subject == null) return LogAndReturnError("No user present in device flow request", "Device authorization failure - no user found");
-            
+
         var sid = await _session.GetSessionIdAsync();
 
         deviceAuth.IsAuthorized = true;

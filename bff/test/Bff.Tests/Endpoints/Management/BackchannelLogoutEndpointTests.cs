@@ -78,7 +78,7 @@ namespace Duende.Bff.Tests.Endpoints.Management
                 var sessions = await store.GetUserSessionsAsync(new UserSessionsFilter { SubjectId = "alice" });
                 sessions.Count().ShouldBe(2);
             }
-            
+
             await IdentityServerHost.RevokeSessionCookieAsync();
 
             {

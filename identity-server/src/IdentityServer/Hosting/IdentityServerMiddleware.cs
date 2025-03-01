@@ -45,10 +45,10 @@ public class IdentityServerMiddleware
     /// <param name="sessionCoordinationService"></param>
     /// <returns></returns>
     public async Task Invoke(
-        HttpContext context, 
+        HttpContext context,
         IdentityServerOptions options,
-        IEndpointRouter router, 
-        IUserSession userSession, 
+        IEndpointRouter router,
+        IUserSession userSession,
         IEventService events,
         IIssuerNameService issuerNameService,
         ISessionCoordinationService sessionCoordinationService)
@@ -84,7 +84,7 @@ public class IdentityServerMiddleware
             if (context.TryGetExpiredUserSession(out var expiredUserSession))
             {
                 _logger.LogDebug("Detected expired session removed; processing post-expiration cleanup.");
-                
+
                 await sessionCoordinationService.ProcessExpirationAsync(expiredUserSession);
             }
         });

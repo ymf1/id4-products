@@ -89,7 +89,7 @@ public class MutualTlsEndpointMiddleware
                 }
             }
         }
-            
+
         await _next(context);
     }
 

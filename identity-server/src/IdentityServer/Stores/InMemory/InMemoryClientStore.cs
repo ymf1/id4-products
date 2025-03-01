@@ -38,12 +38,12 @@ public class InMemoryClientStore : IClientStore
     {
         using var activity = Tracing.StoreActivitySource.StartActivity("InMemoryClientStore.FindClientById");
         activity?.SetTag(Tracing.Properties.ClientId, clientId);
-        
+
         var query =
             from client in _clients
             where client.ClientId == clientId
             select client;
-            
+
         return Task.FromResult(query.SingleOrDefault());
     }
 }

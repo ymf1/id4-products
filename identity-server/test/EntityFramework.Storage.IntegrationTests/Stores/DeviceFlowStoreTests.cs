@@ -311,7 +311,7 @@ public class DeviceFlowStoreTests : IntegrationTest<DeviceFlowStoreTests, Persis
         var unauthorizedDeviceCode = new DeviceCode
         {
             ClientId = "device_flow",
-            RequestedScopes = new[] {"openid", "api1"},
+            RequestedScopes = new[] { "openid", "api1" },
             CreationTime = new DateTime(2018, 10, 19, 16, 14, 29),
             Lifetime = 300,
             IsOpenId = true
@@ -405,13 +405,13 @@ public class DeviceFlowStoreTests : IntegrationTest<DeviceFlowStoreTests, Persis
             });
             context.SaveChanges();
         }
-            
+
         using (var context = new PersistedGrantDbContext(options))
         {
             var store = new DeviceFlowStore(context, new PersistentGrantSerializer(), FakeLogger<DeviceFlowStore>.Create(), new NoneCancellationTokenProvider());
             await store.RemoveByDeviceCodeAsync(testDeviceCode);
         }
-            
+
         using (var context = new PersistedGrantDbContext(options))
         {
             context.DeviceFlowCodes.FirstOrDefault(x => x.UserCode == testUserCode).ShouldBeNull();

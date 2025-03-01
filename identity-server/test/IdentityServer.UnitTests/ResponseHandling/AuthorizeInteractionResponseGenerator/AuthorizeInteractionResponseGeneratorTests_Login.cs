@@ -68,12 +68,13 @@ public class AuthorizeInteractionResponseGeneratorTests_Login
         var request = new ValidatedAuthorizeRequest
         {
             ClientId = "foo",
-            Subject = new IdentityServerUser("123") {
+            Subject = new IdentityServerUser("123")
+            {
                 IdentityProvider = IdentityServerConstants.LocalIdentityProvider
             }.CreatePrincipal(),
-            Client = new Client 
+            Client = new Client
             {
-                IdentityProviderRestrictions = new List<string> 
+                IdentityProviderRestrictions = new List<string>
                 {
                     IdentityServerConstants.LocalIdentityProvider
                 }
@@ -98,7 +99,7 @@ public class AuthorizeInteractionResponseGeneratorTests_Login
             Client = new Client
             {
                 EnableLocalLogin = false,
-                IdentityProviderRestrictions = new List<string> 
+                IdentityProviderRestrictions = new List<string>
                 {
                     "some_idp"
                 }
@@ -158,7 +159,8 @@ public class AuthorizeInteractionResponseGeneratorTests_Login
         var request = new ValidatedAuthorizeRequest
         {
             ClientId = "foo",
-            Client = new Client() {
+            Client = new Client()
+            {
                 UserSsoLifetime = 3600 // 1h
             },
             Subject = new IdentityServerUser("123")

@@ -14,6 +14,6 @@ public class TestAccessTokenRetriever : IAccessTokenRetriever
 
     public async Task<AccessTokenResult> GetAccessToken(AccessTokenRetrievalContext context)
     {
-        return  await _accessTokenGetter();
+        return await _accessTokenGetter();
     }
 }

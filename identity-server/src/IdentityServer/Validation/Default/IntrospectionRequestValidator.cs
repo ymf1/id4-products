@@ -52,7 +52,7 @@ internal class IntrospectionRequestValidator : IIntrospectionRequestValidator
         }
 
         using var activity = Tracing.BasicActivitySource.StartActivity("IntrospectionRequestValidator.Validate");
-        
+
         _logger.LogDebug("Introspection request validation started.");
 
         // retrieve required token
@@ -76,7 +76,7 @@ internal class IntrospectionRequestValidator : IIntrospectionRequestValidator
         {
             if (Constants.SupportedTokenTypeHints.Contains(hint))
             {
-                if(_logger.IsEnabled(LogLevel.Debug))
+                if (_logger.IsEnabled(LogLevel.Debug))
                 {
                     var sanitized = hint.Replace(Environment.NewLine, "").Replace("\n", "").Replace("\r", "");
                     _logger.LogDebug("Token type hint found in request: {tokenTypeHint}", sanitized);
@@ -115,7 +115,7 @@ internal class IntrospectionRequestValidator : IIntrospectionRequestValidator
             // > it MUST extend its search across all of its supported token types.
             // > An authorization server MAY ignore this parameter, particularly if
             // > it is able to detect the token type automatically.
-    
+
             if (hint.IsMissing() || hint == TokenTypeHints.AccessToken)
             {
                 // try access token
@@ -145,7 +145,7 @@ internal class IntrospectionRequestValidator : IIntrospectionRequestValidator
                 }
             }
         }
-        
+
 
         if (claims != null)
         {

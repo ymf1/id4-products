@@ -11,9 +11,9 @@ namespace BffRemoteApi;
 public class Configuration
 {
     public string? Authority { get; set; }
-    
+
     public string? ClientId { get; set; }
-    
+
     /// <summary>
     /// should be supplied as a command line argument or environment variable, e.g.
     /// ./GenericBFF --BFF:ClientSecret=secret

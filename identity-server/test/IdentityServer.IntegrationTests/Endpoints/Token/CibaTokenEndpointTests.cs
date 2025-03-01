@@ -146,18 +146,18 @@ public class CibaTokenEndpointTests
         // user auth/consent
         var cibaService = _mockPipeline.Resolve<IBackchannelAuthenticationInteractionService>();
         var request = await cibaService.GetLoginRequestByInternalIdAsync(_mockCibaUserNotificationService.LoginRequest.InternalId);
-        await cibaService.CompleteLoginRequestAsync(new CompleteBackchannelLoginRequest(_mockCibaUserNotificationService.LoginRequest.InternalId) 
+        await cibaService.CompleteLoginRequestAsync(new CompleteBackchannelLoginRequest(_mockCibaUserNotificationService.LoginRequest.InternalId)
         {
             ScopesValuesConsented = request.ValidatedResources.RawScopeValues,
             Subject = new IdentityServerUser(_user.SubjectId)
-                {
-                    AuthenticationTime = DateTime.UtcNow,
-                    IdentityProvider = IdentityServerConstants.LocalIdentityProvider,
-                }
+            {
+                AuthenticationTime = DateTime.UtcNow,
+                IdentityProvider = IdentityServerConstants.LocalIdentityProvider,
+            }
                 .CreatePrincipal()
         });
 
-            
+
         // token request
         var values = JsonSerializer.Deserialize<Dictionary<string, object>>(await cibaResponse.Content.ReadAsStringAsync());
         var requestId = values["auth_req_id"].ToString();
@@ -177,7 +177,7 @@ public class CibaTokenEndpointTests
         tokenResponse.StatusCode.ShouldBe(HttpStatusCode.OK);
     }
 
-        
+
     [Fact]
     [Trait("Category", Category)]
     public async Task request_before_consent_should_return_error()
@@ -257,10 +257,10 @@ public class CibaTokenEndpointTests
         {
             ScopesValuesConsented = request.ValidatedResources.RawScopeValues,
             Subject = new IdentityServerUser(_user.SubjectId)
-                {
-                    AuthenticationTime = DateTime.UtcNow,
-                    IdentityProvider = IdentityServerConstants.LocalIdentityProvider,
-                }
+            {
+                AuthenticationTime = DateTime.UtcNow,
+                IdentityProvider = IdentityServerConstants.LocalIdentityProvider,
+            }
                 .CreatePrincipal()
         });
 
@@ -320,10 +320,10 @@ public class CibaTokenEndpointTests
         {
             ScopesValuesConsented = request.ValidatedResources.RawScopeValues,
             Subject = new IdentityServerUser(_user.SubjectId)
-                {
-                    AuthenticationTime = DateTime.UtcNow,
-                    IdentityProvider = IdentityServerConstants.LocalIdentityProvider,
-                }
+            {
+                AuthenticationTime = DateTime.UtcNow,
+                IdentityProvider = IdentityServerConstants.LocalIdentityProvider,
+            }
                 .CreatePrincipal()
         });
 
@@ -383,10 +383,10 @@ public class CibaTokenEndpointTests
         {
             //ScopesValuesConsented = request.ValidatedResources.RawScopeValues, // none to deny
             Subject = new IdentityServerUser(_user.SubjectId)
-                {
-                    AuthenticationTime = DateTime.UtcNow,
-                    IdentityProvider = IdentityServerConstants.LocalIdentityProvider,
-                }
+            {
+                AuthenticationTime = DateTime.UtcNow,
+                IdentityProvider = IdentityServerConstants.LocalIdentityProvider,
+            }
                 .CreatePrincipal()
         });
 
@@ -446,10 +446,10 @@ public class CibaTokenEndpointTests
         {
             ScopesValuesConsented = request.ValidatedResources.RawScopeValues,
             Subject = new IdentityServerUser(_user.SubjectId)
-                {
-                    AuthenticationTime = DateTime.UtcNow,
-                    IdentityProvider = IdentityServerConstants.LocalIdentityProvider,
-                }
+            {
+                AuthenticationTime = DateTime.UtcNow,
+                IdentityProvider = IdentityServerConstants.LocalIdentityProvider,
+            }
                 .CreatePrincipal()
         });
 
@@ -515,10 +515,10 @@ public class CibaTokenEndpointTests
         {
             ScopesValuesConsented = request.ValidatedResources.RawScopeValues,
             Subject = new IdentityServerUser(_user.SubjectId)
-                {
-                    AuthenticationTime = DateTime.UtcNow,
-                    IdentityProvider = IdentityServerConstants.LocalIdentityProvider,
-                }
+            {
+                AuthenticationTime = DateTime.UtcNow,
+                IdentityProvider = IdentityServerConstants.LocalIdentityProvider,
+            }
                 .CreatePrincipal()
         });
 

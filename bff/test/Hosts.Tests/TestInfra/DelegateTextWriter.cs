@@ -21,7 +21,7 @@ public class DelegateTextWriter : TextWriter
     public override void Write(char value)
     {
         if (value == '\r')
-            // let's ignore carriage returns
+        // let's ignore carriage returns
         {
             return;
         }

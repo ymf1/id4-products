@@ -90,7 +90,7 @@ public class DefaultTokenService : ITokenService
     public virtual async Task<Token> CreateIdentityTokenAsync(TokenCreationRequest request)
     {
         using var activity = Tracing.ServiceActivitySource.StartActivity("DefaultTokenService.CreateIdentityToken");
-        
+
         Logger.LogTrace("Creating identity token");
         request.Validate();
 
@@ -168,7 +168,7 @@ public class DefaultTokenService : ITokenService
     public virtual async Task<Token> CreateAccessTokenAsync(TokenCreationRequest request)
     {
         using var activity = Tracing.ServiceActivitySource.StartActivity("DefaultTokenService.CreateAccessToken");
-        
+
         Logger.LogTrace("Creating access token");
         request.Validate();
 
@@ -228,7 +228,7 @@ public class DefaultTokenService : ITokenService
     public virtual async Task<string> CreateSecurityTokenAsync(Token token)
     {
         using var activity = Tracing.ServiceActivitySource.StartActivity("DefaultTokenService.CreateSecurityToken");
-        
+
         string tokenResult;
 
         if (token.Type == OidcConstants.TokenTypes.AccessToken)
@@ -242,7 +242,7 @@ public class DefaultTokenService : ITokenService
                 }
                 token.Claims.Add(new Claim(JwtClaimTypes.JwtId, CryptoRandom.CreateUniqueId(16, CryptoRandom.OutputFormat.Hex)));
             }
-                
+
             if (token.AccessTokenType == AccessTokenType.Jwt)
             {
                 Logger.LogTrace("Creating JWT access token");

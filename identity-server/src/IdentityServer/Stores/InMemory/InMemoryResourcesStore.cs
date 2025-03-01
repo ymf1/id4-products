@@ -20,8 +20,8 @@ public class InMemoryResourcesStore : IResourceStore
     /// Initializes a new instance of the <see cref="InMemoryResourcesStore" /> class.
     /// </summary>
     public InMemoryResourcesStore(
-        IEnumerable<IdentityResource> identityResources = null, 
-        IEnumerable<ApiResource> apiResources = null, 
+        IEnumerable<IdentityResource> identityResources = null,
+        IEnumerable<ApiResource> apiResources = null,
         IEnumerable<ApiScope> apiScopes = null)
     {
         if (identityResources?.HasDuplicates(m => m.Name) == true)
@@ -33,7 +33,7 @@ public class InMemoryResourcesStore : IResourceStore
         {
             throw new ArgumentException("Api resources must not contain duplicate names");
         }
-            
+
         if (apiScopes?.HasDuplicates(m => m.Name) == true)
         {
             throw new ArgumentException("Scopes must not contain duplicate names");
@@ -48,7 +48,7 @@ public class InMemoryResourcesStore : IResourceStore
     public Task<Resources> GetAllResourcesAsync()
     {
         using var activity = Tracing.StoreActivitySource.StartActivity("InMemoryResourceStore.GetAllResources");
-        
+
         var result = new Resources(_identityResources, _apiResources, _apiScopes);
         return Task.FromResult(result);
     }
@@ -61,8 +61,8 @@ public class InMemoryResourcesStore : IResourceStore
         activity?.SetTag(Tracing.Properties.ApiResourceNames, apiResourceNames.ToSpaceSeparatedString());
 
         var query = from a in _apiResources
-            where apiResourceNames.Contains(a.Name)
-            select a;
+                    where apiResourceNames.Contains(a.Name)
+                    select a;
         return Task.FromResult(query);
     }
 
@@ -74,8 +74,8 @@ public class InMemoryResourcesStore : IResourceStore
         activity?.SetTag(Tracing.Properties.ScopeNames, scopeNames.ToSpaceSeparatedString());
 
         var identity = from i in _identityResources
-            where scopeNames.Contains(i.Name)
-            select i;
+                       where scopeNames.Contains(i.Name)
+                       select i;
 
         return Task.FromResult(identity);
     }
@@ -88,8 +88,8 @@ public class InMemoryResourcesStore : IResourceStore
         activity?.SetTag(Tracing.Properties.ScopeNames, scopeNames.ToSpaceSeparatedString());
 
         var query = from a in _apiResources
-            where a.Scopes.Any(x => scopeNames.Contains(x))
-            select a;
+                    where a.Scopes.Any(x => scopeNames.Contains(x))
+                    select a;
 
         return Task.FromResult(query);
     }
@@ -105,7 +105,7 @@ public class InMemoryResourcesStore : IResourceStore
             from x in _apiScopes
             where scopeNames.Contains(x.Name)
             select x;
-            
+
         return Task.FromResult(query);
     }
 }

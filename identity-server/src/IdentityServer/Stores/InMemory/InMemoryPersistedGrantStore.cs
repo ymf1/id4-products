@@ -19,7 +19,7 @@ public class InMemoryPersistedGrantStore : IPersistedGrantStore
     public Task StoreAsync(PersistedGrant grant)
     {
         using var activity = Tracing.StoreActivitySource.StartActivity("InMemoryPersistedGrantStoreResponseGenerator.Store");
-        
+
         _repository[grant.Key] = grant;
 
         return Task.CompletedTask;
@@ -29,7 +29,7 @@ public class InMemoryPersistedGrantStore : IPersistedGrantStore
     public Task<PersistedGrant> GetAsync(string key)
     {
         using var activity = Tracing.StoreActivitySource.StartActivity("InMemoryPersistedGrantStoreResponseGenerator.Get");
-        
+
         if (key != null && _repository.TryGetValue(key, out PersistedGrant token))
         {
             return Task.FromResult(token);
@@ -42,11 +42,11 @@ public class InMemoryPersistedGrantStore : IPersistedGrantStore
     public Task<IEnumerable<PersistedGrant>> GetAllAsync(PersistedGrantFilter filter)
     {
         using var activity = Tracing.StoreActivitySource.StartActivity("InMemoryPersistedGrantStoreResponseGenerator.GetAll");
-        
+
         filter.Validate();
-            
+
         var items = Filter(filter);
-            
+
         return Task.FromResult(items);
     }
 
@@ -54,7 +54,7 @@ public class InMemoryPersistedGrantStore : IPersistedGrantStore
     public Task RemoveAsync(string key)
     {
         using var activity = Tracing.StoreActivitySource.StartActivity("InMemoryPersistedGrantStoreResponseGenerator.Remove");
-        
+
         _repository.TryRemove(key, out _);
 
         return Task.CompletedTask;
@@ -64,11 +64,11 @@ public class InMemoryPersistedGrantStore : IPersistedGrantStore
     public Task RemoveAllAsync(PersistedGrantFilter filter)
     {
         using var activity = Tracing.StoreActivitySource.StartActivity("InMemoryPersistedGrantStoreResponseGenerator.RemoveAll");
-        
+
         filter.Validate();
 
         var items = Filter(filter);
-            
+
         foreach (var item in items)
         {
             _repository.TryRemove(item.Key, out _);

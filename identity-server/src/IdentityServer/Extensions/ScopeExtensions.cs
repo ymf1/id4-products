@@ -12,7 +12,7 @@ internal static class ScopeExtensions
     public static string ToSpaceSeparatedString(this IEnumerable<ApiScope> apiScopes)
     {
         var scopeNames = from s in apiScopes
-            select s.Name;
+                         select s.Name;
 
         return string.Join(' ', scopeNames);
     }
@@ -21,7 +21,7 @@ internal static class ScopeExtensions
     public static IEnumerable<string> ToStringList(this IEnumerable<ApiScope> apiScopes)
     {
         var scopeNames = from s in apiScopes
-            select s.Name;
+                         select s.Name;
 
         return scopeNames;
     }

@@ -282,7 +282,7 @@ public class DPoPTokenEndpointTests
         // The point here is to have an array in the payload, to exercise 
         // the json serialization
         _payload.Add("key_ops", new string[] { "sign", "verify" });
-        
+
         var dpopToken = CreateDPoPProofToken();
         var request = new ClientCredentialsTokenRequest
         {
@@ -1003,7 +1003,7 @@ public class DPoPTokenEndpointTests
                 dpop_jkt = new string('x', 101)
             });
         var response = await _mockPipeline.BrowserClient.GetAsync(url);
-        
+
         _mockPipeline.ErrorWasCalled.ShouldBeTrue();
     }
 

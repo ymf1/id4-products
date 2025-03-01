@@ -81,8 +81,8 @@ public class TestBrowserClient : HttpClient
     /// <param name="ct">Cancellation token</param>
     /// <returns>The specified api response</returns>
     public async Task<BffHostResponse> CallBffHostApi(
-        string url, 
-        HttpStatusCode? expectedStatusCode = null, 
+        string url,
+        HttpStatusCode? expectedStatusCode = null,
         CancellationToken ct = default)
     {
         var req = new HttpRequestMessage(HttpMethod.Get, url);
@@ -98,19 +98,19 @@ public class TestBrowserClient : HttpClient
 
             apiResult.Method.ShouldBe("GET", StringCompareShould.IgnoreCase);
 
-            return new (response, apiResult);
+            return new(response, apiResult);
         }
         else
         {
             response.StatusCode.ToString().ShouldBe(expectedStatusCode.ToString());
-            return new (response, null!);
+            return new(response, null!);
         }
 
     }
 
     public async Task<BffHostResponse> CallBffHostApi(
-        string url, 
-        HttpMethod method, 
+        string url,
+        HttpMethod method,
         HttpContent? content = null,
         HttpStatusCode? expectedStatusCode = null,
         CancellationToken ct = default)

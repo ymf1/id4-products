@@ -15,7 +15,7 @@ namespace Duende.IdentityServer.Endpoints.Results;
 /// </summary>
 public class PushedAuthorizationErrorResult : EndpointResult<PushedAuthorizationErrorResult>
 {
-    
+
     /// <summary>
     /// The error response model.
     /// </summary>
@@ -36,7 +36,7 @@ internal class PushedAuthorizationErrorHttpWriter : IHttpResponseWriter<PushedAu
     public async Task WriteHttpResponse(PushedAuthorizationErrorResult result, HttpContext context)
     {
         context.Response.SetNoCache();
-        context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
+        context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
         var dto = new ResultDto
         {
             error = result.Response.Error,

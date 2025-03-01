@@ -85,7 +85,7 @@ public class AuthorizeHttpWriter : IHttpResponseWriter<AuthorizeResult>
     private async Task ConsumePushedAuthorizationRequest(AuthorizeResult result)
     {
         var referenceValue = result.Response?.Request?.PushedAuthorizationReferenceValue;
-        if(referenceValue.IsPresent())
+        if (referenceValue.IsPresent())
         {
             await _pushedAuthorizationService.ConsumeAsync(referenceValue);
         }
@@ -190,7 +190,7 @@ public class AuthorizeHttpWriter : IHttpResponseWriter<AuthorizeResult>
     /// response_mode is form_post.
     /// </summary>
     protected virtual string FormPostHeader => DefaultFormPostHeadTags;
-    
+
     /// <summary>
     /// Gets the body tags that will be included in the response when
     /// response_mode is form_post. The string "{body}" (including the curly

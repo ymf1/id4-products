@@ -38,7 +38,7 @@ namespace ConsoleCibaClient
             if (disco.IsError) throw new Exception(disco.Error);
 
             var cibaEp = disco.BackchannelAuthenticationEndpoint;
-            
+
             var username = "alice";
             var bindingMessage = Guid.NewGuid().ToString("N").Substring(0, 10);
 
@@ -145,8 +145,8 @@ namespace ConsoleCibaClient
 
         static string CreateRequestObject(IDictionary<string, string> values)
         {
-            var claims = new List<Claim>() 
-            { 
+            var claims = new List<Claim>()
+            {
                 new Claim(JwtClaimTypes.JwtId, Guid.NewGuid().ToString("n"))
             };
             foreach (var item in values)
@@ -172,7 +172,7 @@ namespace ConsoleCibaClient
                     "qi":"pG6J4dcUDrDndMxa-ee1yG4KjZqqyCQcmPAfqklI2LmnpRIjcK78scclvpboI3JQyg6RCEKVMwAhVtQM6cBcIO3JrHgqeYDblp5wXHjto70HVW6Z8kBruNx1AH9E8LzNvSRL-JVTFzBkJuNgzKQfD0G77tQRgJ-Ri7qu3_9o1M4"
                 }
                 """;
-        
+
             var now = DateTime.UtcNow;
 
             var token = new JwtSecurityToken(

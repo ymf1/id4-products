@@ -226,10 +226,10 @@ public class DeviceCodeValidation
         var request = new ValidatedTokenRequest();
         request.SetClient(client);
 
-        var context = new DeviceCodeValidationContext {DeviceCode = handle, Request = request};
+        var context = new DeviceCodeValidationContext { DeviceCode = handle, Request = request };
 
         await validator.ValidateAsync(context);
-            
+
         context.Result.IsError.ShouldBeFalse();
     }
 }

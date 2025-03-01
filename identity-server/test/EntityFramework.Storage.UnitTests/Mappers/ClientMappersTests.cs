@@ -115,7 +115,8 @@ public class ClientMappersTests
         MapperTestHelpers
             .AllPropertiesAreMapped<Models.Client, Entities.Client>(
                 notAutoInitialized,
-                source => {
+                source =>
+                {
                     source.AllowedIdentityTokenSigningAlgorithms.Add("RS256"); // We have to add values, otherwise the converter will produce null
                     source.AllowedGrantTypes = new List<string>
                     {
@@ -205,7 +206,8 @@ public class ClientMappersTests
         MapperTestHelpers
             .AllPropertiesAreMapped<ExtendedClientModel, ExtendedClientEntity>(
                 notAutoInitialized,
-                source => {
+                source =>
+                {
                     source.AllowedIdentityTokenSigningAlgorithms.Add("RS256"); // We have to add values, otherwise the converter will produce null
                     source.AllowedGrantTypes = new List<string>
                     {

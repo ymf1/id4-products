@@ -35,7 +35,7 @@ internal class PushedAuthorizationHttpWriter : IHttpResponseWriter<PushedAuthori
     public async Task WriteHttpResponse(PushedAuthorizationResult result, HttpContext context)
     {
         context.Response.SetNoCache();
-        context.Response.StatusCode = (int) HttpStatusCode.Created;
+        context.Response.StatusCode = (int)HttpStatusCode.Created;
         var dto = new ResultDto
         {
             request_uri = result.Response.RequestUri,

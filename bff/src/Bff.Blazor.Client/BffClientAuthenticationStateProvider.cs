@@ -12,7 +12,7 @@ namespace Duende.Bff.Blazor.Client;
 internal class BffClientAuthenticationStateProvider : AuthenticationStateProvider
 {
     public const string HttpClientName = "Duende.Bff.Blazor.Client:StateProvider";
-    
+
     private readonly FetchUserService _fetchUserService;
     private readonly PersistentUserService _persistentUserService;
     private readonly TimeProvider _timeProvider;
@@ -49,7 +49,7 @@ internal class BffClientAuthenticationStateProvider : AuthenticationStateProvide
             TimeSpan.FromMilliseconds(_options.WebAssemblyStateProviderPollingInterval));
         _logger = logger;
     }
-    
+
     private async void TimerCallback(object? _)
     {
         // We don't want to do any polling if we already know that the user is anonymous.

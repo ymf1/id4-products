@@ -49,7 +49,7 @@ public class SubpathHosting
             new IdentityResources.Profile(),
             new IdentityResources.Email()
         });
-            
+
         _mockPipeline.Initialize("/subpath");
     }
 

@@ -36,7 +36,7 @@ namespace IdentityServerHost.Pages.ExternalLogin
             _logger = logger;
             _events = events;
         }
-        
+
         public async Task<IActionResult> OnGet()
         {
             // read external identity from the temporary cookie
@@ -85,7 +85,7 @@ namespace IdentityServerHost.Pages.ExternalLogin
             var additionalLocalClaims = new List<Claim>();
             var localSignInProps = new AuthenticationProperties();
             CaptureExternalLoginContext(result, additionalLocalClaims, localSignInProps);
-            
+
             // issue authentication cookie for user
             var isuser = new IdentityServerUser(user.SubjectId)
             {

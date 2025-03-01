@@ -37,7 +37,7 @@ class TokenRevocationErrorHttpWriter : IHttpResponseWriter<TokenRevocationErrorR
 {
     public Task WriteHttpResponse(TokenRevocationErrorResult result, HttpContext context)
     {
-        context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
+        context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
         return context.Response.WriteJsonAsync(new { error = result.Error });
     }
 }

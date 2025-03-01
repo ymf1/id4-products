@@ -18,7 +18,7 @@ namespace UnitTests.Validation.AuthorizeRequest_Validation;
 public class Authorize_ProtocolValidation_Resources
 {
     private const string Category = "AuthorizeRequest Protocol Validation - Resources";
-        
+
     private readonly AuthorizeRequestValidator _subject;
 
     private readonly IdentityServerOptions _options = new IdentityServerOptions();
@@ -177,7 +177,7 @@ public class Authorize_ProtocolValidation_Resources
         result.ValidatedRequest.RequestedResourceIndicators
             .ShouldBe(["urn:test1", "http://resource1", "http://resource2"], true);
     }
-        
+
     [Fact]
     [Trait("Category", Category)]
     public async Task failed_resource_validation_should_fail()

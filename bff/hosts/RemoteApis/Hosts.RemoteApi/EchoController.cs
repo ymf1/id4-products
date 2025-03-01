@@ -16,7 +16,7 @@ namespace Api
         {
             string message;
             var sub = User.FindFirst("sub");
-            
+
             if (!User.Identity.IsAuthenticated)
             {
                 message = "Hello, anonymous caller";

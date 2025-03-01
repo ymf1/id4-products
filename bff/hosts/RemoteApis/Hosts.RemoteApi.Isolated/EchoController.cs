@@ -15,7 +15,7 @@ namespace Api.Isolated
         {
             string message;
             var sub = User.FindFirst("sub");
-            
+
             if (User.Identity is { IsAuthenticated: false })
             {
                 message = "Hello, anonymous caller";
@@ -30,7 +30,7 @@ namespace Api.Isolated
                 var client = User.FindFirst("client_id");
                 message = $"Hello client, {client.Value}";
             }
-            
+
             var response = new
             {
                 path = Request.Path.Value,

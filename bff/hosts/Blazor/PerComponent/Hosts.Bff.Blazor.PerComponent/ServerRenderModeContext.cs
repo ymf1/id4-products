@@ -10,10 +10,10 @@ public class ServerRenderModeContext(IHttpContextAccessor accessor) : IRenderMod
     RenderMode IRenderModeContext.GetMode()
     {
         var prerendering = !accessor.HttpContext?.Response.HasStarted ?? false;
-        if(prerendering)
+        if (prerendering)
         {
             return RenderMode.Prerender;
-        } 
+        }
         else
         {
             return RenderMode.Server;

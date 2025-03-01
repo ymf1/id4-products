@@ -51,7 +51,7 @@ public class DefaultRefreshTokenService : IRefreshTokenService
     /// <param name="options">The persistent grant options</param>
     /// <param name="logger">The logger</param>
     public DefaultRefreshTokenService(
-        IRefreshTokenStore refreshTokenStore, 
+        IRefreshTokenStore refreshTokenStore,
         IProfileService profile,
         IClock clock,
         PersistentGrantOptions options,
@@ -74,10 +74,11 @@ public class DefaultRefreshTokenService : IRefreshTokenService
     public virtual async Task<TokenValidationResult> ValidateRefreshTokenAsync(string tokenHandle, Client client)
     {
         using var activity = Tracing.ServiceActivitySource.StartActivity("DefaultRefreshTokenService.ValidateRefreshToken");
-        
+
         var invalidGrant = new TokenValidationResult
         {
-            IsError = true, Error = OidcConstants.TokenErrors.InvalidGrant
+            IsError = true,
+            Error = OidcConstants.TokenErrors.InvalidGrant
         };
 
         Logger.LogTrace("Start refresh token validation");
@@ -100,7 +101,7 @@ public class DefaultRefreshTokenService : IRefreshTokenService
             Logger.LogWarning("Refresh token has expired.");
             return invalidGrant;
         }
-            
+
         /////////////////////////////////////////////
         // check if client belongs to requested refresh token
         /////////////////////////////////////////////
@@ -118,7 +119,7 @@ public class DefaultRefreshTokenService : IRefreshTokenService
             Logger.LogError("{clientId} does not have access to offline_access scope anymore", client.ClientId);
             return invalidGrant;
         }
-            
+
         /////////////////////////////////////////////
         // check if refresh token has been consumed
         /////////////////////////////////////////////
@@ -130,7 +131,7 @@ public class DefaultRefreshTokenService : IRefreshTokenService
                 return invalidGrant;
             }
         }
-            
+
         /////////////////////////////////////////////
         // make sure user is enabled
         /////////////////////////////////////////////
@@ -146,11 +147,11 @@ public class DefaultRefreshTokenService : IRefreshTokenService
             Logger.LogError("{subjectId} has been disabled", refreshToken.Subject.GetSubjectId());
             return invalidGrant;
         }
-            
+
         return new TokenValidationResult
         {
-            IsError = false, 
-            RefreshToken = refreshToken, 
+            IsError = false,
+            RefreshToken = refreshToken,
             Client = client
         };
     }
@@ -177,7 +178,7 @@ public class DefaultRefreshTokenService : IRefreshTokenService
     public virtual async Task<string> CreateRefreshTokenAsync(RefreshTokenCreationRequest request)
     {
         using var activity = Tracing.ServiceActivitySource.StartActivity("DefaultRefreshTokenService.CreateRefreshToken");
-        
+
         Logger.LogDebug("Creating refresh token");
 
         int lifetime;
@@ -231,7 +232,7 @@ public class DefaultRefreshTokenService : IRefreshTokenService
     public virtual async Task<string> UpdateRefreshTokenAsync(RefreshTokenUpdateRequest request)
     {
         using var activity = Tracing.ServiceActivitySource.StartActivity("DefaultTokenCreationService.UpdateRefreshToken");
-        
+
         Logger.LogDebug("Updating refresh token");
 
         var handle = request.Handle;
@@ -241,16 +242,16 @@ public class DefaultRefreshTokenService : IRefreshTokenService
         if (request.Client.RefreshTokenUsage == TokenUsage.OneTimeOnly)
         {
 
-            if(Options.DeleteOneTimeOnlyRefreshTokensOnUse)
+            if (Options.DeleteOneTimeOnlyRefreshTokensOnUse)
             {
                 Logger.LogDebug("Token usage is one-time only and refresh behavior is delete. Deleting current handle, and generating new handle");
 
                 await RefreshTokenStore.RemoveRefreshTokenAsync(handle);
-            } 
+            }
             else
             {
                 Logger.LogDebug("Token usage is one-time only and refresh behavior is mark as consumed. Setting current handle as consumed, and generating new handle");
-                
+
                 // flag as consumed
                 if (request.RefreshToken.ConsumedTime == null)
                 {

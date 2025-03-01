@@ -23,7 +23,7 @@ namespace ConsoleClientCredentialsFlowCallingIdentityServerApi
             Console.ReadLine();
             await CallServiceAsync(response.AccessToken);
             Console.ReadLine();
-            
+
             "Reference access token".ConsoleBox(ConsoleColor.Green);
             response = await RequestTokenAsync("client.reference");
             response.Show();

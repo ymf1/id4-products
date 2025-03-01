@@ -20,10 +20,10 @@ public class DeviceAuthorizationRequestValidation
     {
         ClientId = "device_flow",
         AllowedGrantTypes = GrantTypes.DeviceFlow,
-        AllowedScopes = {"openid", "profile", "resource"},
+        AllowedScopes = { "openid", "profile", "resource" },
         AllowOfflineAccess = true
     };
-        
+
     [Fact]
     [Trait("Category", Category)]
     public async Task Null_Parameter()
@@ -42,7 +42,7 @@ public class DeviceAuthorizationRequestValidation
         testClient.ProtocolType = IdentityServerConstants.ProtocolTypes.WsFederation;
 
         var validator = Factory.CreateDeviceAuthorizationRequestValidator();
-        var result = await validator.ValidateAsync(testParameters, new ClientSecretValidationResult {Client = testClient});
+        var result = await validator.ValidateAsync(testParameters, new ClientSecretValidationResult { Client = testClient });
 
         result.IsError.ShouldBeTrue();
         result.Error.ShouldBe(OidcConstants.AuthorizeErrors.UnauthorizedClient);
@@ -55,7 +55,7 @@ public class DeviceAuthorizationRequestValidation
         testClient.AllowedGrantTypes = GrantTypes.Implicit;
 
         var validator = Factory.CreateDeviceAuthorizationRequestValidator();
-        var result = await validator.ValidateAsync(testParameters, new ClientSecretValidationResult {Client = testClient});
+        var result = await validator.ValidateAsync(testParameters, new ClientSecretValidationResult { Client = testClient });
 
         result.IsError.ShouldBeTrue();
         result.Error.ShouldBe(OidcConstants.AuthorizeErrors.UnauthorizedClient);
@@ -65,10 +65,10 @@ public class DeviceAuthorizationRequestValidation
     [Trait("Category", Category)]
     public async Task Unauthorized_Scope()
     {
-        var parameters = new NameValueCollection {{"scope", "resource2"}};
+        var parameters = new NameValueCollection { { "scope", "resource2" } };
 
         var validator = Factory.CreateDeviceAuthorizationRequestValidator();
-        var result = await validator.ValidateAsync(parameters, new ClientSecretValidationResult {Client = testClient});
+        var result = await validator.ValidateAsync(parameters, new ClientSecretValidationResult { Client = testClient });
 
         result.IsError.ShouldBeTrue();
         result.Error.ShouldBe(OidcConstants.AuthorizeErrors.InvalidScope);
@@ -78,10 +78,10 @@ public class DeviceAuthorizationRequestValidation
     [Trait("Category", Category)]
     public async Task Unknown_Scope()
     {
-        var parameters = new NameValueCollection {{"scope", Guid.NewGuid().ToString()}};
+        var parameters = new NameValueCollection { { "scope", Guid.NewGuid().ToString() } };
 
         var validator = Factory.CreateDeviceAuthorizationRequestValidator();
-        var result = await validator.ValidateAsync(parameters, new ClientSecretValidationResult {Client = testClient});
+        var result = await validator.ValidateAsync(parameters, new ClientSecretValidationResult { Client = testClient });
 
         result.IsError.ShouldBeTrue();
         result.Error.ShouldBe(OidcConstants.AuthorizeErrors.InvalidScope);
@@ -91,10 +91,10 @@ public class DeviceAuthorizationRequestValidation
     [Trait("Category", Category)]
     public async Task Valid_OpenId_Request()
     {
-        var parameters = new NameValueCollection {{"scope", "openid"}};
+        var parameters = new NameValueCollection { { "scope", "openid" } };
 
         var validator = Factory.CreateDeviceAuthorizationRequestValidator();
-        var result = await validator.ValidateAsync(parameters, new ClientSecretValidationResult {Client = testClient});
+        var result = await validator.ValidateAsync(parameters, new ClientSecretValidationResult { Client = testClient });
 
         result.IsError.ShouldBeFalse();
         result.ValidatedRequest.IsOpenIdRequest.ShouldBeTrue();

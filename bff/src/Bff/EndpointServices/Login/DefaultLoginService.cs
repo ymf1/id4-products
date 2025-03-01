@@ -22,7 +22,7 @@ public class DefaultLoginService : ILoginService
     /// The return URL validator
     /// </summary>
     protected readonly IReturnUrlValidator ReturnUrlValidator;
-    
+
     /// <summary>
     /// The logger
     /// </summary>
@@ -40,14 +40,14 @@ public class DefaultLoginService : ILoginService
         ReturnUrlValidator = returnUrlValidator;
         Logger = logger;
     }
-        
+
     /// <inheritdoc />
     public virtual async Task ProcessRequestAsync(HttpContext context)
     {
         Logger.LogDebug("Processing login request");
 
         context.CheckForBffMiddleware(Options);
-            
+
         var returnUrl = context.Request.Query[Constants.RequestParameters.ReturnUrl].FirstOrDefault();
 
         if (!string.IsNullOrWhiteSpace(returnUrl))

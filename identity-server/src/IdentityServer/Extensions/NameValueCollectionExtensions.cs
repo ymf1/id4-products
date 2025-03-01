@@ -29,7 +29,7 @@ internal static class NameValueCollectionExtensions
 
         return nvc;
     }
-        
+
     public static string ToQueryString(this NameValueCollection collection)
     {
         if (collection.Count == 0)

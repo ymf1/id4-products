@@ -29,7 +29,7 @@ public class DefaultIssuerNameService : IIssuerNameService
         _urls = urls;
         _httpContextAccessor = httpContextAccessor;
     }
-        
+
     /// <inheritdoc />
     public Task<string> GetCurrentAsync()
     {

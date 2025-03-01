@@ -66,7 +66,7 @@ public class ExtensionGrantValidator
             {
                 Request = request
             };
-            
+
             await validator.ValidateAsync(context);
             return context.Result;
         }

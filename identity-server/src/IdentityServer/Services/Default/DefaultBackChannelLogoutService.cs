@@ -23,7 +23,7 @@ public class DefaultBackChannelLogoutService : IBackChannelLogoutService
     /// The system clock;
     /// </summary>
     protected IClock Clock { get; }
-        
+
     /// <summary>
     /// The IdentityServerTools used to create the JWT.
     /// </summary>
@@ -78,7 +78,7 @@ public class DefaultBackChannelLogoutService : IBackChannelLogoutService
     public virtual async Task SendLogoutNotificationsAsync(LogoutNotificationContext context)
     {
         using var activity = Tracing.ServiceActivitySource.StartActivity("DefaultBackChannelLogoutService.SendLogoutNotifications");
-        
+
         var backChannelRequests = await LogoutNotificationService.GetBackChannelLogoutNotificationsAsync(context);
         if (backChannelRequests.Any())
         {

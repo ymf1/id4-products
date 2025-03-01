@@ -23,7 +23,7 @@ public class OidcReturnUrlParserTests
 
         _subject = new OidcReturnUrlParser(
             _options,
-            null, null, 
+            null, null,
             _urls,
             new LoggerFactory().CreateLogger<OidcReturnUrlParser>());
     }
@@ -40,7 +40,7 @@ public class OidcReturnUrlParserTests
         var valid = _subject.IsValidReturnUrl(url);
         valid.ShouldBeTrue();
     }
-        
+
     [Theory]
     [InlineData(default(string))]
     [InlineData("")]

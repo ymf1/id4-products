@@ -19,7 +19,7 @@ namespace IdentityServerHost.Pages.Logout
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IEventService _events;
 
-        [BindProperty] 
+        [BindProperty]
         public string LogoutId { get; set; }
 
         public Index(IIdentityServerInteractionService interaction, IEventService events)
@@ -48,7 +48,7 @@ namespace IdentityServerHost.Pages.Logout
                     showLogoutPrompt = false;
                 }
             }
-            
+
             if (showLogoutPrompt == false)
             {
                 // if the request for logout was properly authenticated from IdentityServer, then
@@ -67,7 +67,7 @@ namespace IdentityServerHost.Pages.Logout
                 // this captures necessary info from the current logged in user
                 // this can still return null if there is no context needed
                 LogoutId ??= await _interaction.CreateLogoutContextAsync();
-                
+
                 // delete local authentication cookie
                 await HttpContext.SignOutAsync();
 

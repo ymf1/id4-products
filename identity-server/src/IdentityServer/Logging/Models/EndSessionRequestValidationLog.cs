@@ -24,7 +24,7 @@ internal class EndSessionRequestValidationLog
         Raw = request.Raw.ToScrubbedDictionary(OidcConstants.EndSessionRequest.IdTokenHint);
 
         SubjectId = "unknown";
-            
+
         var subjectClaim = request.Subject?.FindFirst(JwtClaimTypes.Subject);
         if (subjectClaim != null)
         {

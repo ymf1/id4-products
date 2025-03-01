@@ -35,18 +35,19 @@ namespace Duende.Bff.Tests.TestHosts
                 AllowOfflineAccess = true,
                 AllowedScopes = { "openid", "profile", "scope1" }
             });
-            
-            
-            IdentityServerHost.OnConfigureServices += services => {
-                services.AddTransient<IBackChannelLogoutHttpClient>(provider => 
+
+
+            IdentityServerHost.OnConfigureServices += services =>
+            {
+                services.AddTransient<IBackChannelLogoutHttpClient>(provider =>
                     new DefaultBackChannelLogoutHttpClient(
-                        BffHost!.HttpClient, 
-                        provider.GetRequiredService<ILoggerFactory>(), 
+                        BffHost!.HttpClient,
+                        provider.GetRequiredService<ILoggerFactory>(),
                         provider.GetRequiredService<ICancellationTokenProvider>()));
 
                 services.AddSingleton<DefaultAccessTokenRetriever>();
             };
-            
+
         }
 
         public async Task Login(string sub)

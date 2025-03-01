@@ -14,7 +14,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Duende.Bff.Tests.TestFramework
 {
-    public class GenericHost(WriteTestOutput writeOutput, string baseAddress = "https://server"): IAsyncDisposable
+    public class GenericHost(WriteTestOutput writeOutput, string baseAddress = "https://server") : IAsyncDisposable
     {
         private readonly string _baseAddress = baseAddress.EndsWith("/")
             ? baseAddress.Substring(0, baseAddress.Length - 1)
@@ -31,7 +31,7 @@ namespace Duende.Bff.Tests.TestFramework
         private TestLoggerProvider Logger { get; } = new(writeOutput, baseAddress + " - ");
 
 
-        public T Resolve<T>() where T:notnull
+        public T Resolve<T>() where T : notnull
         {
             // not calling dispose on scope on purpose
             return _appServices.GetRequiredService<IServiceScopeFactory>().CreateScope().ServiceProvider.GetRequiredService<T>();
@@ -93,7 +93,7 @@ namespace Duende.Bff.Tests.TestFramework
         void ConfigureApp(IApplicationBuilder app)
         {
             _appServices = app.ApplicationServices;
-            
+
             OnConfigure(app);
 
             ConfigureSignin(app);
@@ -134,7 +134,7 @@ namespace Duende.Bff.Tests.TestFramework
 
                     var props = _propsToSignIn ?? new AuthenticationProperties();
                     await ctx.SignInAsync(_userToSignIn, props);
-                    
+
                     _userToSignIn = null;
                     _propsToSignIn = null;
 

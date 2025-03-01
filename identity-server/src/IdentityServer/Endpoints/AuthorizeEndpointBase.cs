@@ -122,7 +122,7 @@ internal abstract class AuthorizeEndpointBase : IEndpointHandler
             {
                 return await CreateErrorResultAsync("Interaction generator error", request, interactionResult.Error, interactionResult.ErrorDescription, false);
             }
-            
+
             if (interactionResult.ResponseType == InteractionResponseType.UserInteraction)
             {
                 if (interactionResult.IsLogin)

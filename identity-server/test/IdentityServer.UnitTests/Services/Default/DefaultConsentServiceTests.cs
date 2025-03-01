@@ -65,7 +65,7 @@ public class DefaultConsentServiceTests
     {
         _client.AllowRememberConsent = false;
 
-        await _subject.UpdateConsentAsync(_user, _client, new [] { new ParsedScopeValue("scope1"), new ParsedScopeValue("scope2") });
+        await _subject.UpdateConsentAsync(_user, _client, new[] { new ParsedScopeValue("scope1"), new ParsedScopeValue("scope2") });
 
         var consent = await _userConsentStore.GetUserConsentAsync(_user.GetSubjectId(), _client.ClientId);
         consent.ShouldBeNull();
@@ -152,7 +152,7 @@ public class DefaultConsentServiceTests
     {
         await _subject.UpdateConsentAsync(_user, _client, new[] { new ParsedScopeValue("scope1"), new ParsedScopeValue("scope2"), new ParsedScopeValue("scope3") });
 
-        var result = await _subject.RequiresConsentAsync(_user, _client, new [] { new ParsedScopeValue("scope2") });
+        var result = await _subject.RequiresConsentAsync(_user, _client, new[] { new ParsedScopeValue("scope2") });
 
         result.ShouldBeFalse();
     }

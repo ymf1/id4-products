@@ -47,8 +47,8 @@ public class TokenRequestValidation_ClientCredentials_Invalid
         var result = await validator.ValidateRequestAsync(parameters, client.ToValidationResult());
 
         result.IsError.ShouldBeFalse();
-        result.ValidatedRequest.ValidatedResources.Resources.ApiResources.Select(x=>x.Name).ShouldBe(["api", "urn:api1", "urn:api2", "urn:api3"]);
-        result.ValidatedRequest.ValidatedResources.Resources.ApiScopes.Select(x=>x.Name).ShouldBe(["resource", "resource2", "scope1"]);
+        result.ValidatedRequest.ValidatedResources.Resources.ApiResources.Select(x => x.Name).ShouldBe(["api", "urn:api1", "urn:api2", "urn:api3"]);
+        result.ValidatedRequest.ValidatedResources.Resources.ApiScopes.Select(x => x.Name).ShouldBe(["resource", "resource2", "scope1"]);
     }
 
     [Fact]
@@ -57,7 +57,7 @@ public class TokenRequestValidation_ClientCredentials_Invalid
     {
         var client = await _clients.FindEnabledClientByIdAsync("client");
         var validator = Factory.CreateTokenRequestValidator();
-            
+
         var parameters = new NameValueCollection();
         parameters.Add(OidcConstants.TokenRequest.GrantType, OidcConstants.GrantTypes.ClientCredentials);
         parameters.Add(OidcConstants.TokenRequest.Scope, "unknown");

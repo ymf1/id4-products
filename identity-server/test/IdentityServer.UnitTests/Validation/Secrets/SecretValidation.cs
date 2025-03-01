@@ -26,7 +26,7 @@ public class SecretValidation
     {
         _validator = new SecretValidator(
             new StubClock(),
-            new[] { _hashedSecretValidator }, 
+            new[] { _hashedSecretValidator },
             new Logger<SecretValidator>(new LoggerFactory()));
     }
 
@@ -165,7 +165,7 @@ public class SecretValidation
             Id = clientId,
             Type = IdentityServerConstants.ParsedSecretTypes.SharedSecret
         };
-            
+
         var result = await _validator.ValidateAsync(client.ClientSecrets, secret);
         result.Success.ShouldBeFalse();
     }

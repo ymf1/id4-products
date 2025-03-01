@@ -16,7 +16,7 @@ namespace Api.DPoP
         {
             string message;
             var sub = User.FindFirst("sub");
-            
+
             if (User.Identity is { IsAuthenticated: false })
             {
                 message = "Hello, anonymous caller";
@@ -31,7 +31,7 @@ namespace Api.DPoP
                 var client = User.FindFirstValue("client_id");
                 message = $"Hello client, {client}";
             }
-            
+
             var response = new
             {
                 path = Request.Path.Value,

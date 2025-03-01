@@ -81,7 +81,7 @@ public class CorsTests
     {
         _pipeline.BackChannelClient.DefaultRequestHeaders.Add("Origin", "https://client");
         _pipeline.BackChannelClient.DefaultRequestHeaders.Add("Access-Control-Request-Method", "GET");
-            
+
         var message = new HttpRequestMessage(HttpMethod.Options, url);
         var response = await _pipeline.BackChannelClient.SendAsync(message);
 

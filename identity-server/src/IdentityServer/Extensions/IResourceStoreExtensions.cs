@@ -54,7 +54,7 @@ public static class IResourceStoreExtensions
             throw new Exception(
                 $"Duplicate api resources found. This is an invalid configuration. Use different names for API resources. Names found: {names}");
         }
-            
+
         var scopesNames = apiScopes.Select(x => x.Name);
         dups = GetDuplicates(scopesNames);
         if (dups.Any())

@@ -23,14 +23,14 @@ public class HomeController : Controller
         _httpClientFactory = httpClientFactory;
         _discoveryCache = discoveryCache;
     }
-    
+
     [AllowAnonymous]
     public IActionResult Index() => View();
 
     public IActionResult Secure() => View();
 
     public IActionResult Logout() => SignOut("oidc", "Cookies");
-    
+
     public async Task<IActionResult> CallApi()
     {
         var token = await HttpContext.GetTokenAsync("access_token");

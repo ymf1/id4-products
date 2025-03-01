@@ -19,7 +19,7 @@ public class TestUserProfileService : IProfileService
     /// The logger
     /// </summary>
     protected readonly ILogger Logger;
-        
+
     /// <summary>
     /// The users
     /// </summary>

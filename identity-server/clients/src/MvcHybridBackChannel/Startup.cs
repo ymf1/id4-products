@@ -82,10 +82,10 @@ namespace MvcHybrid
 
                     options.DisableTelemetry = true;
                 });
-            
+
             // var apiKey = _configuration["HoneyCombApiKey"];
             // var dataset = "IdentityServerDev";
-            
+
             // services.AddOpenTelemetryTracing(builder =>
             // {
             //     builder

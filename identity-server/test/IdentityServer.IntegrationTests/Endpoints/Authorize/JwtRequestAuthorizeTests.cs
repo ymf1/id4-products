@@ -29,7 +29,7 @@ public class JwtRequestAuthorizeTests
     private readonly IdentityServerPipeline _mockPipeline = new IdentityServerPipeline();
     private readonly Client _client;
 
-    private readonly string _symmetricJwk = 
+    private readonly string _symmetricJwk =
         """
         { 
             "kid": "1", 
@@ -255,7 +255,7 @@ public class JwtRequestAuthorizeTests
         _mockPipeline.LoginRequest.IdP.ShouldBe("idp_value");
         _mockPipeline.LoginRequest.Tenant.ShouldBe("tenant_value");
         _mockPipeline.LoginRequest.LoginHint.ShouldBe("login_hint_value");
-        _mockPipeline.LoginRequest.AcrValues.ShouldBe([ "acr_1", "acr_2"]);
+        _mockPipeline.LoginRequest.AcrValues.ShouldBe(["acr_1", "acr_2"]);
 
         _mockPipeline.LoginRequest.Parameters.AllKeys.ShouldContain("foo");
         _mockPipeline.LoginRequest.Parameters["foo"].ShouldBe("123foo");
@@ -302,7 +302,7 @@ public class JwtRequestAuthorizeTests
         _mockPipeline.LoginRequest.IdP.ShouldBe("idp_value");
         _mockPipeline.LoginRequest.Tenant.ShouldBe("tenant_value");
         _mockPipeline.LoginRequest.LoginHint.ShouldBe("login_hint_value");
-        _mockPipeline.LoginRequest.AcrValues.ShouldBe([ "acr_1", "acr_2"]);
+        _mockPipeline.LoginRequest.AcrValues.ShouldBe(["acr_1", "acr_2"]);
 
         _mockPipeline.LoginRequest.Parameters.AllKeys.ShouldContain("foo");
         _mockPipeline.LoginRequest.Parameters["foo"].ShouldBe("123foo");
@@ -349,7 +349,7 @@ public class JwtRequestAuthorizeTests
         _mockPipeline.LoginRequest.IdP.ShouldBe("idp_value");
         _mockPipeline.LoginRequest.Tenant.ShouldBe("tenant_value");
         _mockPipeline.LoginRequest.LoginHint.ShouldBe("login_hint_value");
-        _mockPipeline.LoginRequest.AcrValues.ShouldBe([ "acr_1", "acr_2"]);
+        _mockPipeline.LoginRequest.AcrValues.ShouldBe(["acr_1", "acr_2"]);
 
         _mockPipeline.LoginRequest.Parameters.AllKeys.ShouldContain("foo");
         _mockPipeline.LoginRequest.Parameters["foo"].ShouldBe("123foo");
@@ -383,7 +383,7 @@ public class JwtRequestAuthorizeTests
             ]);
 
         var (parResponse, statusCode) = await _mockPipeline.PushAuthorizationRequestAsync(
-            new Dictionary<string, string>() 
+            new Dictionary<string, string>()
             {
                 { "client_id", _client.ClientId },
                 { "request", requestJwt }
@@ -402,7 +402,7 @@ public class JwtRequestAuthorizeTests
         _mockPipeline.LoginRequest.IdP.ShouldBe("idp_value");
         _mockPipeline.LoginRequest.Tenant.ShouldBe("tenant_value");
         _mockPipeline.LoginRequest.LoginHint.ShouldBe("login_hint_value");
-        _mockPipeline.LoginRequest.AcrValues.ShouldBe([ "acr_1", "acr_2"]);
+        _mockPipeline.LoginRequest.AcrValues.ShouldBe(["acr_1", "acr_2"]);
 
         _mockPipeline.LoginRequest.Parameters.AllKeys.ShouldContain("foo");
         _mockPipeline.LoginRequest.Parameters["foo"].ShouldBe("123foo");
@@ -412,7 +412,7 @@ public class JwtRequestAuthorizeTests
     }
 
     [Theory]
-    [InlineData((Type) null)]
+    [InlineData((Type)null)]
     [InlineData(typeof(QueryStringAuthorizationParametersMessageStore))]
     [InlineData(typeof(DistributedCacheAuthorizationParametersMessageStore))]
     [Trait("Category", Category)]
@@ -426,7 +426,7 @@ public class JwtRequestAuthorizeTests
             };
             _mockPipeline.Initialize();
         }
-            
+
         var requestJwt = CreateRequestJwt(
             issuer: _client.ClientId,
             audience: IdentityServerPipeline.BaseUrl,
@@ -461,7 +461,7 @@ public class JwtRequestAuthorizeTests
         _mockPipeline.LoginRequest.IdP.ShouldBe("idp_value");
         _mockPipeline.LoginRequest.Tenant.ShouldBe("tenant_value");
         _mockPipeline.LoginRequest.LoginHint.ShouldBe("login_hint_value");
-        _mockPipeline.LoginRequest.AcrValues.ShouldBe([ "acr_1", "acr_2"]);
+        _mockPipeline.LoginRequest.AcrValues.ShouldBe(["acr_1", "acr_2"]);
 
         _mockPipeline.LoginRequest.Parameters.AllKeys.ShouldContain("foo");
         _mockPipeline.LoginRequest.Parameters["foo"].ShouldBe("123foo");
@@ -514,7 +514,7 @@ public class JwtRequestAuthorizeTests
         _mockPipeline.LoginRequest.IdP.ShouldBe("idp_value");
         _mockPipeline.LoginRequest.Tenant.ShouldBe("tenant_value");
         _mockPipeline.LoginRequest.LoginHint.ShouldBe("login_hint_value");
-        _mockPipeline.LoginRequest.AcrValues.ShouldBe([ "acr_1", "acr_2"]);
+        _mockPipeline.LoginRequest.AcrValues.ShouldBe(["acr_1", "acr_2"]);
 
         _mockPipeline.LoginRequest.Parameters.AllKeys.ShouldContain("foo");
         _mockPipeline.LoginRequest.Parameters["foo"].ShouldBe("123foo");
@@ -1011,7 +1011,7 @@ public class JwtRequestAuthorizeTests
     }
 
     [Theory]
-    [InlineData((Type) null)]
+    [InlineData((Type)null)]
     [InlineData(typeof(QueryStringAuthorizationParametersMessageStore))]
     [InlineData(typeof(DistributedCacheAuthorizationParametersMessageStore))]
     [Trait("Category", Category)]
@@ -1132,7 +1132,7 @@ public class JwtRequestAuthorizeTests
         _mockPipeline.LoginRequest.IdP.ShouldBe("idp_value");
         _mockPipeline.LoginRequest.Tenant.ShouldBe("tenant_value");
         _mockPipeline.LoginRequest.LoginHint.ShouldBe("login_hint_value");
-        _mockPipeline.LoginRequest.AcrValues.ShouldBe([ "acr_1", "acr_2"]);
+        _mockPipeline.LoginRequest.AcrValues.ShouldBe(["acr_1", "acr_2"]);
         _mockPipeline.LoginRequest.Parameters.AllKeys.ShouldContain("foo");
         _mockPipeline.LoginRequest.Parameters["foo"].ShouldBe("123foo");
 
@@ -1293,7 +1293,7 @@ public class JwtRequestAuthorizeTests
     }
 
     [Theory]
-    [InlineData((Type) null)]
+    [InlineData((Type)null)]
     [InlineData(typeof(QueryStringAuthorizationParametersMessageStore))]
     [InlineData(typeof(DistributedCacheAuthorizationParametersMessageStore))]
     [Trait("Category", Category)]
@@ -1307,7 +1307,7 @@ public class JwtRequestAuthorizeTests
             };
             _mockPipeline.Initialize();
         }
-            
+
         await _mockPipeline.LoginAsync("bob");
 
         var requestJwt = CreateRequestJwt(
@@ -1345,7 +1345,7 @@ public class JwtRequestAuthorizeTests
     }
 
     [Theory]
-    [InlineData((Type) null)]
+    [InlineData((Type)null)]
     [InlineData(typeof(QueryStringAuthorizationParametersMessageStore))]
     [InlineData(typeof(DistributedCacheAuthorizationParametersMessageStore))]
     [Trait("Category", Category)]
@@ -1361,7 +1361,7 @@ public class JwtRequestAuthorizeTests
         }
 
         _client.RequireConsent = true;
-            
+
         await _mockPipeline.LoginAsync("bob");
 
         var requestJwt = CreateRequestJwt(

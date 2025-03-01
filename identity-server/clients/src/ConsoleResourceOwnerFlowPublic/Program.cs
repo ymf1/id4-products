@@ -34,7 +34,7 @@ namespace ConsoleResourceOwnerFlowPublic
                 Address = disco.TokenEndpoint,
 
                 ClientId = "roclient.public",
-                
+
                 UserName = "bob",
                 Password = "bob",
 

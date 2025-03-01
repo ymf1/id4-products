@@ -29,7 +29,7 @@ namespace Duende.Bff.Tests.Headers
             var host = apiResult.RequestHeaders["Host"].Single();
             host.ShouldBe("app");
         }
-        
+
         [Fact]
         public async Task forwarded_host_name_should_not_propagate_to_api()
         {

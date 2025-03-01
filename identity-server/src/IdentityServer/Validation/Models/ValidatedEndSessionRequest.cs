@@ -24,7 +24,7 @@ public class ValidatedEndSessionRequest : ValidatedRequest
     /// The post-logout URI.
     /// </value>
     public string PostLogOutUri { get; set; }
-        
+
     /// <summary>
     /// Gets or sets the state.
     /// </summary>

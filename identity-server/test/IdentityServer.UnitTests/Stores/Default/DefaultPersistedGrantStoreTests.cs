@@ -42,7 +42,7 @@ public class DefaultPersistedGrantStoreTests
             _stubHandleGenerationService,
             TestLogger.Create<DefaultUserConsentStore>());
     }
-        
+
     [Fact]
     public async Task StoreAuthorizationCodeAsync_should_persist_grant()
     {

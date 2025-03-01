@@ -20,7 +20,7 @@ public class NopSessionRevocationService : ISessionRevocationService
     {
         _logger = logger;
     }
-        
+
     /// <inheritdoc />
     public Task RevokeSessionsAsync(UserSessionsFilter filter, CancellationToken cancellationToken = default)
     {

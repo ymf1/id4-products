@@ -26,7 +26,7 @@ public class Authorize_ClientValidation_Code
 
         var validator = Factory.CreateAuthorizeRequestValidator();
         var result = await validator.ValidateAsync(parameters);
-            
+
         result.IsError.ShouldBeTrue();
         result.Error.ShouldBe(OidcConstants.AuthorizeErrors.InvalidScope);
     }
@@ -43,7 +43,7 @@ public class Authorize_ClientValidation_Code
 
         var validator = Factory.CreateAuthorizeRequestValidator();
         var result = await validator.ValidateAsync(parameters);
-            
+
         result.IsError.ShouldBeTrue();
         result.Error.ShouldBe(OidcConstants.AuthorizeErrors.InvalidRequest);
     }
@@ -61,7 +61,7 @@ public class Authorize_ClientValidation_Code
 
         var validator = Factory.CreateAuthorizeRequestValidator();
         var result = await validator.ValidateAsync(parameters);
-            
+
         result.IsError.ShouldBeTrue();
         result.Error.ShouldBe(OidcConstants.AuthorizeErrors.UnauthorizedClient);
     }
@@ -79,7 +79,7 @@ public class Authorize_ClientValidation_Code
 
         var validator = Factory.CreateAuthorizeRequestValidator();
         var result = await validator.ValidateAsync(parameters);
-            
+
         result.IsError.ShouldBeTrue();
         result.Error.ShouldBe(OidcConstants.AuthorizeErrors.UnauthorizedClient);
     }
@@ -96,7 +96,7 @@ public class Authorize_ClientValidation_Code
 
         var validator = Factory.CreateAuthorizeRequestValidator();
         var result = await validator.ValidateAsync(parameters);
-            
+
         result.IsError.ShouldBeTrue();
         result.Error.ShouldBe(OidcConstants.AuthorizeErrors.UnauthorizedClient);
     }
@@ -113,7 +113,7 @@ public class Authorize_ClientValidation_Code
 
         var validator = Factory.CreateAuthorizeRequestValidator();
         var result = await validator.ValidateAsync(parameters);
-            
+
         result.IsError.ShouldBeTrue();
         result.Error.ShouldBe(OidcConstants.AuthorizeErrors.InvalidScope);
     }

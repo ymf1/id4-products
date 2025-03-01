@@ -43,7 +43,7 @@ public class AuthorizeEndpointBaseTests
     private StubAuthorizeInteractionResponseGenerator _stubInteractionGenerator = new StubAuthorizeInteractionResponseGenerator();
 
     private MockConsentMessageStore _mockUserConsentResponseMessageStore = new MockConsentMessageStore();
-        
+
     private TestAuthorizeEndpoint _subject;
 
     private ClaimsPrincipal _user = new IdentityServerUser("bob").CreatePrincipal();

@@ -63,15 +63,15 @@ public class MutualTlsSecretParser : ISecretParser
                     _logger.LogError("Client ID exceeds maximum length.");
                     return null;
                 }
-                    
+
                 var clientCertificate = await context.Connection.GetClientCertificateAsync();
-                    
+
                 if (clientCertificate is null)
                 {
                     _logger.LogDebug("Client certificate not present");
                     return null;
                 }
-                    
+
                 return new ParsedSecret
                 {
                     Id = id,

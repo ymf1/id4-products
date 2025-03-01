@@ -80,7 +80,7 @@ public class IdentityServerUser
         {
             claims.Add(new Claim(JwtClaimTypes.IdentityProvider, IdentityProvider!));
         }
-            
+
         if (Tenant.IsPresent())
         {
             claims.Add(new Claim(IdentityServerConstants.ClaimTypes.Tenant, Tenant!));

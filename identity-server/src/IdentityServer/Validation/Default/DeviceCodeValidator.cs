@@ -51,7 +51,7 @@ internal class DeviceCodeValidator : IDeviceCodeValidator
     public async Task ValidateAsync(DeviceCodeValidationContext context)
     {
         using var activity = Tracing.BasicActivitySource.StartActivity("DeviceCodeValidator.Validate");
-        
+
         var deviceCode = await _devices.FindByDeviceCodeAsync(context.DeviceCode);
 
         if (deviceCode == null)
@@ -60,7 +60,7 @@ internal class DeviceCodeValidator : IDeviceCodeValidator
             context.Result = new TokenRequestValidationResult(context.Request, OidcConstants.TokenErrors.InvalidGrant);
             return;
         }
-            
+
         // validate client binding
         if (deviceCode.ClientId != context.Request.Client.ClientId)
         {

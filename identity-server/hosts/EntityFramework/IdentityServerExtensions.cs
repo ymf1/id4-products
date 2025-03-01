@@ -49,7 +49,7 @@ internal static class IdentityServerExtensions
 
         builder.Services.AddIdentityServerConfiguration(opt =>
         {
-                // opt.DynamicClientRegistration.SecretLifetime = TimeSpan.FromHours(1);
+            // opt.DynamicClientRegistration.SecretLifetime = TimeSpan.FromHours(1);
         })
             .AddClientConfigurationStore();
 

@@ -22,9 +22,9 @@ public class DeviceAuthorizationTests
         _mockPipeline.Clients.Add(new Client
         {
             ClientId = "client1",
-            ClientSecrets = {new Secret("secret".Sha256())},
+            ClientSecrets = { new Secret("secret".Sha256()) },
             AllowedGrantTypes = GrantTypes.DeviceFlow,
-            AllowedScopes = {"openid"}
+            AllowedScopes = { "openid" }
         });
 
         _mockPipeline.IdentityScopes.AddRange(new IdentityResource[] {
@@ -112,7 +112,7 @@ public class DeviceAuthorizationTests
 
         response.StatusCode.ShouldBe(HttpStatusCode.OK);
         response.Content.Headers.ContentType.MediaType.ShouldBe("application/json");
-            
+
         var resultDto = ParseJsonBody<ResultDto>(await response.Content.ReadAsStreamAsync());
 
         resultDto.ShouldNotBeNull();

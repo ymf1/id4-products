@@ -18,9 +18,9 @@ public class BffUserAccessTokenParameters
     /// <param name="forceRenewal"></param>
     /// <param name="resource"></param>
     public BffUserAccessTokenParameters(
-        string? signInScheme = null, 
+        string? signInScheme = null,
         string? challengeScheme = null,
-        bool forceRenewal = false, 
+        bool forceRenewal = false,
         string? resource = null)
     {
         SignInScheme = signInScheme;

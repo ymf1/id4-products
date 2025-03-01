@@ -78,7 +78,7 @@ public class BasicAuthenticationSecretParser : ISecretParser
 
         var idAndSecret = _options.InputLengthRestrictions.ClientId + _options.InputLengthRestrictions.ClientSecret; // *3 for the URL encoding
         var authorizationHeaderHeaderMaxLength = 4 * idAndSecret + 10;
-        
+
         if (authorizationHeader.Length > authorizationHeaderHeaderMaxLength)
         {
             _logger.LogError("Authorization header exceeds maximum length allowed.");

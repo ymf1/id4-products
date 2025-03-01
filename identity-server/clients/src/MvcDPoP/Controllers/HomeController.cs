@@ -24,7 +24,7 @@ public class HomeController : Controller
     public IActionResult Index() => View();
 
     public IActionResult Secure() => View();
-    
+
     public async Task<IActionResult> Renew()
     {
         await HttpContext.GetUserAccessTokenAsync(new UserTokenRequestParameters { ForceRenewal = true });
@@ -39,7 +39,7 @@ public class HomeController : Controller
 
         var response = await client.GetStringAsync("identity");
         ViewBag.Json = response.PrettyPrintJson();
-        
+
         return View();
     }
 

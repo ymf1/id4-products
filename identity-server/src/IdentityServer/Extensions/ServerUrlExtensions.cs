@@ -20,7 +20,7 @@ public static class ServerUrlExtensions
         var split = urls.Origin.Split("://", StringSplitOptions.RemoveEmptyEntries);
         var scheme = split.First();
         var host = HostString.FromUriComponent(split.Last()).Value;
-            
+
         return scheme + "://" + host;
     }
 

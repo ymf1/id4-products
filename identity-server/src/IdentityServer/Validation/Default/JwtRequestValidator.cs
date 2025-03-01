@@ -63,7 +63,7 @@ public class JwtRequestValidator : IJwtRequestValidator
         Options = options;
         IssuerNameService = issuerNameService;
         Logger = logger;
-            
+
         Handler = new JsonWebTokenHandler
         {
             MaximumTokenSizeInBytes = options.InputLengthRestrictions.Jwt
@@ -76,7 +76,7 @@ public class JwtRequestValidator : IJwtRequestValidator
     internal JwtRequestValidator(string audience, ILogger<JwtRequestValidator> logger)
     {
         _audienceUri = audience;
-            
+
         Logger = logger;
         Handler = new JsonWebTokenHandler();
     }
@@ -85,7 +85,7 @@ public class JwtRequestValidator : IJwtRequestValidator
     public virtual async Task<JwtRequestValidationResult> ValidateAsync(JwtRequestValidationContext context)
     {
         using var activity = Tracing.BasicActivitySource.StartActivity("JwtRequestValidator.Validate");
-        
+
         ArgumentNullException.ThrowIfNull(context);
         if (context.Client == null) throw new ArgumentNullException(nameof(context.Client));
         if (String.IsNullOrWhiteSpace(context.JwtTokenString)) throw new ArgumentNullException(nameof(context.JwtTokenString));
@@ -199,7 +199,7 @@ public class JwtRequestValidator : IJwtRequestValidator
             // don't filter out the jti claim
             filter.Remove(JwtClaimTypes.JwtId);
         }
-            
+
         var filtered = token.Claims.Where(claim => !filter.Contains(claim.Type));
         return Task.FromResult(filtered.ToList());
     }

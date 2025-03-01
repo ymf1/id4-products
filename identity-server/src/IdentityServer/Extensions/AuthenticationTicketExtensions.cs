@@ -58,7 +58,7 @@ public static class AuthenticationTicketExtensions
         ticket.Properties.Items.TryGetValue(JwtClaimTypes.Issuer, out var value);
         return value;
     }
-    
+
     /// <summary>
     /// Sets a issuer
     /// </summary>
@@ -84,7 +84,7 @@ public static class AuthenticationTicketExtensions
         return ticket.Properties.ExpiresUtc?.UtcDateTime;
     }
 
-    
+
     /// <summary>
     /// Serializes and AuthenticationTicket to a string
     /// </summary>

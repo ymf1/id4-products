@@ -55,17 +55,17 @@ internal static class AuthorizeResponseExtensions
         {
             collection.Add("state", response.State);
         }
-            
+
         if (response.SessionState.IsPresent())
         {
             collection.Add("session_state", response.SessionState);
         }
-            
+
         if (response.Issuer.IsPresent())
         {
             if (options.EmitIssuerIdentificationResponseParameter)
             {
-                collection.Add("iss", response.Issuer);    
+                collection.Add("iss", response.Issuer);
             }
         }
 

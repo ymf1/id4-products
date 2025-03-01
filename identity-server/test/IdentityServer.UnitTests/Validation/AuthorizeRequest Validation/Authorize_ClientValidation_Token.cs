@@ -28,7 +28,7 @@ public class Authorize_ClientValidation_Token
 
         var validator = Factory.CreateAuthorizeRequestValidator();
         var result = await validator.ValidateAsync(parameters);
-            
+
         result.IsError.ShouldBeTrue();
         result.Error.ShouldBe(OidcConstants.AuthorizeErrors.InvalidScope);
     }

@@ -44,7 +44,7 @@ public class InMemoryUserSessionStore : IUserSessionStore
         _store.TryRemove(key, out _);
         return Task.CompletedTask;
     }
-        
+
     /// <inheritdoc />
     public Task<IReadOnlyCollection<UserSession>> GetUserSessionsAsync(UserSessionsFilter filter, CancellationToken cancellationToken = default)
     {
@@ -81,7 +81,7 @@ public class InMemoryUserSessionStore : IUserSessionStore
 
         var keys = query.Select(x => x.Key).ToArray();
 
-        foreach(var key in keys)
+        foreach (var key in keys)
         {
             _store.TryRemove(key, out _);
         }

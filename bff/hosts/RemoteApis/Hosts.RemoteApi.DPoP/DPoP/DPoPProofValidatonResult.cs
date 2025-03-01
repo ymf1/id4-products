@@ -48,7 +48,7 @@ public class DPoPProofValidatonResult
     /// The jti value read from the payload.
     /// </summary>
     public string TokenId { get; set; }
-    
+
     /// <summary>
     /// The ath value read from the payload.
     /// </summary>

@@ -33,7 +33,7 @@ namespace ResourceBasedApi
 
             return Select;
         }
-        
+
         /// <summary>
         /// Extracts scheme and credential from Authorization header (if present)
         /// </summary>

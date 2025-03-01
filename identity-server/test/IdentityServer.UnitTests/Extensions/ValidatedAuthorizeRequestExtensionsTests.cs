@@ -21,7 +21,7 @@ public class ValidatedAuthorizeRequestExtensionsTests
         request.AuthenticationContextReferenceClasses.Add("c");
 
         var acrs = request.GetAcrValues();
-        foreach(var acr in acrs)
+        foreach (var acr in acrs)
         {
             request.RemoveAcrValue(acr);
         }

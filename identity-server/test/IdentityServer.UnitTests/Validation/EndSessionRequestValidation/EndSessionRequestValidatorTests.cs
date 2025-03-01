@@ -63,7 +63,7 @@ public class EndSessionRequestValidatorTests
         {
             IsError = false,
             Claims = new Claim[] { new Claim("sub", _user.GetSubjectId()) },
-            Client = new Client() { ClientId = "client"}
+            Client = new Client() { ClientId = "client" }
         };
         _stubRedirectUriValidator.IsPostLogoutRedirectUriValid = true;
 
@@ -142,7 +142,7 @@ public class EndSessionRequestValidatorTests
 
         result.ValidatedRequest.Client.ClientId.ShouldBe("client");
         result.ValidatedRequest.Subject.GetSubjectId().ShouldBe(_user.GetSubjectId());
-            
+
         result.ValidatedRequest.State.ShouldBeNull();
         result.ValidatedRequest.PostLogOutUri.ShouldBeNull();
     }

@@ -23,7 +23,7 @@ internal class EndpointRouter(
     {
         ArgumentNullException.ThrowIfNull(context);
 
-        foreach(var endpoint in endpoints)
+        foreach (var endpoint in endpoints)
         {
             var path = endpoint.Path;
             if (context.Request.Path.Equals(path, StringComparison.OrdinalIgnoreCase))

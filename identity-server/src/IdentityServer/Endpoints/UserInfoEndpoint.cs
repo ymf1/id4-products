@@ -32,9 +32,9 @@ internal class UserInfoEndpoint : IEndpointHandler
     /// <param name="responseGenerator">The response generator.</param>
     /// <param name="logger">The logger.</param>
     public UserInfoEndpoint(
-        BearerTokenUsageValidator tokenUsageValidator, 
-        IUserInfoRequestValidator requestValidator, 
-        IUserInfoResponseGenerator responseGenerator, 
+        BearerTokenUsageValidator tokenUsageValidator,
+        IUserInfoRequestValidator requestValidator,
+        IUserInfoResponseGenerator responseGenerator,
         ILogger<UserInfoEndpoint> logger)
     {
         _tokenUsageValidator = tokenUsageValidator;
@@ -51,7 +51,7 @@ internal class UserInfoEndpoint : IEndpointHandler
     public async Task<IEndpointResult> ProcessAsync(HttpContext context)
     {
         using var activity = Tracing.BasicActivitySource.StartActivity(IdentityServerConstants.EndpointNames.UserInfo + "Endpoint");
-        
+
         if (!HttpMethods.IsGet(context.Request.Method) && !HttpMethods.IsPost(context.Request.Method))
         {
             _logger.LogWarning("Invalid HTTP method for userinfo endpoint.");

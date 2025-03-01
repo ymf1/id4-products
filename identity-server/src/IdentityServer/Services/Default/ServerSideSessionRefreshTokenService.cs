@@ -37,7 +37,8 @@ class ServerSideSessionRefreshTokenService : IRefreshTokenService
 
     static readonly TokenValidationResult TokenValidationError = new TokenValidationResult
     {
-        IsError = true, Error = OidcConstants.TokenErrors.InvalidGrant
+        IsError = true,
+        Error = OidcConstants.TokenErrors.InvalidGrant
     };
 
 
@@ -47,7 +48,7 @@ class ServerSideSessionRefreshTokenService : IRefreshTokenService
         var result = await Inner.ValidateRefreshTokenAsync(tokenHandle, client);
 
         using var activity = Tracing.ServiceActivitySource.StartActivity("ServerSideSessionRefreshTokenService.ValidateRefreshToken");
-        
+
         if (!result.IsError)
         {
             var valid = await SessionCoordinationService.ValidateSessionAsync(new SessionValidationRequest
@@ -66,7 +67,7 @@ class ServerSideSessionRefreshTokenService : IRefreshTokenService
 
         return result;
     }
-   
+
     /// <inheritdoc/>
     public Task<string> CreateRefreshTokenAsync(RefreshTokenCreationRequest request)
     {

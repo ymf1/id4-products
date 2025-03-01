@@ -61,7 +61,7 @@ public class CachingCorsPolicyService<T> : ICorsPolicyService
     {
         using var activity = Tracing.StoreActivitySource.StartActivity("CachingCorsPolicyService.IsOriginAllowed");
         activity?.SetTag(Tracing.Properties.Origin, origin);
-        
+
         var entry = await CorsCache.GetOrAddAsync(origin,
             Options.Caching.CorsExpiration,
             async () => new CorsCacheEntry(await Inner.IsOriginAllowedAsync(origin)));

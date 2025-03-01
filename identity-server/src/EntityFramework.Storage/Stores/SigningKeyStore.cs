@@ -56,7 +56,7 @@ public class SigningKeyStore : ISigningKeyStore
     public async Task<IEnumerable<SerializedKey>> LoadKeysAsync()
     {
         using var activity = Tracing.StoreActivitySource.StartActivity("SigningKeyStore.LoadKeys");
-        
+
         var entities = await Context.Keys.Where(x => x.Use == Use)
             .AsNoTracking()
             .ToArrayAsync(CancellationTokenProvider.CancellationToken);
@@ -80,7 +80,7 @@ public class SigningKeyStore : ISigningKeyStore
     public async Task StoreKeyAsync(SerializedKey key)
     {
         using var activity = Tracing.StoreActivitySource.StartActivity("SigningKeyStore.StoreKey");
-        
+
         var entity = new Key
         {
             Id = key.Id,
@@ -104,7 +104,7 @@ public class SigningKeyStore : ISigningKeyStore
     public async Task DeleteKeyAsync(string id)
     {
         using var activity = Tracing.StoreActivitySource.StartActivity("SigningKeyStore.DeleteKey");
-        
+
         var item = await Context.Keys.Where(x => x.Use == Use && x.Id == id)
             .FirstOrDefaultAsync(CancellationTokenProvider.CancellationToken);
         if (item != null)
@@ -116,7 +116,7 @@ public class SigningKeyStore : ISigningKeyStore
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                foreach(var entity in ex.Entries)
+                foreach (var entity in ex.Entries)
                 {
                     entity.State = EntityState.Detached;
                 }

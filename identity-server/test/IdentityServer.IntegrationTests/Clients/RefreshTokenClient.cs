@@ -138,7 +138,7 @@ public class RefreshTokenClient
 
         rt1.ShouldBe(rt2);
     }
-        
+
     [Fact]
     public async Task Refreshing_a_refresh_token_with_one_time_only_should_return_different_refresh_token()
     {
@@ -180,7 +180,7 @@ public class RefreshTokenClient
 
         rt1.ShouldNotBe(rt2);
     }
-        
+
     [Fact]
     public async Task Replaying_a_rotated_token_should_fail()
     {
@@ -219,7 +219,7 @@ public class RefreshTokenClient
         response.TokenType.ShouldBe("Bearer");
         response.IdentityToken.ShouldNotBeNull();
         response.RefreshToken.ShouldNotBeNull();
-            
+
         // refresh token (again)
         response = await _client.RequestRefreshTokenAsync(new RefreshTokenRequest
         {
@@ -233,7 +233,7 @@ public class RefreshTokenClient
         response.IsError.ShouldBeTrue();
         response.Error.ShouldBe("invalid_grant");
     }
-        
+
     [Fact]
     public async Task Using_a_valid_refresh_token_should_succeed()
     {
@@ -269,7 +269,7 @@ public class RefreshTokenClient
 
         response.IsError.ShouldBeFalse();
     }
-        
+
     [Fact]
     public async Task Using_a_revoked_refresh_token_should_fail()
     {
@@ -306,7 +306,7 @@ public class RefreshTokenClient
         });
 
         revocationResponse.IsError.ShouldBe(false);
-            
+
         // refresh token
         response = await _client.RequestRefreshTokenAsync(new RefreshTokenRequest
         {

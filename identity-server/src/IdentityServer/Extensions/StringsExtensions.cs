@@ -20,7 +20,7 @@ internal static class StringExtensions
         {
             return string.Empty;
         }
-        
+
         return String.Join(' ', list);
     }
 
@@ -263,7 +263,7 @@ internal static class StringExtensions
             }
         }
 
-        return new NameValueCollection();           
+        return new NameValueCollection();
     }
 
     public static string? GetOrigin(this string? url)
@@ -285,7 +285,7 @@ internal static class StringExtensions
 
         return null;
     }
-        
+
     public static string Obfuscate(this string value)
     {
         var last4Chars = "****";

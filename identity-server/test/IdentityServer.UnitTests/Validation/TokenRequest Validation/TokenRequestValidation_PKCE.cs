@@ -114,7 +114,7 @@ public class TokenRequestValidation_PKCE
 
         var verifier = "x".Repeat(lengths.CodeVerifierMinLength);
         var challenge = VerifierToSha256CodeChallenge(verifier);
-            
+
         var code = new AuthorizationCode
         {
             CreationTime = DateTime.UtcNow,

@@ -109,7 +109,7 @@ public class AuthorizeInteractionResponseGeneratorTests_Consent
         var exception = await act.ShouldThrowAsync<ArgumentNullException>();
         exception.ParamName.ShouldBe("request");
     }
-        
+
     [Fact]
     public async Task ProcessConsentAsync_AllowsNullConsent()
     {
@@ -186,7 +186,7 @@ public class AuthorizeInteractionResponseGeneratorTests_Consent
         result.Error.ShouldBe(OidcConstants.AuthorizeErrors.ConsentRequired);
         AssertUpdateConsentNotCalled();
     }
-        
+
     [Fact]
     public async Task ProcessConsentAsync_PromptModeIsConsent_NoPriorConsent_ReturnsConsentResult()
     {
@@ -240,7 +240,7 @@ public class AuthorizeInteractionResponseGeneratorTests_Consent
         var consent = new ConsentResponse
         {
             RememberConsent = false,
-            ScopesValuesConsented = new string[] {}
+            ScopesValuesConsented = new string[] { }
         };
         var result = await _subject.ProcessConsentAsync(request, consent);
         request.WasConsentShown.ShouldBeTrue();
@@ -264,7 +264,7 @@ public class AuthorizeInteractionResponseGeneratorTests_Consent
         var consent = new ConsentResponse
         {
             RememberConsent = false,
-            ScopesValuesConsented = new string[] {}
+            ScopesValuesConsented = new string[] { }
         };
         var result = await _subject.ProcessConsentAsync(request, consent);
         request.WasConsentShown.ShouldBeTrue();
@@ -277,7 +277,7 @@ public class AuthorizeInteractionResponseGeneratorTests_Consent
     public async Task ProcessConsentAsync_NoPromptMode_ConsentServiceRequiresConsent_ConsentGrantedButMissingRequiredScopes_ReturnsErrorResult()
     {
         RequiresConsent(true);
-        var client = new Client {};
+        var client = new Client { };
         var request = new ValidatedAuthorizeRequest()
         {
             ResponseMode = OidcConstants.ResponseModes.Fragment,
@@ -309,7 +309,8 @@ public class AuthorizeInteractionResponseGeneratorTests_Consent
             ResponseMode = OidcConstants.ResponseModes.Fragment,
             State = "12345",
             RedirectUri = "https://client.com/callback",
-            Client = new Client {
+            Client = new Client
+            {
                 AllowRememberConsent = false
             },
             RequestedScopes = new List<string> { "openid", "read", "write" },
@@ -329,7 +330,7 @@ public class AuthorizeInteractionResponseGeneratorTests_Consent
         result.IsConsent.ShouldBeFalse();
         AssertUpdateConsentNotCalled();
     }
-        
+
     [Fact]
     public async Task ProcessConsentAsync_PromptModeConsent_ConsentGranted_ScopesSelected_ReturnsConsentResult()
     {
@@ -339,7 +340,8 @@ public class AuthorizeInteractionResponseGeneratorTests_Consent
             ResponseMode = OidcConstants.ResponseModes.Fragment,
             State = "12345",
             RedirectUri = "https://client.com/callback",
-            Client = new Client {
+            Client = new Client
+            {
                 AllowRememberConsent = false
             },
             RequestedScopes = new List<string> { "openid", "read", "write" },

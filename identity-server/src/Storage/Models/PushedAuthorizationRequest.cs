@@ -27,7 +27,7 @@ public class PushedAuthorizationRequest
     /// </summary>
 
     public DateTime ExpiresAtUtc { get; set; }
-    
+
     /// <summary>
     /// The data protected content of the pushed authorization request.  
     /// </summary>

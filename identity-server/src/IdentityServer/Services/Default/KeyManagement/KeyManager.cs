@@ -63,7 +63,7 @@ public class KeyManager : IKeyManager
     public async Task<IEnumerable<KeyContainer>> GetCurrentKeysAsync()
     {
         using var activity = Tracing.ServiceActivitySource.StartActivity("KeyManager.GetCurrentKeys");
-        
+
         _logger.LogTrace("Getting the current key.");
 
         var (_, currentKeys) = await GetAllKeysInternalAsync();
@@ -86,7 +86,7 @@ public class KeyManager : IKeyManager
     public async Task<IEnumerable<KeyContainer>> GetAllKeysAsync()
     {
         using var activity = Tracing.ServiceActivitySource.StartActivity("KeyManager.GetAllKeys");
-        
+
         _logger.LogTrace("Getting all the keys.");
 
         var (keys, _) = await GetAllKeysInternalAsync();
@@ -116,7 +116,7 @@ public class KeyManager : IKeyManager
         }
 
         var rotationRequired = false;
-            
+
         // if we don't have an active key, then a new one is about to be created so don't bother running this check
         if (signingKeysSuccess)
         {
@@ -158,7 +158,7 @@ public class KeyManager : IKeyManager
 
                     if (!signingKeysSuccess)
                     {
-                        signingKeysSuccess = TryGetAllCurrentSigningKeys(keys, out signingKeys); 
+                        signingKeysSuccess = TryGetAllCurrentSigningKeys(keys, out signingKeys);
                     }
                     if (rotationRequired)
                     {
@@ -210,7 +210,7 @@ public class KeyManager : IKeyManager
         if (allKeys == null || !allKeys.Any()) return true;
 
         var groupedKeys = allKeys.GroupBy(x => x.Algorithm).ToArray();
-            
+
         var success = groupedKeys.Length == _options.KeyManagement.AllowedSigningAlgorithmNames.Count() &&
                       groupedKeys.All(x => _options.KeyManagement.AllowedSigningAlgorithmNames.Contains(x.Key));
 
@@ -218,8 +218,8 @@ public class KeyManager : IKeyManager
         {
             return true;
         }
-            
-        foreach(var item in groupedKeys)
+
+        foreach (var item in groupedKeys)
         {
             var keys = item.AsEnumerable();
             var activeKey = GetCurrentSigningKey(keys);
@@ -298,7 +298,7 @@ public class KeyManager : IKeyManager
 
         return container;
     }
-        
+
     internal async Task<IEnumerable<KeyContainer>> GetAllKeysFromCacheAsync()
     {
         var cachedKeys = await _cache.GetKeysAsync();
@@ -420,13 +420,13 @@ public class KeyManager : IKeyManager
     internal async Task<IEnumerable<KeyContainer>> GetAllKeysFromStoreAsync(bool cache = true)
     {
         _logger.LogTrace("Loading keys from store.");
-            
+
         var protectedKeys = await _store.LoadKeysAsync();
         if (protectedKeys != null && protectedKeys.Any())
         {
             // retired keys are those that are beyond inclusion, thus we act as if they don't exist.
             protectedKeys = await FilterAndDeleteRetiredKeysAsync(protectedKeys);
-            
+
             var keys = protectedKeys.Select(x =>
                 {
                     try
@@ -438,7 +438,7 @@ public class KeyManager : IKeyManager
                         }
                         return key;
                     }
-                    catch(CryptographicException ex)
+                    catch (CryptographicException ex)
                     {
                         _logger.LogError(ex, "Error unprotecting the IdentityServer signing key with kid {kid}. This is likely due to the ASP.NET Core data protection key that was used to protect it is not available. This could occur because data protection has not been configured properly for your load balanced environment, or the IdentityServer signing key store was populated with keys from a different environment with different ASP.NET Core data protection keys. Once you have corrected the problem and if you keep getting this error then it is safe to delete the specific IdentityServer signing key with that kid.", x?.Id);
                     }
@@ -504,7 +504,7 @@ public class KeyManager : IKeyManager
             var newKey = await CreateAndStoreNewKeyAsync(alg);
             keys.Add(newKey);
         }
-            
+
         if (AreAllKeysWithinInitializationDuration(keys))
         {
             // this is meant to allow multiple servers that all start at the same time to have some 
@@ -538,10 +538,10 @@ public class KeyManager : IKeyManager
     internal bool TryGetAllCurrentSigningKeys(IEnumerable<KeyContainer> keys, out IEnumerable<KeyContainer> signingKeys)
     {
         signingKeys = GetAllCurrentSigningKeys(keys);
-            
+
         var success = signingKeys.Count() == _options.KeyManagement.AllowedSigningAlgorithmNames.Count() &&
                       signingKeys.All(x => _options.KeyManagement.AllowedSigningAlgorithmNames.Contains(x.Algorithm));
-            
+
         return success;
     }
 
@@ -559,7 +559,7 @@ public class KeyManager : IKeyManager
         foreach (var item in groupedKeys)
         {
             _logger.LogTrace("Looking for an active signing key for alg {alg}.", item.Key);
-                
+
             var activeKey = GetCurrentSigningKey(item);
             if (activeKey != null)
             {

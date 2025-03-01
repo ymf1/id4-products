@@ -78,7 +78,7 @@ public class StrictRedirectUriValidator : IRedirectUriValidator
         // on the PAR endpoint and at the authorize endpoint (if a redirect uri
         // was pushed)
         if (_options?.PushedAuthorization?.AllowUnregisteredPushedRedirectUris == true &&
-            context.Client.RequireClientSecret && 
+            context.Client.RequireClientSecret &&
             (context.AuthorizeRequestType == AuthorizeRequestType.PushedAuthorization ||
              context.AuthorizeRequestType == AuthorizeRequestType.AuthorizeWithPushedParameters))
         {

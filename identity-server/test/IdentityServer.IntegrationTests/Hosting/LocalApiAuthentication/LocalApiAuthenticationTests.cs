@@ -31,7 +31,7 @@ public class LocalApiAuthenticationTests
     private Client _client;
 
     public LocalApiTokenMode Mode { get; set; }
-    
+
     public bool ApiWasCalled { get; set; }
     public ClaimsPrincipal ApiPrincipal { get; set; }
 
@@ -86,10 +86,10 @@ public class LocalApiAuthenticationTests
             }
         });
 
-        _pipeline.OnPostConfigureServices += services => 
+        _pipeline.OnPostConfigureServices += services =>
         {
             services.AddAuthentication()
-                .AddLocalApi("local", options => 
+                .AddLocalApi("local", options =>
                 {
                     options.TokenMode = Mode;
                 });
@@ -108,19 +108,19 @@ public class LocalApiAuthenticationTests
             });
         };
 
-        _pipeline.OnPreConfigure += app => 
+        _pipeline.OnPreConfigure += app =>
         {
             app.UseRouting();
         };
 
-        _pipeline.OnPostConfigure += app => 
+        _pipeline.OnPostConfigure += app =>
         {
             app.UseAuthorization();
 
-            app.UseEndpoints(eps => 
+            app.UseEndpoints(eps =>
             {
                 eps.MapGet("/api", ctx =>
-                { 
+                {
                     ApiWasCalled = true;
                     ApiPrincipal = ctx.User;
                     return Task.CompletedTask;
@@ -223,8 +223,8 @@ public class LocalApiAuthenticationTests
 
         var handler = new JsonWebTokenHandler() { SetDefaultTimesOnTokenCreation = false };
         var key = new SigningCredentials(jsonWebKey, jsonWebKey.Alg);
-            var proofToken = handler.CreateToken(JsonSerializer.Serialize(payload), key, header);
-            return proofToken;
+        var proofToken = handler.CreateToken(JsonSerializer.Serialize(payload), key, header);
+        return proofToken;
     }
 
     [Fact]
@@ -282,13 +282,13 @@ public class LocalApiAuthenticationTests
         var req = new HttpRequestMessage(HttpMethod.Get, "https://server/api");
         var at = await GetAccessTokenAsync(true);
         req.Headers.Authorization = new AuthenticationHeaderValue("DPoP", at);
-        
+
         // Use a new key to make the proof token that we present when we make the API request.
         // This doesn't prove that we have possession of the key that the access token is bound to,
         // so it should fail.
         var newKey = GenerateJwk();
         var newJwk = new Microsoft.IdentityModel.Tokens.JsonWebKey(newKey);
-        var newJkt  = Base64Url.Encode(newJwk.ComputeJwkThumbprint());
+        var newJkt = Base64Url.Encode(newJwk.ComputeJwkThumbprint());
         var proofToken = CreateProofToken("GET", "https://server/api", at, jwkString: newKey);
         req.Headers.Add("DPoP", proofToken);
 
@@ -317,13 +317,13 @@ public class LocalApiAuthenticationTests
         var req = new HttpRequestMessage(HttpMethod.Get, "https://server/api");
         var at = await GetAccessTokenAsync(dpop: true, reference: true);
         req.Headers.Authorization = new AuthenticationHeaderValue("DPoP", at);
-        
+
         // Use a new key to make the proof token that we present when we make the API request.
         // This doesn't prove that we have possession of the key that the access token is bound to,
         // so it should fail.
         var newKey = GenerateJwk();
         var newJwk = new Microsoft.IdentityModel.Tokens.JsonWebKey(newKey);
-        var newJkt  = Base64Url.Encode(newJwk.ComputeJwkThumbprint());
+        var newJkt = Base64Url.Encode(newJwk.ComputeJwkThumbprint());
         var proofToken = CreateProofToken("GET", "https://server/api", at, jwkString: newKey);
         req.Headers.Add("DPoP", proofToken);
 
@@ -336,7 +336,7 @@ public class LocalApiAuthenticationTests
         };
         var introspectionResponse = await _pipeline.BackChannelClient.IntrospectTokenAsync(introspectionRequest);
         introspectionResponse.IsError.ShouldBeFalse();
-        
+
         var cnf = introspectionResponse.Claims.FirstOrDefault(c => c.Type == JwtClaimTypes.Confirmation);
         var json = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(cnf.Value);
         if (json.TryGetValue(JwtClaimTypes.ConfirmationMethods.JwkThumbprint, out var jktJson))
@@ -370,7 +370,7 @@ public class LocalApiAuthenticationTests
     public async Task dpop_nonce_should_validate()
     {
         var at = await GetAccessTokenAsync(true);
-        
+
         var req = new HttpRequestMessage(HttpMethod.Get, "https://server/api");
         req.Headers.Authorization = new AuthenticationHeaderValue("DPoP", at);
         req.Headers.Add("DPoP", CreateProofToken("GET", "https://server/api", at));
@@ -403,7 +403,7 @@ public class LocalApiAuthenticationTests
         response.Headers.WwwAuthenticate.Select(x => x.Scheme).ShouldBe(["Bearer"]);
 
     }
-    
+
     [Fact]
     [Trait("Category", Category)]
     public async Task dpop_only_bearer_should_fail()

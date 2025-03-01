@@ -48,7 +48,7 @@ public static class PrincipalExtensions
         var claim = id.FindFirst(JwtClaimTypes.AuthenticationTime);
 
         if (claim == null) throw new InvalidOperationException("auth_time is missing.");
-           
+
         return long.Parse(claim.Value);
     }
 
@@ -183,7 +183,7 @@ public static class PrincipalExtensions
     {
         return principal.FindFirst(IdentityServerConstants.ClaimTypes.Tenant)?.Value;
     }
-        
+
     /// <summary>
     /// Determines whether this instance is authenticated.
     /// </summary>

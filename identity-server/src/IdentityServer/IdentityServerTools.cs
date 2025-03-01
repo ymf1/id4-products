@@ -140,7 +140,7 @@ public class IdentityServerTools : IIdentityServerTools
 
             Claims = new HashSet<Claim>(claims, new ClaimComparer())
         };
-        
+
         return await _tokenCreation.CreateTokenAsync(token);
     }
 

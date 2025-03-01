@@ -159,7 +159,7 @@ public class EndSessionTests
 
         var response = await _mockPipeline.BrowserClient.GetAsync(IdentityServerPipeline.EndSessionEndpoint +
                                                                   "?id_token_hint=" + id_token +
-                                                                  "&post_logout_redirect_uri=https://client2/signout-callback2" + 
+                                                                  "&post_logout_redirect_uri=https://client2/signout-callback2" +
                                                                   "&ui_locales=fr-FR fr-CA");
 
         _mockPipeline.LogoutWasCalled.ShouldBeTrue();
@@ -456,7 +456,7 @@ public class EndSessionTests
         var id_token = authorization.IdentityToken;
 
         _mockPipeline.BrowserClient.AllowAutoRedirect = true;
-        response = await _mockPipeline.BrowserClient.GetAsync(IdentityServerPipeline.EndSessionEndpoint + 
+        response = await _mockPipeline.BrowserClient.GetAsync(IdentityServerPipeline.EndSessionEndpoint +
                                                               "?id_token_hint=" + id_token);
 
         _mockPipeline.LogoutRequest.PostLogoutRedirectUri.ShouldBeNull();
@@ -538,7 +538,7 @@ public class EndSessionTests
             var bytes = Base64Url.Decode(parts[1]);
             var json = Encoding.UTF8.GetString(bytes);
             var payload = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(json);
-                
+
             payload["iss"].GetString().ShouldBe("https://server");
             payload["sub"].GetString().ShouldBe("bob");
             payload["aud"].GetString().ShouldBe("client3");

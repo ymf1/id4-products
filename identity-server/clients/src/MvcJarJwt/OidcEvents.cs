@@ -15,7 +15,7 @@ public class OidcEvents : OpenIdConnectEvents
     {
         _assertionService = assertionService;
     }
-    
+
     public override Task AuthorizationCodeReceived(AuthorizationCodeReceivedContext context)
     {
         context.TokenEndpointRequest.ClientAssertionType = OidcConstants.ClientAssertionTypes.JwtBearer;

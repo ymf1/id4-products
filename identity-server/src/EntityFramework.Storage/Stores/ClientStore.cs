@@ -57,7 +57,7 @@ public class ClientStore : IClientStore
     {
         using var activity = Tracing.StoreActivitySource.StartActivity("ClientStore.FindClientById");
         activity?.SetTag(Tracing.Properties.ClientId, clientId);
-        
+
         var query = Context.Clients
           .Where(x => x.ClientId == clientId)
           .Include(x => x.AllowedCorsOrigins)

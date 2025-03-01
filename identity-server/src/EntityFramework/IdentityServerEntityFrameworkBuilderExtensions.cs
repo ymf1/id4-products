@@ -52,7 +52,7 @@ public static class IdentityServerEntityFrameworkBuilderExtensions
         builder.AddResourceStore<ResourceStore>();
         builder.AddCorsPolicyService<CorsPolicyService>();
         builder.AddIdentityProviderStore<IdentityProviderStore>();
-            
+
         return builder;
     }
 

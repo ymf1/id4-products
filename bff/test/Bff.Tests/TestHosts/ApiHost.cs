@@ -18,8 +18,8 @@ namespace Duende.Bff.Tests.TestHosts
 
         public ApiHost(
             WriteTestOutput output,
-            IdentityServerHost identityServerHost, 
-            string scope, 
+            IdentityServerHost identityServerHost,
+            string scope,
             string baseAddress = "https://api")
             : base(output, baseAddress)
         {
@@ -58,14 +58,14 @@ namespace Duende.Bff.Tests.TestHosts
                 endpoints.Map("/return_unauthenticated",
                     context =>
                     {
-                        context.Response.StatusCode = (int) System.Net.HttpStatusCode.Unauthorized;
+                        context.Response.StatusCode = (int)System.Net.HttpStatusCode.Unauthorized;
                         return Task.CompletedTask;
                     });
 
                 endpoints.Map("/return_forbidden",
                     context =>
                     {
-                        context.Response.StatusCode = (int) System.Net.HttpStatusCode.Forbidden;
+                        context.Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
                         return Task.CompletedTask;
                     });
 
@@ -80,7 +80,7 @@ namespace Duende.Bff.Tests.TestHosts
                             body = await sr.ReadToEndAsync();
                         }
                     }
-                    
+
                     // capture request headers
                     var requestHeaders = new Dictionary<string, List<string>>();
                     foreach (var header in context.Request.Headers)

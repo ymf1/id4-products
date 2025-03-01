@@ -72,7 +72,7 @@ internal static class HostingExtensions
         // add CSRF protection and status code handling for API endpoints
         app.UseBff();
         app.UseAuthorization();
-        
+
         // local API endpoints
         app.MapControllers()
             .RequireAuthorization()

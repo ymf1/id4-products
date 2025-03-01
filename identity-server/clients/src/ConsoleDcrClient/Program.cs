@@ -43,7 +43,7 @@ static async Task RegisterClient()
 
     var clientJson = json.RootElement.GetProperty("client_id");
     var secretJson = json.RootElement.GetProperty("client_secret");
-    
+
     request.Document.Extensions!.Add("client_id", clientJson);
     request.Document.Extensions.Add("client_secret", secretJson);
 

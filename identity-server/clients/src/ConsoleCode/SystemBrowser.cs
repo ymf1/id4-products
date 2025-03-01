@@ -177,7 +177,7 @@ namespace ConsoleResourceIndicators
 
                 _source.TrySetResult(value);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
                 ctx.Response.StatusCode = 400;

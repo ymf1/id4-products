@@ -12,7 +12,7 @@ using IntegrationTests.Common;
 
 namespace IntegrationTests.Conformance.Basic;
 
-public class CodeFlowTests 
+public class CodeFlowTests
 {
     private const string Category = "Conformance.Basic.CodeFlowTests";
 
@@ -100,7 +100,7 @@ public class CodeFlowTests
         tokenResult.IdentityToken.ShouldNotBeNull();
 
         var token = new JwtSecurityToken(tokenResult.IdentityToken);
-            
+
         var s_hash = token.Claims.FirstOrDefault(c => c.Type == "s_hash");
         s_hash.ShouldBeNull();
     }
@@ -112,7 +112,7 @@ public class CodeFlowTests
     public async Task StateHash_should_be_emitted_based_on_options(bool emitStateHash)
     {
         _pipeline.Options.EmitStateHash = emitStateHash;
-            
+
         await _pipeline.LoginAsync("bob");
 
         var nonce = Guid.NewGuid().ToString();
@@ -153,7 +153,7 @@ public class CodeFlowTests
         tokenResult.IdentityToken.ShouldNotBeNull();
 
         var token = new JwtSecurityToken(tokenResult.IdentityToken);
-            
+
         var s_hash = token.Claims.FirstOrDefault(c => c.Type == "s_hash");
 
         if (emitStateHash)

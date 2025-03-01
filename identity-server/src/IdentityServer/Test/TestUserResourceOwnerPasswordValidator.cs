@@ -38,8 +38,8 @@ public class TestUserResourceOwnerPasswordValidator : IResourceOwnerPasswordVali
         {
             var user = _users.FindByUsername(context.UserName);
             context.Result = new GrantValidationResult(
-                user.SubjectId ?? throw new ArgumentException("Subject ID not set", nameof(user.SubjectId)), 
-                OidcConstants.AuthenticationMethods.Password, _clock.UtcNow.UtcDateTime, 
+                user.SubjectId ?? throw new ArgumentException("Subject ID not set", nameof(user.SubjectId)),
+                OidcConstants.AuthenticationMethods.Password, _clock.UtcNow.UtcDateTime,
                 user.Claims);
         }
 

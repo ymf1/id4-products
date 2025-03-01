@@ -186,7 +186,7 @@ public class AuthorizeResponseGenerator : IAuthorizeResponseGenerator
         if (responseTypes.Contains(OidcConstants.ResponseTypes.IdToken))
         {
             string stateHash = null;
-                
+
             if (Options.EmitStateHash && request.State.IsPresent())
             {
                 var credential = await KeyMaterialService.GetSigningCredentialsAsync(request.Client.AllowedIdentityTokenSigningAlgorithms);

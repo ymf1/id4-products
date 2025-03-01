@@ -17,10 +17,10 @@ namespace Duende.Bff.Tests.SessionManagement
 
         public CookieSlidingTests(ITestOutputHelper output) : base(output)
         {
-            BffHost.OnConfigureServices += services => 
+            BffHost.OnConfigureServices += services =>
             {
                 services.AddSingleton<IUserSessionStore>(_sessionStore);
-                services.Configure<CookieAuthenticationOptions>("cookie", options => 
+                services.Configure<CookieAuthenticationOptions>("cookie", options =>
                 {
                     options.SlidingExpiration = true;
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
@@ -126,7 +126,7 @@ namespace Duende.Bff.Tests.SessionManagement
         public async Task user_endpoint_when_uservalidate_renews_and_sliding_flag_is_passed_cookie_should_not_slide()
         {
             var shouldRenew = false;
-            
+
             BffHost.OnConfigureServices += services =>
             {
                 services.Configure<CookieAuthenticationOptions>("cookie", options =>
@@ -138,7 +138,7 @@ namespace Duende.Bff.Tests.SessionManagement
                     };
                 });
             };
-            
+
             await BffHost.InitializeAsync();
 
             await BffHost.BffLoginAsync("alice");

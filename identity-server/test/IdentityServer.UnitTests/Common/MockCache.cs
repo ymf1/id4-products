@@ -10,7 +10,7 @@ public class MockCache<T> : ICache<T>
     where T : class
 {
     public Dictionary<string, T> Items { get; set; } = new Dictionary<string, T>();
-         
+
 
     public Task<T> GetAsync(string key)
     {

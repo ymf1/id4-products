@@ -33,12 +33,12 @@ public class DefaultSilentLoginService : ISilentLoginService
         Options = options.Value;
         Logger = logger;
     }
-        
+
     /// <inheritdoc />
     public virtual async Task ProcessRequestAsync(HttpContext context)
     {
         Logger.LogDebug("Processing silent login request");
-        
+
         context.CheckForBffMiddleware(Options);
 
         var pathBase = context.Request.PathBase;
@@ -54,7 +54,7 @@ public class DefaultSilentLoginService : ISilentLoginService
         };
 
         Logger.LogDebug("Silent login endpoint triggering Challenge with returnUrl {redirectUri}", redirectPath);
-        
+
         await context.ChallengeAsync(props);
     }
 }

@@ -336,7 +336,7 @@ namespace Duende.Bff.Tests.Endpoints
             ApiResponse apiResult = JsonSerializer.Deserialize<ApiResponse>(json).ShouldNotBeNull();
             apiResult.RequestHeaders["my-header-to-be-copied-by-yarp"].First().ShouldBe("copied-value");
 
-            response.Content.Headers.Select(x => x.Key).ShouldNotContain("added-by-custom-default-transform", 
+            response.Content.Headers.Select(x => x.Key).ShouldNotContain("added-by-custom-default-transform",
                 "a custom transform doesn't run the defaults");
         }
     }

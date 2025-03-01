@@ -22,7 +22,8 @@ namespace IdentityServer.PerfTests.Services
 
         public DefaultTokenServiceTest()
         {
-            Container.OnConfigureIdentityServerOptions += opts => {
+            Container.OnConfigureIdentityServerOptions += opts =>
+            {
                 opts.IssuerUri = "https://server";
             };
 
@@ -39,10 +40,10 @@ namespace IdentityServer.PerfTests.Services
 
             _subject = Container.ResolveService<ITokenService>();
 
-            _principal = new IdentityServerUser("sub") 
-            { 
-                AuthenticationTime = System.DateTime.Now, 
-                IdentityProvider = "local" 
+            _principal = new IdentityServerUser("sub")
+            {
+                AuthenticationTime = System.DateTime.Now,
+                IdentityProvider = "local"
             }.CreatePrincipal();
         }
 

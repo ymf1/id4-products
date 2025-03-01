@@ -19,7 +19,7 @@ public class FailRouter : IEndpointRouter
 
     public IEndpointHandler Find(HttpContext context)
     {
-        throw (Exception) _exceptionType.GetConstructor([]).Invoke(null);
+        throw (Exception)_exceptionType.GetConstructor([]).Invoke(null);
     }
 }
 

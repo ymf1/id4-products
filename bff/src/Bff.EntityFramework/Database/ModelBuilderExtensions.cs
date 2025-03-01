@@ -15,8 +15,8 @@ public static class ModelBuilderExtensions
     private static EntityTypeBuilder<TEntity> ToTable<TEntity>(this EntityTypeBuilder<TEntity> entityTypeBuilder, TableConfiguration configuration)
         where TEntity : class
     {
-        return String.IsNullOrWhiteSpace(configuration.Schema) ? 
-            entityTypeBuilder.ToTable(configuration.Name) : 
+        return String.IsNullOrWhiteSpace(configuration.Schema) ?
+            entityTypeBuilder.ToTable(configuration.Name) :
             entityTypeBuilder.ToTable(configuration.Name, configuration.Schema);
     }
 
@@ -34,7 +34,7 @@ public static class ModelBuilderExtensions
 
         modelBuilder.Entity<UserSessionEntity>(entity =>
         {
-            entity.ToTable(storeOptions.UserSessions);  
+            entity.ToTable(storeOptions.UserSessions);
 
             entity.HasKey(x => x.Id);
 

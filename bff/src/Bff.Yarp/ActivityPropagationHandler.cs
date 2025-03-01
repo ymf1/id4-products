@@ -20,7 +20,7 @@ public sealed class ActivityPropagationHandler : DelegatingHandler
 
     /// <inheritdoc />
     public ActivityPropagationHandler(HttpMessageHandler innerHandler) : base(innerHandler) { }
-        
+
     /// <inheritdoc />
     protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {

@@ -5,7 +5,7 @@ using Microsoft.Playwright;
 
 namespace Hosts.Tests.PageModels;
 
-public class LoginPageModel: PageModel
+public class LoginPageModel : PageModel
 {
 
     public async Task Login()

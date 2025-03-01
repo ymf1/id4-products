@@ -14,7 +14,7 @@ internal static class Extensions
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
         var services = builder.Services;
-        
+
         services.AddControllers();
 
         services.AddAuthentication("token")

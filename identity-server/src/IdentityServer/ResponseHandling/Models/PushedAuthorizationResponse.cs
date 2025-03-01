@@ -19,7 +19,7 @@ public class PushedAuthorizationFailure : PushedAuthorizationResponse
     /// The error code, as specified by RFC 9126, etc.
     /// </summary>
     public required string Error { get; set; }
-    
+
     /// <summary>
     /// The error description: "human-readable ASCII text providing
     /// additional information, used to assist the client developer in

@@ -17,7 +17,7 @@ public class DistributedDeviceFlowThrottlingServiceTests
     private TestCache cache = new TestCache();
     InMemoryClientStore _store;
 
-    private readonly IdentityServerOptions options = new IdentityServerOptions {DeviceFlow = new DeviceFlowOptions {Interval = 5}};
+    private readonly IdentityServerOptions options = new IdentityServerOptions { DeviceFlow = new DeviceFlowOptions { Interval = 5 } };
     private readonly DeviceCode deviceCode = new DeviceCode
     {
         Lifetime = 300,
@@ -36,7 +36,7 @@ public class DistributedDeviceFlowThrottlingServiceTests
     public async Task First_Poll()
     {
         var handle = Guid.NewGuid().ToString();
-        var service = new DistributedDeviceFlowThrottlingService(cache, _store, new StubClock {UtcNowFunc = () => testDate}, options);
+        var service = new DistributedDeviceFlowThrottlingService(cache, _store, new StubClock { UtcNowFunc = () => testDate }, options);
 
         var result = await service.ShouldSlowDown(handle, deviceCode);
 
@@ -56,7 +56,7 @@ public class DistributedDeviceFlowThrottlingServiceTests
         var result = await service.ShouldSlowDown(handle, deviceCode);
 
         result.ShouldBeTrue();
-            
+
         CheckCacheEntry(handle);
     }
 
@@ -64,7 +64,7 @@ public class DistributedDeviceFlowThrottlingServiceTests
     public async Task Second_Poll_After_Interval()
     {
         var handle = Guid.NewGuid().ToString();
-            
+
         var service = new DistributedDeviceFlowThrottlingService(cache, _store, new StubClock { UtcNowFunc = () => testDate }, options);
 
         cache.Set($"devicecode_{handle}", Encoding.UTF8.GetBytes(testDate.AddSeconds(-deviceCode.Lifetime - 1).ToString("O")));
@@ -88,7 +88,7 @@ public class DistributedDeviceFlowThrottlingServiceTests
         var service = new DistributedDeviceFlowThrottlingService(cache, _store, new StubClock { UtcNowFunc = () => testDate }, options);
 
         var result = await service.ShouldSlowDown(handle, deviceCode);
-            
+
         result.ShouldBeFalse();
 
         cache.Items.TryGetValue(CacheKey + handle, out var values).ShouldBeTrue();

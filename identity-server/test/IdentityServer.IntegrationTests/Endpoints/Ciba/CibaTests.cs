@@ -50,7 +50,7 @@ public class CibaTests
                     new Secret
                     {
                         Type = SecretTypes.JsonWebKey,
-                        Value = 
+                        Value =
                         """
                         {
                             "kid":"ZzAjSnraU3bkWGnnAqLapYGpTyNfLbjbzgAPbbW2GEA",
@@ -126,7 +126,7 @@ public class CibaTests
             }
         }
 
-        const string rsaKey = 
+        const string rsaKey =
             """
             {
                 "kid":"ZzAjSnraU3bkWGnnAqLapYGpTyNfLbjbzgAPbbW2GEA",
@@ -250,7 +250,7 @@ public class CibaTests
         _mockCustomBackchannelAuthenticationValidator.Thunk = ctx =>
             {
                 // Invent a nested value, as if there was custom logic doing something "interesting"
-                ctx.ValidationResult.ValidatedRequest.Properties.Add("complex", 
+                ctx.ValidationResult.ValidatedRequest.Properties.Add("complex",
                     new Dictionary<string, string>
                     {
                         { "nested", "value" },

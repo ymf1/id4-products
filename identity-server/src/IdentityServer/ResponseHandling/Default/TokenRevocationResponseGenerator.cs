@@ -59,7 +59,7 @@ public class TokenRevocationResponseGenerator : ITokenRevocationResponseGenerato
     public virtual async Task<TokenRevocationResponse> ProcessAsync(TokenRevocationRequestValidationResult validationResult)
     {
         using var activity = Tracing.BasicActivitySource.StartActivity("TokenRevocationResponseGenerator.Process");
-        
+
         var response = new TokenRevocationResponse
         {
             Success = false,

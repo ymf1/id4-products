@@ -56,7 +56,7 @@ public class UserInfoResponseGenerator : IUserInfoResponseGenerator
     public virtual async Task<Dictionary<string, object>> ProcessAsync(UserInfoRequestValidationResult validationResult)
     {
         using var activity = Tracing.BasicActivitySource.StartActivity("UserInfoResponseGenerator.Process");
-        
+
         Logger.LogDebug("Creating userinfo response");
 
         // extract scopes and turn into requested claim types
@@ -122,10 +122,10 @@ public class UserInfoResponseGenerator : IUserInfoResponseGenerator
 
         // if we ever parameterized identity scopes, then we would need to invoke the resource validator's parse API here
         var identityResources = await Resources.FindEnabledIdentityResourcesByScopeAsync(scopes);
-            
+
         var resources = new Resources(identityResources, Enumerable.Empty<ApiResource>(), Enumerable.Empty<ApiScope>());
         var result = new ResourceValidationResult(resources);
-            
+
         return result;
     }
 

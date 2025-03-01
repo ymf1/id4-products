@@ -121,7 +121,7 @@ public class TokenEndpointTests
     {
         var text = $"grant_type=client_credentials&client_id={client_id}&client_secret={client_secret}&scope=%00";
         var content = new StringContent(text, Encoding.UTF8, "application/x-www-form-urlencoded");
-        
+
         var response = await _mockPipeline.BackChannelClient.PostAsync(IdentityServerPipeline.TokenEndpoint, content);
 
         response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);

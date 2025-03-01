@@ -80,7 +80,7 @@ public class DefaultBackchannelAuthenticationInteractionServiceTests
         var result = await _subject.GetLoginRequestByInternalIdAsync(req.InternalId);
         result.InternalId.ShouldBe(req.InternalId);
     }
-        
+
     [Fact]
     public async Task CompleteLoginRequestAsync_for_valid_request_should_mark_login_request_complete()
     {
@@ -98,7 +98,7 @@ public class DefaultBackchannelAuthenticationInteractionServiceTests
             Description = "desc",
             ScopesValuesConsented = new string[] { "scope1", "scope2" },
             SessionId = "sid",
-            Subject = new IdentityServerUser("123") 
+            Subject = new IdentityServerUser("123")
             {
                 DisplayName = "name",
                 AuthenticationTime = new DateTime(2000, 02, 03, 8, 15, 00, DateTimeKind.Utc),

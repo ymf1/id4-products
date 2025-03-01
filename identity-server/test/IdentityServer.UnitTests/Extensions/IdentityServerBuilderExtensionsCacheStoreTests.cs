@@ -11,7 +11,7 @@ namespace UnitTests.Extensions;
 
 public class IdentityServerBuilderExtensionsCacheStoreTests
 {
-    private class CustomClientStore: IClientStore
+    private class CustomClientStore : IClientStore
     {
         public Task<Client> FindClientByIdAsync(string clientId)
         {

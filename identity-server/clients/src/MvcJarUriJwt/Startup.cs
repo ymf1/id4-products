@@ -70,10 +70,10 @@ public class Startup
                 options.GetClaimsFromUserInfoEndpoint = true;
                 options.MapInboundClaims = false;
                 options.SaveTokens = true;
-                
+
                 // needed to add JWR / private_key_jwt support
                 options.EventsType = typeof(OidcEvents);
-                
+
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     NameClaimType = "name",
@@ -95,7 +95,7 @@ public class Startup
         {
             client.BaseAddress = new Uri(Constants.SampleApi);
         });
-        
+
         // var apiKey = _configuration["HoneyCombApiKey"];
         // var dataset = "IdentityServerDev";
         //

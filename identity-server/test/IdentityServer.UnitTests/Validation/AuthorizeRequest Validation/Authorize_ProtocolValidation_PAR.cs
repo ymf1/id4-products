@@ -41,7 +41,7 @@ public class Authorize_ProtocolValidation_Valid_PAR
         result.IsError.ShouldBe(true);
         result.ErrorDescription.ShouldBe("invalid client for pushed authorization request");
     }
-    
+
     [Fact]
     [Trait("Category", Category)]
     public void expired_par_requests_should_fail()

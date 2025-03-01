@@ -23,13 +23,13 @@ public class Startup
     {
         _configuration = configuration;
     }
-    
+
     public void ConfigureServices(IServiceCollection services)
     {
         JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 
         services.AddControllersWithViews();
-        
+
         services.AddHttpClient();
 
         services.AddSingleton<IDiscoveryCache>(r =>
@@ -83,7 +83,7 @@ public class Startup
 
                 options.DisableTelemetry = true;
             });
-        
+
         // var apiKey = _configuration["HoneyCombApiKey"];
         // var dataset = "IdentityServerDev";
         //

@@ -86,7 +86,7 @@ public static class IdentityServerBuilderExtensionsAdditional
 
         return builder;
     }
-        
+
     /// <summary>
     /// Adds a resource validator.
     /// </summary>
@@ -298,7 +298,7 @@ public static class IdentityServerBuilderExtensionsAdditional
 
         return builder;
     }
-        
+
 
 
     /// <summary>
@@ -445,7 +445,8 @@ public static class IdentityServerBuilderExtensionsAdditional
         else
         {
             httpBuilder = builder.Services.AddHttpClient(name)
-                .ConfigureHttpClient(client => {
+                .ConfigureHttpClient(client =>
+                {
                     client.Timeout = TimeSpan.FromSeconds(IdentityServerConstants.HttpClients.DefaultTimeoutSeconds);
                 });
         }
@@ -455,7 +456,7 @@ public static class IdentityServerBuilderExtensionsAdditional
             var httpClientFactory = s.GetRequiredService<IHttpClientFactory>();
             var httpClient = httpClientFactory.CreateClient(name);
             var loggerFactory = s.GetRequiredService<ILoggerFactory>();
-                
+
             return new DefaultBackChannelLogoutHttpClient(httpClient, loggerFactory, new NoneCancellationTokenProvider());
         });
 
@@ -480,11 +481,12 @@ public static class IdentityServerBuilderExtensionsAdditional
         else
         {
             httpBuilder = builder.Services.AddHttpClient(name)
-                .ConfigureHttpClient(client => {
+                .ConfigureHttpClient(client =>
+                {
                     client.Timeout = TimeSpan.FromSeconds(IdentityServerConstants.HttpClients.DefaultTimeoutSeconds);
                 });
         }
-            
+
         builder.Services.AddTransient<IJwtRequestUriHttpClient, DefaultJwtRequestUriHttpClient>(s =>
         {
             var httpClientFactory = s.GetRequiredService<IHttpClientFactory>();

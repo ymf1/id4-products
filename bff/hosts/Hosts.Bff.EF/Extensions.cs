@@ -27,10 +27,11 @@ namespace Bff.EF
             services.AddBff(options =>
             {
                 options.BackchannelLogoutAllUserSessions = true;
-                options.EnableSessionCleanup = true;    
+                options.EnableSessionCleanup = true;
             })
                 .AddRemoteApis()
-                .AddEntityFrameworkServerSideSessions(options=> {
+                .AddEntityFrameworkServerSideSessions(options =>
+                {
                     //options.UseSqlServer(cn);
                     options.UseSqlite(cn, opt => opt.MigrationsAssembly(typeof(UserSessions).Assembly.FullName));
                 });

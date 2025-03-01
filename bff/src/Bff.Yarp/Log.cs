@@ -7,9 +7,9 @@ namespace Duende.Bff.Yarp.Logging;
 
 internal static class EventIds
 {
-    public static readonly EventId ProxyError = new (5, "ProxyError");
+    public static readonly EventId ProxyError = new(5, "ProxyError");
 }
-    
+
 internal static class Log
 {
 
@@ -17,9 +17,9 @@ internal static class Log
         LogLevel.Information,
         EventIds.ProxyError,
         "Proxy response error. local path: '{localPath}', error: '{error}'");
-        
+
     public static void ProxyResponseError(this ILogger logger, string localPath, string error)
-    { 
+    {
         ProxyResponseErrorMessage(logger, localPath, error, null);
     }
 }

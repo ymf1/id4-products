@@ -36,7 +36,7 @@ public class TokenRequestValidation_Valid
         result.IsError.ShouldBeFalse();
         result.ValidatedRequest.UserName.ShouldBe("bob_no_password");
     }
-        
+
     [Fact]
     [Trait("Category", Category)]
     public async Task Valid_code_request_should_succeed()
@@ -135,7 +135,7 @@ public class TokenRequestValidation_Valid
 
         var parameters = new NameValueCollection();
         parameters.Add(OidcConstants.TokenRequest.GrantType, OidcConstants.GrantTypes.ClientCredentials);
-            
+
 
         var result = await validator.ValidateRequestAsync(parameters, client.ToValidationResult());
 
@@ -318,7 +318,7 @@ public class TokenRequestValidation_Valid
 
         result.IsError.ShouldBeFalse();
     }
-        
+
     [Fact]
     [Trait("Category", Category)]
     public async Task Valid_device_code_request_should_succeed()

@@ -47,7 +47,7 @@ class EndSessionCallbackHttpWriter : IHttpResponseWriter<EndSessionCallbackResul
     {
         if (result.Result.IsError)
         {
-            context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
+            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
         }
         else
         {

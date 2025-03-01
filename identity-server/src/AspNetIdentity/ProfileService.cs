@@ -23,7 +23,7 @@ public class ProfileService<TUser> : IProfileService
     /// The claims factory.
     /// </summary>
     protected readonly IUserClaimsPrincipalFactory<TUser> ClaimsFactory;
-        
+
     /// <summary>
     /// The logger
     /// </summary>
@@ -110,7 +110,7 @@ public class ProfileService<TUser> : IProfileService
     {
         var principal = await ClaimsFactory.CreateAsync(user);
         if (principal == null) throw new Exception("ClaimsFactory failed to create a principal");
-            
+
         return principal;
     }
 

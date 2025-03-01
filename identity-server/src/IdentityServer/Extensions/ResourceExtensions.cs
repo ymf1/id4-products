@@ -40,7 +40,7 @@ public static class ResourceExtensions
         {
             names.Add(IdentityServerConstants.StandardScopes.OfflineAccess);
         }
-            
+
         return names;
     }
 
@@ -53,8 +53,8 @@ public static class ResourceExtensions
     public static IdentityResource FindIdentityResourcesByScope(this Resources resources, string name)
     {
         var q = from id in resources.IdentityResources
-            where id.Name == name
-            select id;
+                where id.Name == name
+                select id;
         return q.FirstOrDefault();
     }
 
@@ -67,8 +67,8 @@ public static class ResourceExtensions
     public static IEnumerable<ApiResource> FindApiResourcesByScope(this Resources resources, string name)
     {
         var q = from api in resources.ApiResources
-            where api.Scopes != null && api.Scopes.Contains(name)
-            select api;
+                where api.Scopes != null && api.Scopes.Contains(name)
+                select api;
         return q.ToArray();
     }
 
@@ -81,8 +81,8 @@ public static class ResourceExtensions
     public static ApiScope FindApiScope(this Resources resources, string name)
     {
         var q = from scope in resources.ApiScopes
-            where scope.Name == name
-            select scope;
+                where scope.Name == name
+                select scope;
         return q.FirstOrDefault();
     }
 
@@ -113,7 +113,7 @@ public static class ResourceExtensions
         {
             return apis.First().AllowedAccessTokenSigningAlgorithms;
         }
-            
+
         var allAlgorithms = apis.Where(r => r.AllowedAccessTokenSigningAlgorithms.Any()).Select(r => r.AllowedAccessTokenSigningAlgorithms).ToList();
 
         // resources need to agree on allowed signing algorithms

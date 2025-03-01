@@ -14,7 +14,8 @@ namespace Duende.Bff.Tests
         public async Task Test1()
         {
             var host = new GenericHost(output.WriteLine);
-            host.OnConfigure += app => app.Run(ctx => {
+            host.OnConfigure += app => app.Run(ctx =>
+            {
                 ctx.Response.StatusCode = 204;
                 return Task.CompletedTask;
             });

@@ -33,7 +33,7 @@ public class MockBackChannelAuthenticationRequestStore : IBackChannelAuthenticat
 
     public Task<IEnumerable<BackChannelAuthenticationRequest>> GetLoginsForUserAsync(string subjectId, string clientId = null)
     {
-        var items = Items.Where(x => x.Value.Subject.GetSubjectId() == subjectId 
+        var items = Items.Where(x => x.Value.Subject.GetSubjectId() == subjectId
                                      && (clientId == null || x.Value.ClientId == clientId)
         );
         return Task.FromResult(items.Select(x => x.Value).AsEnumerable());

@@ -44,7 +44,7 @@ public class CustomTokenResponseClients
         // raw fields
         var fields = GetFields(response);
         fields["string_value"].GetString().ShouldBe("some_string");
-        fields["int_value"].GetInt32().ShouldBe(42); 
+        fields["int_value"].GetInt32().ShouldBe(42);
 
         JsonElement temp;
         fields.TryGetValue("identity_token", out temp).ShouldBeFalse();
@@ -71,7 +71,7 @@ public class CustomTokenResponseClients
         response.TokenType.ShouldBe("Bearer");
         response.IdentityToken.ShouldBeNull();
         response.RefreshToken.ShouldBeNull();
-            
+
 
         // token content
         var payload = GetPayload(response);
@@ -107,7 +107,7 @@ public class CustomTokenResponseClients
         // raw fields
         var fields = GetFields(response);
         fields["string_value"].GetString().ShouldBe("some_string");
-        fields["int_value"].GetInt32().ShouldBe(42); 
+        fields["int_value"].GetInt32().ShouldBe(42);
 
         JsonElement temp;
         fields.TryGetValue("identity_token", out temp).ShouldBeFalse();
@@ -160,7 +160,7 @@ public class CustomTokenResponseClients
         // raw fields
         var fields = GetFields(response);
         fields["string_value"].GetString().ShouldBe("some_string");
-        fields["int_value"].GetInt32().ShouldBe(42); 
+        fields["int_value"].GetInt32().ShouldBe(42);
 
         JsonElement temp;
         fields.TryGetValue("identity_token", out temp).ShouldBeFalse();
@@ -197,7 +197,7 @@ public class CustomTokenResponseClients
         payload["sub"].GetString().ShouldBe("bob");
         payload["idp"].GetString().ShouldBe("local");
         payload["aud"].GetString().ShouldBe("api");
-         
+
         var scopes = payload["scope"].EnumerateArray();
         scopes.First().ToString().ShouldBe("api1");
 
@@ -228,8 +228,8 @@ public class CustomTokenResponseClients
         // raw fields
         var fields = GetFields(response);
         fields["string_value"].GetString().ShouldBe("some_string");
-        fields["int_value"].GetInt32().ShouldBe(42); 
-            
+        fields["int_value"].GetInt32().ShouldBe(42);
+
         JsonElement temp;
         fields.TryGetValue("identity_token", out temp).ShouldBeFalse();
         fields.TryGetValue("refresh_token", out temp).ShouldBeFalse();

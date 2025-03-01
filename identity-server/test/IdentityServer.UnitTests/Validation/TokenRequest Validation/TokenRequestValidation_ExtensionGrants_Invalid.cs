@@ -91,7 +91,7 @@ public class TokenRequestValidation_ExtensionGrants_Invalid
         };
 
         var result = await validator.ValidateRequestAsync(
-            parameters, 
+            parameters,
             client.ToValidationResult());
 
         result.IsError.ShouldBeTrue();

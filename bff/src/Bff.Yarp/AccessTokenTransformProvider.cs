@@ -75,7 +75,7 @@ public class AccessTokenTransformProvider : ITransformProvider
     /// <inheritdoc />
     public void Apply(TransformBuilderContext transformBuildContext)
     {
-        if(GetMetadataValue(transformBuildContext, Constants.Yarp.OptionalUserTokenMetadata, out var optionalTokenMetadata))
+        if (GetMetadataValue(transformBuildContext, Constants.Yarp.OptionalUserTokenMetadata, out var optionalTokenMetadata))
         {
             if (GetMetadataValue(transformBuildContext, Constants.Yarp.TokenTypeMetadata, out var tokenTypeMetadata))
             {
@@ -88,7 +88,7 @@ public class AccessTokenTransformProvider : ITransformProvider
                 });
                 return;
             }
-        } 
+        }
         else if (GetMetadataValue(transformBuildContext, Constants.Yarp.TokenTypeMetadata, out var tokenTypeMetadata))
         {
             if (!Enum.TryParse<TokenType>(tokenTypeMetadata, true, out _))

@@ -98,7 +98,7 @@ class AuthorizeInteractionPageHttpWriter : IHttpResponseWriter<AuthorizeInteract
                 {
                     returnUrl = returnUrl.AddQueryString(Constants.ProcessedMaxAge, processedMaxAge);
                 }
-            } 
+            }
             else
             {
                 returnUrl = returnUrl.AddQueryString(result.Request.ToOptimizedQueryString());

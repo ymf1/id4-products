@@ -83,14 +83,14 @@ public class IdentityProviderMappersTests
             .AllPropertiesAreMapped<Entities.IdentityProvider, Models.IdentityProvider>(
                 source =>
                 {
-                    source.Properties = 
+                    source.Properties =
                     """
                     {
                         "foo": "bar"
                     }
                     """;
                 },
-                source => source.ToModel(), 
+                source => source.ToModel(),
                 out var unmappedMembers)
             .ShouldBeTrue($"{string.Join(',', unmappedMembers)} should be mapped");
     }

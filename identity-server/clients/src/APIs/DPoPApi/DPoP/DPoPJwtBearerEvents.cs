@@ -136,7 +136,7 @@ public class DPoPJwtBearerEvents : JwtBearerEvents
 
         context.Response.Headers.Append(HeaderNames.WWWAuthenticate, sb.ToString());
 
-        
+
         if (context.HttpContext.Items.ContainsKey("DPoP-Nonce"))
         {
             var nonce = context.HttpContext.Items["DPoP-Nonce"] as string;

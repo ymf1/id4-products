@@ -11,7 +11,7 @@ public class StubLoggerFactory(ILogger logger) : ILoggerFactory
     {
         return logger;
     }
-    
+
     public void Dispose()
     {
     }

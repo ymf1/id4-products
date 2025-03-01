@@ -19,7 +19,7 @@ public class TokenCleanupHost : IHostedService
     private readonly ILogger<TokenCleanupHost> _logger;
 
     private TimeSpan CleanupInterval => TimeSpan.FromSeconds(_options.TokenCleanupInterval);
-        
+
     private CancellationTokenSource _source;
 
     /// <summary>
@@ -50,7 +50,7 @@ public class TokenCleanupHost : IHostedService
 
             Task.Factory.StartNew(() => StartInternalAsync(_source.Token), cancellationToken);
         }
-            
+
         return Task.CompletedTask;
     }
 

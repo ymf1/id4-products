@@ -28,7 +28,7 @@ public class Authorize_ClientValidation_Valid
 
         var validator = Factory.CreateAuthorizeRequestValidator();
         var result = await validator.ValidateAsync(parameters);
-            
+
         result.IsError.ShouldBeFalse();
     }
 
@@ -44,7 +44,7 @@ public class Authorize_ClientValidation_Valid
 
         var validator = Factory.CreateAuthorizeRequestValidator();
         var result = await validator.ValidateAsync(parameters);
-            
+
         result.IsError.ShouldBeFalse();
     }
 
@@ -60,7 +60,7 @@ public class Authorize_ClientValidation_Valid
 
         var validator = Factory.CreateAuthorizeRequestValidator();
         var result = await validator.ValidateAsync(parameters);
-            
+
         result.IsError.ShouldBeFalse();
     }
 
@@ -76,7 +76,7 @@ public class Authorize_ClientValidation_Valid
 
         var validator = Factory.CreateAuthorizeRequestValidator();
         var result = await validator.ValidateAsync(parameters);
-            
+
         result.IsError.ShouldBeFalse();
     }
 
@@ -178,7 +178,7 @@ public class Authorize_ClientValidation_Valid
 
         var validator = Factory.CreateAuthorizeRequestValidator();
         var result = await validator.ValidateAsync(parameters);
-            
+
         result.IsError.ShouldBeFalse();
     }
 
@@ -195,7 +195,7 @@ public class Authorize_ClientValidation_Valid
 
         var validator = Factory.CreateAuthorizeRequestValidator();
         var result = await validator.ValidateAsync(parameters);
-            
+
         result.IsError.ShouldBeFalse();
     }
 
@@ -211,7 +211,7 @@ public class Authorize_ClientValidation_Valid
 
         var validator = Factory.CreateAuthorizeRequestValidator();
         var result = await validator.ValidateAsync(parameters);
-            
+
         result.IsError.ShouldBeFalse();
     }
 

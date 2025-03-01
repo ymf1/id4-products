@@ -25,7 +25,7 @@ public class DefaultBackChannelLogoutServiceTests
             ILogoutNotificationService logoutNotificationService,
             IBackChannelLogoutHttpClient backChannelLogoutHttpClient,
             IIssuerNameService issuerNameService,
-            ILogger<IBackChannelLogoutService> logger) 
+            ILogger<IBackChannelLogoutService> logger)
             : base(clock, tools, logoutNotificationService, backChannelLogoutHttpClient, issuerNameService, logger)
         {
         }

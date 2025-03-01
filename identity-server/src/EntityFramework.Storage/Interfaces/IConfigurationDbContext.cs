@@ -22,7 +22,7 @@ public interface IConfigurationDbContext : IDisposable
     /// The clients.
     /// </value>
     DbSet<Client> Clients { get; set; }
-        
+
     /// <summary>
     /// Gets or sets the clients' CORS origins.
     /// </summary>
@@ -62,7 +62,7 @@ public interface IConfigurationDbContext : IDisposable
     /// The identity providers.
     /// </value>
     DbSet<IdentityProvider> IdentityProviders { get; set; }
-    
+
     /// <summary>
     /// Saves the changes.
     /// </summary>

@@ -52,12 +52,13 @@ public class EcKeyContainer : KeyContainer
             _ => throw new Exception("Invalid SigningAlgorithm")
         };
 
-        var parameters = new ECParameters {
+        var parameters = new ECParameters
+        {
             Curve = CryptoHelper.GetCurveFromCrvValue(curve),
             D = D,
             Q = Q,
         };
-            
+
         var key = new ECDsaSecurityKey(ECDsa.Create(parameters))
         {
             KeyId = Id

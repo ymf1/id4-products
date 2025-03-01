@@ -17,7 +17,7 @@ public class BffRemoteApiEndpointMetadata : IBffApiEndpoint
     /// Optionally send a user token if present
     /// </summary>
     public bool OptionalUserToken { get; set; }
-        
+
     /// <summary>
     /// Maps to UserAccessTokenParameters and included if set
     /// </summary>

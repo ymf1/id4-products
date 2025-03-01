@@ -26,7 +26,7 @@ namespace Duende.Bff.Tests.SessionManagement
 
             BffHost.BrowserClient.RemoveCookie("bff");
             (await _sessionStore.GetUserSessionsAsync(new UserSessionsFilter { SubjectId = "alice" })).Count().ShouldBe(1);
-            
+
             await BffHost.BffOidcLoginAsync();
 
             (await _sessionStore.GetUserSessionsAsync(new UserSessionsFilter { SubjectId = "alice" })).Count().ShouldBe(1);

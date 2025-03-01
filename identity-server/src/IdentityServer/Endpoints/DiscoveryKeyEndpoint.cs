@@ -33,7 +33,7 @@ internal class DiscoveryKeyEndpoint : IEndpointHandler
     public async Task<IEndpointResult> ProcessAsync(HttpContext context)
     {
         using var activity = Tracing.BasicActivitySource.StartActivity(IdentityServerConstants.EndpointNames.Discovery + "Endpoint");
-        
+
         _logger.LogTrace("Processing discovery request.");
 
         // validate HTTP

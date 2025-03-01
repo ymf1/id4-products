@@ -163,7 +163,7 @@ public class UserSessionStore : IUserSessionStore, IUserSessionStoreCleanup
         if (item != null)
         {
             _logger.LogDebug("Getting user session record from store for sub {sub} sid {sid}", item.SubjectId, item.SessionId);
-            
+
             result = new UserSession();
             item.CopyTo(result);
         }

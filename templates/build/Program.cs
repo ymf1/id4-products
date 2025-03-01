@@ -69,7 +69,7 @@ void CopyDir(DirectoryInfo source, DirectoryInfo target)
             continue;
         }
 
-        CopyDir(child,  new DirectoryInfo(Path.Combine(target.FullName, child.Name)));
+        CopyDir(child, new DirectoryInfo(Path.Combine(target.FullName, child.Name)));
     }
 
 }
@@ -80,11 +80,11 @@ void CopyFile(DirectoryInfo directoryInfo, FileInfo fileInfo)
     fileInfo.CopyTo(destFileName, true);
 }
 
-bool TryFindFile(string fileName, [NotNullWhen(true)]out FileInfo? found)
+bool TryFindFile(string fileName, [NotNullWhen(true)] out FileInfo? found)
 {
 
 
-    var currentDir = new DirectoryInfo(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) 
+    var currentDir = new DirectoryInfo(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
                                        ?? throw new InvalidOperationException("Failed to find directory for current assembly"));
 
     while (currentDir != null && currentDir.Exists)

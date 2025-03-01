@@ -26,7 +26,7 @@ namespace IdentityServer.UnitTests.Caches
         {
             _identityResources.Add(new IdentityResources.OpenId());
             _identityResources.Add(new IdentityResources.Profile());
-            
+
             _resources.Add(new ApiResource("urn:api1") { Scopes = { "scope1", "sharedscope1" } });
             _resources.Add(new ApiResource("urn:api2") { Scopes = { "scope2", "sharedscope1" } });
 
@@ -45,14 +45,14 @@ namespace IdentityServer.UnitTests.Caches
             services.AddSingleton(typeof(MockCache<>));
             services.AddSingleton(typeof(ICache<>), typeof(MockCache<>));
             services.AddSingleton<IClock>(_mockClock);
-            
+
             _provider = services.BuildServiceProvider();
         }
 
         [Fact]
         public async Task FindIdentityResourcesByScopeNameAsync_should_populate_cache()
         {
-            var cache = (MockCache<IdentityResource>) _provider.GetRequiredService<ICache<IdentityResource>>();
+            var cache = (MockCache<IdentityResource>)_provider.GetRequiredService<ICache<IdentityResource>>();
             var store = _provider.GetRequiredService<IResourceStore>();
             cache.CacheItems.Count.ShouldBe(0);
 
@@ -79,7 +79,7 @@ namespace IdentityServer.UnitTests.Caches
         [Fact]
         public async Task FindApiScopesByNameAsync_should_populate_cache()
         {
-            var cache = (MockCache<ApiScope>) _provider.GetRequiredService<ICache<ApiScope>>();
+            var cache = (MockCache<ApiScope>)_provider.GetRequiredService<ICache<ApiScope>>();
             var store = _provider.GetRequiredService<IResourceStore>();
             cache.CacheItems.Count.ShouldBe(0);
 

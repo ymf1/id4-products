@@ -27,7 +27,7 @@ public interface IBackChannelAuthenticationRequestStore
     /// Gets the request.
     /// </summary>
     Task<BackChannelAuthenticationRequest?> GetByAuthenticationRequestIdAsync(string requestId);
-        
+
     /// <summary>
     /// Gets the request.
     /// </summary>

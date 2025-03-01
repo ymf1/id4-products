@@ -52,7 +52,7 @@ namespace ConsoleResourceIndicators
                     await SetResultAsync(ctx.Request.QueryString.Value, ctx);
                     return;
                 }
-                
+
                 ctx.Response.StatusCode = 405;
             });
         }
@@ -60,7 +60,7 @@ namespace ConsoleResourceIndicators
         private async Task SetResultAsync(string value, HttpContext ctx)
         {
             _source.TrySetResult(value);
-            
+
             try
             {
                 ctx.Response.StatusCode = 200;

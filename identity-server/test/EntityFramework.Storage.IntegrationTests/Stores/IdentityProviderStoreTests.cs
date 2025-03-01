@@ -32,7 +32,8 @@ public class IdentityProviderStoreTests : IntegrationTest<IdentityProviderStoreT
         {
             var idp = new OidcProvider
             {
-                Scheme = "scheme1", Type = "oidc"
+                Scheme = "scheme1",
+                Type = "oidc"
             };
             context.IdentityProviders.Add(idp.ToEntity());
             context.SaveChanges();
@@ -55,7 +56,8 @@ public class IdentityProviderStoreTests : IntegrationTest<IdentityProviderStoreT
         {
             var idp = new OidcProvider
             {
-                Scheme = "scheme2", Type = "saml"
+                Scheme = "scheme2",
+                Type = "saml"
             };
             context.IdentityProviders.Add(idp.ToEntity());
             context.SaveChanges();
@@ -78,7 +80,8 @@ public class IdentityProviderStoreTests : IntegrationTest<IdentityProviderStoreT
         {
             var idp = new OidcProvider
             {
-                Scheme = "SCHEME3", Type = "oidc"
+                Scheme = "SCHEME3",
+                Type = "oidc"
             };
             context.IdentityProviders.Add(idp.ToEntity());
             context.SaveChanges();

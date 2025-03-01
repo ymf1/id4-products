@@ -95,7 +95,7 @@ public class ClientAssertionClient
 
         AssertValidToken(response);
     }
-        
+
     [Fact]
     public async Task Valid_client_with_token_replay_should_fail()
     {
@@ -117,7 +117,7 @@ public class ClientAssertionClient
         });
 
         AssertValidToken(response);
-            
+
         // replay
         response = await _client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
         {
@@ -202,7 +202,7 @@ public class ClientAssertionClient
         response.RefreshToken.ShouldBeNull();
 
         var payload = GetPayload(response);
-            
+
         payload.Count.ShouldBe(8);
         payload["iss"].GetString().ShouldBe("https://idsvr4");
         payload["aud"].GetString().ShouldBe("api");

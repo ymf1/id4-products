@@ -109,7 +109,7 @@ public class UserInfoResponseGeneratorTests
     {
         _identityResources.Add(new IdentityResource("id1", ["foo"]));
         _identityResources.Add(new IdentityResource("id2", ["bar"]));
-            
+
         var address = new
         {
             street_address = "One Hacker Way",
@@ -117,7 +117,7 @@ public class UserInfoResponseGeneratorTests
             postal_code = 69118,
             country = "Germany"
         };
-            
+
         _mockProfileService.ProfileClaims = new[]
         {
             new Claim("email", "fred@gmail.com"),
@@ -147,11 +147,11 @@ public class UserInfoResponseGeneratorTests
         claims["email"].ShouldBe("fred@gmail.com");
         claims.ShouldContainKey("name");
         claims["name"].ShouldBe("fred jones");
-            
+
         // this will be treated as a string because this is not valid JSON from the System.Text library point of view
         claims.ShouldContainKey("address");
         claims["address"].ShouldBe("{ 'street_address': 'One Hacker Way', 'locality': 'Heidelberg', 'postal_code': 69118, 'country': 'Germany' }");
-            
+
         // this is a JsonElement
         claims.ShouldContainKey("address2");
         claims["address2"].ToString().ShouldBe("{\"street_address\":\"One Hacker Way\",\"locality\":\"Heidelberg\",\"postal_code\":69118,\"country\":\"Germany\"}");

@@ -12,7 +12,7 @@ public static class BffRemoteApiEndpointExtensions
 {
     private static BffRemoteApiEndpointMetadata GetBffRemoteApiEndpointMetadata(this EndpointBuilder builder)
     {
-        if(builder.Metadata.First(m => m.GetType() == typeof(BffRemoteApiEndpointMetadata)) 
+        if (builder.Metadata.First(m => m.GetType() == typeof(BffRemoteApiEndpointMetadata))
             is not BffRemoteApiEndpointMetadata metadata)
         {
             throw new InvalidOperationException("no metadata found");
@@ -44,7 +44,7 @@ public static class BffRemoteApiEndpointExtensions
     /// <param name="builder"></param>
     /// <returns></returns>
     /// <exception cref="InvalidOperationException">When invoked multiple times for the same endpoint.</exception>
-    public static IEndpointConventionBuilder WithAccessTokenRetriever<TRetriever>(this IEndpointConventionBuilder builder) 
+    public static IEndpointConventionBuilder WithAccessTokenRetriever<TRetriever>(this IEndpointConventionBuilder builder)
         where TRetriever : IAccessTokenRetriever
     {
         builder.Add(endpointBuilder =>

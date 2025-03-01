@@ -134,7 +134,7 @@ public class AccessTokenValidation
         now = DateTime.UtcNow;
 
         var store = Factory.CreateReferenceTokenStore();
-        var validator = Factory.CreateTokenValidator(store, clock:_clock);
+        var validator = Factory.CreateTokenValidator(store, clock: _clock);
 
         var token = TokenFactory.CreateAccessToken(new Client { ClientId = "roclient" }, "valid", 2, "read", "write");
         token.CreationTime = now;
@@ -173,7 +173,7 @@ public class AccessTokenValidation
 
         result.IsError.ShouldBeFalse();
     }
-        
+
     [Theory]
     [InlineData(true)]
     [InlineData(false)]
@@ -182,7 +182,7 @@ public class AccessTokenValidation
     {
         var options = TestIdentityServerOptions.Create();
         options.EmitScopesAsSpaceDelimitedStringInJwt = flag;
-            
+
         var signer = Factory.CreateDefaultTokenCreator(options);
         var jwt = await signer.CreateTokenAsync(TokenFactory.CreateAccessToken(new Client { ClientId = "roclient" }, "valid", 600, "read", "write"));
 
@@ -199,7 +199,7 @@ public class AccessTokenValidation
         scopes[0].ShouldBe("read");
         scopes[1].ShouldBe("write");
     }
-        
+
     [Fact]
     [Trait("Category", Category)]
     public async Task JWT_Token_invalid_Issuer()
@@ -222,7 +222,7 @@ public class AccessTokenValidation
     {
         var signer = Factory.CreateDefaultTokenCreator();
         var jwt = await signer.CreateTokenAsync(TokenFactory.CreateAccessTokenLong(new Client { ClientId = "roclient" }, "valid", 600, 1000, "read", "write"));
-            
+
         var validator = Factory.CreateTokenValidator(null);
         var result = await validator.ValidateAccessTokenAsync(jwt);
 

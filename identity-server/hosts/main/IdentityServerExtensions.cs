@@ -99,7 +99,7 @@ internal static class IdentityServerExtensions
 
             var ecCert = store.Certificates
                 .Find(X509FindType.FindBySubjectName, "identityserver.test.ecdsa", true)
-                .Single();  
+                .Single();
             var key = new ECDsaSecurityKey(ecCert.GetECDsaPrivateKey())
             {
                 KeyId = CryptoRandom.CreateUniqueId(16, CryptoRandom.OutputFormat.Hex)

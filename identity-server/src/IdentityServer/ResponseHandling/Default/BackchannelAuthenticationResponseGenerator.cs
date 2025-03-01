@@ -21,7 +21,7 @@ public class BackchannelAuthenticationResponseGenerator : IBackchannelAuthentica
     /// The options
     /// </summary>
     protected readonly IdentityServerOptions Options;
-        
+
     /// <summary>
     /// The request store.
     /// </summary>
@@ -53,7 +53,7 @@ public class BackchannelAuthenticationResponseGenerator : IBackchannelAuthentica
     public BackchannelAuthenticationResponseGenerator(IdentityServerOptions options,
         IBackChannelAuthenticationRequestStore backChannelAuthenticationRequestStore,
         IBackchannelAuthenticationUserNotificationService userLoginService,
-        IClock clock, 
+        IClock clock,
         ILogger<BackchannelAuthenticationResponseGenerator> logger)
     {
         Options = options;
@@ -67,7 +67,7 @@ public class BackchannelAuthenticationResponseGenerator : IBackchannelAuthentica
     public virtual async Task<BackchannelAuthenticationResponse> ProcessAsync(BackchannelAuthenticationRequestValidationResult validationResult)
     {
         using var activity = Tracing.BasicActivitySource.StartActivity("BackchannelAuthenticationResponseGenerator.Process");
-        
+
         ArgumentNullException.ThrowIfNull(validationResult);
         if (validationResult.ValidatedRequest == null) throw new ArgumentNullException(nameof(validationResult.ValidatedRequest));
         if (validationResult.ValidatedRequest.Client == null) throw new ArgumentNullException(nameof(validationResult.ValidatedRequest.Client));
@@ -75,7 +75,7 @@ public class BackchannelAuthenticationResponseGenerator : IBackchannelAuthentica
         Logger.LogTrace("Creating response for backchannel authentication request");
 
         var request = new BackChannelAuthenticationRequest
-        { 
+        {
             CreationTime = Clock.UtcNow.UtcDateTime,
             ClientId = validationResult.ValidatedRequest.ClientId,
             RequestedScopes = validationResult.ValidatedRequest.ValidatedResources.RawScopeValues,

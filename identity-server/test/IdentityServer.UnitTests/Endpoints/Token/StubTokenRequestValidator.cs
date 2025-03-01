@@ -8,8 +8,8 @@ namespace IdentityServer.Endpoints.Token;
 
 internal class StubTokenRequestValidator : ITokenRequestValidator
 {
-    public TokenRequestValidationResult  Result { get; set; }
-    
+    public TokenRequestValidationResult Result { get; set; }
+
     public Task<TokenRequestValidationResult> ValidateRequestAsync(TokenRequestValidationContext context)
     {
         return Task.FromResult(Result);

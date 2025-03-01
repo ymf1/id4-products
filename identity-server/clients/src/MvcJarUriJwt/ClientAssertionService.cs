@@ -12,7 +12,7 @@ public class ClientAssertionService : IClientAssertionService
 {
     private readonly AssertionService _assertionService;
 
-    public ClientAssertionService(AssertionService assertionService) 
+    public ClientAssertionService(AssertionService assertionService)
     {
         _assertionService = assertionService;
     }

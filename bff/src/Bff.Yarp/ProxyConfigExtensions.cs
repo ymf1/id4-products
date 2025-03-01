@@ -32,7 +32,7 @@ public static class ProxyConfigExtensions
     {
         return config.WithMetadata(Constants.Yarp.OptionalUserTokenMetadata, "true");
     }
-        
+
     /// <summary>
     /// Adds anti-forgery metadata to a route configuration
     /// </summary>
@@ -57,11 +57,11 @@ public static class ProxyConfigExtensions
         }
 
         metadata.TryAdd(key, value);
-            
+
         return config with { Metadata = metadata };
     }
 
-        
+
     /// <summary>
     /// Adds BFF access token metadata to a cluster configuration
     /// </summary>
@@ -82,7 +82,7 @@ public static class ProxyConfigExtensions
         }
 
         metadata.TryAdd(Constants.Yarp.TokenTypeMetadata, tokenType.ToString());
-            
+
         return config with { Metadata = metadata };
     }
 }

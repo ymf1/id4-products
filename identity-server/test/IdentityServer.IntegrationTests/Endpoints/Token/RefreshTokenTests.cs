@@ -107,7 +107,7 @@ public class RefreshTokenTests
             ClientId = client_id,
             ClientSecret = client_secret,
             ClientCredentialStyle = ClientCredentialStyle.PostBody,
-            
+
             RefreshToken = tokenResult1.RefreshToken
         });
 

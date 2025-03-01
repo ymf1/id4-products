@@ -87,7 +87,7 @@ public class EndSessionRequestValidator : IEndSessionRequestValidator
     public async Task<EndSessionValidationResult> ValidateAsync(NameValueCollection parameters, ClaimsPrincipal subject)
     {
         using var activity = Tracing.BasicActivitySource.StartActivity("EndSessionRequestValidator.Validate");
-        
+
         Logger.LogDebug("Start end session request validation");
 
         var isAuthenticated = subject.IsAuthenticated();

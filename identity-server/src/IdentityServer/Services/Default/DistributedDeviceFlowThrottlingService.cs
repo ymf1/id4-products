@@ -55,7 +55,7 @@ public class DistributedDeviceFlowThrottlingService : IDeviceFlowThrottlingServi
         ArgumentNullException.ThrowIfNull(deviceCode);
 
         var key = KeyPrefix + deviceCode;
-        var options = new DistributedCacheEntryOptions {AbsoluteExpiration = _clock.UtcNow.AddSeconds(details.Lifetime)};
+        var options = new DistributedCacheEntryOptions { AbsoluteExpiration = _clock.UtcNow.AddSeconds(details.Lifetime) };
 
         var lastSeenAsString = await _cache.GetStringAsync(key);
 

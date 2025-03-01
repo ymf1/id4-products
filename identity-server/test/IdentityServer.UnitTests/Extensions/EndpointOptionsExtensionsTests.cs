@@ -154,7 +154,7 @@ public class EndpointOptionsExtensionsTests
             expectedIsEndpointEnabled,
             _options.IsEndpointEnabled(
                 CreateTestEndpoint(IdentityServerConstants.EndpointNames.BackchannelAuthentication)));
-    }    
+    }
 
     private Endpoint CreateTestEndpoint(string name)
     {

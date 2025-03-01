@@ -41,7 +41,7 @@ public class GrantTypesValidation
         var client = new Client();
         client.AllowedGrantTypes = new[] { "custom" };
     }
-        
+
     [Theory]
     [Trait("Category", Category)]
     [InlineData(GrantType.Implicit, GrantType.Hybrid)]
@@ -53,7 +53,7 @@ public class GrantTypesValidation
 
         Action act = () => client.AllowedGrantTypes = new[] { type1, type2 };
 
-        act.ShouldThrow<InvalidOperationException>();            
+        act.ShouldThrow<InvalidOperationException>();
     }
 
     [Theory]

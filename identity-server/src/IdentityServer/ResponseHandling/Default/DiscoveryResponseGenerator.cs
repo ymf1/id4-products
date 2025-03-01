@@ -92,7 +92,7 @@ public class DiscoveryResponseGenerator : IDiscoveryResponseGenerator
     public virtual async Task<Dictionary<string, object>> CreateDiscoveryDocumentAsync(string baseUrl, string issuerUri)
     {
         using var activity = Tracing.BasicActivitySource.StartActivity("DiscoveryResponseGenerator.CreateDiscoveryDocument");
-        
+
         baseUrl = baseUrl.EnsureTrailingSlash();
 
         var entries = new Dictionary<string, object>
@@ -151,7 +151,7 @@ public class DiscoveryResponseGenerator : IDiscoveryResponseGenerator
             {
                 entries.Add(OidcConstants.Discovery.DeviceAuthorizationEndpoint, baseUrl + ProtocolRoutePaths.DeviceAuthorization);
             }
-                
+
             if (Options.Endpoints.EnableBackchannelAuthenticationEndpoint)
             {
                 entries.Add(OidcConstants.Discovery.BackchannelAuthenticationEndpoint, baseUrl + ProtocolRoutePaths.BackchannelAuthentication);
@@ -240,8 +240,8 @@ public class DiscoveryResponseGenerator : IDiscoveryResponseGenerator
             if (Options.Discovery.ShowApiScopes)
             {
                 var apiScopes = from scope in resources.ApiScopes
-                    where scope.ShowInDiscoveryDocument
-                    select scope.Name;
+                                where scope.ShowInDiscoveryDocument
+                                select scope.Name;
 
                 scopes.AddRange(apiScopes);
                 scopes.Add(StandardScopes.OfflineAccess);
@@ -286,7 +286,7 @@ public class DiscoveryResponseGenerator : IDiscoveryResponseGenerator
             {
                 standardGrantTypes.Add(OidcConstants.GrantTypes.DeviceCode);
             }
-            
+
             if (Options.Endpoints.EnableBackchannelAuthenticationEndpoint)
             {
                 standardGrantTypes.Add(OidcConstants.GrantTypes.Ciba);
@@ -340,21 +340,21 @@ public class DiscoveryResponseGenerator : IDiscoveryResponseGenerator
         if (Options.Endpoints.EnableAuthorizeEndpoint)
         {
             entries.Add(OidcConstants.Discovery.RequestParameterSupported, true);
-                
+
             entries.Add(OidcConstants.Discovery.RequestObjectSigningAlgorithmsSupported, new[]
             {
                 SecurityAlgorithms.RsaSha256,
                 SecurityAlgorithms.RsaSha384,
                 SecurityAlgorithms.RsaSha512,
-                    
+
                 SecurityAlgorithms.RsaSsaPssSha256,
                 SecurityAlgorithms.RsaSsaPssSha384,
                 SecurityAlgorithms.RsaSsaPssSha512,
-                    
+
                 SecurityAlgorithms.EcdsaSha256,
                 SecurityAlgorithms.EcdsaSha384,
                 SecurityAlgorithms.EcdsaSha512,
-                    
+
                 SecurityAlgorithms.HmacSha256,
                 SecurityAlgorithms.HmacSha384,
                 SecurityAlgorithms.HmacSha512
@@ -380,14 +380,14 @@ public class DiscoveryResponseGenerator : IDiscoveryResponseGenerator
 
         if (Options.Endpoints.EnableBackchannelAuthenticationEndpoint)
         {
-            entries.Add(OidcConstants.Discovery.BackchannelTokenDeliveryModesSupported, 
+            entries.Add(OidcConstants.Discovery.BackchannelTokenDeliveryModesSupported,
                 new[] { OidcConstants.BackchannelTokenDeliveryModes.Poll });
             entries.Add(OidcConstants.Discovery.BackchannelUserCodeParameterSupported, true);
         }
 
         if (Options.Endpoints.EnableTokenEndpoint)
         {
-            entries.Add(OidcConstants.Discovery.DPoPSigningAlgorithmsSupported, SupportedDPoPSigningAlgorithms );
+            entries.Add(OidcConstants.Discovery.DPoPSigningAlgorithmsSupported, SupportedDPoPSigningAlgorithms);
         }
 
         // custom entries
@@ -424,7 +424,7 @@ public class DiscoveryResponseGenerator : IDiscoveryResponseGenerator
     public virtual async Task<IEnumerable<Models.JsonWebKey>> CreateJwkDocumentAsync()
     {
         using var activity = Tracing.BasicActivitySource.StartActivity("DiscoveryResponseGenerator.CreateJwkDocument");
-        
+
         var webKeys = new List<Models.JsonWebKey>();
 
         foreach (var key in await Keys.GetValidationKeysAsync())

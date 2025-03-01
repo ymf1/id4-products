@@ -67,7 +67,7 @@ internal class BackchannelAuthenticationHttpWriter : IHttpResponseWriter<Backcha
                 auth_req_id = result.Response.AuthenticationRequestId,
                 expires_in = result.Response.ExpiresIn,
                 interval = result.Response.Interval,
-                
+
                 Custom = result.Response.Custom
             });
         }

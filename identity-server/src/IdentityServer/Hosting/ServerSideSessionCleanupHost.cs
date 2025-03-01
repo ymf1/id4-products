@@ -49,7 +49,7 @@ public class ServerSideSessionCleanupHost : IHostedService
 
             Task.Factory.StartNew(() => StartInternalAsync(_source.Token), cancellationToken);
         }
-            
+
         return Task.CompletedTask;
     }
 
@@ -73,7 +73,7 @@ public class ServerSideSessionCleanupHost : IHostedService
 
     private async Task StartInternalAsync(CancellationToken cancellationToken)
     {
-        var removalFrequencySeconds = (int) _options.ServerSideSessions.RemoveExpiredSessionsFrequency.TotalSeconds;
+        var removalFrequencySeconds = (int)_options.ServerSideSessions.RemoveExpiredSessionsFrequency.TotalSeconds;
 
         // Start the first run at a random interval.
         var delay = _options.ServerSideSessions.FuzzExpiredSessionRemovalStart

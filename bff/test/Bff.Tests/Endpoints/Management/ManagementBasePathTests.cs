@@ -19,8 +19,10 @@ namespace Duende.Bff.Tests.Endpoints.Management
         [InlineData(Constants.ManagementEndpoints.User)]
         public async Task custom_ManagementBasePath_should_affect_basepath(string path)
         {
-            BffHost.OnConfigureServices += svcs => {
-                svcs.Configure<BffOptions>(options => {
+            BffHost.OnConfigureServices += svcs =>
+            {
+                svcs.Configure<BffOptions>(options =>
+                {
                     options.ManagementBasePath = new PathString("/{path:regex(^[a-zA-Z\\d-]+$)}/bff");
                 });
             };

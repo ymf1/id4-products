@@ -65,15 +65,15 @@ public class ClientStoreTests : IntegrationTest<ClientStoreTests, ConfigurationD
         {
             ClientId = "properties_test_client",
             ClientName = "Properties Test Client",
-            AllowedCorsOrigins = {"https://localhost"},
+            AllowedCorsOrigins = { "https://localhost" },
             AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
-            AllowedScopes = {"openid", "profile", "api1"},
-            Claims = {new ClientClaim("test", "value")},
-            ClientSecrets = {new Secret("secret".Sha256())},
-            IdentityProviderRestrictions = {"AD"},
-            PostLogoutRedirectUris = {"https://locahost/signout-callback"},
-            Properties = {{"foo1", "bar1"}, {"foo2", "bar2"},},
-            RedirectUris = {"https://locahost/signin"}
+            AllowedScopes = { "openid", "profile", "api1" },
+            Claims = { new ClientClaim("test", "value") },
+            ClientSecrets = { new Secret("secret".Sha256()) },
+            IdentityProviderRestrictions = { "AD" },
+            PostLogoutRedirectUris = { "https://locahost/signout-callback" },
+            Properties = { { "foo1", "bar1" }, { "foo2", "bar2" }, },
+            RedirectUris = { "https://locahost/signin" }
         };
 
         using (var context = new ConfigurationDbContext(options))
@@ -112,7 +112,7 @@ public class ClientStoreTests : IntegrationTest<ClientStoreTests, ConfigurationD
         {
             ClientId = "test_client_with_uris",
             ClientName = "Test client with URIs",
-            AllowedScopes = {"openid", "profile", "api1"},
+            AllowedScopes = { "openid", "profile", "api1" },
             AllowedGrantTypes = GrantTypes.CodeAndClientCredentials
         };
 
@@ -143,7 +143,7 @@ public class ClientStoreTests : IntegrationTest<ClientStoreTests, ConfigurationD
 
             context.SaveChanges();
         }
-            
+
         using (var context = new ConfigurationDbContext(options))
         {
             var store = new ClientStore(context, FakeLogger<ClientStore>.Create(), new NoneCancellationTokenProvider());

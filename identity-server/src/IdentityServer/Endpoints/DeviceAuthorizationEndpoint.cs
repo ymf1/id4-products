@@ -53,7 +53,7 @@ internal class DeviceAuthorizationEndpoint : IEndpointHandler
     public async Task<IEndpointResult> ProcessAsync(HttpContext context)
     {
         using var activity = Tracing.BasicActivitySource.StartActivity(IdentityServerConstants.EndpointNames.DeviceAuthorization + "Endpoint");
-        
+
         _logger.LogTrace("Processing device authorize request.");
 
         // validate HTTP

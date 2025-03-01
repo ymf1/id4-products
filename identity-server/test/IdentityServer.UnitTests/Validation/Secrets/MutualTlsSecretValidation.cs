@@ -15,7 +15,7 @@ namespace UnitTests.Validation.Secrets;
 public class MutualTlsSecretValidation
 {
     private const string Category = "Secrets - MutualTls Secret Validation";
-       
+
     private IClientStore _clients = new InMemoryClientStore(ClientValidationTestClients.Get());
 
     ///////////////////

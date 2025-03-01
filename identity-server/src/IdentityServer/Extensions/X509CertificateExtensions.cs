@@ -22,7 +22,7 @@ public static class X509CertificateExtensions
     public static string CreateThumbprintCnf(this X509Certificate2 certificate)
     {
         var hash = certificate.GetSha256Thumbprint();
-                            
+
         var values = new Dictionary<string, string>
         {
             { "x5t#S256", hash }

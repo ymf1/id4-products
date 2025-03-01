@@ -42,7 +42,7 @@ public class InMemoryCorsPolicyService : ICorsPolicyService
     public virtual Task<bool> IsOriginAllowedAsync(string origin)
     {
         using var activity = Tracing.ServiceActivitySource.StartActivity("InMemoryCorsPolicyService.IsOriginAllowedAsync");
-        
+
         var query =
             from client in Clients
             from url in client.AllowedCorsOrigins

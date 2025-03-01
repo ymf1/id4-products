@@ -28,9 +28,9 @@ public class LocalApiAuthenticationHandler : AuthenticationHandler<LocalApiAuthe
 
     /// <inheritdoc />
     public LocalApiAuthenticationHandler(
-        IOptionsMonitor<LocalApiAuthenticationOptions> options, 
-        ILoggerFactory logger, 
-        UrlEncoder encoder, 
+        IOptionsMonitor<LocalApiAuthenticationOptions> options,
+        ILoggerFactory logger,
+        UrlEncoder encoder,
         ITokenValidator tokenValidator,
         IDPoPProofValidator dpopValidator,
         IClientStore clientStore)
@@ -130,7 +130,7 @@ public class LocalApiAuthenticationHandler : AuthenticationHandler<LocalApiAuthe
                 ExpirationValidationMode = client.DPoPValidationMode,
                 ClientClockSkew = client.DPoPClockSkew,
             };
-            
+
             var dpopResult = await _dpopValidator.ValidateAsync(validationContext);
             if (dpopResult.IsError)
             {
@@ -252,7 +252,7 @@ public class LocalApiAuthenticationHandler : AuthenticationHandler<LocalApiAuthe
 
         if (sb.Length > 0)
         {
-            if(Response.Headers.ContainsKey(HeaderNames.WWWAuthenticate))
+            if (Response.Headers.ContainsKey(HeaderNames.WWWAuthenticate))
             {
 
                 throw new InvalidOperationException("Attempted to set the WWW-Authenticate header when it is already set");
@@ -262,4 +262,4 @@ public class LocalApiAuthenticationHandler : AuthenticationHandler<LocalApiAuthe
 
         return Task.CompletedTask;
     }
-} 
+}

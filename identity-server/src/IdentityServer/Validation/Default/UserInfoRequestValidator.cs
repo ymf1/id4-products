@@ -31,7 +31,7 @@ internal class UserInfoRequestValidator : IUserInfoRequestValidator
     /// <param name="logger">The logger.</param>
     /// <param name="serverSideTicketStore"></param>
     public UserInfoRequestValidator(
-        ITokenValidator tokenValidator, 
+        ITokenValidator tokenValidator,
         IProfileService profile,
         ILogger<UserInfoRequestValidator> logger,
         IServerSideTicketStore serverSideTicketStore = null)
@@ -51,7 +51,7 @@ internal class UserInfoRequestValidator : IUserInfoRequestValidator
     public async Task<UserInfoRequestValidationResult> ValidateRequestAsync(string accessToken)
     {
         using var activity = Tracing.BasicActivitySource.StartActivity("UserInfoRequestValidator.ValidateRequest");
-        
+
         // the access token needs to be valid and have at least the openid scope
         var tokenResult = await _tokenValidator.ValidateAccessTokenAsync(
             accessToken,
@@ -94,7 +94,7 @@ internal class UserInfoRequestValidator : IUserInfoRequestValidator
                     SubjectId = subClaim.Value,
                     SessionId = sid,
                 });
-                
+
                 if (sessions.Count == 1)
                 {
                     _logger.LogDebug("Loading subject claims from server-side session store");
@@ -102,7 +102,7 @@ internal class UserInfoRequestValidator : IUserInfoRequestValidator
                 }
             }
         }
-        
+
         if (subject == null)
         {
             _logger.LogDebug("Loading subject claims from access token");

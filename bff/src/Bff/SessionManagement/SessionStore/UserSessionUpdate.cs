@@ -22,7 +22,7 @@ public class UserSessionUpdate
     /// The creation time
     /// </summary>
     public DateTime Created { get; set; }
-        
+
     /// <summary>
     /// The renewal time
     /// </summary>

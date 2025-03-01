@@ -250,7 +250,7 @@ public static class Telemetry
         /// <summary>
         /// Successful Client Secret validations
         /// </summary>
-        public static Counter<long> ClientSecretValidationCounter = 
+        public static Counter<long> ClientSecretValidationCounter =
             ExperimentalMeter.CreateCounter<long>(Counters.ClientSecretValidation);
 
         /// <summary>
@@ -442,7 +442,7 @@ public static class Telemetry
         /// <summary>
         /// Successful token issuance counter.
         /// </summary>
-        public static readonly Counter<long> TokenIssuedCounter = 
+        public static readonly Counter<long> TokenIssuedCounter =
             ExperimentalMeter.CreateCounter<long>(Counters.TokenIssued);
 
         /// <summary>

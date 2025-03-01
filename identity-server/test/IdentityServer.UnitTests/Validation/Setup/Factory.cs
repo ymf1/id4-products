@@ -144,13 +144,13 @@ internal static class Factory
 
     public static IRefreshTokenService CreateRefreshTokenService(IRefreshTokenStore store = null, IProfileService profile = null)
     {
-        return CreateRefreshTokenService(store ?? CreateRefreshTokenStore(), 
-            profile ?? new TestProfileService(), 
+        return CreateRefreshTokenService(store ?? CreateRefreshTokenStore(),
+            profile ?? new TestProfileService(),
             new PersistentGrantOptions());
     }
 
     private static IRefreshTokenService CreateRefreshTokenService(
-        IRefreshTokenStore store, 
+        IRefreshTokenStore store,
         IProfileService profile,
         PersistentGrantOptions options)
     {
@@ -192,7 +192,7 @@ internal static class Factory
         {
             options = TestIdentityServerOptions.Create();
         }
-            
+
         if (resourceStore == null)
         {
             resourceStore = new InMemoryResourcesStore(TestScopes.GetIdentity(), TestScopes.GetApis(), TestScopes.GetScopes());
@@ -224,7 +224,7 @@ internal static class Factory
         {
             options = TestIdentityServerOptions.Create();
         }
-            
+
         if (issuerNameService == null)
         {
             issuerNameService = new TestIssuerNameService(options.IssuerUri);
@@ -254,14 +254,14 @@ internal static class Factory
         {
             resourceValidator = CreateResourceValidator(resourceStore);
         }
-    
+
         var userSession = new MockUserSession();
 
         if (requestObjectValidator == null)
         {
             requestObjectValidator = CreateRequestObjectValidator();
         }
-        
+
         return new AuthorizeRequestValidator(
             options,
             issuerNameService,
@@ -275,7 +275,7 @@ internal static class Factory
             TestLogger.Create<AuthorizeRequestValidator>());
     }
 
-    public static RequestObjectValidator CreateRequestObjectValidator(        
+    public static RequestObjectValidator CreateRequestObjectValidator(
         JwtRequestValidator jwtRequestValidator = null,
         IJwtRequestUriHttpClient jwtRequestUriHttpClient = null,
         IPushedAuthorizationService pushedAuthorizationService = null,
@@ -298,11 +298,11 @@ internal static class Factory
     }
 
     public static TokenValidator CreateTokenValidator(
-        IReferenceTokenStore store = null, 
+        IReferenceTokenStore store = null,
         IRefreshTokenStore refreshTokenStore = null,
         IProfileService profile = null,
         IIssuerNameService issuerNameService = null,
-        IdentityServerOptions options = null, 
+        IdentityServerOptions options = null,
         IClock clock = null)
     {
         options ??= TestIdentityServerOptions.Create();
@@ -313,7 +313,7 @@ internal static class Factory
         issuerNameService ??= new TestIssuerNameService(options.IssuerUri);
 
         var clients = CreateClientStore();
-            
+
         var logger = TestLogger.Create<TokenValidator>();
 
         var keyInfo = new SecurityKeyInfo
@@ -329,7 +329,7 @@ internal static class Factory
             referenceTokenStore: store,
             customValidator: new DefaultCustomTokenValidator(),
             keys: new DefaultKeyMaterialService(
-                new[] { new InMemoryValidationKeysStore(new[] { keyInfo }) }, 
+                new[] { new InMemoryValidationKeysStore(new[] { keyInfo }) },
                 Enumerable.Empty<ISigningCredentialStore>(),
                 new NopAutomaticKeyManagerKeyStore()
             ),
@@ -350,7 +350,7 @@ internal static class Factory
         profile = profile ?? new TestProfileService();
         throttlingService = throttlingService ?? new TestDeviceFlowThrottlingService();
         clock = clock ?? new StubClock();
-            
+
         var validator = new DeviceCodeValidator(service, profile, throttlingService, clock, TestLogger.Create<DeviceCodeValidator>());
 
         return validator;
@@ -394,7 +394,7 @@ internal static class Factory
             new DefaultHandleGenerationService(),
             TestLogger.Create<DefaultAuthorizationCodeStore>());
     }
-        
+
     public static IRefreshTokenStore CreateRefreshTokenStore()
     {
         return new DefaultRefreshTokenStore(new InMemoryPersistedGrantStore(),
@@ -402,7 +402,7 @@ internal static class Factory
             new DefaultHandleGenerationService(),
             TestLogger.Create<DefaultRefreshTokenStore>());
     }
-        
+
     public static IReferenceTokenStore CreateReferenceTokenStore()
     {
         return new DefaultReferenceTokenStore(new InMemoryPersistedGrantStore(),

@@ -36,7 +36,7 @@ internal class IdentityServerAuthenticationService : IAuthenticationService
         ILogger<IdentityServerAuthenticationService> logger)
     {
         _inner = decorator.Instance;
-            
+
         _schemes = schemes;
         _clock = clock;
         _session = session;

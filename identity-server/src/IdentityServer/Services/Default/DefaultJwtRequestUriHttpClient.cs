@@ -40,7 +40,7 @@ public class DefaultJwtRequestUriHttpClient : IJwtRequestUriHttpClient
     public async Task<string> GetJwtAsync(string url, Client client)
     {
         using var activity = Tracing.ServiceActivitySource.StartActivity("DefaultJwtRequestUriHttpClient.GetJwt");
-        
+
         var req = new HttpRequestMessage(HttpMethod.Get, url);
         req.Options.TryAdd(IdentityServerConstants.JwtRequestClientKey, client);
 

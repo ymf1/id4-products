@@ -260,7 +260,7 @@ public static class IdentityServerBuilderExtensionsCore
 
         builder.Services.TryAddTransient<IBackchannelAuthenticationThrottlingService, DistributedBackchannelAuthenticationThrottlingService>();
         builder.Services.TryAddTransient<IBackchannelAuthenticationUserNotificationService, NopBackchannelAuthenticationUserNotificationService>();
-            
+
         builder.AddJwtRequestUriHttpClient();
         builder.AddBackChannelLogoutHttpClient();
 
@@ -346,7 +346,7 @@ public static class IdentityServerBuilderExtensionsCore
         builder.Services.TryAddTransient<ICustomTokenValidator, DefaultCustomTokenValidator>();
         builder.Services.TryAddTransient<ICustomAuthorizeRequestValidator, DefaultCustomAuthorizeRequestValidator>();
         builder.Services.TryAddTransient<ICustomBackchannelAuthenticationValidator, DefaultCustomBackchannelAuthenticationValidator>();
-            
+
         return builder;
     }
 

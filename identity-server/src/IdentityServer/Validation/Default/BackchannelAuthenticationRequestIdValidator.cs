@@ -40,7 +40,7 @@ internal class BackchannelAuthenticationRequestIdValidator : IBackchannelAuthent
     public async Task ValidateAsync(BackchannelAuthenticationRequestIdValidationContext context)
     {
         using var activity = Tracing.BasicActivitySource.StartActivity("BackchannelAuthenticationRequestIdValidator.Validate");
-        
+
         var request = await _backchannelAuthenticationStore.GetByAuthenticationRequestIdAsync(context.AuthenticationRequestId);
 
         if (request == null)

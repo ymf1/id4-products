@@ -197,7 +197,7 @@ public class Authorize_ProtocolValidation_Valid
 
         result.ValidatedRequest.SessionId.ShouldNotBeNull();
     }
-        
+
     [Fact]
     [Trait("Category", Category)]
     public async Task multiple_prompt_values_should_be_accepted()
@@ -223,7 +223,7 @@ public class Authorize_ProtocolValidation_Valid
     public async Task processed_prompt_values_should_overwrite_original_values()
     {
         var validator = Factory.CreateAuthorizeRequestValidator();
-            
+
         var parameters = new NameValueCollection();
         parameters.Add(OidcConstants.AuthorizeRequest.ClientId, "codeclient");
         parameters.Add(OidcConstants.AuthorizeRequest.Scope, "openid");

@@ -83,7 +83,7 @@ public class ParRedirectUriValidatorTests
             RequestedUri = notThePushedRedirectUri,
             Client = new Client()
         });
-        
+
         result.ShouldBe(false);
     }
 
@@ -111,7 +111,7 @@ public class ParRedirectUriValidatorTests
                 RedirectUris = { "https://registered.example.com" }
             }
         });
-        
+
         registeredRedirectUri.ShouldNotBe(pushedRedirectUri);
         result.ShouldBe(true);
     }
@@ -140,7 +140,7 @@ public class ParRedirectUriValidatorTests
                 RedirectUris = { "https://registered.example.com" }
             }
         });
-        
+
         registeredRedirectUri.ShouldNotBe(requestedRedirectUri);
         result.ShouldBe(false);
     }

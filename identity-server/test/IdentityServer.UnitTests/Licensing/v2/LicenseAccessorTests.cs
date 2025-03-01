@@ -36,10 +36,10 @@ public class LicenseAccessorTests
         l.SerialNumber.ShouldBe(serialNumber);
         l.Expiration!.Value.Date.ShouldBe(new DateTime(2024, 11, 15));
         l.Redistribution.ShouldBe(isRedistribution);
-        
+
         var enterpriseFeaturesEnabled = edition == LicenseEdition.Enterprise || edition == LicenseEdition.Community;
         var businessFeaturesEnabled = enterpriseFeaturesEnabled || edition == LicenseEdition.Business;
-        
+
         _licenseAccessor.Current.IsEnabled(LicenseFeature.DynamicProviders).ShouldBe(enterpriseFeaturesEnabled || addDynamicProviders);
         _licenseAccessor.Current.IsEnabled(LicenseFeature.ResourceIsolation).ShouldBe(enterpriseFeaturesEnabled);
         _licenseAccessor.Current.IsEnabled(LicenseFeature.DPoP).ShouldBe(enterpriseFeaturesEnabled);
@@ -74,13 +74,13 @@ public class LicenseAccessorTests
     ];
 
 
-    
+
     [Fact]
     public void keys_that_cannot_be_parsed_are_treated_the_same_as_an_absent_license()
     {
         _options.LicenseKey = "invalid key";
         _licenseAccessor.Current.IsConfigured.ShouldBeFalse();
-        _logger.Collector.GetSnapshot().ShouldContain(r => 
+        _logger.Collector.GetSnapshot().ShouldContain(r =>
             r.Message == "Error validating the Duende software license key");
     }
 }

@@ -65,7 +65,7 @@ public class BffMiddleware
                 }
             }
         }
-        
+
         var isUIEndpoint = endpoint.Metadata.GetMetadata<IBffUIApiEndpoint>() != null;
         if (isUIEndpoint && context.IsAjaxRequest())
         {

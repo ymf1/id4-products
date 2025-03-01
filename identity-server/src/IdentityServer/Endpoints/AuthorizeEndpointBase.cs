@@ -2,10 +2,8 @@
 // See LICENSE in the project root for license information.
 
 
-using System;
 using System.Collections.Specialized;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Endpoints.Results;
 using Duende.IdentityServer.Events;

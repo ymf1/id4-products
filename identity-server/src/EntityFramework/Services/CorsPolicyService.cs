@@ -6,9 +6,6 @@ using Duende.IdentityServer.EntityFramework.Interfaces;
 using Duende.IdentityServer.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Duende.IdentityServer.EntityFramework.Services;
 

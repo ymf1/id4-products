@@ -2,8 +2,6 @@
 // See LICENSE in the project root for license information.
 
 
-using System;
-using System.Threading.Tasks;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Validation;

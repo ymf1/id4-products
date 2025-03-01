@@ -3,15 +3,11 @@
 
 
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Duende.IdentityServer.Configuration;
 using Microsoft.IdentityModel.JsonWebTokens;
-using System;
 using Duende.IdentityServer.Extensions;
 using System.Text.Json;
 using Duende.IdentityModel;
-using System.Linq;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Models;
 using Microsoft.AspNetCore.DataProtection;

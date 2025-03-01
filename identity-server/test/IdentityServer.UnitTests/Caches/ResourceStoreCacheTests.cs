@@ -6,14 +6,8 @@ using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores;
-using Shouldly;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using UnitTests.Services.Default.KeyManagement;
-using Xunit;
 
 
 namespace IdentityServer.UnitTests.Caches

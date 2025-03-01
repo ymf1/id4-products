@@ -2,17 +2,12 @@
 // See LICENSE in the project root for license information.
 
 
-using Shouldly;
-using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
 using System.Security.Claims;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Test;
 using IntegrationTests.Common;
-using Xunit;
 using System.Text;
 
 namespace IntegrationTests.Endpoints.Token;

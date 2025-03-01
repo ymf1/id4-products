@@ -2,7 +2,6 @@
 // See LICENSE in the project root for license information.
 
 
-using System.Threading.Tasks;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Services;
 using Microsoft.Extensions.Logging;

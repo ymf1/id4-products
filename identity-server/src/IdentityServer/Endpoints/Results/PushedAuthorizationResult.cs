@@ -6,10 +6,7 @@ using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Hosting;
 using Duende.IdentityServer.ResponseHandling;
 using Microsoft.AspNetCore.Http;
-using System;
 using System.Net;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace Duende.IdentityServer.Endpoints.Results;
 

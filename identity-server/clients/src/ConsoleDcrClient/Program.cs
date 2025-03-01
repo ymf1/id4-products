@@ -1,6 +1,4 @@
-﻿using System;
-using System.Net.Http;
-using System.Text.Json;
+﻿using System.Text.Json;
 using Clients;
 using Duende.IdentityModel.Client;
 

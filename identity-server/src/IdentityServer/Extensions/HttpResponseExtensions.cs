@@ -4,13 +4,8 @@
 
 using Duende.IdentityServer.Models;
 using Microsoft.AspNetCore.Http;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Duende.IdentityServer.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Duende.IdentityServer.Services;
-using System;
 
 #pragma warning disable 1591
 

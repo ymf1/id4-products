@@ -2,7 +2,6 @@
 // See LICENSE in the project root for license information.
 
 
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using Duende.IdentityServer.Extensions;
 using Microsoft.AspNetCore.DataProtection;

@@ -8,8 +8,6 @@ using Duende.IdentityServer.Stores;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Duende.IdentityServer.Hosting.DynamicProviders;
 

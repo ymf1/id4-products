@@ -3,7 +3,6 @@
 
 
 using Duende.IdentityServer.Extensions;
-using System;
 using System.Security.Cryptography;
 using System.Text;
 

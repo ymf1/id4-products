@@ -2,10 +2,6 @@
 // See LICENSE in the project root for license information.
 
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.ResponseHandling;
@@ -13,10 +9,8 @@ using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Services.Default;
 using Duende.IdentityServer.Stores;
 using Duende.IdentityServer.Validation;
-using Shouldly;
 using UnitTests.Common;
 using Microsoft.Extensions.Logging.Abstractions;
-using Xunit;
 
 namespace UnitTests.ResponseHandling;
 

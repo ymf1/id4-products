@@ -3,8 +3,6 @@
 
 
 using Duende.IdentityServer.Models;
-using Shouldly;
-using Xunit;
 
 namespace UnitTests.Extensions;
 

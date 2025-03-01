@@ -6,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Reflection.PortableExecutable;
 using System.Security.Cryptography;
 using System.Text.Json;
 

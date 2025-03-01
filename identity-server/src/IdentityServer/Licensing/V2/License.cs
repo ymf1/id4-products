@@ -3,10 +3,8 @@
 
 #nullable enable
 
-using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Security.Claims;
 
 namespace Duende.IdentityServer.Licensing.V2;

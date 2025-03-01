@@ -4,7 +4,6 @@
 
 using Duende.IdentityServer.Stores.Serialization;
 using Duende.IdentityModel;
-using System.Linq;
 using System.Security.Claims;
 
 namespace Duende.IdentityServer.Extensions;

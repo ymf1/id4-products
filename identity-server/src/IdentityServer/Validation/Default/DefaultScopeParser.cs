@@ -3,8 +3,6 @@
 
 
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using Duende.IdentityServer.Extensions;
 
 namespace Duende.IdentityServer.Validation;

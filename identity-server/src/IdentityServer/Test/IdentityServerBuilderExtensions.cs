@@ -3,7 +3,6 @@
 
 
 using Duende.IdentityServer.Test;
-using System.Collections.Generic;
 
 namespace Microsoft.Extensions.DependencyInjection;
 

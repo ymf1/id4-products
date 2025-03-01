@@ -4,8 +4,6 @@
 
 #nullable enable
 
-using System;
-using System.Linq;
 using Duende.IdentityServer;
 using Duende.IdentityModel;
 using Duende.IdentityServer.AspNetIdentity;

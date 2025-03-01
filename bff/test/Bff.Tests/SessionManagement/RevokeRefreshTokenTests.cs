@@ -3,11 +3,7 @@
 
 using Duende.Bff.Tests.TestHosts;
 using Duende.IdentityServer.Stores;
-using Shouldly;
 using Microsoft.Extensions.DependencyInjection;
-using System.Linq;
-using System.Threading.Tasks;
-using Xunit;
 using Xunit.Abstractions;
 
 namespace Duende.Bff.Tests.SessionManagement

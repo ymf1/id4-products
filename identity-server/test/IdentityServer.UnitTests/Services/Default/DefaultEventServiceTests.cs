@@ -1,13 +1,10 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
-using System.Threading.Tasks;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Events;
-using Shouldly;
 using UnitTests.Common;
 using UnitTests.Services.Default.KeyManagement;
-using Xunit;
 
 namespace UnitTests.Services.Default;
 

@@ -2,8 +2,6 @@
 // See LICENSE in the project root for license information.
 
 
-using System.Text.Json.Serialization;
-
 namespace Duende.IdentityServer.ResponseHandling;
 
 /// <summary>

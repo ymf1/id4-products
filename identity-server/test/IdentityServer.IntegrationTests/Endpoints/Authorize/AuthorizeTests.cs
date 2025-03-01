@@ -2,13 +2,8 @@
 // See LICENSE in the project root for license information.
 
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Models;
@@ -17,11 +12,9 @@ using Duende.IdentityServer.Stores;
 using Duende.IdentityServer.Stores.Default;
 using Duende.IdentityServer.Test;
 using Duende.IdentityServer.Validation;
-using Shouldly;
 using Duende.IdentityModel;
 using IntegrationTests.Common;
 using Microsoft.Extensions.DependencyInjection;
-using Xunit;
 
 namespace IntegrationTests.Endpoints.Authorize;
 

@@ -3,7 +3,6 @@
 
 
 using Duende.IdentityServer.Models;
-using System.Threading.Tasks;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Services;
 

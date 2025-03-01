@@ -3,8 +3,6 @@
 
 
 using Duende.IdentityModel;
-using System.Threading.Tasks;
-using System;
 using Duende.IdentityServer.Validation;
 
 namespace Duende.IdentityServer.Test;

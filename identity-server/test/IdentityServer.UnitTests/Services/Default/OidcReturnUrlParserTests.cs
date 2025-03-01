@@ -4,11 +4,9 @@
 
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Services;
-using Shouldly;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using UnitTests.Common;
-using Xunit;
 
 namespace UnitTests.Services.Default;
 

@@ -4,16 +4,10 @@
 
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Test;
-using Shouldly;
 using Duende.IdentityModel;
 using IntegrationTests.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Security.Claims;
-using System.Threading.Tasks;
-using Xunit;
 
 namespace IntegrationTests.Endpoints.Authorize;
 

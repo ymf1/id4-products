@@ -6,7 +6,6 @@
 
 using Duende.IdentityServer.Models;
 using System.Collections.Concurrent;
-using System.Threading.Tasks;
 
 namespace Duende.IdentityServer.Stores;
 

@@ -4,7 +4,6 @@
 
 using System.Collections.Specialized;
 using System.Net;
-using System.Threading.Tasks;
 using Duende.IdentityServer.Endpoints.Results;
 using Duende.IdentityServer.Hosting;
 using Duende.IdentityServer.Services;
@@ -12,7 +11,6 @@ using Duende.IdentityServer.Validation;
 using Duende.IdentityServer.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using System.IO;
 
 namespace Duende.IdentityServer.Endpoints;
 

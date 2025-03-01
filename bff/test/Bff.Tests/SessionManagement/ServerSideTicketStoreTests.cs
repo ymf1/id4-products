@@ -2,11 +2,7 @@
 // See LICENSE in the project root for license information.
 
 using Duende.Bff.Tests.TestHosts;
-using Shouldly;
 using Microsoft.Extensions.DependencyInjection;
-using System.Linq;
-using System.Threading.Tasks;
-using Xunit;
 using Xunit.Abstractions;
 
 namespace Duende.Bff.Tests.SessionManagement

@@ -5,7 +5,6 @@
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Models;
 using Microsoft.AspNetCore.DataProtection;
-using System;
 
 namespace Duende.IdentityServer.Services.KeyManagement;
 

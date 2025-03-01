@@ -4,9 +4,6 @@
 
 #nullable enable
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Duende.IdentityModel;
 using Microsoft.AspNetCore.Http;
 

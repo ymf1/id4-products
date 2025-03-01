@@ -1,6 +1,5 @@
 using Hosts.ServiceDefaults;
 using Hosts.Tests.TestInfra;
-using Shouldly;
 using Xunit.Abstractions;
 
 namespace Hosts.Tests;

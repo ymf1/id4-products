@@ -2,19 +2,14 @@
 // See LICENSE in the project root for license information.
 
 
-using System;
-using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.ResponseHandling;
 using Duende.IdentityServer.Stores;
 using Duende.IdentityServer.Validation;
-using Shouldly;
 using UnitTests.Common;
-using Xunit;
 
 namespace UnitTests.ResponseHandling;
 

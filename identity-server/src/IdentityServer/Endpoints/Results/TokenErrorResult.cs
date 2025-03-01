@@ -2,11 +2,8 @@
 // See LICENSE in the project root for license information.
 
 
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Duende.IdentityServer.Extensions;
-using System;
-using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using Duende.IdentityServer.Hosting;
 using Duende.IdentityServer.ResponseHandling;

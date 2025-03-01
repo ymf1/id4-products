@@ -4,9 +4,6 @@
 using Duende.Bff.Tests.TestFramework;
 using Microsoft.AspNetCore.Builder;
 using System.Net;
-using System.Threading.Tasks;
-using Shouldly;
-using Xunit;
 using Xunit.Abstractions;
 
 namespace Duende.Bff.Tests

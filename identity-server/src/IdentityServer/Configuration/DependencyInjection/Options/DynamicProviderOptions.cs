@@ -7,8 +7,6 @@
 using Duende.IdentityServer.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
 
 namespace Duende.IdentityServer.Configuration;
 

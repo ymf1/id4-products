@@ -2,8 +2,6 @@
 // See LICENSE in the project root for license information.
 
 
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Duende.IdentityServer.Endpoints.Results;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Hosting;
@@ -14,7 +12,6 @@ using Duende.IdentityModel;
 using Duende.IdentityServer.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using System.IO;
 
 namespace Duende.IdentityServer.Endpoints;
 

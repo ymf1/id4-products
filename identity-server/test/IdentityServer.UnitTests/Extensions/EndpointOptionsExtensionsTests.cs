@@ -6,7 +6,6 @@ using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Hosting;
 using Duende.IdentityServer.Extensions;
-using Xunit;
 
 namespace UnitTests.Extensions;
 

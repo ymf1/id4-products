@@ -1,6 +1,5 @@
 using Duende.IdentityServer;
 using IdentityServerHost;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Serilog;
 
 namespace IdentityServerInMem;

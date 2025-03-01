@@ -10,8 +10,6 @@ using Microsoft.AspNetCore.Authentication;
 using Duende.IdentityModel.Client;
 using System.Net.Http;
 using Microsoft.Extensions.Configuration;
-using OpenTelemetry.Resources;
-using OpenTelemetry.Trace;
 
 namespace MvcHybrid
 {

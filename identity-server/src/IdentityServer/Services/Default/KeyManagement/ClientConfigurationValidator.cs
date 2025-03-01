@@ -4,7 +4,6 @@
 
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Validation;
-using System.Threading.Tasks;
 
 namespace Duende.IdentityServer.Services.KeyManagement;
 

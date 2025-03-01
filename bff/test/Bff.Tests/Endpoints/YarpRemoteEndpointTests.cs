@@ -3,11 +3,7 @@
 
 using Duende.Bff.Tests.TestHosts;
 using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Duende.Bff.Tests.TestFramework;
-using Shouldly;
-using Xunit;
 using Xunit.Abstractions;
 
 namespace Duende.Bff.Tests.Endpoints

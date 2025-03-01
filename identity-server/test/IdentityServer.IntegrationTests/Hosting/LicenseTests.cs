@@ -1,18 +1,10 @@
 // Copyright (c) Duende Software. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Duende.IdentityServer.Licensing.V2;
 using Duende.IdentityServer.Models;
-using Shouldly;
 using IntegrationTests.Common;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Time.Testing;
-using Xunit;
 
 namespace IntegrationTests.Hosting;
 

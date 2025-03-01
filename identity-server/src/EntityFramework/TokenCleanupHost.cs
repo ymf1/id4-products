@@ -3,9 +3,6 @@
 
 
 using Microsoft.Extensions.Hosting;
-using System.Threading;
-using System.Threading.Tasks;
-using System;
 using Duende.IdentityServer.EntityFramework;
 using Duende.IdentityServer.EntityFramework.Options;
 using Microsoft.Extensions.Logging;

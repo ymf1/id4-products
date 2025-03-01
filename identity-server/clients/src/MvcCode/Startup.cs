@@ -1,4 +1,3 @@
-using System;
 using Clients;
 using Duende.IdentityModel;
 using Microsoft.AspNetCore.Authentication;
@@ -10,9 +9,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 using Duende.IdentityModel.Client;
 using Microsoft.Extensions.Configuration;
-using OpenTelemetry.Resources;
-using OpenTelemetry.Trace;
-using System.Threading.Tasks;
 
 namespace MvcCode;
 

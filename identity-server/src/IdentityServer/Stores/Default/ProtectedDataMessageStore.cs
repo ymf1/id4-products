@@ -2,11 +2,9 @@
 // See LICENSE in the project root for license information.
 
 
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.DataProtection;
 using Duende.IdentityModel;
 using System.Text;
-using System;
 using Duende.IdentityServer.Models;
 using Microsoft.Extensions.Logging;
 

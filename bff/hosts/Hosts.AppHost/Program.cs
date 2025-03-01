@@ -1,4 +1,3 @@
-using Aspire.Hosting;
 using Hosts.ServiceDefaults;
 using Projects;
 

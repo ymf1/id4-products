@@ -1,18 +1,12 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
-using System;
-using System.Collections.Generic;
 using Duende.Bff.Tests.TestFramework;
 using Duende.IdentityServer.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using System.IO;
-using System.Linq;
 using System.Text.Json;
-using Duende.IdentityServer.Extensions;
-using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Duende.Bff.Tests.TestHosts
 {

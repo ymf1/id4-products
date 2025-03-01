@@ -5,15 +5,9 @@
 using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Test;
-using Shouldly;
 using IntegrationTests.Common;
-using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
 using System.Security.Claims;
-using System.Threading.Tasks;
-using Xunit;
 using Microsoft.Extensions.DependencyInjection;
 using Duende.IdentityServer.Validation;
 using Duende.IdentityServer.Services;
@@ -21,7 +15,6 @@ using System.Text.Json;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using static Duende.IdentityServer.IdentityServerConstants;
-using Duende.IdentityModel.Client;
 
 namespace IdentityServer.IntegrationTests.Endpoints.Ciba;
 

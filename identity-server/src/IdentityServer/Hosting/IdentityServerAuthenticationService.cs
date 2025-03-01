@@ -5,12 +5,9 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Duende.IdentityServer.Extensions;
-using System;
 using Duende.IdentityModel;
-using System.Linq;
 using Duende.IdentityServer.Configuration.DependencyInjection;
 using Duende.IdentityServer.Services;
 

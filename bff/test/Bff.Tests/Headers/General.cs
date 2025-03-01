@@ -1,11 +1,6 @@
-using System.Linq;
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Duende.Bff.Tests.TestFramework;
 using Duende.Bff.Tests.TestHosts;
-using Shouldly;
-using Xunit;
 using Xunit.Abstractions;
 
 namespace Duende.Bff.Tests.Headers

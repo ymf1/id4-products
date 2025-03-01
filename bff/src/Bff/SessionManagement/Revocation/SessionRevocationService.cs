@@ -3,10 +3,6 @@
 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Duende.AccessTokenManagement.OpenIdConnect;
 using Microsoft.Extensions.Options;
 

@@ -6,9 +6,7 @@ using Duende.IdentityServer.IntegrationTests.TestFramework;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System;
 using System.Text.Encodings.Web;
-using System.Threading.Tasks;
 
 namespace Duende.IdentityServer.IntegrationTests.TestFramework
 {

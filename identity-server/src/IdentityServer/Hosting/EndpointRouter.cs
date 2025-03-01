@@ -5,8 +5,6 @@
 using Duende.IdentityServer.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Licensing.V2;
 

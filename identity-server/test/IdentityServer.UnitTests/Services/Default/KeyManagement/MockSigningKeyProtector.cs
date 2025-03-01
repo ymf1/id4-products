@@ -5,7 +5,6 @@
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services.KeyManagement;
 using Microsoft.AspNetCore.DataProtection;
-using System;
 
 namespace UnitTests.Services.Default.KeyManagement;
 

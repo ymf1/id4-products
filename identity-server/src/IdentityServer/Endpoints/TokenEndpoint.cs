@@ -6,17 +6,13 @@ using Duende.IdentityModel;
 using Duende.IdentityServer.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Duende.IdentityServer.Endpoints.Results;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Hosting;
 using Duende.IdentityServer.ResponseHandling;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Validation;
-using System.IO;
 using Duende.IdentityServer.Configuration;
-using System.Linq;
 
 namespace Duende.IdentityServer.Endpoints;
 

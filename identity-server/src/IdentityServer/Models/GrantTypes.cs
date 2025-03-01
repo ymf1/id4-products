@@ -5,7 +5,6 @@
 #nullable enable
 
 using Duende.IdentityModel;
-using System.Collections.Generic;
 
 #pragma warning disable 1591
 

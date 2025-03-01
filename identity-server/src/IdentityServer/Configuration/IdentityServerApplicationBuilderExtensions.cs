@@ -4,7 +4,6 @@
 
 #nullable enable
 
-using Duende;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Extensions;
@@ -16,10 +15,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using Duende.IdentityServer.Licensing.V2;
 
 namespace Microsoft.AspNetCore.Builder;

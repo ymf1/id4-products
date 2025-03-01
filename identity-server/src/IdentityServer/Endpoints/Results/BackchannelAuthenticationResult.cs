@@ -4,10 +4,7 @@
 
 using Duende.IdentityServer.Extensions;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 using Duende.IdentityServer.Hosting;
 using Duende.IdentityServer.ResponseHandling;
 using Duende.IdentityModel;

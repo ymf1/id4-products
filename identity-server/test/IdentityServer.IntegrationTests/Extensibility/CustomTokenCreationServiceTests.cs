@@ -2,21 +2,17 @@
 // See LICENSE in the project root for license information.
 
 
-using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
-using Shouldly;
 using Duende.IdentityModel;
 using Duende.IdentityModel.Client;
 using IntegrationTests.Common;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Xunit;
 
 namespace IntegrationTests.Extensibility;
 

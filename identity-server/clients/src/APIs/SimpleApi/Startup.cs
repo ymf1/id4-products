@@ -1,4 +1,3 @@
-using System.IdentityModel.Tokens.Jwt;
 using Clients;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;

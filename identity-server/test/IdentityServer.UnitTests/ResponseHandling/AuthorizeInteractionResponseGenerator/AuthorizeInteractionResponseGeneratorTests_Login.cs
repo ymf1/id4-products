@@ -2,18 +2,13 @@
 // See LICENSE in the project root for license information.
 
 
-using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Threading.Tasks;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Validation;
-using Shouldly;
 using Duende.IdentityModel;
 using UnitTests.Common;
-using Xunit;
 
 namespace UnitTests.ResponseHandling.AuthorizeInteractionResponseGenerator;
 

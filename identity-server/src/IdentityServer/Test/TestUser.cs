@@ -3,7 +3,6 @@
 
 
 using Duende.IdentityModel;
-using System.Collections.Generic;
 using System.Security.Claims;
 
 namespace Duende.IdentityServer.Test;

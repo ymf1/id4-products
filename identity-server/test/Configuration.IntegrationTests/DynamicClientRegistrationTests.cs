@@ -2,9 +2,7 @@
 // See LICENSE in the project root for license information.
 
 
-using Shouldly;
 using IntegrationTests.TestHosts;
-using Xunit;
 using Duende.IdentityServer.Configuration.Models.DynamicClientRegistration;
 using System.Net.Http.Json;
 using Duende.IdentityServer.Models;

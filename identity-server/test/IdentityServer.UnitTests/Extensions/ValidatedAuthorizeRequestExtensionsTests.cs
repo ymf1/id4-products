@@ -2,10 +2,8 @@
 // See LICENSE in the project root for license information.
 
 
-using System;
 using Duende.IdentityServer.Validation;
 using Duende.IdentityModel;
-using Xunit;
 
 namespace UnitTests.Extensions;
 

@@ -6,9 +6,7 @@ using Duende.IdentityModel;
 using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Models;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Specialized;
-using System.Threading.Tasks;
 
 namespace Duende.IdentityServer.Validation;
 

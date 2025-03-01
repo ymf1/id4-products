@@ -9,8 +9,6 @@ using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores;
 using Duende.IdentityServer.Validation;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using System;
-using System.Net.Http;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
 using Microsoft.Extensions.Logging;

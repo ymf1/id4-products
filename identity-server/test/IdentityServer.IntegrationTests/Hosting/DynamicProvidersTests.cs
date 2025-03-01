@@ -7,18 +7,13 @@ using Duende.IdentityServer.Hosting.DynamicProviders;
 using Duende.IdentityServer.IntegrationTests.TestFramework;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
-using Shouldly;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Net;
-using System.Threading.Tasks;
-using Xunit;
 
 namespace IdentityServer.IntegrationTests.Hosting;
 

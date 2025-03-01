@@ -2,7 +2,6 @@
 // See LICENSE in the project root for license information.
 
 
-using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using System.Net;
@@ -13,7 +12,6 @@ using Duende.IdentityServer.ResponseHandling;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Validation;
 using Duende.IdentityServer.Extensions;
-using System.IO;
 using Duende.IdentityServer.Models;
 
 namespace Duende.IdentityServer.Endpoints;

@@ -4,7 +4,6 @@
 
 using Duende.IdentityServer.Models;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Validation;

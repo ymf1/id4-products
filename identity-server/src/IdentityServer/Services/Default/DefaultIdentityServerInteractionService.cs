@@ -4,11 +4,7 @@
 
 using Duende.IdentityServer.Extensions;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
-using System.Linq;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Stores;
 

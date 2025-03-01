@@ -3,9 +3,7 @@
 
 
 using System.Net;
-using Shouldly;
 using IntegrationTests.TestHosts;
-using Xunit;
 using Duende.IdentityServer.Configuration.Models.DynamicClientRegistration;
 using System.Net.Http.Json;
 using Duende.IdentityServer.Configuration.Models;

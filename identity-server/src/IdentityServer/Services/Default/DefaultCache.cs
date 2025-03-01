@@ -2,9 +2,7 @@
 // See LICENSE in the project root for license information.
 
 
-using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
-using System;
 using Microsoft.Extensions.Logging;
 using Duende.IdentityServer.Internal;
 using Duende.IdentityServer.Configuration;

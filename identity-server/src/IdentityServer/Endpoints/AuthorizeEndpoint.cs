@@ -4,7 +4,6 @@
 
 using System.Collections.Specialized;
 using System.Net;
-using System.Threading.Tasks;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Endpoints.Results;
 using Duende.IdentityServer.Hosting;

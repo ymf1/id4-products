@@ -3,9 +3,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Duende.IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.DataProtection;

@@ -3,8 +3,6 @@
 
 
 using Duende.IdentityServer.EntityFramework.Mappers;
-using Shouldly;
-using Xunit;
 using Models = Duende.IdentityServer.Models;
 using Entities = Duende.IdentityServer.EntityFramework.Entities;
 

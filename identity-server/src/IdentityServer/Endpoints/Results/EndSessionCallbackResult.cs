@@ -2,11 +2,8 @@
 // See LICENSE in the project root for license information.
 
 
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System.Net;
-using System;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Validation;
 using Duende.IdentityServer.Extensions;

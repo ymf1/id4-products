@@ -2,13 +2,9 @@
 // See LICENSE in the project root for license information.
 
 using Duende.Bff.Tests.TestHosts;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Xunit;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net;
-using Shouldly;
 using Xunit.Abstractions;
 
 namespace Duende.Bff.Tests.Endpoints.Management

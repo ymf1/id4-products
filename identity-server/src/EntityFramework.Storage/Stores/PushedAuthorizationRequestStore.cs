@@ -2,8 +2,6 @@
 // See LICENSE in the project root for license information.
 
 
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Duende.IdentityServer.EntityFramework.Interfaces;

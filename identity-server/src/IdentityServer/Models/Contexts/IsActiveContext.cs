@@ -5,7 +5,6 @@
 #nullable enable
 
 using Duende.IdentityServer.Extensions;
-using System;
 using System.Security.Claims;
 
 namespace Duende.IdentityServer.Models;

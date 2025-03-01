@@ -1,14 +1,7 @@
-
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Duende.IdentityServer.Hosting;
-using Shouldly;
 using IntegrationTests.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Xunit;
 
 
 namespace IntegrationTests.Hosting;

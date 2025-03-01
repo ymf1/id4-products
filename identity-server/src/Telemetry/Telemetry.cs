@@ -3,8 +3,6 @@
 
 
 using Duende.IdentityServer.Validation;
-using System;
-using System.Diagnostics;
 using System.Diagnostics.Metrics;
 
 namespace Duende.IdentityServer;

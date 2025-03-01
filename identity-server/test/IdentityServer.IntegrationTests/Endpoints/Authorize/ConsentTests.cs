@@ -2,25 +2,18 @@
 // See LICENSE in the project root for license information.
 
 
-using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Stores;
 using Duende.IdentityServer.Stores.Default;
 using Duende.IdentityServer.Stores.Serialization;
 using Duende.IdentityServer.Test;
-using Shouldly;
 using IntegrationTests.Common;
 using Microsoft.Extensions.DependencyInjection;
-using Xunit;
-using static Duende.IdentityServer.Models.IdentityResources;
 
 namespace IntegrationTests.Endpoints.Authorize;
 

@@ -4,10 +4,7 @@
 
 using Duende.IdentityModel;
 using Duende.IdentityServer.Extensions;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System;
 using Duende.IdentityServer.Models;
 
 namespace Duende.IdentityServer.Validation;

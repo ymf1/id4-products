@@ -2,19 +2,14 @@
 // See LICENSE in the project root for license information.
 
 
-using System.Collections.Generic;
-using Shouldly;
 using Duende.IdentityModel.Client;
 using IntegrationTests.Common;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System.Linq;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Models;
-using Xunit;
 using JsonWebKey = Microsoft.IdentityModel.Tokens.JsonWebKey;
 
 namespace IntegrationTests.Endpoints.Discovery;

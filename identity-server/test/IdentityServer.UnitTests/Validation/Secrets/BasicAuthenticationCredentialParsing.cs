@@ -2,19 +2,14 @@
 // See LICENSE in the project root for license information.
 
 
-using System;
-using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using Duende.IdentityModel.Client;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Validation;
-using Shouldly;
 using UnitTests.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
-using Xunit;
 
 namespace UnitTests.Validation.Secrets;
 

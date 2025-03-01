@@ -2,18 +2,14 @@
 // See LICENSE in the project root for license information.
 
 
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Validation;
-using Shouldly;
 using UnitTests.Common;
-using Xunit;
 
 namespace UnitTests.Validation.EndSessionRequestValidation;
 

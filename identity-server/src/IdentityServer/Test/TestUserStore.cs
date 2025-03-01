@@ -3,11 +3,8 @@
 
 
 using Duende.IdentityModel;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System;
 
 namespace Duende.IdentityServer.Test;
 

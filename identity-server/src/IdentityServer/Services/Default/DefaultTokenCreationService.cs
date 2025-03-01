@@ -5,10 +5,7 @@
 using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Models;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Duende.IdentityServer.Configuration;
 
 using Microsoft.IdentityModel.JsonWebTokens;

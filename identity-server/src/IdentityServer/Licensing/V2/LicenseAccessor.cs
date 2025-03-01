@@ -3,9 +3,6 @@
 
 #nullable enable
 
-using System;
-using System.IO;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using Duende.IdentityServer.Configuration;

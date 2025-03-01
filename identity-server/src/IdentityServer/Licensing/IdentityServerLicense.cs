@@ -4,7 +4,6 @@
 
 #nullable disable
 
-using System;
 using System.Security.Claims;
 
 namespace Duende.IdentityServer;

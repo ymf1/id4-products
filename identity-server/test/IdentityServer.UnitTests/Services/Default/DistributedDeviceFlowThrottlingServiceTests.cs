@@ -6,9 +6,9 @@ using System.Text;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
-using UnitTests.Common;
-using Microsoft.Extensions.Caching.Distributed;
 using Duende.IdentityServer.Stores;
+using Microsoft.Extensions.Caching.Distributed;
+using UnitTests.Common;
 
 namespace UnitTests.Services.Default;
 

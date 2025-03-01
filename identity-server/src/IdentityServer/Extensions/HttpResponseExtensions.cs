@@ -2,10 +2,10 @@
 // See LICENSE in the project root for license information.
 
 
-using Duende.IdentityServer.Models;
-using Microsoft.AspNetCore.Http;
 using System.Text;
 using Duende.IdentityServer.Configuration;
+using Duende.IdentityServer.Models;
+using Microsoft.AspNetCore.Http;
 
 #pragma warning disable 1591
 

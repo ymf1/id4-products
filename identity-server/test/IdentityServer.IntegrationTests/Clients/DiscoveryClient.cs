@@ -3,9 +3,9 @@
 
 
 using Duende.IdentityModel.Client;
+using IntegrationTests.Clients.Setup;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using IntegrationTests.Clients.Setup;
 
 namespace IntegrationTests.Clients;
 

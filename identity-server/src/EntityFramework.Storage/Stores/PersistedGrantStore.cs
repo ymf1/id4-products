@@ -2,14 +2,14 @@
 // See LICENSE in the project root for license information.
 
 
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Duende.IdentityServer.EntityFramework.Interfaces;
 using Duende.IdentityServer.EntityFramework.Mappers;
 using Duende.IdentityServer.Extensions;
-using Duende.IdentityServer.Stores;
 using Duende.IdentityServer.Services;
+using Duende.IdentityServer.Stores;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Duende.IdentityServer.EntityFramework.Stores;
 

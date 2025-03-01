@@ -3,8 +3,8 @@
 
 
 using Duende.IdentityServer.Models;
-using Duende.IdentityServer.Validation;
 using Duende.IdentityServer.Stores;
+using Duende.IdentityServer.Validation;
 using Microsoft.Extensions.Logging;
 
 namespace Duende.IdentityServer.Services;

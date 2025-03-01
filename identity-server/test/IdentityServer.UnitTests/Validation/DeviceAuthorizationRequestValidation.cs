@@ -3,10 +3,10 @@
 
 
 using System.Collections.Specialized;
+using Duende.IdentityModel;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Validation;
-using Duende.IdentityModel;
 using UnitTests.Validation.Setup;
 
 namespace UnitTests.Validation;

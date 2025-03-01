@@ -2,11 +2,11 @@
 // See LICENSE in the project root for license information.
 
 
+using System.Text.Encodings.Web;
 using Duende.IdentityServer.IntegrationTests.TestFramework;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System.Text.Encodings.Web;
 
 namespace Duende.IdentityServer.IntegrationTests.TestFramework
 {

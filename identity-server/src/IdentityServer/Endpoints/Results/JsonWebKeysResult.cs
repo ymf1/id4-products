@@ -3,9 +3,9 @@
 
 
 using Duende.IdentityServer.Extensions;
-using Microsoft.AspNetCore.Http;
 using Duende.IdentityServer.Hosting;
 using Duende.IdentityServer.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Duende.IdentityServer.Endpoints.Results;
 

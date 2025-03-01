@@ -2,14 +2,14 @@
 // See LICENSE in the project root for license information.
 
 
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
-using Microsoft.Extensions.Logging;
-using Duende.IdentityServer.Extensions;
 using Duende.IdentityModel;
 using Duende.IdentityServer.Configuration.DependencyInjection;
+using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace Duende.IdentityServer.Hosting;
 

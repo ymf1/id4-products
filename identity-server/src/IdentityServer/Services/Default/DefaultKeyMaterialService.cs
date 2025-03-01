@@ -2,11 +2,11 @@
 // See LICENSE in the project root for license information.
 
 
-using Microsoft.IdentityModel.Tokens;
-using Duende.IdentityServer.Models;
-using Duende.IdentityServer.Stores;
 using Duende.IdentityServer.Extensions;
+using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services.KeyManagement;
+using Duende.IdentityServer.Stores;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Duende.IdentityServer.Services;
 

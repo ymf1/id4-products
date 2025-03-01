@@ -2,19 +2,19 @@
 // See LICENSE in the project root for license information.
 
 
+using System.Collections.Specialized;
+using System.Net;
+using Duende.IdentityModel;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Endpoints.Results;
 using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Hosting;
+using Duende.IdentityServer.Licensing.V2;
 using Duende.IdentityServer.Logging.Models;
 using Duende.IdentityServer.ResponseHandling;
 using Duende.IdentityServer.Validation;
-using Duende.IdentityModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using System.Collections.Specialized;
-using System.Net;
-using Duende.IdentityServer.Licensing.V2;
 
 namespace Duende.IdentityServer.Endpoints;
 internal class PushedAuthorizationEndpoint : IEndpointHandler

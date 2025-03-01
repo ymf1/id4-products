@@ -2,16 +2,16 @@
 // See LICENSE in the project root for license information.
 
 
+using System.Security.Claims;
+using System.Text;
+using System.Text.Encodings.Web;
 using Duende.IdentityModel;
+using Duende.IdentityServer.Stores;
+using Duende.IdentityServer.Validation;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System.Security.Claims;
-using System.Text.Encodings.Web;
-using Duende.IdentityServer.Validation;
 using Microsoft.Net.Http.Headers;
-using System.Text;
-using Duende.IdentityServer.Stores;
 using static Duende.IdentityModel.OidcConstants;
 
 namespace Duende.IdentityServer.Hosting.LocalApiAuthentication;

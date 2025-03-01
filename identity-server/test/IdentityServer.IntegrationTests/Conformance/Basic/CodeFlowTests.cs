@@ -4,10 +4,10 @@
 
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Duende.IdentityModel.Client;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Test;
-using Duende.IdentityModel.Client;
 using IntegrationTests.Common;
 
 namespace IntegrationTests.Conformance.Basic;

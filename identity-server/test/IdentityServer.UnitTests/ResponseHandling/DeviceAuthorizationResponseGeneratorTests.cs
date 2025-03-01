@@ -9,8 +9,8 @@ using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Services.Default;
 using Duende.IdentityServer.Stores;
 using Duende.IdentityServer.Validation;
-using UnitTests.Common;
 using Microsoft.Extensions.Logging.Abstractions;
+using UnitTests.Common;
 
 namespace UnitTests.ResponseHandling;
 

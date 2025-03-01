@@ -4,8 +4,8 @@
 
 #nullable enable
 
-using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace Duende.IdentityServer.Hosting.LocalApiAuthentication;
 

@@ -8,8 +8,8 @@ using Duende.IdentityServer.Models;
 using Duende.IdentityServer.ResponseHandling;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Validation;
-using UnitTests.Common;
 using Microsoft.Extensions.Logging;
+using UnitTests.Common;
 using static Duende.IdentityModel.OidcConstants;
 
 namespace UnitTests.ResponseHandling.AuthorizeInteractionResponseGenerator;

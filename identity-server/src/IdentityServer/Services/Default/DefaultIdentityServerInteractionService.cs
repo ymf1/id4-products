@@ -3,10 +3,10 @@
 
 
 using Duende.IdentityServer.Extensions;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Stores;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace Duende.IdentityServer.Services;
 

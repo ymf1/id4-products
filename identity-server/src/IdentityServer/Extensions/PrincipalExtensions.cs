@@ -2,10 +2,10 @@
 // See LICENSE in the project root for license information.
 
 
-using Duende.IdentityModel;
 using System.Diagnostics;
 using System.Security.Claims;
 using System.Security.Principal;
+using Duende.IdentityModel;
 
 namespace Duende.IdentityServer.Extensions;
 

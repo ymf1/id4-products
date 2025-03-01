@@ -2,6 +2,9 @@
 // See LICENSE in the project root for license information.
 
 
+using System.Net;
+using System.Reflection;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,9 +12,6 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System.Net;
-using System.Reflection;
-using System.Security.Claims;
 
 namespace Duende.IdentityServer.IntegrationTests.TestFramework;
 

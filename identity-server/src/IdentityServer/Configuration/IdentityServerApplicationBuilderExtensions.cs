@@ -4,20 +4,20 @@
 
 #nullable enable
 
+using System.Reflection;
+using System.Runtime.InteropServices;
+using Duende.IdentityModel;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Hosting;
 using Duende.IdentityServer.Hosting.DynamicProviders;
+using Duende.IdentityServer.Licensing.V2;
 using Duende.IdentityServer.Stores;
-using Duende.IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using Duende.IdentityServer.Licensing.V2;
 
 namespace Microsoft.AspNetCore.Builder;
 

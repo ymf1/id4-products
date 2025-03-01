@@ -1,6 +1,6 @@
+using System;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
-using System;
 
 namespace Api.DPoP;
 

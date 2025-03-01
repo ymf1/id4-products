@@ -2,6 +2,7 @@
 // See LICENSE in the project root for license information.
 
 
+using System.Security.Claims;
 using Duende.IdentityModel.Client;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Extensions;
@@ -16,7 +17,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.JsonWebTokens;
-using System.Security.Claims;
 
 namespace IntegrationTests.Hosting;
 

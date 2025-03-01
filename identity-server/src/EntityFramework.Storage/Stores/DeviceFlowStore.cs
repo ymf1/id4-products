@@ -6,11 +6,11 @@ using Duende.IdentityModel;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Duende.IdentityServer.EntityFramework.Interfaces;
 using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores;
 using Duende.IdentityServer.Stores.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Duende.IdentityServer.Services;
 
 namespace Duende.IdentityServer.EntityFramework.Stores;
 

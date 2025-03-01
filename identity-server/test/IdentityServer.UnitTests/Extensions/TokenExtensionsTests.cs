@@ -2,13 +2,13 @@
 // See LICENSE in the project root for license information.
 
 
+using System.Security.Claims;
+using System.Text.Json;
+using Duende.IdentityModel;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Models;
-using Duende.IdentityModel;
-using System.Security.Claims;
-using System.Text.Json;
 using UnitTests.Common;
 
 namespace UnitTests.Extensions;

@@ -1,8 +1,8 @@
-﻿using Duende.IdentityModel;
-using Duende.IdentityModel.Client;
-using System;
+﻿using System;
 using System.Text;
 using System.Text.Json;
+using Duende.IdentityModel;
+using Duende.IdentityModel.Client;
 
 namespace Clients
 {

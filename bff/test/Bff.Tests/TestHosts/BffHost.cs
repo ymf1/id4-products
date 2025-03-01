@@ -1,14 +1,14 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
+using System.Net;
+using System.Text.Json;
 using Duende.Bff.Tests.TestFramework;
+using Duende.Bff.Yarp;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using System.Net;
-using System.Text.Json;
-using Duende.Bff.Yarp;
-using Microsoft.AspNetCore.Authentication;
 using Yarp.ReverseProxy.Forwarder;
 using Yarp.ReverseProxy.Transforms;
 using Yarp.ReverseProxy.Transforms.Builder;

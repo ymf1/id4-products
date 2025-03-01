@@ -1,9 +1,9 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
+using Duende.AccessTokenManagement.OpenIdConnect;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
-using Duende.AccessTokenManagement.OpenIdConnect;
 using Microsoft.Extensions.Options;
 
 namespace Duende.Bff;

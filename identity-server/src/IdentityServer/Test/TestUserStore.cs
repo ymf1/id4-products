@@ -2,9 +2,9 @@
 // See LICENSE in the project root for license information.
 
 
-using Duende.IdentityModel;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Duende.IdentityModel;
 
 namespace Duende.IdentityServer.Test;
 

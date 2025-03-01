@@ -8,9 +8,9 @@ using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Services;
-using UnitTests.Common;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
+using UnitTests.Common;
 
 namespace UnitTests.Services.Default;
 

@@ -2,14 +2,14 @@
 // See LICENSE in the project root for license information.
 
 
-using Microsoft.AspNetCore.Http;
 using System.Net;
-using Duende.IdentityServer.Configuration;
-using Duende.IdentityServer.Validation;
-using Duende.IdentityServer.Extensions;
-using System.Text.Encodings.Web;
 using System.Text;
+using System.Text.Encodings.Web;
+using Duende.IdentityServer.Configuration;
+using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Hosting;
+using Duende.IdentityServer.Validation;
+using Microsoft.AspNetCore.Http;
 
 namespace Duende.IdentityServer.Endpoints.Results;
 

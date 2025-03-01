@@ -2,10 +2,10 @@
 // See LICENSE in the project root for license information.
 
 
-using Duende.IdentityServer.Extensions;
 using System.Security.Claims;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Duende.IdentityServer.Extensions;
 
 #pragma warning disable 1591
 

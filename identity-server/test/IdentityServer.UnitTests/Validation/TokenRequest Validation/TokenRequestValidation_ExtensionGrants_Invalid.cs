@@ -3,8 +3,8 @@
 
 
 using System.Collections.Specialized;
-using Duende.IdentityServer.Stores;
 using Duende.IdentityModel;
+using Duende.IdentityServer.Stores;
 using UnitTests.Validation.Setup;
 
 namespace UnitTests.Validation.TokenRequest_Validation;

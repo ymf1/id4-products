@@ -2,11 +2,11 @@
 // See LICENSE in the project root for license information.
 
 
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Extensions.DependencyInjection;
 

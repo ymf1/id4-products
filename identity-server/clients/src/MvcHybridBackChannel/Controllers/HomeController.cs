@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
+using System.Globalization;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Clients;
 using Duende.IdentityModel.Client;
-using System.Globalization;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MvcHybrid.Controllers
 {

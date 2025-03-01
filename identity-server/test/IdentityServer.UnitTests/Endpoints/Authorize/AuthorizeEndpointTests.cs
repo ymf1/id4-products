@@ -10,9 +10,9 @@ using Duende.IdentityServer.Endpoints;
 using Duende.IdentityServer.Endpoints.Results;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Validation;
-using UnitTests.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using UnitTests.Common;
 
 namespace UnitTests.Endpoints.Authorize;
 

@@ -5,13 +5,13 @@
 using System.Net;
 using System.Security.Claims;
 using System.Text.Json;
+using Duende.IdentityModel.Client;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Test;
-using Duende.IdentityModel.Client;
 using IdentityServer.IntegrationTests.Common;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;

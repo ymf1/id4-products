@@ -3,9 +3,9 @@
 
 
 using Duende.IdentityServer.Extensions;
-using Microsoft.Extensions.Logging;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
+using Microsoft.Extensions.Logging;
 
 namespace Duende.IdentityServer.Test;
 

@@ -7,9 +7,9 @@ using Duende.IdentityModel.Client;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Validation;
-using UnitTests.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
+using UnitTests.Common;
 
 namespace UnitTests.Validation.Secrets;
 

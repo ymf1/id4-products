@@ -1,8 +1,8 @@
-﻿using Clients;
-using Duende.IdentityModel.Client;
-using System;
+﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Clients;
+using Duende.IdentityModel.Client;
 
 namespace ConsoleResourceOwnerFlowRefreshToken
 {

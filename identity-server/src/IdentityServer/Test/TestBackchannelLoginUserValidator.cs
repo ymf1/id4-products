@@ -2,10 +2,10 @@
 // See LICENSE in the project root for license information.
 
 
+using System.Security.Claims;
+using Duende.IdentityModel;
 using Duende.IdentityServer.Test;
 using Duende.IdentityServer.Validation;
-using Duende.IdentityModel;
-using System.Security.Claims;
 
 namespace Microsoft.Extensions.DependencyInjection;
 

@@ -4,15 +4,15 @@
 
 #nullable enable
 
+using Duende.IdentityServer;
+using Duende.IdentityServer.Configuration;
+using Duende.IdentityServer.Hosting.DynamicProviders;
 using Duende.IdentityServer.ResponseHandling;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores;
 using Duende.IdentityServer.Validation;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Duende.IdentityServer;
-using Duende.IdentityServer.Configuration;
 using Microsoft.Extensions.Logging;
-using Duende.IdentityServer.Hosting.DynamicProviders;
 
 namespace Microsoft.Extensions.DependencyInjection;
 

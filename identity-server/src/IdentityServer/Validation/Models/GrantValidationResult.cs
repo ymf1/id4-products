@@ -2,9 +2,9 @@
 // See LICENSE in the project root for license information.
 
 
+using System.Security.Claims;
 using Duende.IdentityModel;
 using Duende.IdentityServer.Extensions;
-using System.Security.Claims;
 using Duende.IdentityServer.Models;
 
 namespace Duende.IdentityServer.Validation;

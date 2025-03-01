@@ -4,6 +4,7 @@
 
 using System.Net;
 using System.Security.Claims;
+using Duende.IdentityModel;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Models;
@@ -12,7 +13,6 @@ using Duende.IdentityServer.Stores;
 using Duende.IdentityServer.Stores.Default;
 using Duende.IdentityServer.Test;
 using Duende.IdentityServer.Validation;
-using Duende.IdentityModel;
 using IntegrationTests.Common;
 using Microsoft.Extensions.DependencyInjection;
 

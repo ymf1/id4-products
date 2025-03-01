@@ -1,12 +1,12 @@
-using Clients;
-using Duende.IdentityModel.Client;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Clients;
+using Duende.IdentityModel.Client;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ConsoleClientCredentialsFlowDPoP
 {

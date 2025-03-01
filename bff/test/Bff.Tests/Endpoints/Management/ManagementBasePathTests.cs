@@ -1,10 +1,10 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
+using System.Net;
 using Duende.Bff.Tests.TestHosts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using System.Net;
 using Xunit.Abstractions;
 
 namespace Duende.Bff.Tests.Endpoints.Management

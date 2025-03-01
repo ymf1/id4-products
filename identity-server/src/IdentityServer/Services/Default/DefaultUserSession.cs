@@ -3,12 +3,12 @@
 
 
 using System.Security.Claims;
-using Duende.IdentityServer.Configuration;
 using Duende.IdentityModel;
+using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Extensions;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Authentication;
 
 namespace Duende.IdentityServer.Services;
 

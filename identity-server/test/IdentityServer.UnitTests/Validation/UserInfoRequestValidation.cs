@@ -2,12 +2,12 @@
 // See LICENSE in the project root for license information.
 
 
-using Duende.IdentityModel;
-using UnitTests.Validation.Setup;
 using System.Security.Claims;
+using Duende.IdentityModel;
 using Duende.IdentityServer.Stores;
 using Duende.IdentityServer.Validation;
 using UnitTests.Common;
+using UnitTests.Validation.Setup;
 
 namespace UnitTests.Validation;
 

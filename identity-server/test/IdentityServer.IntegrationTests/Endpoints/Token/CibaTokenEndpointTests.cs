@@ -5,13 +5,13 @@
 using System.Net;
 using System.Security.Claims;
 using System.Text.Json;
+using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Test;
+using Duende.IdentityServer.Validation;
 using IntegrationTests.Common;
 using Microsoft.Extensions.DependencyInjection;
-using Duende.IdentityServer.Services;
-using Duende.IdentityServer.Validation;
-using Duende.IdentityServer;
 
 namespace IntegrationTests.Endpoints.Token;
 

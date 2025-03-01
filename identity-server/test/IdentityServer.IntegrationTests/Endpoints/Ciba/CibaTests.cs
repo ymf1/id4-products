@@ -2,17 +2,17 @@
 // See LICENSE in the project root for license information.
 
 
-using Duende.IdentityServer;
-using Duende.IdentityServer.Models;
-using Duende.IdentityServer.Test;
-using IntegrationTests.Common;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
-using Microsoft.Extensions.DependencyInjection;
-using Duende.IdentityServer.Validation;
-using Duende.IdentityServer.Services;
 using System.Text.Json;
-using System.IdentityModel.Tokens.Jwt;
+using Duende.IdentityServer;
+using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Services;
+using Duende.IdentityServer.Test;
+using Duende.IdentityServer.Validation;
+using IntegrationTests.Common;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using static Duende.IdentityServer.IdentityServerConstants;
 

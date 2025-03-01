@@ -1,11 +1,11 @@
+using System;
 using Clients;
+using Duende.AccessTokenManagement;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using Microsoft.Extensions.Configuration;
-using Duende.AccessTokenManagement;
 
 namespace MvcJarJwt;
 

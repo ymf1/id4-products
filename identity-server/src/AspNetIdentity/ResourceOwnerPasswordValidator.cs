@@ -2,10 +2,10 @@
 // See LICENSE in the project root for license information.
 
 
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Validation;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using static Duende.IdentityModel.OidcConstants;
 
 namespace Duende.IdentityServer.AspNetIdentity;

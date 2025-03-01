@@ -2,15 +2,15 @@
 // See LICENSE in the project root for license information.
 
 
-using Duende.IdentityServer.Extensions;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-using Duende.IdentityServer.Events;
-using Duende.IdentityServer.Services;
-using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Configuration;
+using Duende.IdentityServer.Events;
+using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Licensing.V2;
+using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Duende.IdentityServer.Hosting;
 

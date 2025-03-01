@@ -2,9 +2,9 @@
 // See LICENSE in the project root for license information.
 
 
-using Microsoft.Extensions.Hosting;
 using Duende.IdentityServer.EntityFramework;
 using Duende.IdentityServer.EntityFramework.Options;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Extensions.DependencyInjection;

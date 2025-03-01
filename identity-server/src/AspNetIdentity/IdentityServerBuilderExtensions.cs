@@ -4,13 +4,13 @@
 
 #nullable enable
 
-using Duende.IdentityServer;
 using Duende.IdentityModel;
+using Duende.IdentityServer;
 using Duende.IdentityServer.AspNetIdentity;
+using Duende.IdentityServer.Configuration;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
-using Duende.IdentityServer.Configuration;
 
 namespace Microsoft.Extensions.DependencyInjection;
 

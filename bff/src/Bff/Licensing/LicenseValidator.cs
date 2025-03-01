@@ -3,11 +3,11 @@
 
 #nullable disable
 
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.JsonWebTokens;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Duende;
 

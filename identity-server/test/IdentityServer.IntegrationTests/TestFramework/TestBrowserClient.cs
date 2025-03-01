@@ -2,11 +2,11 @@
 // See LICENSE in the project root for license information.
 
 
+using System.Diagnostics;
+using System.Net;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
-using System.Diagnostics;
-using System.Net;
 
 namespace Duende.IdentityServer.IntegrationTests.TestFramework;
 

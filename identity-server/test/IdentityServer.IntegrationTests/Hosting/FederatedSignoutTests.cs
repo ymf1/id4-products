@@ -4,10 +4,10 @@
 
 using System.Net;
 using System.Security.Claims;
+using Duende.IdentityModel;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Test;
-using Duende.IdentityModel;
 using IntegrationTests.Common;
 using Microsoft.AspNetCore.Authentication;
 

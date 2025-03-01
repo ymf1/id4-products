@@ -2,9 +2,9 @@
 // See LICENSE in the project root for license information.
 
 
+using Duende.IdentityServer.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Duende.IdentityServer.Services;
 
 #pragma warning disable 1591
 

@@ -2,9 +2,9 @@
 // See LICENSE in the project root for license information.
 
 
-using UnitTests.Common;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Validation;
+using UnitTests.Common;
 
 namespace UnitTests.Validation;
 

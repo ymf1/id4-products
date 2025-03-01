@@ -2,16 +2,16 @@
 // See LICENSE in the project root for license information.
 
 
-using Duende.IdentityServer.Extensions;
-using Duende.IdentityModel;
-using Microsoft.AspNetCore.Http;
 using System.Text.Encodings.Web;
+using Duende.IdentityModel;
 using Duende.IdentityServer.Configuration;
+using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Hosting;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.ResponseHandling;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores;
+using Microsoft.AspNetCore.Http;
 
 namespace Duende.IdentityServer.Endpoints.Results;
 

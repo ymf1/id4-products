@@ -2,9 +2,9 @@
 // See LICENSE in the project root for license information.
 
 
-using Duende.IdentityServer.Extensions;
 using System.Collections.Specialized;
 using Duende.IdentityServer.Configuration;
+using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.ResponseHandling;
 
 namespace Duende.IdentityServer.Models;

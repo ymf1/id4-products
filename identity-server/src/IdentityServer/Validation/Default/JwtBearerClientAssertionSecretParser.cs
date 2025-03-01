@@ -3,10 +3,10 @@
 
 
 using System.IdentityModel.Tokens.Jwt;
-using Duende.IdentityServer.Configuration;
-using Duende.IdentityServer.Models;
 using Duende.IdentityModel;
+using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Extensions;
+using Duende.IdentityServer.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 

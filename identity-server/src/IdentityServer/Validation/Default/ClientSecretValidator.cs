@@ -3,11 +3,11 @@
 
 
 using Duende.IdentityServer.Events;
-using Duende.IdentityServer.Services;
-using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Http;
-using Duende.IdentityServer.Stores;
 using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Services;
+using Duende.IdentityServer.Stores;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace Duende.IdentityServer.Validation;
 

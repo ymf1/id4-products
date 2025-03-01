@@ -4,11 +4,11 @@
 
 using System.Net;
 using System.Security.Claims;
+using System.Text;
 using System.Text.Json;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Test;
 using IntegrationTests.Common;
-using System.Text;
 
 namespace IntegrationTests.Endpoints.Token;
 

@@ -1,14 +1,14 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http;
 using Clients;
 using Duende.IdentityModel;
+using Duende.IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Net.Http;
-using Duende.IdentityModel.Client;
-using Microsoft.Extensions.Configuration;
 
 namespace MvcCode;
 

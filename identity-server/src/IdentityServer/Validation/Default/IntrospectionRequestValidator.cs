@@ -2,12 +2,12 @@
 // See LICENSE in the project root for license information.
 
 
+using System.Security.Claims;
+using Duende.IdentityModel;
 using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
-using Duende.IdentityModel;
 using Microsoft.Extensions.Logging;
-using System.Security.Claims;
 using static Duende.IdentityServer.Constants;
 
 namespace Duende.IdentityServer.Validation;

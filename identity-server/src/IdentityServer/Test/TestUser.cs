@@ -2,8 +2,8 @@
 // See LICENSE in the project root for license information.
 
 
-using Duende.IdentityModel;
 using System.Security.Claims;
+using Duende.IdentityModel;
 
 namespace Duende.IdentityServer.Test;
 

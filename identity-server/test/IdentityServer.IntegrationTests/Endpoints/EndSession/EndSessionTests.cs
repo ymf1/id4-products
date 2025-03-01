@@ -7,10 +7,10 @@ using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using Duende.IdentityModel;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Test;
-using Duende.IdentityModel;
 using IntegrationTests.Common;
 using Microsoft.AspNetCore.WebUtilities;
 

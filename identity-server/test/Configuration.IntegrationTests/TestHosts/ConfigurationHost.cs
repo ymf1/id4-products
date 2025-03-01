@@ -2,16 +2,16 @@
 // See LICENSE in the project root for license information.
 
 
-using IntegrationTests.TestFramework;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Configuration.EntityFramework;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
-using Duende.IdentityServer.Services;
 using Duende.IdentityServer.EntityFramework.Options;
 using Duende.IdentityServer.EntityFramework.Storage;
+using Duende.IdentityServer.Services;
+using IntegrationTests.TestFramework;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace IntegrationTests.TestHosts;
 

@@ -2,10 +2,10 @@
 // See LICENSE in the project root for license information.
 
 
-using Duende.IdentityServer.Extensions;
-using Microsoft.AspNetCore.Http;
 using System.Net;
+using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Hosting;
+using Microsoft.AspNetCore.Http;
 
 namespace Duende.IdentityServer.Endpoints.Results;
 

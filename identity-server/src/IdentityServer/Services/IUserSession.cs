@@ -4,8 +4,8 @@
 
 #nullable enable
 
-using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Duende.IdentityServer.Services;
 

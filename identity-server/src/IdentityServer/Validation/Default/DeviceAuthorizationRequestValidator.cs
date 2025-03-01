@@ -3,10 +3,10 @@
 
 
 using System.Collections.Specialized;
-using Duende.IdentityServer.Configuration;
-using Duende.IdentityServer.Logging;
 using Duende.IdentityModel;
+using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Extensions;
+using Duende.IdentityServer.Logging;
 using Duende.IdentityServer.Models;
 using Microsoft.Extensions.Logging;
 

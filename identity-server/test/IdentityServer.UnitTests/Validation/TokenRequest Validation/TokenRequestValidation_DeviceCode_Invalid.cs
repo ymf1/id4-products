@@ -3,11 +3,11 @@
 
 
 using System.Collections.Specialized;
+using Duende.IdentityModel;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Stores;
-using Duende.IdentityModel;
 using UnitTests.Common;
 using UnitTests.Validation.Setup;
 

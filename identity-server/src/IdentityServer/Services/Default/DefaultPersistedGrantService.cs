@@ -2,10 +2,10 @@
 // See LICENSE in the project root for license information.
 
 
-using Microsoft.Extensions.Logging;
+using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Stores;
 using Duende.IdentityServer.Stores.Serialization;
-using Duende.IdentityServer.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Duende.IdentityServer.Services;
 

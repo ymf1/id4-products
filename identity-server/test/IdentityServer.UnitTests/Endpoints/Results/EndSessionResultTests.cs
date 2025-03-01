@@ -5,11 +5,11 @@
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Endpoints.Results;
 using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Validation;
-using UnitTests.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
-using Duende.IdentityServer.Services;
+using UnitTests.Common;
 
 namespace UnitTests.Endpoints.Results;
 

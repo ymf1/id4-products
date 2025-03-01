@@ -2,17 +2,17 @@
 // See LICENSE in the project root for license information.
 
 
+using Duende.IdentityModel;
+using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Endpoints.Results;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.ResponseHandling;
+using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Validation;
-using Duende.IdentityModel;
-using UnitTests.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
-using Duende.IdentityServer.Services;
-using Duende.IdentityServer;
+using UnitTests.Common;
 using UnitTests.Validation.Setup;
 
 namespace UnitTests.Endpoints.Results;

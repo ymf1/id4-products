@@ -3,9 +3,9 @@
 
 
 using System.Collections.Specialized;
+using Duende.IdentityModel;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Validation;
-using Duende.IdentityModel;
 using UnitTests.Validation.Setup;
 
 namespace UnitTests.Validation.AuthorizeRequest_Validation;

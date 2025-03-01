@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
+using Duende.AccessTokenManagement;
 using Duende.IdentityModel;
 using Duende.IdentityModel.Client;
-using Duende.AccessTokenManagement;
 
 namespace MvcJarJwt;
 

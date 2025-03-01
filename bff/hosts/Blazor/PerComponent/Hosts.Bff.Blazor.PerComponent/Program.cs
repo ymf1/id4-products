@@ -1,9 +1,9 @@
-using Hosts.Bff.Blazor.PerComponent.Components;
 using Duende.Bff;
 using Duende.Bff.Blazor;
 using Duende.Bff.Yarp;
 using Hosts.Bff.Blazor.PerComponent;
 using Hosts.Bff.Blazor.PerComponent.Client;
+using Hosts.Bff.Blazor.PerComponent.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 

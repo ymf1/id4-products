@@ -1,11 +1,11 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
-using Duende.Bff.Tests.TestFramework;
-using Duende.Bff.Tests.TestHosts;
 using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
+using Duende.Bff.Tests.TestFramework;
+using Duende.Bff.Tests.TestHosts;
 using Xunit.Abstractions;
 
 namespace Duende.Bff.Tests.Endpoints

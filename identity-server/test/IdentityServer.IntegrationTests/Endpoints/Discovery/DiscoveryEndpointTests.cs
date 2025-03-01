@@ -2,14 +2,14 @@
 // See LICENSE in the project root for license information.
 
 
-using Duende.IdentityModel.Client;
-using IntegrationTests.Common;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using System.Text.Json;
+using Duende.IdentityModel.Client;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Models;
+using IntegrationTests.Common;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using JsonWebKey = Microsoft.IdentityModel.Tokens.JsonWebKey;
 
 namespace IntegrationTests.Endpoints.Discovery;

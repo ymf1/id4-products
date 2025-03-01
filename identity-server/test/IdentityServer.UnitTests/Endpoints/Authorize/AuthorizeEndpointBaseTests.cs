@@ -12,11 +12,11 @@ using Duende.IdentityServer.Hosting;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.ResponseHandling;
 using Duende.IdentityServer.Services;
+using Duende.IdentityServer.Stores;
 using Duende.IdentityServer.Validation;
-using UnitTests.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Duende.IdentityServer.Stores;
+using UnitTests.Common;
 
 namespace UnitTests.Endpoints.Authorize;
 

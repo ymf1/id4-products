@@ -2,10 +2,10 @@
 // See LICENSE in the project root for license information.
 
 
-using Microsoft.AspNetCore.DataProtection;
-using Duende.IdentityModel;
 using System.Text;
+using Duende.IdentityModel;
 using Duende.IdentityServer.Models;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Logging;
 
 namespace Duende.IdentityServer.Stores;

@@ -2,9 +2,9 @@
 // See LICENSE in the project root for license information.
 
 
-using Duende.IdentityServer.Extensions;
 using System.Security.Cryptography;
 using System.Text;
+using Duende.IdentityServer.Extensions;
 
 namespace Duende.IdentityServer.Models;
 

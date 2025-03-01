@@ -2,12 +2,11 @@
 // See LICENSE in the project root for license information.
 
 
+using System.Text.Json;
+using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Models;
 using Microsoft.Extensions.Logging;
-using System.Text.Json;
-using Duende.IdentityServer.Configuration;
-
 using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace Duende.IdentityServer.Services;

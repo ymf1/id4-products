@@ -1,11 +1,11 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
+using System.Security.Claims;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System.Security.Claims;
 using Xunit.Abstractions;
 
 namespace Duende.Bff.Tests.TestHosts

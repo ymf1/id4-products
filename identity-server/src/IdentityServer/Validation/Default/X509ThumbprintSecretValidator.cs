@@ -3,8 +3,8 @@
 
 
 using System.Security.Cryptography.X509Certificates;
-using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Extensions;
+using Duende.IdentityServer.Models;
 using Microsoft.Extensions.Logging;
 
 namespace Duende.IdentityServer.Validation;

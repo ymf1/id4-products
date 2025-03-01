@@ -2,10 +2,10 @@
 // See LICENSE in the project root for license information.
 
 
+using Duende.IdentityModel;
+using Duende.IdentityServer.Configuration.DependencyInjection;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Validation;
-using Duende.IdentityServer.Configuration.DependencyInjection;
-using Duende.IdentityModel;
 
 namespace Duende.IdentityServer.Services;
 

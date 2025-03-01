@@ -3,9 +3,9 @@
 
 
 using System.Security.Claims;
+using Duende.IdentityModel;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Test;
-using Duende.IdentityModel;
 
 namespace IntegrationTests.Clients.Setup;
 

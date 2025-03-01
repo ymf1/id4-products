@@ -2,6 +2,7 @@
 // See LICENSE in the project root for license information.
 
 
+using System.Net;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Hosting.DynamicProviders;
 using Duende.IdentityServer.IntegrationTests.TestFramework;
@@ -13,7 +14,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System.Net;
 
 namespace IdentityServer.IntegrationTests.Hosting;
 

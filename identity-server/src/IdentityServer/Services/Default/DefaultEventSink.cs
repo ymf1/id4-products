@@ -2,8 +2,8 @@
 // See LICENSE in the project root for license information.
 
 
-using Microsoft.Extensions.Logging;
 using Duende.IdentityServer.Events;
+using Microsoft.Extensions.Logging;
 
 namespace Duende.IdentityServer.Services;
 

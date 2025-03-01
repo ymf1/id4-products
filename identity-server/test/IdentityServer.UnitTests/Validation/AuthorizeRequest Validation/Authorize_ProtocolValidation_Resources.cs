@@ -3,12 +3,12 @@
 
 
 using System.Collections.Specialized;
+using Duende.IdentityModel;
 using Duende.IdentityServer.Configuration;
+using Duende.IdentityServer.Licensing.V2;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Stores;
 using Duende.IdentityServer.Validation;
-using Duende.IdentityModel;
-using Duende.IdentityServer.Licensing.V2;
 using Microsoft.Extensions.Logging.Abstractions;
 using UnitTests.Common;
 using UnitTests.Validation.Setup;

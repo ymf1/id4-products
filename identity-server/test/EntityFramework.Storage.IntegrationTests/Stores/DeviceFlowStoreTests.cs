@@ -2,17 +2,17 @@
 // See LICENSE in the project root for license information.
 
 
-using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using Duende.IdentityModel;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Duende.IdentityServer.EntityFramework.Options;
 using Duende.IdentityServer.EntityFramework.Stores;
 using Duende.IdentityServer.Models;
-using Duende.IdentityServer.Stores.Serialization;
-using Duende.IdentityModel;
-using Microsoft.EntityFrameworkCore.InMemory.Infrastructure.Internal;
 using Duende.IdentityServer.Services;
+using Duende.IdentityServer.Stores.Serialization;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.InMemory.Infrastructure.Internal;
 
 namespace EntityFramework.Storage.IntegrationTests.Stores;
 

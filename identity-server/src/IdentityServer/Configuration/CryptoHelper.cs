@@ -4,11 +4,11 @@
 
 #nullable enable
 
-using Duende.IdentityModel;
-using Microsoft.IdentityModel.Tokens;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using Duende.IdentityModel;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Duende.IdentityServer.Configuration;
 

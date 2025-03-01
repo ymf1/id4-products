@@ -2,8 +2,8 @@
 // See LICENSE in the project root for license information.
 
 
-using Microsoft.IdentityModel.Tokens;
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Duende.IdentityServer.Models;
 

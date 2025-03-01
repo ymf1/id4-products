@@ -4,8 +4,8 @@
 
 using System.Text;
 using Duende.IdentityServer.Validation;
-using UnitTests.Common;
 using Microsoft.AspNetCore.Http;
+using UnitTests.Common;
 
 namespace UnitTests.Validation;
 

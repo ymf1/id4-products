@@ -5,18 +5,18 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text.Json;
+using Duende.IdentityModel;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores;
 using Duende.IdentityServer.Validation;
-using Duende.IdentityModel;
+using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using UnitTests.Common;
 using UnitTests.Services.Default;
 using UnitTests.Validation.Setup;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 
 namespace UnitTests.Validation.Secrets;
 

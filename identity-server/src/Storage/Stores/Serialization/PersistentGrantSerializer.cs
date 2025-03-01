@@ -2,10 +2,10 @@
 // See LICENSE in the project root for license information.
 
 
-using Duende.IdentityServer.Models;
-using Microsoft.AspNetCore.DataProtection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Duende.IdentityServer.Models;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace Duende.IdentityServer.Stores.Serialization;
 

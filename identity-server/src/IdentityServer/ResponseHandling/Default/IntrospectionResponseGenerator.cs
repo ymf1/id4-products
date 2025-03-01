@@ -3,11 +3,11 @@
 
 
 using Duende.IdentityModel;
-using Duende.IdentityServer.Extensions;
-using Microsoft.Extensions.Logging;
 using Duende.IdentityServer.Events;
+using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Validation;
+using Microsoft.Extensions.Logging;
 
 namespace Duende.IdentityServer.ResponseHandling;
 

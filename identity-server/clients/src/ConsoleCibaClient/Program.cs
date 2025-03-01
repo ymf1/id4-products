@@ -1,7 +1,3 @@
-using Clients;
-using Duende.IdentityModel;
-using Duende.IdentityModel.Client;
-using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -9,6 +5,10 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
+using Clients;
+using Duende.IdentityModel;
+using Duende.IdentityModel.Client;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ConsoleCibaClient
 {

@@ -1,9 +1,9 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
+using System.Net;
 using Duende.Bff.Tests.TestFramework;
 using Microsoft.AspNetCore.Builder;
-using System.Net;
 using Xunit.Abstractions;
 
 namespace Duende.Bff.Tests

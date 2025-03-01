@@ -4,8 +4,8 @@
 
 #nullable enable
 
-using Duende.IdentityServer.Extensions;
 using System.Diagnostics;
+using Duende.IdentityServer.Extensions;
 
 namespace Duende.IdentityServer.Models;
 

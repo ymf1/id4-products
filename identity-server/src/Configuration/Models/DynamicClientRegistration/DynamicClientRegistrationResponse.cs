@@ -3,8 +3,8 @@
 
 
 using System.Text.Json.Serialization;
-using Duende.IdentityServer.Models;
 using Duende.IdentityModel;
+using Duende.IdentityServer.Models;
 
 namespace Duende.IdentityServer.Configuration.Models.DynamicClientRegistration;
 

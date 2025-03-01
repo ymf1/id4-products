@@ -2,11 +2,11 @@
 // See LICENSE in the project root for license information.
 
 
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 using System.Net;
 using Duende.IdentityServer.Endpoints.Results;
 using Duende.IdentityServer.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace Duende.IdentityServer.Endpoints;
 

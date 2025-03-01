@@ -3,10 +3,10 @@
 
 
 using System.Text.Json;
+using Duende.IdentityModel;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Services;
-using Duende.IdentityModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using UnitTests.Common;

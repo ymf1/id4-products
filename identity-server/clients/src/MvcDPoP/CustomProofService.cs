@@ -1,6 +1,6 @@
+using System.Threading.Tasks;
 using Duende.AccessTokenManagement;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 
 namespace MvcDPoP;
 

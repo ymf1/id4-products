@@ -5,8 +5,8 @@
 using System.Net;
 using System.Text;
 using System.Text.Json;
-using Duende.IdentityServer;
 using Duende.IdentityModel.Client;
+using Duende.IdentityServer;
 using IntegrationTests.Endpoints.Introspection.Setup;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;

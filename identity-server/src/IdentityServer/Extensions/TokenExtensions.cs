@@ -2,13 +2,13 @@
 // See LICENSE in the project root for license information.
 
 
-using Duende.IdentityModel;
-using Duende.IdentityServer.Models;
-using Microsoft.Extensions.Logging;
 using System.Security.Claims;
 using System.Text.Json;
+using Duende.IdentityModel;
 using Duende.IdentityServer.Configuration;
+using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Validation;
+using Microsoft.Extensions.Logging;
 
 namespace Duende.IdentityServer.Extensions;
 

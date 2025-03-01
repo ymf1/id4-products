@@ -2,9 +2,9 @@
 // See LICENSE in the project root for license information.
 
 
+using Duende.IdentityModel;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
-using Duende.IdentityModel;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace Duende.IdentityServer.Stores.Default;

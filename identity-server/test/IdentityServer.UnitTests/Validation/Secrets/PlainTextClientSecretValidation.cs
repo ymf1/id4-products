@@ -6,8 +6,8 @@ using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Stores;
 using Duende.IdentityServer.Validation;
-using UnitTests.Validation.Setup;
 using Microsoft.Extensions.Logging;
+using UnitTests.Validation.Setup;
 
 namespace UnitTests.Validation.Secrets;
 

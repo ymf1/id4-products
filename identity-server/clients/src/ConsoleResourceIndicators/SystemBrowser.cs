@@ -1,11 +1,11 @@
-﻿using Duende.IdentityModel.OidcClient.Browser;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Duende.IdentityModel.OidcClient.Browser;
 
 namespace ConsoleResourceIndicators
 {

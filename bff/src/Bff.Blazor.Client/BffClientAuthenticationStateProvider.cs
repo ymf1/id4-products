@@ -3,8 +3,8 @@
 
 using System.Security.Claims;
 using Duende.Bff.Blazor.Client.Internals;
-using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Duende.Bff.Blazor.Client;

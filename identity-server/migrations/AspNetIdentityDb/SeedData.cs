@@ -2,12 +2,12 @@
 using System;
 using System.Linq;
 using System.Security.Claims;
-using IdentityServerHost.Data;
 using Duende.IdentityModel;
+using IdentityServerHost.Data;
+using IdentityServerHost.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using IdentityServerHost.Models;
 
 namespace IdentityServerHost;
 

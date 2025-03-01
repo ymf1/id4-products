@@ -3,10 +3,10 @@
 
 
 using System.Security.Claims;
+using Duende.IdentityModel;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Validation;
-using Duende.IdentityModel;
 using UnitTests.Common;
 
 namespace UnitTests.ResponseHandling.AuthorizeInteractionResponseGenerator;

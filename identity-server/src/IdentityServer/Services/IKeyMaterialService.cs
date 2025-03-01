@@ -4,8 +4,8 @@
 
 #nullable enable
 
-using Microsoft.IdentityModel.Tokens;
 using Duende.IdentityServer.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Duende.IdentityServer.Services;
 

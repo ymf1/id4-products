@@ -4,8 +4,8 @@
 
 using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
-using Duende.IdentityServer.Hosting;
 using Duende.IdentityServer.Extensions;
+using Duende.IdentityServer.Hosting;
 
 namespace UnitTests.Extensions;
 

@@ -2,9 +2,9 @@
 // See LICENSE in the project root for license information.
 
 
-using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Duende.IdentityModel;
+using Microsoft.AspNetCore.Identity;
 
 namespace Duende.IdentityServer.AspNetIdentity;
 

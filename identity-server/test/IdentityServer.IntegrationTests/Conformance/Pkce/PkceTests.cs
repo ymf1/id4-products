@@ -4,11 +4,11 @@
 
 using System.Security.Claims;
 using System.Text;
+using Duende.IdentityModel;
+using Duende.IdentityModel.Client;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Test;
-using Duende.IdentityModel;
-using Duende.IdentityModel.Client;
 using IntegrationTests.Common;
 
 namespace IntegrationTests.Conformance.Pkce;

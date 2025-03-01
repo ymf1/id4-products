@@ -3,9 +3,9 @@
 
 
 using System.Diagnostics;
-using Microsoft.AspNetCore.Http;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace Duende.IdentityServer.Events;
 

@@ -2,13 +2,13 @@
 // See LICENSE in the project root for license information.
 
 
-using Microsoft.Extensions.Logging;
-using Duende.IdentityServer.Stores;
+using System.Security.Cryptography;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Internal;
-using System.Security.Cryptography;
 using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Stores;
+using Microsoft.Extensions.Logging;
 
 namespace Duende.IdentityServer.Services.KeyManagement;
 

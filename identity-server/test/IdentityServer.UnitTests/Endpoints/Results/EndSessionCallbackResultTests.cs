@@ -6,8 +6,8 @@ using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Endpoints.Results;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Validation;
-using UnitTests.Common;
 using Microsoft.AspNetCore.Http;
+using UnitTests.Common;
 
 namespace UnitTests.Endpoints.Results;
 

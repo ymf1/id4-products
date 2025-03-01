@@ -2,10 +2,10 @@
 // See LICENSE in the project root for license information.
 
 
+using System.Text;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Stores;
 using Microsoft.Extensions.Logging;
-using System.Text;
 
 namespace Duende.IdentityServer.Services.KeyManagement;
 

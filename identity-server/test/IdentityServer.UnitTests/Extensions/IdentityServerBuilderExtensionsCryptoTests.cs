@@ -2,11 +2,11 @@
 // See LICENSE in the project root for license information.
 
 
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using System.Security.Cryptography;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 
 namespace UnitTests.Extensions;
 

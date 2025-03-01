@@ -5,11 +5,11 @@
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
+using Duende.IdentityModel;
+using Duende.IdentityModel.Client;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Validation;
-using Duende.IdentityModel;
-using Duende.IdentityModel.Client;
 using IntegrationTests.Common;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;

@@ -5,8 +5,8 @@
 using System.Net;
 using System.Text;
 using System.Text.Json;
-using Duende.IdentityServer.Models;
 using Duende.IdentityModel;
+using Duende.IdentityServer.Models;
 using IntegrationTests.Common;
 
 namespace IntegrationTests.Endpoints.DeviceAuthorization;

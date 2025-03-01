@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Clients;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Clients;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MvcJarUriJwt.Controllers;
 

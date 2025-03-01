@@ -2,17 +2,17 @@
 // See LICENSE in the project root for license information.
 
 
-using Microsoft.Extensions.Logging;
-using Duende.IdentityServer.Configuration;
-using Microsoft.IdentityModel.JsonWebTokens;
-using Duende.IdentityServer.Extensions;
-using System.Text.Json;
-using Duende.IdentityModel;
-using Duende.IdentityServer.Services;
-using Duende.IdentityServer.Models;
-using Microsoft.AspNetCore.DataProtection;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
+using Duende.IdentityModel;
+using Duende.IdentityServer.Configuration;
+using Duende.IdentityServer.Extensions;
+using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Services;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace Duende.IdentityServer.Validation;
 

@@ -4,8 +4,8 @@
 
 #nullable enable
 
-using Duende.IdentityServer.Extensions;
 using Duende.IdentityModel;
+using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Licensing.V2;
 
 namespace Duende.IdentityServer.Validation;

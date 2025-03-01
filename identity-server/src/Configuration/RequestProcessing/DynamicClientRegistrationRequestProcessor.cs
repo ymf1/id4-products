@@ -2,11 +2,11 @@
 // See LICENSE in the project root for license information.
 
 
+using Duende.IdentityModel;
 using Duende.IdentityServer.Configuration.Configuration;
 using Duende.IdentityServer.Configuration.Models;
 using Duende.IdentityServer.Configuration.Models.DynamicClientRegistration;
 using Duende.IdentityServer.Models;
-using Duende.IdentityModel;
 
 namespace Duende.IdentityServer.Configuration.RequestProcessing;
 

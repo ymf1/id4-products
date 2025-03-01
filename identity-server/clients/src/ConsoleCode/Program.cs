@@ -1,10 +1,10 @@
-﻿using Clients;
+﻿using System;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Clients;
 using Duende.IdentityModel.Client;
 using Duende.IdentityModel.OidcClient;
 using Serilog;
-using System;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace ConsoleResourceIndicators
 {

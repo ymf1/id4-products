@@ -3,8 +3,8 @@
 
 
 using System.Security.Claims;
-using Duende.IdentityServer.Models;
 using Duende.IdentityModel;
+using Duende.IdentityServer.Models;
 using Microsoft.Extensions.Logging;
 
 namespace Duende.IdentityServer.Services;

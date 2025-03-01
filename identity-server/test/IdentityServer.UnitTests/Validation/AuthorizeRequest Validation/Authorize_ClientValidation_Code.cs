@@ -3,8 +3,8 @@
 
 
 using System.Collections.Specialized;
-using Duende.IdentityServer.Configuration;
 using Duende.IdentityModel;
+using Duende.IdentityServer.Configuration;
 using UnitTests.Common;
 using UnitTests.Validation.Setup;
 

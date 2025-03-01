@@ -2,19 +2,19 @@
 // See LICENSE in the project root for license information.
 
 
+using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
+using Duende.IdentityServer.Licensing.V2;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Services.Default;
+using Duende.IdentityServer.Services.KeyManagement;
 using Duende.IdentityServer.Stores;
 using Duende.IdentityServer.Stores.Serialization;
 using Duende.IdentityServer.Validation;
-using UnitTests.Common;
 using Microsoft.Extensions.Logging;
-using Duende.IdentityServer.Services.KeyManagement;
-using Duende.IdentityServer;
-using Duende.IdentityServer.Licensing.V2;
 using Microsoft.Extensions.Logging.Abstractions;
+using UnitTests.Common;
 
 namespace UnitTests.Validation.Setup;
 

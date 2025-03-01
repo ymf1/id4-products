@@ -2,9 +2,9 @@
 // See LICENSE in the project root for license information.
 
 
+using System.Text;
 using Duende.IdentityModel;
 using Microsoft.AspNetCore.Authentication;
-using System.Text;
 
 namespace Duende.IdentityServer.Extensions;
 

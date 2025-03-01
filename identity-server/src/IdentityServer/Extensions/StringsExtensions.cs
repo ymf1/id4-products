@@ -3,11 +3,11 @@
 
 
 #nullable enable
-using Microsoft.AspNetCore.WebUtilities;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace Duende.IdentityServer.Extensions;
 

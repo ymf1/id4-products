@@ -4,11 +4,11 @@
 
 #nullable enable
 
+using Duende.IdentityModel;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Logging.Models;
 using Duende.IdentityServer.Services;
-using Duende.IdentityModel;
 using Microsoft.Extensions.Logging;
 
 namespace Duende.IdentityServer.Validation;

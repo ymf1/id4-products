@@ -2,10 +2,10 @@
 // See LICENSE in the project root for license information.
 
 
-using IntegrationTests.TestHosts;
-using Duende.IdentityServer.Configuration.Models.DynamicClientRegistration;
 using System.Net.Http.Json;
+using Duende.IdentityServer.Configuration.Models.DynamicClientRegistration;
 using Duende.IdentityServer.Models;
+using IntegrationTests.TestHosts;
 
 namespace IntegrationTests;
 

@@ -2,12 +2,12 @@
 // See LICENSE in the project root for license information.
 
 
-using Duende.IdentityModel;
-using Duende.IdentityServer.Extensions;
-using System.Security.Cryptography;
-using System.Text;
 using System.Collections.Specialized;
 using System.Globalization;
+using System.Security.Cryptography;
+using System.Text;
+using Duende.IdentityModel;
+using Duende.IdentityServer.Extensions;
 
 #pragma warning disable 1591
 

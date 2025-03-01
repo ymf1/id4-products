@@ -4,8 +4,8 @@
 
 #nullable enable
 
-using Microsoft.AspNetCore.Http;
 using Duende.IdentityServer.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Duende.IdentityServer.Validation;
 

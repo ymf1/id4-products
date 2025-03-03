@@ -39,7 +39,7 @@ internal class SanitizedLogger<T> : ISanitizedLogger<T>
     {
         if (_logger.IsEnabled(LogLevel.Trace))
         {
-            _logger.LogTrace(message, args.Select(SanitizeLogParameter).ToArray());
+            _logger.LogTrace(message, args.Select(ILoggerDevExtensions.SanitizeLogParameter).ToArray());
         }
     }
     
@@ -47,7 +47,7 @@ internal class SanitizedLogger<T> : ISanitizedLogger<T>
     {
         if (_logger.IsEnabled(LogLevel.Debug))
         {
-            LoggerExtensions.LogDebug(_logger, message, args.Select(SanitizeLogParameter).ToArray());
+            LoggerExtensions.LogDebug(_logger, message, args.Select(ILoggerDevExtensions.SanitizeLogParameter).ToArray());
         }
     }
     
@@ -55,7 +55,7 @@ internal class SanitizedLogger<T> : ISanitizedLogger<T>
     {
         if (_logger.IsEnabled(LogLevel.Information))
         {
-            _logger.LogInformation(message, args.Select(SanitizeLogParameter).ToArray());
+            _logger.LogInformation(message, args.Select(ILoggerDevExtensions.SanitizeLogParameter).ToArray());
         }
     }
 
@@ -63,7 +63,7 @@ internal class SanitizedLogger<T> : ISanitizedLogger<T>
     {
         if (_logger.IsEnabled(LogLevel.Warning))
         {
-            _logger.LogWarning(message, args.Select(SanitizeLogParameter).ToArray());
+            _logger.LogWarning(message, args.Select(ILoggerDevExtensions.SanitizeLogParameter).ToArray());
         }
     }
     
@@ -71,7 +71,7 @@ internal class SanitizedLogger<T> : ISanitizedLogger<T>
     {
         if (_logger.IsEnabled(LogLevel.Error))
         {
-            _logger.LogError(message, args.Select(SanitizeLogParameter).ToArray());
+            _logger.LogError(message, args.Select(ILoggerDevExtensions.SanitizeLogParameter).ToArray());
         }
     }
 
@@ -79,17 +79,12 @@ internal class SanitizedLogger<T> : ISanitizedLogger<T>
     {
         if (_logger.IsEnabled(LogLevel.Critical))
         {
-            _logger.LogCritical(exception, message, args.Select(SanitizeLogParameter).ToArray());
+            _logger.LogCritical(exception, message, args.Select(ILoggerDevExtensions.SanitizeLogParameter).ToArray());
         }
     }
 
     public ILogger ToILogger()
     {
         return _logger;
-    }
-
-    private static object SanitizeLogParameter(object value)
-    {
-        return value?.GetType() == typeof(string) ? value.ToString()?.ReplaceLineEndings(string.Empty) : value;
     }
 }

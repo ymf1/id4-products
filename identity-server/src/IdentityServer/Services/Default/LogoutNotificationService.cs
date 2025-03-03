@@ -21,7 +21,7 @@ public class LogoutNotificationService : ILogoutNotificationService
 {
     private readonly IClientStore _clientStore;
     private readonly IIssuerNameService _issuerNameService;
-    private readonly ISanitizedLogger<LogoutNotificationService> _sanitizedLogger;
+    private readonly SanitizedLogger<LogoutNotificationService> _sanitizedLogger;
 
 
     /// <summary>

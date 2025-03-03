@@ -196,7 +196,7 @@ public static class IdentityServerBuilderExtensionsCore
         builder.Services.AddTransient<IReturnUrlParser, OidcReturnUrlParser>();
         builder.Services.AddScoped<IUserSession, DefaultUserSession>();
         builder.Services.AddTransient(typeof(MessageCookie<>));
-        builder.Services.AddTransient(typeof(ISanitizedLogger<>), typeof(SanitizedLogger<>));
+        builder.Services.AddTransient(typeof(SanitizedLogger<>));
 
         builder.Services.AddCors();
         builder.Services.AddTransientDecorator<ICorsPolicyProvider, CorsPolicyProvider>();

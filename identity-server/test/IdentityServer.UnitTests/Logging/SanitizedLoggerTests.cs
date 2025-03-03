@@ -8,7 +8,7 @@ public class SanitizedLoggerTests
 {
     private readonly FakeLogger<SanitizedLoggerTests> _fakeLogger;
 
-    private readonly ISanitizedLogger<SanitizedLoggerTests> _subject;
+    private readonly SanitizedLogger<SanitizedLoggerTests> _subject;
 
     public SanitizedLoggerTests()
     {

@@ -15,7 +15,7 @@ namespace Duende.IdentityServer.Services;
 public class NopBackchannelAuthenticationUserNotificationService : IBackchannelAuthenticationUserNotificationService
 {
     private readonly IIssuerNameService _issuerNameService;
-    private readonly ISanitizedLogger<NopBackchannelAuthenticationUserNotificationService> _sanitizedLogger;
+    private readonly SanitizedLogger<NopBackchannelAuthenticationUserNotificationService> _sanitizedLogger;
 
     /// <summary>
     /// Ctor

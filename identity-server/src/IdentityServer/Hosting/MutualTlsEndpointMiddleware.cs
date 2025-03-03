@@ -19,7 +19,7 @@ namespace Duende.IdentityServer.Hosting;
 /// </summary>
 public class MutualTlsEndpointMiddleware
 {
-    private readonly ISanitizedLogger<MutualTlsEndpointMiddleware> _sanitizedLogger;
+    private readonly SanitizedLogger<MutualTlsEndpointMiddleware> _sanitizedLogger;
     private readonly RequestDelegate _next;
     private readonly IdentityServerOptions _options;
 

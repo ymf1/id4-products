@@ -17,7 +17,7 @@ public class DefaultJwtRequestUriHttpClient : IJwtRequestUriHttpClient
 {
     private readonly HttpClient _client;
     private readonly IdentityServerOptions _options;
-    private readonly ISanitizedLogger<DefaultJwtRequestUriHttpClient> _sanitizedLogger;
+    private readonly SanitizedLogger<DefaultJwtRequestUriHttpClient> _sanitizedLogger;
     private readonly ICancellationTokenProvider _cancellationTokenProvider;
 
     /// <summary>

@@ -17,11 +17,9 @@ internal class EndpointRouter(
     IEnumerable<Endpoint> endpoints,
     ProtocolRequestCounter requestCounter,
     IdentityServerOptions options,
-    ISanitizedLogger<EndpointRouter> sanitizedLogger)
+    SanitizedLogger<EndpointRouter> sanitizedLogger)
     : IEndpointRouter
 {
-    private readonly ISanitizedLogger _sanitizedLogger = sanitizedLogger;
-
     public IEndpointHandler Find(HttpContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
@@ -32,7 +30,7 @@ internal class EndpointRouter(
             if (context.Request.Path.Equals(path, StringComparison.OrdinalIgnoreCase))
             {
                 var endpointName = endpoint.Name;
-                _sanitizedLogger.LogDebug("Request path {path} matched to endpoint type {endpoint}", context.Request.Path, endpointName);
+                sanitizedLogger.LogDebug("Request path {path} matched to endpoint type {endpoint}", context.Request.Path, endpointName);
 
                 requestCounter.Increment();
 
@@ -40,7 +38,7 @@ internal class EndpointRouter(
             }
         }
 
-        _sanitizedLogger.LogTrace("No endpoint entry found for request path: {path}", context.Request.Path);
+        sanitizedLogger.LogTrace("No endpoint entry found for request path: {path}", context.Request.Path);
 
         return null;
     }
@@ -51,15 +49,15 @@ internal class EndpointRouter(
         {
             if (context.RequestServices.GetService(endpoint.Handler) is IEndpointHandler handler)
             {
-                _sanitizedLogger.LogDebug("Endpoint enabled: {endpoint}, successfully created handler: {endpointHandler}", endpoint.Name, endpoint.Handler.FullName);
+                sanitizedLogger.LogDebug("Endpoint enabled: {endpoint}, successfully created handler: {endpointHandler}", endpoint.Name, endpoint.Handler.FullName);
                 return handler;
             }
 
-            _sanitizedLogger.LogDebug("Endpoint enabled: {endpoint}, failed to create handler: {endpointHandler}", endpoint.Name, endpoint.Handler.FullName);
+            sanitizedLogger.LogDebug("Endpoint enabled: {endpoint}, failed to create handler: {endpointHandler}", endpoint.Name, endpoint.Handler.FullName);
         }
         else
         {
-            _sanitizedLogger.LogWarning("Endpoint disabled: {endpoint}", endpoint.Name);
+            sanitizedLogger.LogWarning("Endpoint disabled: {endpoint}", endpoint.Name);
         }
 
         return null;

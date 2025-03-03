@@ -24,7 +24,7 @@ namespace Duende.IdentityServer.Hosting;
 public class IdentityServerMiddleware
 {
     private readonly RequestDelegate _next;
-    private readonly ISanitizedLogger<IdentityServerMiddleware> _sanitizedLogger;
+    private readonly SanitizedLogger<IdentityServerMiddleware> _sanitizedLogger;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="IdentityServerMiddleware"/> class.

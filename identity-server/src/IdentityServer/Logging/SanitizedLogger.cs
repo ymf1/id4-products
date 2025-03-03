@@ -6,22 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Duende.IdentityServer.Logging;
 
-internal interface ISanitizedLogger
-{
-    void LogTrace(string message, params object[] args);
-    void LogDebug(string message, params object[] args);
-    void LogInformation(string message, params object[] args);
-    void LogWarning(string message, params object[] args);
-    void LogError(string message, params object[] args);
-    void LogCritical(Exception exception, string message, params object[] args);
-    ILogger ToILogger();
-}
-
-internal interface ISanitizedLogger<T> : ISanitizedLogger
-{
-}
-
-internal class SanitizedLogger<T> : ISanitizedLogger<T>
+internal class SanitizedLogger<T>
 {
     private readonly ILogger _logger;
     

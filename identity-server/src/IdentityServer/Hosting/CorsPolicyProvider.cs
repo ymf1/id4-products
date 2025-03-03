@@ -19,13 +19,13 @@ namespace Duende.IdentityServer.Hosting;
 
 internal class CorsPolicyProvider : ICorsPolicyProvider
 {
-    private readonly ISanitizedLogger<CorsPolicyProvider> _sanitizedLogger;
+    private readonly SanitizedLogger<CorsPolicyProvider> _sanitizedLogger;
     private readonly ICorsPolicyProvider _inner;
     private readonly IServiceProvider _provider;
     private readonly IdentityServerOptions _options;
 
     public CorsPolicyProvider(
-        ISanitizedLogger<CorsPolicyProvider> sanitizedLogger,
+        SanitizedLogger<CorsPolicyProvider> sanitizedLogger,
         Decorator<ICorsPolicyProvider> inner,
         IdentityServerOptions options,
         IServiceProvider provider)

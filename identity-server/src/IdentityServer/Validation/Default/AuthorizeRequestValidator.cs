@@ -28,7 +28,7 @@ internal class AuthorizeRequestValidator : IAuthorizeRequestValidator
     private readonly IUserSession _userSession;
     private readonly IRequestObjectValidator _requestObjectValidator;
     private readonly LicenseUsageTracker _licenseUsage;
-    private readonly ISanitizedLogger<AuthorizeRequestValidator> _sanitizedLogger;
+    private readonly SanitizedLogger<AuthorizeRequestValidator> _sanitizedLogger;
 
     private readonly ResponseTypeEqualityComparer
         _responseTypeEqualityComparer = new ResponseTypeEqualityComparer();
@@ -44,7 +44,7 @@ internal class AuthorizeRequestValidator : IAuthorizeRequestValidator
         IUserSession userSession,
         IRequestObjectValidator requestObjectValidator,
         LicenseUsageTracker licenseUsage,
-        ISanitizedLogger<AuthorizeRequestValidator> sanitizedLogger)
+        SanitizedLogger<AuthorizeRequestValidator> sanitizedLogger)
     {
         _options = options;
         _issuerNameService = issuerNameService;

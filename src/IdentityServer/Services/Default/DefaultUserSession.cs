@@ -310,8 +310,12 @@ public class DefaultUserSession : IUserSession
         await AuthenticateAsync();
         if (Properties != null)
         {
-            Properties.AddClientId(clientId);
-            await UpdateSessionCookie();
+            var clientIds = Properties.GetClientList();
+            if (!clientIds.Contains(clientId))
+            {
+                Properties.AddClientId(clientId);
+                await UpdateSessionCookie();
+            }
         }
     }
 

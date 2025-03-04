@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
@@ -14,16 +14,23 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AngleSharp" />
         <PackageReference Include="coverlet.collector">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="Duende.AccessTokenManagement.OpenIdConnect" />
+        <PackageReference Include="Duende.IdentityServer" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+        <PackageReference Include="Meziantou.Extensions.Logging.Xunit" />
         <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing" />
         <PackageReference Include="NSubstitute" />
-        <PackageReference Include="Shouldly"/>
+        <PackageReference Include="RichardSzalay.MockHttp" />
+        <PackageReference Include="Shouldly" />
         <PackageReference Include="xunit.core" />
-        <PackageReference Include="xunit.runner.visualstudio" >
+        <PackageReference Include="xunit.runner.visualstudio">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
@@ -31,7 +38,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\src\AspNetCore.Authentication.JwtBearer\AspNetCore.Authentication.JwtBearer.csproj" />
-        <ProjectReference Include="..\TestFramework\TestFramework.csproj" />
     </ItemGroup>
 
     <ItemGroup>

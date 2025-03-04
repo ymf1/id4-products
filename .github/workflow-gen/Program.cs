@@ -193,7 +193,7 @@ void GenerateBffWorkflow(Product product)
 
     job.StepBuild(product.Solution);
 
-    // Devcerts are needed because some tests run start an a http server with https. 
+    // Devcerts are needed because some tests run start a http server with https. 
     job.StepDotNetDevCerts();
 
     job.StepInstallPlayWright();
@@ -613,7 +613,7 @@ public static class StepExtensions
     /// </summary>
     public static Job RunEitherOnBranchOrAsPR(this Job job)
         => job.If(
-            "(github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository) || (github.event_name == 'push')");
+            "(github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository) || (github.event_name == 'push') || (github.event_name == 'workflow_dispatch')");
     
     public static void StepInitializeCodeQl(this Job job)
     {

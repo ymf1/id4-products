@@ -193,7 +193,7 @@ void GenerateBffWorkflow(Product product)
 
     job.StepBuild(product.Solution);
 
-    // Devcerts are needed because some tests run start an a http server with https. 
+    // Devcerts are needed because some tests run start a http server with https. 
     job.StepDotNetDevCerts();
 
     job.StepInstallPlayWright();

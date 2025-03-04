@@ -54,7 +54,7 @@ jobs:
         else
           echo 'Tag is-${{ github.event.inputs.version }} does not exist.'
         fi
-    - name: Git Config
+    - name: Git Tag
       run: |-
         git tag -a is-${{ github.event.inputs.version }} -m "Release v${{ github.event.inputs.version }}"
         git push origin is-${{ github.event.inputs.version }}
@@ -65,12 +65,6 @@ jobs:
           6.0.x
           8.0.x
           9.0.x
-    - name: Git tag
-      run: |-
-        git config --global user.email "github-bot@duendesoftware.com"
-        git config --global user.name "Duende Software GitHub Bot"
-        git tag -a is-${{ github.event.inputs.version }} -m "Release v${{ github.event.inputs.version }}"
-        git push origin is-${{ github.event.inputs.version }}
     - name: Pack Duende.IdentityServer.sln
       run: dotnet pack -c Release Duende.IdentityServer.sln -o artifacts
     - name: Tool restore

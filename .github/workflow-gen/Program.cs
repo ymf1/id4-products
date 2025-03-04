@@ -440,7 +440,7 @@ public static class StepExtensions
 
     public static void StepUploadArtifacts(this Job job, string componentName, bool uploadAlways = false)
     {
-        var path = $"{componentName}/artifacts/*.nupkg";
+        var path = $"artifacts/*.nupkg";
         var step = job.Step()
             .Name("Upload Artifacts");
 

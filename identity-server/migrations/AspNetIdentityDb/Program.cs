@@ -3,7 +3,6 @@
 
 using IdentityServerHost;
 using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
 
 namespace SqlServer;
 

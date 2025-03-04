@@ -2,7 +2,6 @@
 // See LICENSE in the project root for license information.
 
 using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
 
 namespace JsOidc
 {

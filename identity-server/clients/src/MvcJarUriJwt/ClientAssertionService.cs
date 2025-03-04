@@ -1,7 +1,6 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
-using System.Threading.Tasks;
 using Duende.AccessTokenManagement;
 using Duende.IdentityModel;
 using Duende.IdentityModel.Client;

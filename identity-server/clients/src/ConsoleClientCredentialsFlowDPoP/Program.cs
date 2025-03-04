@@ -1,11 +1,8 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
-using System;
-using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Clients;
 using Duende.IdentityModel.Client;
 using Microsoft.Extensions.DependencyInjection;

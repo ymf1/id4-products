@@ -2,8 +2,6 @@
 // See LICENSE in the project root for license information.
 
 using Clients;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace SampleApi
 {

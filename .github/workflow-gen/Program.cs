@@ -613,7 +613,7 @@ public static class StepExtensions
     /// </summary>
     public static Job RunEitherOnBranchOrAsPR(this Job job)
         => job.If(
-            "(github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository) || (github.event_name == 'push')");
+            "(github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository) || (github.event_name == 'push') || (github.event_name == 'workflow_dispatch')");
     
     public static void StepInitializeCodeQl(this Job job)
     {

@@ -1,12 +1,9 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
-using System.Net.Http;
-using System.Threading.Tasks;
 using Duende.Bff;
 using Duende.IdentityModel;
 using Duende.IdentityModel.Client;
-using Microsoft.Extensions.Logging;
 
 namespace Bff;
 

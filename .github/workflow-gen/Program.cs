@@ -99,13 +99,6 @@ void GenerateIdentityServerReleaseWorkflow(Product product)
 
     job.StepSetupDotNet();
 
-    job.Step()
-        .Name("Git tag")
-        .Run($@"git config --global user.email ""github-bot@duendesoftware.com""
-git config --global user.name ""Duende Software GitHub Bot""
-git tag -a {product.TagPrefix}-{contexts.Event.Input.Version} -m ""Release v{contexts.Event.Input.Version}""
-git push origin {product.TagPrefix}-{contexts.Event.Input.Version}");
-
     job.StepPack(product.Solution);
 
     job.StepToolRestore();
@@ -415,7 +408,7 @@ public static class StepExtensions
     internal static Step StepGitPushTag(this Job job, Product component, GitHubContexts contexts)
     {
         return job.Step()
-            .Name("Git Config")
+            .Name("Git Tag")
             .Run($"""
                  git tag -a {component.TagPrefix}-{contexts.Event.Input.Version} -m "Release v{contexts.Event.Input.Version}"
                  git push origin {component.TagPrefix}-{contexts.Event.Input.Version}

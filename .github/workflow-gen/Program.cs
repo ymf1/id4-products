@@ -322,6 +322,8 @@ void GenerateCodeQlWorkflow(Product system, string cronSchedule)
 
     job.StepSetupDotNet();
 
+    job.StepRestore(system.Solution);
+
     job.StepBuild(system.Solution);
 
     job.StepPerformCodeQlAnalysis();

@@ -43,7 +43,7 @@ jobs:
           8.0.x
           9.0.x
     - name: Build
-      run: dotnet build bff.slnf -c Release
+      run: dotnet build bff.slnf --no-restore -c Release
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@9e8d0789d4a0fa9ceb6b1738f7e269594bdd67f0
       with:

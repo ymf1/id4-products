@@ -463,7 +463,7 @@ public static class StepExtensions
     public static Step StepBuild(this Job job, string solution)
         => job.Step()
             .Name("Build")
-            .Run($"dotnet build {solution} -c Release");
+            .Run($"dotnet build {solution} --no-restore -c Release");
 
     public static void StepTest(this Job job, string solution)
     {

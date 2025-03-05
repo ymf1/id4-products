@@ -48,7 +48,7 @@ jobs:
     - name: Verify Formatting
       run: dotnet format bff.slnf --verify-no-changes
     - name: Build
-      run: dotnet build bff.slnf -c Release
+      run: dotnet build bff.slnf --no-restore -c Release
     - name: Dotnet devcerts
       run: dotnet dev-certs https --trust
     - name: Install Playwright

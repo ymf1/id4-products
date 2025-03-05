@@ -346,4 +346,46 @@ public class PrivateKeyJwtSecretValidation
 
         result.Success.ShouldBeFalse();
     }
+
+    [Fact]
+    public async Task Invalid_Not_Yet_Valid_Token()
+    {
+        var clientId = "certificate_base64_valid";
+        var client = await _clients.FindEnabledClientByIdAsync(clientId);
+
+        var token = CreateToken(clientId, nowOverride: DateTime.UtcNow.AddSeconds(30));
+        var secret = new ParsedSecret
+        {
+            Id = clientId,
+            Credential = new JwtSecurityTokenHandler().WriteToken(token),
+            Type = IdentityServerConstants.ParsedSecretTypes.JwtBearer
+        };
+
+        _options.JwtValidationClockSkew = TimeSpan.FromSeconds(5);
+
+        var result = await _validator.ValidateAsync(client.ClientSecrets, secret);
+
+        result.Success.ShouldBeFalse();
+    }
+
+    [Fact]
+    public async Task Configuration_Allows_For_Clock_Skew_In_Token()
+    {
+        var clientId = "certificate_base64_valid";
+        var client = await _clients.FindEnabledClientByIdAsync(clientId);
+
+        var token = CreateToken(clientId, nowOverride: DateTime.UtcNow.AddSeconds(5));
+        var secret = new ParsedSecret
+        {
+            Id = clientId,
+            Credential = new JwtSecurityTokenHandler().WriteToken(token),
+            Type = IdentityServerConstants.ParsedSecretTypes.JwtBearer
+        };
+
+        _options.JwtValidationClockSkew = TimeSpan.FromSeconds(10);
+
+        var result = await _validator.ValidateAsync(client.ClientSecrets, secret);
+
+        result.Success.ShouldBeTrue();
+    }
 }

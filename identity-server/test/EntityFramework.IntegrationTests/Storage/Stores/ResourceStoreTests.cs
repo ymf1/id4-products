@@ -11,7 +11,7 @@ using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace EntityFramework.Storage.IntegrationTests.Stores;
+namespace EntityFramework.IntegrationTests.Storage.Stores;
 
 public class ScopeStoreTests : IntegrationTest<ScopeStoreTests, ConfigurationDbContext, ConfigurationStoreOptions>
 {

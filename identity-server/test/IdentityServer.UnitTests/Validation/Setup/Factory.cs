@@ -5,6 +5,7 @@
 using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Licensing.V2;
+using Duende.IdentityServer.Logging;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Services.Default;
@@ -170,10 +171,11 @@ internal static class Factory
         return new DefaultResourceValidator(store, new DefaultScopeParser(TestLogger.Create<DefaultScopeParser>()), TestLogger.Create<DefaultResourceValidator>());
     }
 
-    internal static ITokenCreationService CreateDefaultTokenCreator(IdentityServerOptions options = null)
+    internal static ITokenCreationService CreateDefaultTokenCreator(IdentityServerOptions options = null,
+        IClock clock = null)
     {
         return new DefaultTokenCreationService(
-            new StubClock(),
+            clock ?? new StubClock(),
             new DefaultKeyMaterialService(
                 new IValidationKeysStore[] { },
                 new ISigningCredentialStore[] { new InMemorySigningCredentialsStore(TestCert.LoadSigningCredentials()) },
@@ -272,7 +274,7 @@ internal static class Factory
             userSession,
             requestObjectValidator,
             new LicenseUsageTracker(new LicenseAccessor(new IdentityServerOptions(), NullLogger<LicenseAccessor>.Instance)),
-            TestLogger.Create<AuthorizeRequestValidator>());
+            new SanitizedLogger<AuthorizeRequestValidator>(TestLogger.Create<AuthorizeRequestValidator>()));
     }
 
     public static RequestObjectValidator CreateRequestObjectValidator(

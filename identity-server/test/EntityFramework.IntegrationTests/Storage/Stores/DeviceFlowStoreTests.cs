@@ -5,6 +5,11 @@
 using System.Security.Claims;
 using Duende.IdentityModel;
 using Duende.IdentityServer.EntityFramework.DbContexts;
+
+/* Unmerged change from project 'EntityFramework.IntegrationTests(net9.0)'
+Removed:
+using Microsoft.EntityFrameworkCore.InMemory.Infrastructure.Internal;
+*/
 using Duende.IdentityServer.EntityFramework.Entities;
 using Duende.IdentityServer.EntityFramework.Options;
 using Duende.IdentityServer.EntityFramework.Stores;
@@ -14,7 +19,7 @@ using Duende.IdentityServer.Stores.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.InMemory.Infrastructure.Internal;
 
-namespace EntityFramework.Storage.IntegrationTests.Stores;
+namespace EntityFramework.IntegrationTests.Storage.Stores;
 
 public class DeviceFlowStoreTests : IntegrationTest<DeviceFlowStoreTests, PersistedGrantDbContext, OperationalStoreOptions>
 {

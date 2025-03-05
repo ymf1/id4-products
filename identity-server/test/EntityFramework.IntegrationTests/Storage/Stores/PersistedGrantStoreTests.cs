@@ -11,7 +11,7 @@ using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores;
 using Microsoft.EntityFrameworkCore;
 
-namespace EntityFramework.Storage.IntegrationTests.Stores;
+namespace EntityFramework.IntegrationTests.Storage.Stores;
 
 public class PersistedGrantStoreTests : IntegrationTest<PersistedGrantStoreTests, PersistedGrantDbContext, OperationalStoreOptions>
 {

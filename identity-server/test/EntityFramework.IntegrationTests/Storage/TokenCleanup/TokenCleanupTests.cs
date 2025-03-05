@@ -15,7 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using IPersistedGrantStore = Duende.IdentityServer.Stores.IPersistedGrantStore;
 
-namespace EntityFramework.Storage.IntegrationTests.TokenCleanup;
+namespace EntityFramework.IntegrationTests.Storage.TokenCleanup;
 
 public class TokenCleanupTests : IntegrationTest<TokenCleanupTests, PersistedGrantDbContext, OperationalStoreOptions>
 {

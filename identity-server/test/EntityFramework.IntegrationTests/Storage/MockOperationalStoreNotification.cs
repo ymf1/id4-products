@@ -5,7 +5,7 @@
 using Duende.IdentityServer.EntityFramework;
 using Duende.IdentityServer.EntityFramework.Entities;
 
-namespace EntityFramework.Storage.IntegrationTests;
+namespace EntityFramework.IntegrationTests.Storage;
 
 public class MockOperationalStoreNotification : IOperationalStoreNotification
 {

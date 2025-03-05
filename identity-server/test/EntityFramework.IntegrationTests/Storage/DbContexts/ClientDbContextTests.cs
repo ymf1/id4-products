@@ -7,7 +7,7 @@ using Duende.IdentityServer.EntityFramework.Entities;
 using Duende.IdentityServer.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
 
-namespace EntityFramework.Storage.IntegrationTests.DbContexts;
+namespace EntityFramework.IntegrationTests.Storage.DbContexts;
 
 public class ClientDbContextTests : IntegrationTest<ClientDbContextTests, ConfigurationDbContext, ConfigurationStoreOptions>
 {

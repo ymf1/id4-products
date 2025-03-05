@@ -6,6 +6,7 @@ using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Hosting;
 using Duende.IdentityServer.Licensing.V2;
+using Duende.IdentityServer.Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging.Abstractions;
 using UnitTests.Common;
@@ -26,7 +27,7 @@ public class EndpointRouterTests
         _options = new IdentityServerOptions();
         var licenseAccessor = new LicenseAccessor(new IdentityServerOptions(), NullLogger<LicenseAccessor>.Instance);
         var protocolRequestCounter = new ProtocolRequestCounter(licenseAccessor, new NullLoggerFactory());
-        _subject = new EndpointRouter(_endpoints, protocolRequestCounter, _options, TestLogger.Create<EndpointRouter>());
+        _subject = new EndpointRouter(_endpoints, protocolRequestCounter, _options, new SanitizedLogger<EndpointRouter>(TestLogger.Create<EndpointRouter>()));
     }
 
     [Fact]

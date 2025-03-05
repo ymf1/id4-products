@@ -17,6 +17,7 @@ using Duende.IdentityServer.Hosting.FederatedSignOut;
 using Duende.IdentityServer.Internal;
 using Duende.IdentityServer.Licensing;
 using Duende.IdentityServer.Licensing.V2;
+using Duende.IdentityServer.Logging;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.ResponseHandling;
 using Duende.IdentityServer.Services;
@@ -193,6 +194,7 @@ public static class IdentityServerBuilderExtensionsCore
         builder.Services.AddTransient<IReturnUrlParser, OidcReturnUrlParser>();
         builder.Services.AddScoped<IUserSession, DefaultUserSession>();
         builder.Services.AddTransient(typeof(MessageCookie<>));
+        builder.Services.AddTransient(typeof(SanitizedLogger<>));
 
         builder.Services.AddCors();
         builder.Services.AddTransientDecorator<ICorsPolicyProvider, CorsPolicyProvider>();

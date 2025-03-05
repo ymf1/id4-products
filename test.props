@@ -10,7 +10,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <!-- <Nullable>enable</Nullable> -->
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-    <NoWarn>$(NoWarn);NU1507</NoWarn>
+    <NoWarn>$(NoWarn);CS1591;NU1507</NoWarn>
   </PropertyGroup>
 
   <!--Release builds do more work and are stricter. This allows for faster

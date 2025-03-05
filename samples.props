@@ -7,6 +7,7 @@
     <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
     <ImplicitUsings>true</ImplicitUsings>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
 
   <!--Release builds do more work and are stricter. This allows for faster

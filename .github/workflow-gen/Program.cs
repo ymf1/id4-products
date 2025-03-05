@@ -65,6 +65,10 @@ void GenerateIdentityServerWorkflow(Product product)
 
     job.StepSetupDotNet();
 
+    job.StepRestore(product.Solution);
+
+    job.StepVerifyFormatting(product.Solution);
+
     job.StepBuild(product.Solution);
 
     job.StepTest(product.Solution);
@@ -82,6 +86,7 @@ void GenerateIdentityServerWorkflow(Product product)
     var fileName = $"{product.Name}-ci";
     WriteWorkflow(workflow, fileName);
 }
+
 void GenerateIdentityServerReleaseWorkflow(Product product)
 {
     var workflow = new Workflow($"{product.Name}/release");
@@ -191,6 +196,10 @@ void GenerateBffWorkflow(Product product)
 
     job.StepSetupDotNet();
 
+    job.StepRestore(product.Solution);
+
+    job.StepVerifyFormatting(product.Solution);
+
     job.StepBuild(product.Solution);
 
     // Devcerts are needed because some tests run start an a http server with https. 
@@ -215,6 +224,7 @@ void GenerateBffWorkflow(Product product)
     var fileName = $"{product.Name}-ci";
     WriteWorkflow(workflow, fileName);
 }
+
 void GenerateBffReleaseWorkflow(Product product)
 {
     var workflow = new Workflow($"{product.Name}/release");
@@ -439,6 +449,16 @@ public static class StepExtensions
             .Name($"Pack {target}")
             .Run($"dotnet pack -c Release {target} -o artifacts");
     }
+
+    public static Step StepRestore(this Job job, string solution)
+        => job.Step()
+            .Name("Restore")
+            .Run($"dotnet restore {solution}");
+
+    public static Step StepVerifyFormatting(this Job job, string solution)
+        => job.Step()
+            .Name("Verify Formatting")
+            .Run($"dotnet format {solution} --verify-no-changes");
 
     public static Step StepBuild(this Job job, string solution)
         => job.Step()

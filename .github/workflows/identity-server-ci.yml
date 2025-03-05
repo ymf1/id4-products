@@ -43,6 +43,10 @@ jobs:
           6.0.x
           8.0.x
           9.0.x
+    - name: Restore
+      run: dotnet restore identity-server.slnf
+    - name: Verify Formatting
+      run: dotnet format identity-server.slnf --verify-no-changes
     - name: Build
       run: dotnet build identity-server.slnf -c Release
     - name: Test

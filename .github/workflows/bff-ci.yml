@@ -43,6 +43,10 @@ jobs:
           6.0.x
           8.0.x
           9.0.x
+    - name: Restore
+      run: dotnet restore bff.slnf
+    - name: Verify Formatting
+      run: dotnet format bff.slnf --verify-no-changes
     - name: Build
       run: dotnet build bff.slnf -c Release
     - name: Dotnet devcerts

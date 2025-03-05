@@ -16,7 +16,7 @@
     <!-- <Nullable>enable</Nullable> -->
     <LangVersion>latest</LangVersion>
     <ImplicitUsings>true</ImplicitUsings>
-    
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">True</ContinuousIntegrationBuild>
     <Deterministic>true</Deterministic>
@@ -56,7 +56,6 @@
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

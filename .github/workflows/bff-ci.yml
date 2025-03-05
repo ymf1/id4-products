@@ -46,7 +46,7 @@ jobs:
     - name: Restore
       run: dotnet restore bff.slnf
     - name: Verify Formatting
-      run: dotnet format bff.slnf --verify-no-changes
+      run: dotnet format bff.slnf --verify-no-changes --no-restore
     - name: Build
       run: dotnet build bff.slnf --no-restore -c Release
     - name: Dotnet devcerts

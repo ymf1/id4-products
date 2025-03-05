@@ -460,7 +460,7 @@ public static class StepExtensions
     public static Step StepVerifyFormatting(this Job job, string solution)
         => job.Step()
             .Name("Verify Formatting")
-            .Run($"dotnet format {solution} --verify-no-changes");
+            .Run($"dotnet format {solution} --verify-no-changes --no-restore");
 
     public static Step StepBuild(this Job job, string solution)
         => job.Step()

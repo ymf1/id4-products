@@ -46,7 +46,7 @@ jobs:
     - name: Restore
       run: dotnet restore identity-server.slnf
     - name: Verify Formatting
-      run: dotnet format identity-server.slnf --verify-no-changes
+      run: dotnet format identity-server.slnf --verify-no-changes --no-restore
     - name: Build
       run: dotnet build identity-server.slnf --no-restore -c Release
     - name: Test

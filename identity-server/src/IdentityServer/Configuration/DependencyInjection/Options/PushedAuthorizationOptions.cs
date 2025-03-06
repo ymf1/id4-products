@@ -47,4 +47,3 @@ public class PushedAuthorizationOptions
     /// </summary>
     public bool AllowUnregisteredPushedRedirectUris { get; set; }
 }
-

@@ -13,4 +13,3 @@ internal class EmptyClientStore : IClientStore
         return Task.FromResult<Client>(null);
     }
 }
-

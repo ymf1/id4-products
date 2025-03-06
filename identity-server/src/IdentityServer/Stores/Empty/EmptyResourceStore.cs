@@ -33,4 +33,3 @@ internal class EmptyResourceStore : IResourceStore
         return Task.FromResult(new Resources() { OfflineAccess = true });
     }
 }
-

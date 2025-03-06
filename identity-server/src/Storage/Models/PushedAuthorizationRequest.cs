@@ -33,4 +33,3 @@ public class PushedAuthorizationRequest
     /// </summary>
     public string Parameters { get; set; }
 }
-

@@ -58,4 +58,3 @@ public class UserSession
     /// </summary>
     public AuthenticationTicket AuthenticationTicket { get; set; } = default!;
 }
-

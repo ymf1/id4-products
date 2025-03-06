@@ -66,4 +66,3 @@ public class RemoveSessionsContext
     /// </summary>
     public bool RevokeConsents { get; set; } = true;
 }
-

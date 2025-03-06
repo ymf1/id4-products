@@ -18,4 +18,3 @@ public interface IHttpResponseWriter<in T>
     /// </summary>
     Task WriteHttpResponse(T result, HttpContext context);
 }
-

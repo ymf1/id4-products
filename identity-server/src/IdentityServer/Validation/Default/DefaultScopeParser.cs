@@ -52,7 +52,7 @@ public class DefaultScopeParser : IScopeParser
             }
             else
             {
-                _logger.LogDebug("Scope parsing ignoring scope {scope}", scopeValue);
+                _logger.LogDebug("Scope parsing ignoring scope {scope}", scopeValue.SanitizeLogParameter());
             }
         }
 

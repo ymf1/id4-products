@@ -18,20 +18,20 @@ namespace Duende.IdentityServer.Endpoints.Results;
 public class DiscoveryDocumentResult : EndpointResult<DiscoveryDocumentResult>
 {
     /// <summary>
-    /// Gets the entries.
-    /// </summary>
-    /// <value>
-    /// The entries.
-    /// </value>
-    public Dictionary<string, object> Entries { get; }
-
-    /// <summary>
     /// Gets the maximum age.
     /// </summary>
     /// <value>
     /// The maximum age.
     /// </value>
     public int? MaxAge { get; }
+
+    /// <summary>
+    /// Gets or sets the JSON representation of the entries in the discovery document.
+    /// </summary>
+    /// <value>
+    /// A JSON string that represents the entries.
+    /// </value>
+    public string Json { get; set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DiscoveryDocumentResult" /> class.
@@ -41,8 +41,19 @@ public class DiscoveryDocumentResult : EndpointResult<DiscoveryDocumentResult>
     /// <exception cref="System.ArgumentNullException">entries</exception>
     public DiscoveryDocumentResult(Dictionary<string, object> entries, int? maxAge = null)
     {
-        Entries = entries ?? throw new ArgumentNullException(nameof(entries));
         MaxAge = maxAge;
+
+        // serialize entries ahead of time
+        Json = ObjectSerializer.ToString(entries);
+    }
+
+    /// <summary>
+    /// Represents a result for a discovery document, implementing <see cref="IEndpointResult"/>.
+    /// </summary>
+    public DiscoveryDocumentResult(string json, int? maxAge = null)
+    {
+        MaxAge = maxAge;
+        Json = json;
     }
 }
 
@@ -56,6 +67,6 @@ class DiscoveryDocumentHttpWriter : IHttpResponseWriter<DiscoveryDocumentResult>
             context.Response.SetCache(result.MaxAge.Value, "Origin");
         }
 
-        return context.Response.WriteJsonAsync(result.Entries);
+        return context.Response.WriteJsonAsync(result.Json);
     }
 }

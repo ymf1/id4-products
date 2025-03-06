@@ -207,4 +207,14 @@ public class IdentityServerOptions
     /// Options for Pushed Authorization Requests (PAR).
     /// </summary>
     public PushedAuthorizationOptions PushedAuthorization { get; set; } = new PushedAuthorizationOptions();
+
+    /// <summary>
+    /// Gets or sets the options for enabling and configuring preview features in the server.
+    /// Preview features provide access to experimental or in-progress functionality that may undergo
+    /// further changes before being finalized.
+    /// </summary>
+    /// <value>
+    /// Options for configuring preview features in the server.
+    /// </value>
+    public PreviewFeatureOptions Preview { get; set; } = new PreviewFeatureOptions();
 }

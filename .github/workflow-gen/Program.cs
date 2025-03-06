@@ -39,7 +39,7 @@ void GenerateIdentityServerWorkflow(Product product)
         .RunEitherOnBranchOrAsPR()
         .Name("Build")
         .RunsOn(GitHubHostedRunners.UbuntuLatest)
-        .Defaults().Run("bash", ".")
+        .Defaults().Run("bash", product.Name)
         .Job;
 
     job.Permissions(
@@ -87,7 +87,7 @@ void GenerateIdentityServerReleaseWorkflow(Product product)
         .Name("Tag and Pack")
         .RunsOn(GitHubHostedRunners.UbuntuLatest)
         .Permissions(contents: Permission.Write, packages: Permission.Write)
-        .Defaults().Run("bash", ".").Job;
+        .Defaults().Run("bash", product.Name).Job;
 
     job.Step()
         .ActionsCheckout();
@@ -440,7 +440,7 @@ public static class StepExtensions
 
     public static void StepUploadArtifacts(this Job job, string componentName, bool uploadAlways = false)
     {
-        var path = $"artifacts/*.nupkg";
+        var path = $"{componentName}/artifacts/*.nupkg";
         var step = job.Step()
             .Name("Upload Artifacts");
 

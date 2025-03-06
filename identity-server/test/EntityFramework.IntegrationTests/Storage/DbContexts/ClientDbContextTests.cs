@@ -2,14 +2,12 @@
 // See LICENSE in the project root for license information.
 
 
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Duende.IdentityServer.EntityFramework.Options;
-using Xunit;
+using Microsoft.EntityFrameworkCore;
 
-namespace EntityFramework.Storage.IntegrationTests.DbContexts;
+namespace EntityFramework.IntegrationTests.Storage.DbContexts;
 
 public class ClientDbContextTests : IntegrationTest<ClientDbContextTests, ConfigurationDbContext, ConfigurationStoreOptions>
 {

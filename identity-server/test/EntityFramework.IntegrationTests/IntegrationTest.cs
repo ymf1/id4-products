@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 namespace EntityFramework.IntegrationTests;
 
 /// <summary>
-/// Base class for integration tests, responsible for initializing test database providers & an xUnit class fixture
+/// Base class for integration tests, responsible for initializing test database providers and an xUnit class fixture
 /// </summary>
 /// <typeparam name="TClass">The type of the class.</typeparam>
 /// <typeparam name="TDbContext">The type of the database context.</typeparam>

@@ -2,19 +2,14 @@
 // See LICENSE in the project root for license information.
 
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Hosting;
 using Duende.IdentityServer.Licensing.V2;
 using Duende.IdentityServer.Logging;
-using Shouldly;
-using UnitTests.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging.Abstractions;
-using Xunit;
+using UnitTests.Common;
 
 namespace UnitTests.Hosting;
 

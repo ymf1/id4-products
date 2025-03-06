@@ -2,10 +2,10 @@
 // See LICENSE in the project root for license information.
 
 
-using Microsoft.EntityFrameworkCore;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Duende.IdentityServer.EntityFramework.Options;
+using Microsoft.EntityFrameworkCore;
 
 namespace EntityFramework.IntegrationTests.Storage.DbContexts;
 

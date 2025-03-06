@@ -5,15 +5,11 @@
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Configuration.DependencyInjection;
 using Duende.IdentityServer.Extensions;
+using Duende.IdentityServer.Logging;
 using Duende.IdentityServer.Services;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Duende.IdentityServer.Logging;
 
 namespace Duende.IdentityServer.Hosting;
 

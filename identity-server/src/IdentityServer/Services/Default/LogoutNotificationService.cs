@@ -4,13 +4,10 @@
 
 using Duende.IdentityModel;
 using Duende.IdentityServer.Extensions;
-using Duende.IdentityServer.Stores;
-using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Duende.IdentityServer.Logging;
 using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Stores;
+using Microsoft.Extensions.Logging;
 
 namespace Duende.IdentityServer.Services;
 
@@ -41,7 +38,7 @@ public class LogoutNotificationService : ILogoutNotificationService
     public async Task<IEnumerable<string>> GetFrontChannelLogoutNotificationsUrlsAsync(LogoutNotificationContext context)
     {
         using var activity = Tracing.ServiceActivitySource.StartActivity("LogoutNotificationService.GetFrontChannelLogoutNotificationsUrls");
-        
+
         var frontChannelUrls = new List<string>();
         foreach (var clientId in context.ClientIds)
         {
@@ -88,7 +85,7 @@ public class LogoutNotificationService : ILogoutNotificationService
     public async Task<IEnumerable<BackChannelLogoutRequest>> GetBackChannelLogoutNotificationsAsync(LogoutNotificationContext context)
     {
         using var activity = Tracing.ServiceActivitySource.StartActivity("LogoutNotificationService.GetBackChannelLogoutNotifications");
-        
+
         var backChannelLogouts = new List<BackChannelLogoutRequest>();
         foreach (var clientId in context.ClientIds)
         {

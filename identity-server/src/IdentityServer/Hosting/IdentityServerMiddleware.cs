@@ -2,19 +2,16 @@
 // See LICENSE in the project root for license information.
 
 
-using Duende.IdentityServer.Extensions;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
-using Duende.IdentityServer.Events;
-using Duende.IdentityServer.Services;
-using Duende.IdentityServer.Models;
-using System.Linq;
 using Duende.IdentityServer.Configuration;
+using Duende.IdentityServer.Events;
+using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Licensing.V2;
 using Duende.IdentityServer.Logging;
+using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Duende.IdentityServer.Hosting;
 
@@ -49,10 +46,10 @@ public class IdentityServerMiddleware
     /// <param name="sessionCoordinationService"></param>
     /// <returns></returns>
     public async Task Invoke(
-        HttpContext context, 
+        HttpContext context,
         IdentityServerOptions options,
-        IEndpointRouter router, 
-        IUserSession userSession, 
+        IEndpointRouter router,
+        IUserSession userSession,
         IEventService events,
         IIssuerNameService issuerNameService,
         ISessionCoordinationService sessionCoordinationService)
@@ -88,7 +85,7 @@ public class IdentityServerMiddleware
             if (context.TryGetExpiredUserSession(out var expiredUserSession))
             {
                 _sanitizedLogger.LogDebug("Detected expired session removed; processing post-expiration cleanup.");
-                
+
                 await sessionCoordinationService.ProcessExpirationAsync(expiredUserSession);
             }
         });

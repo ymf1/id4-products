@@ -2,17 +2,17 @@
 // See LICENSE in the project root for license information.
 
 
-using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using Duende.IdentityModel;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Entities;
 using Duende.IdentityServer.EntityFramework.Options;
 using Duende.IdentityServer.EntityFramework.Stores;
 using Duende.IdentityServer.Models;
-using Duende.IdentityServer.Stores.Serialization;
-using Duende.IdentityModel;
-using Microsoft.EntityFrameworkCore.InMemory.Infrastructure.Internal;
 using Duende.IdentityServer.Services;
+using Duende.IdentityServer.Stores.Serialization;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.InMemory.Infrastructure.Internal;
 
 namespace EntityFramework.IntegrationTests.Storage.Stores;
 
@@ -311,7 +311,7 @@ public class DeviceFlowStoreTests : IntegrationTest<DeviceFlowStoreTests, Persis
         var unauthorizedDeviceCode = new DeviceCode
         {
             ClientId = "device_flow",
-            RequestedScopes = new[] {"openid", "api1"},
+            RequestedScopes = new[] { "openid", "api1" },
             CreationTime = new DateTime(2018, 10, 19, 16, 14, 29),
             Lifetime = 300,
             IsOpenId = true
@@ -405,13 +405,13 @@ public class DeviceFlowStoreTests : IntegrationTest<DeviceFlowStoreTests, Persis
             });
             context.SaveChanges();
         }
-            
+
         using (var context = new PersistedGrantDbContext(options))
         {
             var store = new DeviceFlowStore(context, new PersistentGrantSerializer(), FakeLogger<DeviceFlowStore>.Create(), new NoneCancellationTokenProvider());
             await store.RemoveByDeviceCodeAsync(testDeviceCode);
         }
-            
+
         using (var context = new PersistedGrantDbContext(options))
         {
             context.DeviceFlowCodes.FirstOrDefault(x => x.UserCode == testUserCode).ShouldBeNull();

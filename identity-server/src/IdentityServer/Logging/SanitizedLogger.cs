@@ -9,17 +9,17 @@ namespace Duende.IdentityServer.Logging;
 internal class SanitizedLogger<T>
 {
     private readonly ILogger _logger;
-    
+
     public SanitizedLogger(ILogger<T> logger)
     {
         _logger = logger;
     }
-    
+
     public SanitizedLogger(ILogger logger)
     {
         _logger = logger;
     }
-    
+
     public void LogTrace(string message, params object[] args)
     {
         if (_logger.IsEnabled(LogLevel.Trace))
@@ -27,7 +27,7 @@ internal class SanitizedLogger<T>
             _logger.LogTrace(message, args.Select(ILoggerDevExtensions.SanitizeLogParameter).ToArray());
         }
     }
-    
+
     public void LogDebug(string message, params object[] args)
     {
         if (_logger.IsEnabled(LogLevel.Debug))
@@ -35,7 +35,7 @@ internal class SanitizedLogger<T>
             LoggerExtensions.LogDebug(_logger, message, args.Select(ILoggerDevExtensions.SanitizeLogParameter).ToArray());
         }
     }
-    
+
     public void LogInformation(string message, params object[] args)
     {
         if (_logger.IsEnabled(LogLevel.Information))
@@ -51,7 +51,7 @@ internal class SanitizedLogger<T>
             _logger.LogWarning(message, args.Select(ILoggerDevExtensions.SanitizeLogParameter).ToArray());
         }
     }
-    
+
     public void LogError(string message, params object[] args)
     {
         if (_logger.IsEnabled(LogLevel.Error))

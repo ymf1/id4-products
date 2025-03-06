@@ -2,13 +2,13 @@
 // See LICENSE in the project root for license information.
 
 
+using System.Security.Cryptography;
+using System.Text;
 using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores.Serialization;
 using Microsoft.Extensions.Logging;
-using Duende.IdentityServer.Services;
-using System.Text;
-using System.Security.Cryptography;
 
 namespace Duende.IdentityServer.Stores;
 
@@ -68,7 +68,7 @@ public class DefaultGrantStore<T>
     }
 
     private const string KeySeparator = ":";
-    
+
     /// <summary>
     /// The suffix added to keys to indicate that hex encoding should be used.
     /// </summary>
@@ -234,7 +234,7 @@ public class DefaultGrantStore<T>
         key = GetHashedKey(key);
         return RemoveItemByHashedKeyAsync(key);
     }
-        
+
     /// <summary>
     /// Removes the item.
     /// </summary>

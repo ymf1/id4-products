@@ -7,16 +7,7 @@ using System.Security.Claims;
 using Duende.IdentityModel;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Extensions;
-using Duende.IdentityServer.
-/* Unmerged change from project 'Duende.IdentityServer(net9.0)'
-Before:
-using Duende.IdentityServer.Stores;
-using Microsoft.Extensions.Logging;
-using static Duende.IdentityServer.IdentityServerConstants;
-After:
-using static Duende.IdentityServer.IdentityServerConstants;
-*/
-Licensing.V2;
+using Duende.IdentityServer.Licensing.V2;
 using Duende.IdentityServer.Logging;
 using Duende.IdentityServer.Logging.Models;
 using Duende.IdentityServer.Models;

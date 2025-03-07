@@ -6,19 +6,41 @@ using System;
 using Duende.IdentityServer.Models;
 using FluentAssertions;
 using Xunit;
+using System.Collections.Generic;
 
 namespace UnitTests.Infrastructure;
 
 public class ObjectSerializerTests
 {
-    public ObjectSerializerTests()
-    {
-    }
-
     [Fact]
     public void Can_be_deserialize_message()
     {
-        Action a = () => Duende.IdentityServer.ObjectSerializer.FromString<Message<ErrorMessage>>("{\"created\":0, \"data\": {\"error\": \"error\"}}");
+        Action a = () =>
+            Duende.IdentityServer.ObjectSerializer.FromString<Message<ErrorMessage>>(
+                "{\"created\":0, \"data\": {\"error\": \"error\"}}");
         a.Should().NotThrow();
+    }
+
+    [Fact]
+    public void Can_serialize_and_deserialize_dictionary()
+    {
+        var jsonObject = new Dictionary<string, object>
+        {
+            { "key", "value" },
+            { "key2", new { key = "value" } },
+            { "key3", new List<string> { "value1", "value2" } },
+            {
+                "key4", new Dictionary<string, string>
+                {
+                    { "key1", "value1" },
+                    { "key2", "value2" }
+                }
+            }
+        };
+
+        var json = Duende.IdentityServer.ObjectSerializer.ToString(jsonObject);
+        var result = Duende.IdentityServer.ObjectSerializer.FromString<Dictionary<string, object>>(json);
+
+        result.Should().NotBeNull();
     }
 }

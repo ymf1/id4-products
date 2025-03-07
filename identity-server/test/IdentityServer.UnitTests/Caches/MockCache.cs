@@ -78,4 +78,3 @@ public class MockCache<T> : ICache<T>
         return Task.CompletedTask;
     }
 }
-

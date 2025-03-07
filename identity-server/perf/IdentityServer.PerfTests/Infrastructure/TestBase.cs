@@ -28,4 +28,3 @@ namespace IdentityServer.PerfTest.Infrastructure
         }
     }
 }
-

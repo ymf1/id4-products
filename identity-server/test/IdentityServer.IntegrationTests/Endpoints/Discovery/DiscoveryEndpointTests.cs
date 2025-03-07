@@ -13,6 +13,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
+using Duende.IdentityServer.Endpoints.Results;
 using Duende.IdentityServer.Models;
 using Xunit;
 using JsonWebKey = Microsoft.IdentityModel.Tokens.JsonWebKey;
@@ -312,5 +313,25 @@ public class DiscoveryEndpointTests
 
         // we got a result back
         data.ContainsKey("after_cache_key").Should().BeFalse();
+    }
+
+    [Fact]
+    [Trait("Category", Category)]
+    public void Cannot_set_entries_for_document_discovery_cache_if_enabled()
+    {
+        var result = new DiscoveryDocumentResult("{}", null);
+        
+        Assert.Throws<InvalidOperationException>(() =>
+            result.Entries = new Dictionary<string, object>());
+    }
+    
+    [Fact]
+    [Trait("Category", Category)]
+    public void Cannot_get_entries_for_document_discovery_cache_if_enabled()
+    {
+        var result = new DiscoveryDocumentResult("{}", null);
+
+        Assert.Throws<InvalidOperationException>(() =>
+            result.Entries.Add("Joe", "Good Stuff"));
     }
 }

@@ -17,6 +17,9 @@ namespace Duende.IdentityServer.Endpoints.Results;
 /// <seealso cref="IEndpointResult" />
 public class DiscoveryDocumentResult : EndpointResult<DiscoveryDocumentResult>
 {
+    private Dictionary<string, object> _entries = new();
+    private readonly bool _isUsingPreviewFeature;
+
     /// <summary>
     /// Gets the maximum age.
     /// </summary>
@@ -26,12 +29,42 @@ public class DiscoveryDocumentResult : EndpointResult<DiscoveryDocumentResult>
     public int? MaxAge { get; }
 
     /// <summary>
-    /// Gets or sets the JSON representation of the entries in the discovery document.
+    /// Gets the JSON representation of the entries in the discovery document.
     /// </summary>
     /// <value>
     /// A JSON string that represents the entries.
     /// </value>
-    public string Json { get; set; }
+    public string Json { get; private set; }
+
+    /// <summary>
+    /// Gets or sets the collection of entries within the discovery document result.
+    /// </summary>
+    /// <value>
+    /// A dictionary containing the discovery document's entries.
+    /// </value>
+    public Dictionary<string, object> Entries
+    {
+        get
+        {
+            if (_isUsingPreviewFeature)
+            {
+                throw new InvalidOperationException(
+                    "DUENDEPREVIEW001: Cannot get Entries when using the cache preview feature.");
+            }
+
+            return _entries;
+        }
+        set
+        {
+            if (_isUsingPreviewFeature)
+            {
+                throw new InvalidOperationException(
+                    "DUENDEPREVIEW001: Cannot set Entries when using the preview feature.");
+            }
+
+            _entries = value ?? throw new ArgumentNullException(nameof(value));
+        }
+    }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DiscoveryDocumentResult" /> class.
@@ -42,18 +75,35 @@ public class DiscoveryDocumentResult : EndpointResult<DiscoveryDocumentResult>
     public DiscoveryDocumentResult(Dictionary<string, object> entries, int? maxAge = null)
     {
         MaxAge = maxAge;
-
-        // serialize entries ahead of time
+        _entries = entries ?? throw new ArgumentNullException(nameof(entries));
         Json = ObjectSerializer.ToString(entries);
     }
 
     /// <summary>
-    /// Represents a result for a discovery document, implementing <see cref="IEndpointResult"/>.
+    /// Represents the result of a discovery document operation.
     /// </summary>
-    public DiscoveryDocumentResult(string json, int? maxAge = null)
+    /// <remarks>
+    /// Encapsulates the properties and logic required to represent the discovery document's
+    /// data along with optional age-based caching information applicable to the response.
+    /// </remarks>
+    internal DiscoveryDocumentResult(string json, int? maxAge)
     {
+        _isUsingPreviewFeature = true;
+        Json = json ?? throw new ArgumentNullException(nameof(json));
         MaxAge = maxAge;
-        Json = json;
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DiscoveryDocumentResult" /> class.
+    /// </summary>
+    /// <param name="entries">The entries.</param>
+    /// <param name="isUsingPreviewFeature">Enable preview feature</param>
+    /// <param name="maxAge">The maximum age.</param>
+    /// <exception cref="System.ArgumentNullException">entries</exception>
+    internal DiscoveryDocumentResult(Dictionary<string, object> entries, bool isUsingPreviewFeature, int? maxAge)
+        :this(entries, maxAge)
+    {
+        _isUsingPreviewFeature = true;
     }
 }
 

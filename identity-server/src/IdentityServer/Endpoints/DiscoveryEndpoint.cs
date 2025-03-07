@@ -14,6 +14,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Duende.IdentityServer.Endpoints;
 
@@ -93,20 +94,21 @@ internal class DiscoveryEndpoint : IEndpointHandler
         if (json is not null)
         {
             return new DiscoveryDocumentResult(
-                json,
-                _options.Discovery.ResponseCacheInterval
+                json: json,
+                maxAge: _options.Discovery.ResponseCacheInterval
             );
         }
 
         var entries =
             await _responseGenerator.CreateDiscoveryDocumentAsync(baseUrl, issuerUri);
 
-#pragma warning disable DUENDEPREVIEW001
         var expirationFromNow = _options.Preview.DiscoveryDocumentCacheDuration;
-#pragma warning restore DUENDEPREVIEW001
 
         var result =
-            new DiscoveryDocumentResult(entries, _options.Discovery.ResponseCacheInterval);
+            new DiscoveryDocumentResult(
+                entries, 
+                isUsingPreviewFeature: true,
+                maxAge: _options.Discovery.ResponseCacheInterval);
 
         await cache.SetStringAsync(key, result.Json, new DistributedCacheEntryOptions
         {

@@ -13,7 +13,6 @@ builder.AddServiceDefaults();
 var response = await RequestTokenAsync();
 response.Show();
 
-Console.ReadLine();
 await CallServiceAsync(response.AccessToken);
 
 static async Task<TokenResponse> RequestTokenAsync()

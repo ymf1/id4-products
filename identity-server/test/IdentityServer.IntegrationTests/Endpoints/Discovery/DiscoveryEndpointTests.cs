@@ -291,10 +291,10 @@ public class DiscoveryEndpointTests
         IdentityServerPipeline pipeline = new IdentityServerPipeline();
         pipeline.Initialize("/root");
 
-        pipeline.Options.Preview.EnableDiscoveryDocumentCache = true;
 #pragma warning disable DUENDEPREVIEW001
-        pipeline.Options.Preview.DiscoveryDocumentCacheDuration = TimeSpan.FromSeconds(1);
+        pipeline.Options.Preview.EnableDiscoveryDocumentCache = true;
 #pragma warning restore DUENDEPREVIEW001
+        pipeline.Options.Preview.DiscoveryDocumentCacheDuration = TimeSpan.FromSeconds(1);
 
         // cache
         _ = await pipeline.BackChannelClient.GetAsync("https://server/root/.well-known/openid-configuration");

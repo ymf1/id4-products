@@ -15,11 +15,11 @@ public class PreviewFeatureOptions
     /// <summary>
     /// Enables Caching of Discovery Document based on ResponseCaching Interval 
     /// </summary>
+    [Experimental("DUENDEPREVIEW001", UrlFormat = "https://duende.link/previewfeatures?id={0}")]
     public bool EnableDiscoveryDocumentCache { get; set; } = false;
 
     /// <summary>
     /// DiscoveryDocument Cache Duration
     /// </summary>
-    [Experimental("DUENDEPREVIEW001", UrlFormat = "https://duende.link/previewfeatures?id={0}")]
     public TimeSpan DiscoveryDocumentCacheDuration{ get; set; } = TimeSpan.FromMinutes(1);
 }

@@ -80,4 +80,3 @@ public class DiscoveryKeysHealthCheck : IHealthCheck
         return new HealthCheckResult(context.Registration.FailureStatus);
     }
 }
-

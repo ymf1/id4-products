@@ -66,4 +66,3 @@ namespace IdentityServer.PerfTests.Services
         }
     }
 }
-

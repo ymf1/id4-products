@@ -19,4 +19,3 @@ public interface IEndpointResult
     /// <param name="context">The HTTP context.</param>
     Task ExecuteAsync(HttpContext context);
 }
-

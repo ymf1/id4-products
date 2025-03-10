@@ -42,4 +42,3 @@ public class PushedAuthorizationSuccess : PushedAuthorizationResponse
     /// </summary>
     public required int ExpiresIn { get; set; }
 }
-

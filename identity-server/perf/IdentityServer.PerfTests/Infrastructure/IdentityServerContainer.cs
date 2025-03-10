@@ -148,4 +148,3 @@ namespace IdentityServer.PerfTest.Infrastructure
         }
     }
 }
-

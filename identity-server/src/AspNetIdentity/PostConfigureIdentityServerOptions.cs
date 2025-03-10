@@ -42,4 +42,3 @@ public class UseAspNetIdentityCookieScheme : IPostConfigureOptions<IdentityServe
             _authOptions.Value.DefaultAuthenticateScheme == IdentityConstants.ApplicationScheme;
     }
 }
-

@@ -127,4 +127,3 @@ internal class PushedAuthorizationEndpoint : IEndpointHandler
         });
     }
 }
-

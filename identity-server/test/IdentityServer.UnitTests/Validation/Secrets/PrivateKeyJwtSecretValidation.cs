@@ -1,6 +1,8 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
+// Supress the warning for the preview feature `Preview.StrictClientAssertionAudienceValidation`
+#pragma warning disable DUENDEPREVIEW002
 
 using System;
 using System.Collections.Generic;
@@ -168,8 +170,8 @@ public class PrivateKeyJwtSecretValidation
     [InlineData("https://idsrv.com/connect/par", false)]
     public async Task Valid_strict_aud(string aud, bool expectSuccess)
     {
-        _options.StrictClientAssertionAudienceValidation = true;
-        
+        _options.Preview.StrictClientAssertionAudienceValidation = true;
+
         var clientId = "certificate_base64_valid";
         var client = await _clients.FindEnabledClientByIdAsync(clientId);
 
@@ -193,8 +195,8 @@ public class PrivateKeyJwtSecretValidation
     [InlineData("https://idsrv.com/connect/par")]
     public async Task StrictAudience_does_not_allow_single_valued_arrays(string aud)
     {
-        _options.StrictClientAssertionAudienceValidation = true;
-        
+        _options.Preview.StrictClientAssertionAudienceValidation = true;
+
         var clientId = "certificate_base64_valid";
         var client = await _clients.FindEnabledClientByIdAsync(clientId);
         
@@ -213,8 +215,8 @@ public class PrivateKeyJwtSecretValidation
     [Fact]
     public async Task StrictAudience_does_not_allow_multi_valued_arrays()
     {
-        _options.StrictClientAssertionAudienceValidation = true;
-        
+        _options.Preview.StrictClientAssertionAudienceValidation = true;
+
         var clientId = "certificate_base64_valid";
         var client = await _clients.FindEnabledClientByIdAsync(clientId);
         

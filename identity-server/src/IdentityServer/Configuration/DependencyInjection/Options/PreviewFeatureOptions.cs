@@ -2,10 +2,9 @@
 // See LICENSE in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
+using System;
 
 namespace Duende.IdentityServer.Configuration;
-
-using System;
 
 /// <summary>
 /// Provides configuration options for enabling and managing preview features in IdentityServer.
@@ -17,6 +16,12 @@ public class PreviewFeatureOptions
     /// </summary>
     [Experimental("DUENDEPREVIEW001", UrlFormat = "https://duende.link/previewfeatures?id={0}")]
     public bool EnableDiscoveryDocumentCache { get; set; } = false;
+
+    /// <summary>
+    /// When clients authenticate with private_key_jwt assertions, validate the audience of the assertion strictly: the audience must be this IdentityServer's issuer identifier as a single string.
+    /// </summary>
+    [Experimental("DUENDEPREVIEW002", UrlFormat = "https://duende.link/previewfeatures?id={0}")]
+    public bool StrictClientAssertionAudienceValidation { get; set; } = false;
 
     /// <summary>
     /// DiscoveryDocument Cache Duration

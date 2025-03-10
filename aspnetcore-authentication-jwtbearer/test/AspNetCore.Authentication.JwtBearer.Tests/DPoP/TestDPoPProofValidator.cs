@@ -22,7 +22,7 @@ public class TestDPoPProofValidator : DefaultDPoPProofValidator
     { }
 
     public IDataProtector TestDataProtector => DataProtector;
-    public FakeTimeProvider TestTimeProvider => (FakeTimeProvider) TimeProvider;
+    public FakeTimeProvider TestTimeProvider => (FakeTimeProvider)TimeProvider;
     public IReplayCache TestReplayCache => ReplayCache;
 
     public new Task ValidateHeader(DPoPProofValidationContext context, DPoPProofValidationResult result, CancellationToken cancellationToken = default) => base.ValidateHeader(context, result, cancellationToken);

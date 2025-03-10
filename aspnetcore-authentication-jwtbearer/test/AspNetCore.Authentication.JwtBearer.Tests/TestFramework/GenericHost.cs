@@ -147,7 +147,7 @@ public class GenericHost
     public async Task RevokeSessionCookieAsync()
     {
         var response = await BrowserClient.GetAsync(Url("__signout"));
-        response.StatusCode.ShouldBe((HttpStatusCode) 204);
+        response.StatusCode.ShouldBe((HttpStatusCode)204);
     }
 
     void ConfigureSignin(WebApplication app)
@@ -182,7 +182,7 @@ public class GenericHost
     {
         _userToSignIn = new ClaimsPrincipal(new ClaimsIdentity(claims, "test", "name", "role"));
         var response = await BrowserClient.GetAsync(Url("__signin"));
-        response.StatusCode.ShouldBe((HttpStatusCode) 204);
+        response.StatusCode.ShouldBe((HttpStatusCode)204);
     }
     public Task IssueSessionCookieAsync(AuthenticationProperties props, params Claim[] claims)
     {

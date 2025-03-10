@@ -44,7 +44,7 @@ public class FreshnessTests : DPoPProofValidatorTestBase
 
     [Theory]
     [Trait("Category", "Unit")]
-    [InlineData((string?) null)]
+    [InlineData((string?)null)]
     [InlineData("")]
     [InlineData(" ")]
     public async Task missing_nonce_returns_use_dpop_nonce_with_server_issued_nonce(string? nonce)

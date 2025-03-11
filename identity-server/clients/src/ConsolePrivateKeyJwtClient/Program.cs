@@ -45,7 +45,7 @@ var ecKey =
         """;
 
 // X.509 cert
-var certificate = new X509Certificate2("client.p12", "changeit");
+var certificate = X509CertificateLoader.LoadPkcs12FromFile(path: "client.p12", password: "changeit");
 var x509Credential = new X509SigningCredentials(certificate);
 
 var response = await RequestTokenAsync(x509Credential);

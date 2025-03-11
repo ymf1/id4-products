@@ -53,7 +53,7 @@ static SocketsHttpHandler GetHandler()
 {
     var handler = new SocketsHttpHandler();
 
-    var cert = new X509Certificate2("client.p12", "changeit");
+    var cert = X509CertificateLoader.LoadPkcs12FromFile(path: "client.p12", password: "changeit");
     handler.SslOptions.ClientCertificates = new X509CertificateCollection { cert };
 
     return handler;

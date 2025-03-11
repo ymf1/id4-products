@@ -533,7 +533,7 @@ public class DefaultDPoPProofValidator : IDPoPProofValidator
     internal bool IsExpired(TimeSpan validityDuration, TimeSpan clockSkew, long time)
     {
         var now = TimeProvider.GetUtcNow().ToUnixTimeSeconds();
-        var start = now + (int) clockSkew.TotalSeconds;
+        var start = now + (int)clockSkew.TotalSeconds;
         if (start < time)
         {
             var diff = time - now;
@@ -541,8 +541,8 @@ public class DefaultDPoPProofValidator : IDPoPProofValidator
             return true;
         }
 
-        var expiration = time + (int) validityDuration.TotalSeconds;
-        var end = now - (int) clockSkew.TotalSeconds;
+        var expiration = time + (int)validityDuration.TotalSeconds;
+        var end = now - (int)clockSkew.TotalSeconds;
         if (expiration < end)
         {
             var diff = now - expiration;

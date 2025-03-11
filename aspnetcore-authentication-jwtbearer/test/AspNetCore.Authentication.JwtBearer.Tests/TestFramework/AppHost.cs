@@ -23,8 +23,8 @@ public class AppHost : GenericHost
     private readonly Action<UserTokenManagementOptions>? _configureUserTokenManagementOptions;
 
     public AppHost(
-        IdentityServerHost identityServerHost, 
-        ApiHost apiHost, 
+        IdentityServerHost identityServerHost,
+        ApiHost apiHost,
         string clientId,
         ITestOutputHelper testOutputHelper,
         string baseAddress = "https://app",
@@ -79,13 +79,13 @@ public class AppHost : GenericHost
                     options.Scope.Add("offline_access");
                 }
 
-                var identityServerHandler = _identityServerHost.Server.CreateHandler();   
+                var identityServerHandler = _identityServerHost.Server.CreateHandler();
                 if (IdentityServerHttpHandler != null)
                 {
                     // allow discovery document
                     IdentityServerHttpHandler.When("/.well-known/*")
                         .Respond(identityServerHandler);
-                    
+
                     options.BackchannelHttpHandler = IdentityServerHttpHandler;
                 }
                 else
@@ -119,12 +119,12 @@ public class AppHost : GenericHost
                     RedirectUri = "/"
                 });
             });
-                
+
             endpoints.MapGet("/logout", async context =>
             {
                 await context.SignOutAsync();
             });
-            
+
             endpoints.MapGet("/user_token", async context =>
             {
                 var token = await context.GetUserAccessTokenAsync();
@@ -139,7 +139,7 @@ public class AppHost : GenericHost
                 });
                 await context.Response.WriteAsJsonAsync(token);
             });
-            
+
             endpoints.MapGet("/client_token", async context =>
             {
                 var token = await context.GetClientAccessTokenAsync();

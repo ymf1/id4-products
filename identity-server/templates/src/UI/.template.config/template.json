@@ -1,10 +1,13 @@
 {
   "author": "Duende Software",
-  "classifications": ["Web", "IdentityServer"],
+  "classifications": [
+    "Web",
+    "IdentityServer"
+  ],
   "name": "Duende IdentityServer Quickstart UI (UI assets only)",
   "identity": "IdentityServer.UI",
   "groupIdentity": "IdentityServer.UI",
-  "shortName": "duende-isui",
+  "shortName": "duende-is-ui",
   "tags": {
     "language": "C#"
   },

@@ -5,9 +5,9 @@
         <OutputType>Exe</OutputType>
     </PropertyGroup>
 
-    <ItemGroup>
-      <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
+  </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\..\..\aspire\aspire.orchestrator\aspire.orchestrator.ServiceDefaults\aspire.orchestrator.ServiceDefaults.csproj" />

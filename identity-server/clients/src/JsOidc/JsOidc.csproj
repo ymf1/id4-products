@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net9.0</TargetFrameworks>
   </PropertyGroup>
-
+   
   <ItemGroup>
     <ProjectReference Include="..\..\..\aspire\aspire.orchestrator\aspire.orchestrator.ServiceDefaults\aspire.orchestrator.ServiceDefaults.csproj" />
   </ItemGroup>

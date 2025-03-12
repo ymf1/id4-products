@@ -4,11 +4,11 @@
         <TargetFrameworks>net9.0</TargetFrameworks>
     </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="IdentityModel.AspNetCore.OAuth2Introspection" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
-        <PackageReference Include="Serilog.AspNetCore" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="IdentityModel.AspNetCore.OAuth2Introspection" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+    <PackageReference Include="Serilog.AspNetCore" />
+  </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\..\aspire\aspire.orchestrator\aspire.orchestrator.ServiceDefaults\aspire.orchestrator.ServiceDefaults.csproj" />

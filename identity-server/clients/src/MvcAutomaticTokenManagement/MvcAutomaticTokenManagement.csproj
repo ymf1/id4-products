@@ -1,14 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-    <PropertyGroup>
-        <TargetFrameworks>net9.0</TargetFrameworks>
-    </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net9.0</TargetFrameworks>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="Duende.AccessTokenManagement.OpenIdConnect" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" />
-        <PackageReference Include="Serilog.AspNetCore" />
-
+  <ItemGroup>
+    <PackageReference Include="Duende.AccessTokenManagement.OpenIdConnect" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" />
+    <PackageReference Include="Serilog.AspNetCore" />
         <PackageReference Include="OpenTelemetry" />
         <PackageReference Include="OpenTelemetry.Exporter.Console" />
         <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" />

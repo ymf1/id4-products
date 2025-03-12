@@ -179,7 +179,7 @@ public class PrivateKeyJwtSecretValidation
         {
             Id = clientId,
             Credential = new JwtSecurityTokenHandler().WriteToken(CreateToken(clientId, aud:aud)), 
-            Type = IdentityServerConstants.ParsedSecretTypes.JwtBearer
+            Type = "client-authentication+jwt"
         };
 
         var result = await _validator.ValidateAsync(client.ClientSecrets, secret);
@@ -232,6 +232,30 @@ public class PrivateKeyJwtSecretValidation
     
         result.Success.Should().BeFalse();
     }
+
+    [Theory]
+    [InlineData("client-authentication+jwt", true, true)]
+    [InlineData("client-authentication+jwt", false, true)]
+    [InlineData(IdentityServerConstants.ParsedSecretTypes.JwtBearer, true, false)]
+    [InlineData(IdentityServerConstants.ParsedSecretTypes.JwtBearer, false, true)]
+    public async Task StrictAudience_only_allows_correct_type(string type, bool setStrict, bool expectedResult)
+    {
+        _options.Preview.StrictClientAssertionAudienceValidation = setStrict;
+
+        var clientId = "certificate_base64_valid";
+        var client = await _clients.FindEnabledClientByIdAsync(clientId);
+        var token = new JwtSecurityTokenHandler().WriteToken(CreateToken(clientId));
+
+        var secret = new ParsedSecret
+        {
+            Id = clientId,
+            Credential = token,
+            Type = type
+        };
+
+        var result = await _validator.ValidateAsync(client.ClientSecrets, secret);
+        result.Success.Should().Be(expectedResult);
+    }
     
     [Fact]
     public async Task Invalid_Replay()
@@ -239,12 +263,12 @@ public class PrivateKeyJwtSecretValidation
         var clientId = "certificate_base64_valid";
         var client = await _clients.FindEnabledClientByIdAsync(clientId);
         var token = new JwtSecurityTokenHandler().WriteToken(CreateToken(clientId));
-            
+
         var secret = new ParsedSecret
         {
             Id = clientId,
             Credential = token,
-            Type = IdentityServerConstants.ParsedSecretTypes.JwtBearer
+            Type = "client-authentication+jwt"
         };
 
         var result = await _validator.ValidateAsync(client.ClientSecrets, secret);

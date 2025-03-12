@@ -263,12 +263,11 @@ public class PrivateKeyJwtSecretValidation
         var clientId = "certificate_base64_valid";
         var client = await _clients.FindEnabledClientByIdAsync(clientId);
         var token = new JwtSecurityTokenHandler().WriteToken(CreateToken(clientId));
-
         var secret = new ParsedSecret
         {
             Id = clientId,
             Credential = token,
-            Type = "client-authentication+jwt"
+            Type = IdentityServerConstants.ParsedSecretTypes.JwtBearer
         };
 
         var result = await _validator.ValidateAsync(client.ClientSecrets, secret);

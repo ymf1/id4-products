@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    <TargetFramework>net8.0</TargetFramework>
     <RootNamespace>IdentityServerHost</RootNamespace>
     <Nullable>enable</Nullable>
     <AnalysisMode>all</AnalysisMode>
@@ -33,11 +33,14 @@
     <PackageReference Include="Microsoft.Data.SqlClient" />
   </ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\..\aspire\aspire.orchestrator\aspire.orchestrator.ServiceDefaults\aspire.orchestrator.ServiceDefaults.csproj" />
-        <ProjectReference Include="..\..\src\Configuration\Duende.IdentityServer.Configuration.csproj" />
-        <ProjectReference Include="..\..\src\Configuration.EntityFramework\Duende.IdentityServer.Configuration.EntityFramework.csproj" />
-        <ProjectReference Include="..\..\src\EntityFramework\Duende.IdentityServer.EntityFramework.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference
+      Include="..\..\aspire\aspire.orchestrator\aspire.orchestrator.ServiceDefaults\aspire.orchestrator.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\..\src\Configuration\Duende.IdentityServer.Configuration.csproj" />
+    <ProjectReference
+      Include="..\..\src\Configuration.EntityFramework\Duende.IdentityServer.Configuration.EntityFramework.csproj" />
+    <ProjectReference
+      Include="..\..\src\EntityFramework\Duende.IdentityServer.EntityFramework.csproj" />
+  </ItemGroup>
 
 </Project>

@@ -234,8 +234,8 @@ public class PrivateKeyJwtSecretValidation
     }
 
     [Theory]
-    [InlineData("client-authentication+jwt", true, true)]
-    [InlineData("client-authentication+jwt", false, true)]
+    [InlineData(IdentityServerConstants.ParsedSecretTypes.ClientAuthenticationJwt, true, true)]
+    [InlineData(IdentityServerConstants.ParsedSecretTypes.ClientAuthenticationJwt, false, true)]
     [InlineData(IdentityServerConstants.ParsedSecretTypes.JwtBearer, true, false)]
     [InlineData(IdentityServerConstants.ParsedSecretTypes.JwtBearer, false, true)]
     public async Task StrictAudience_only_allows_correct_type(string type, bool setStrict, bool expectedResult)

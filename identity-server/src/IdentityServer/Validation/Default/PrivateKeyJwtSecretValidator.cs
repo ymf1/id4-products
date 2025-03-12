@@ -66,12 +66,12 @@ public class PrivateKeyJwtSecretValidator : ISecretValidator
         // Decide whether to enforce strict audience validation or not.
         var enforceStrictAud = _options.Preview.StrictClientAssertionAudienceValidation;
 
-        if (enforceStrictAud && parsedSecret.Type != "client-authentication+jwt")
+        if (enforceStrictAud && parsedSecret.Type != ParsedSecretTypes.ClientAuthenticationJwt)
         {
             return fail;
         }
 
-        if (parsedSecret.Type != ParsedSecretTypes.JwtBearer && parsedSecret.Type != "client-authentication+jwt")
+        if (parsedSecret.Type != ParsedSecretTypes.JwtBearer && parsedSecret.Type != ParsedSecretTypes.ClientAuthenticationJwt)
         {
             return fail;
         }
@@ -101,7 +101,7 @@ public class PrivateKeyJwtSecretValidator : ISecretValidator
 
         // If strict mode is not enabled by option but the type value "client-authentication+jwt" is provided,
         // enforce strict audience validation.
-        if (string.Equals(parsedSecret.Type, "client-authentication+jwt", StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(parsedSecret.Type, ParsedSecretTypes.ClientAuthenticationJwt, StringComparison.OrdinalIgnoreCase))
         {
             enforceStrictAud = true;
         }

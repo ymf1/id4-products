@@ -68,6 +68,7 @@ public static class IdentityServerConstants
         public const string SharedSecret = "SharedSecret";
         public const string X509Certificate = "X509Certificate";
         public const string JwtBearer = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer";
+        public const string ClientAuthenticationJwt = "client-authentication+jwt";
     }
 
     public static class SecretTypes

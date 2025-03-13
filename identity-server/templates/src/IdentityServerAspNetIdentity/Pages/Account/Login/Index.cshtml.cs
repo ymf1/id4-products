@@ -94,7 +94,10 @@ public class Index : PageModel
 
         if (ModelState.IsValid)
         {
-            var result = await _signInManager.PasswordSignInAsync(Input.Username!, Input.Password!, Input.RememberLogin, lockoutOnFailure: true);
+            // Only remember login if allowed
+            var rememberLogin = View.AllowRememberLogin && Input.RememberLogin;
+
+            var result = await _signInManager.PasswordSignInAsync(Input.Username!, Input.Password!, isPersistent: rememberLogin, lockoutOnFailure: true);
             if (result.Succeeded)
             {
                 var user = await _userManager.FindByNameAsync(Input.Username!);

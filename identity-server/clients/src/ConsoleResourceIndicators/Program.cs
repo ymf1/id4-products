@@ -51,6 +51,10 @@ foreach (var test in testsToRun)
     }
 }
 
+// Exit the application
+"Exiting application...".ConsoleYellow();
+Environment.Exit(0);
+
 async Task FrontChannel(string scope, IEnumerable<string> resource)
 {
     resource ??= [];

@@ -63,15 +63,7 @@ public class PrivateKeyJwtSecretValidator : ISecretValidator
         var fail = new SecretValidationResult { Success = false };
         var success = new SecretValidationResult { Success = true };
 
-        // Decide whether to enforce strict audience validation or not.
-        var enforceStrictAud = _options.Preview.StrictClientAssertionAudienceValidation;
-
-        if (enforceStrictAud && parsedSecret.Type != ParsedSecretTypes.ClientAuthenticationJwt)
-        {
-            return fail;
-        }
-
-        if (parsedSecret.Type != ParsedSecretTypes.JwtBearer && parsedSecret.Type != ParsedSecretTypes.ClientAuthenticationJwt)
+        if (parsedSecret.Type != ParsedSecretTypes.JwtBearer)
         {
             return fail;
         }
@@ -99,11 +91,27 @@ public class PrivateKeyJwtSecretValidator : ISecretValidator
             return fail;
         }
 
-        // If strict mode is not enabled by option but the type value "client-authentication+jwt" is provided,
-        // enforce strict audience validation.
-        if (string.Equals(parsedSecret.Type, ParsedSecretTypes.ClientAuthenticationJwt, StringComparison.OrdinalIgnoreCase))
+        // Decide whether to enforce strict audience validation or not.
+        var enforceStrictAud = _options.Preview.StrictClientAssertionAudienceValidation;
+
+        try
         {
-            enforceStrictAud = true;
+            // Read the token so we can get the "typ" header value if it exists.
+            var handlerForHeader = new JsonWebTokenHandler();
+            var tokenForHeader = handlerForHeader.ReadJsonWebToken(jwtTokenString);
+            var jwtTyp = tokenForHeader.GetHeaderValue<string>("typ");
+
+            // If strict mode is not enabled by option but the "typ" header value "client-authentication+jwt" is provided,
+            // enforce strict audience validation.
+            if (string.Equals(jwtTyp, "client-authentication+jwt", StringComparison.OrdinalIgnoreCase))
+            {
+                enforceStrictAud = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error reading JWT header.");
+            return fail;
         }
 
         var tokenValidationParameters = new TokenValidationParameters
@@ -138,7 +146,7 @@ public class PrivateKeyJwtSecretValidator : ISecretValidator
             };
 
             // Strict audience validation requires that the token type be "JWT"
-            tokenValidationParameters.ValidTypes = ["JWT"];
+            tokenValidationParameters.ValidTypes = ["client-authentication+jwt"];
         }
         else
         {

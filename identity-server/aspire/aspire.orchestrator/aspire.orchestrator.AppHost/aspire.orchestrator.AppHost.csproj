@@ -20,6 +20,7 @@
 
         <!-- Database Projects -->
         <ProjectReference Include="..\..\..\clients\src\ConsoleCode\ConsoleCode.csproj" />
+        <ProjectReference Include="..\..\..\clients\src\ConsoleResourceIndicators\ConsoleResourceIndicators.csproj" />
         <ProjectReference Include="..\..\..\migrations\AspNetIdentityDb\AspNetIdentityDb.csproj" />
         <ProjectReference Include="..\..\..\migrations\IdentityServerDb\IdentityServerDb.csproj" />
 

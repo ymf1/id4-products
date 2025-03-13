@@ -7,7 +7,13 @@ using ConsoleResourceIndicators;
 using Duende.IdentityModel;
 using Duende.IdentityModel.Client;
 using Duende.IdentityModel.OidcClient;
+using Microsoft.Extensions.Hosting;
 using Serilog;
+
+var builder = Host.CreateApplicationBuilder(args);
+
+// Add ServiceDefaults from Aspire
+builder.AddServiceDefaults();
 
 OidcClient _oidcClient;
 

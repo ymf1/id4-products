@@ -53,7 +53,8 @@ foreach (var run in plannedRuns)
 }
 
 // Exit the application
-Environment.Exit(exitCode: 0);
+"Exiting application...".ConsoleYellow();
+Environment.Exit(0);
 
 async Task RequestToken(PlannedRun run)
 {

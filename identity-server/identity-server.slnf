@@ -16,6 +16,7 @@
 	  "identity-server\\clients\\src\\MvcJarUriJwt\\MvcJarUriJwt.csproj",
 	  "identity-server\\clients\\src\\ConsoleScopesResources\\ConsoleScopesResources.csproj",
 	  "identity-server\\clients\\src\\ConsoleCibaClient\\ConsoleCibaClient.csproj",
+	  "identity-server\\clients\\src\\ConsoleCode\\ConsoleCode.csproj",
 	  "identity-server\\clients\\src\\ConsoleDeviceFlow\\ConsoleDeviceFlow.csproj",
 	  "identity-server\\clients\\src\\ConsoleClientCredentialsFlow\\ConsoleClientCredentialsFlow.csproj",
 	  "identity-server\\clients\\src\\ConsoleClientCredentialsFlowCallingIdentityServerApi\\ConsoleClientCredentialsFlowCallingIdentityServerApi.csproj",

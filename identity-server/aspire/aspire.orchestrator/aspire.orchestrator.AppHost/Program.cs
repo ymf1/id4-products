@@ -57,7 +57,6 @@ if (HostIsEnabled(nameof(Projects.Host_AspNetIdentity)) || HostIsEnabled(nameof(
 
 #region Identity Server Clients
 
-// ** Console-Code client ommitted as it currently requires interaction **
 // ** Console-ResourceIndicators client ommitted as it current requires interaction **
 
 if (ClientIsEnabled(nameof(Projects.MvcCode)))
@@ -138,6 +137,9 @@ if (ClientIsEnabled(nameof(Projects.WindowsConsoleSystemBrowser)))
 
 if (ClientIsEnabled(nameof(Projects.ConsoleScopesResources)))
     builder.AddProject<Projects.ConsoleScopesResources>(name: "console-scopes-resources").WithExplicitStart();
+
+if (ClientIsEnabled(nameof(Projects.ConsoleCode)))
+    builder.AddProject<Projects.ConsoleCode>(name: "console-code").WithExplicitStart();
 
 #endregion
 

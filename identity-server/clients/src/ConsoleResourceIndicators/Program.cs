@@ -21,21 +21,21 @@ OidcClient _oidcClient;
 
 var testsToRun = new List<Test>
 {
-    new() { Id = "1", Scope = "resource1.scope1 resource2.scope1 resource3.scope1 shared.scope offline_access" },
-    new() { Id = "2", Scope = "resource1.scope1 resource2.scope1 resource3.scope1 shared.scope" },
-    new() { Id = "3", Scope = "resource1.scope1 resource2.scope1 resource3.scope1 shared.scope offline_access", Resources = ["urn:resource1", "urn:resource2"] },
-    new() { Id = "4", Scope = "resource1.scope1 resource2.scope1 resource3.scope1 shared.scope", Resources = ["urn:resource1", "urn:resource2"] },
-    new() { Id = "5", Scope = "resource1.scope1 resource2.scope1 resource3.scope1 shared.scope offline_access", Resources = ["urn:resource1", "urn:resource2", "urn:resource3"] },
-    new() { Id = "6", Scope = "resource1.scope1 resource2.scope1 resource3.scope1 shared.scope", Resources = ["urn:resource1", "urn:resource2", "urn:resource3"] },
-    new() { Id = "7", Scope = "resource1.scope1 resource2.scope1 resource3.scope1 shared.scope offline_access", Resources = ["urn:resource3"] },
-    new() { Id = "8", Scope = "resource1.scope1 resource2.scope1 resource3.scope1 shared.scope", Resources = ["urn:resource3"] },
-    new() { Id = "9", Scope = "resource3.scope1 offline_access", Resources = ["urn:resource3"] },
-    new() { Id = "10", Scope = "resource3.scope1", Resources = ["urn:resource3"] },
-    new() { Id = "11", Scope = "resource1.scope1 offline_access", Resources = ["urn:resource3"] },
-    new() { Id = "12", Scope = "shared.scope", Resources = ["urn:invalid"] }
+    new() { Id = "1", Enabled = true, Scope = "resource1.scope1 resource2.scope1 resource3.scope1 shared.scope offline_access" },
+    new() { Id = "2", Enabled = true, Scope = "resource1.scope1 resource2.scope1 resource3.scope1 shared.scope" },
+    new() { Id = "3", Enabled = true, Scope = "resource1.scope1 resource2.scope1 resource3.scope1 shared.scope offline_access", Resources = ["urn:resource1", "urn:resource2"] },
+    new() { Id = "4", Enabled = true, Scope = "resource1.scope1 resource2.scope1 resource3.scope1 shared.scope", Resources = ["urn:resource1", "urn:resource2"] },
+    new() { Id = "5", Enabled = true, Scope = "resource1.scope1 resource2.scope1 resource3.scope1 shared.scope offline_access", Resources = ["urn:resource1", "urn:resource2", "urn:resource3"] },
+    new() { Id = "6", Enabled = true, Scope = "resource1.scope1 resource2.scope1 resource3.scope1 shared.scope", Resources = ["urn:resource1", "urn:resource2", "urn:resource3"] },
+    new() { Id = "7", Enabled = true, Scope = "resource1.scope1 resource2.scope1 resource3.scope1 shared.scope offline_access", Resources = ["urn:resource3"] },
+    new() { Id = "8", Enabled = true, Scope = "resource1.scope1 resource2.scope1 resource3.scope1 shared.scope", Resources = ["urn:resource3"] },
+    new() { Id = "9", Enabled = true, Scope = "resource3.scope1 offline_access", Resources = ["urn:resource3"] },
+    new() { Id = "10", Enabled = true, Scope = "resource3.scope1", Resources = ["urn:resource3"] },
+    new() { Id = "11", Enabled = true, Scope = "resource1.scope1 offline_access", Resources = ["urn:resource3"] },
+    new() { Id = "12", Enabled = true, Scope = "shared.scope", Resources = ["urn:invalid"] }
 };
 
-foreach (var test in testsToRun)
+foreach (var test in testsToRun.Where(t => t.Enabled))
 {
     var resources = test.Resources != null ? test.Resources.Aggregate((x, y) => $"{x}, {y}") : "-none-";
     ($"Runing test: ({test.Id}) SCOPES: " + test.Scope + ", RESOURCES: " + resources).ConsoleBox(ConsoleColor.Green);
@@ -159,6 +159,7 @@ async Task Refresh(string refreshToken, string resource)
 class Test
 {
     public string Id { get; set; }
+    public bool Enabled { get; set; }
     public string Scope { get; set; }
     public IEnumerable<string> Resources { get; set; } = null;
 }

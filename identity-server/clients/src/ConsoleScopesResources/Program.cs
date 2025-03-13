@@ -39,13 +39,8 @@ var plannedRuns = new List<PlannedRun>
 };
 
 // Execute the planned runs
-foreach (var run in plannedRuns)
+foreach (var run in plannedRuns.Where(t => t.Enabled))
 {
-    if (!run.Enabled)
-    {
-        continue;
-    }
-
     $"Running: ({run.Id}) - {run.Name}".ConsoleBox(ConsoleColor.Green);
     await RequestToken(run);
 

@@ -1,18 +1,20 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
+// Supress the warning for the preview feature `Preview.StrictClientAssertionAudienceValidation`
+#pragma warning disable DUENDEPREVIEW002
 
+using Duende.IdentityServer.Configuration;
+using Duende.IdentityServer.Extensions;
+using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Services;
+using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.JsonWebTokens;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Duende.IdentityServer.Configuration;
-using Duende.IdentityServer.Models;
-using Duende.IdentityServer.Services;
-using Duende.IdentityServer.Extensions;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.JsonWebTokens;
-using Microsoft.IdentityModel.Tokens;
 using static Duende.IdentityServer.IdentityServerConstants;
 
 namespace Duende.IdentityServer.Validation;
@@ -34,7 +36,7 @@ public class PrivateKeyJwtSecretValidator : ISecretValidator
     /// Instantiates an instance of private_key_jwt secret validator
     /// </summary>
     public PrivateKeyJwtSecretValidator(
-        IIssuerNameService issuerNameService, 
+        IIssuerNameService issuerNameService,
         IReplayCache replayCache,
         IServerUrls urls,
         IdentityServerOptions options,
@@ -89,7 +91,28 @@ public class PrivateKeyJwtSecretValidator : ISecretValidator
             return fail;
         }
 
-        var issuer = await _issuerNameService.GetCurrentAsync();
+        // Decide whether to enforce strict audience validation or not.
+        var enforceStrictAud = _options.Preview.StrictClientAssertionAudienceValidation;
+
+        try
+        {
+            // Read the token so we can get the "typ" header value if it exists.
+            var handlerForHeader = new JsonWebTokenHandler();
+            var tokenForHeader = handlerForHeader.ReadJsonWebToken(jwtTokenString);
+            var jwtTyp = tokenForHeader.GetHeaderValue<string>("typ");
+
+            // If strict mode is not enabled by option but the "typ" header value "client-authentication+jwt" is provided,
+            // enforce strict audience validation.
+            if (string.Equals(jwtTyp, "client-authentication+jwt", StringComparison.OrdinalIgnoreCase))
+            {
+                enforceStrictAud = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error reading JWT header.");
+            return fail;
+        }
 
         var tokenValidationParameters = new TokenValidationParameters
         {
@@ -98,14 +121,16 @@ public class PrivateKeyJwtSecretValidator : ISecretValidator
 
             ValidIssuer = parsedSecret.Id,
             ValidateIssuer = true,
-            
+
             RequireSignedTokens = true,
             RequireExpirationTime = true,
 
             ClockSkew = TimeSpan.FromMinutes(5)
         };
-        
-        if (_options.StrictClientAssertionAudienceValidation)
+
+        var issuer = await _issuerNameService.GetCurrentAsync();
+
+        if (enforceStrictAud)
         {
             // New strict audience validation requires that the audience be the issuer identifier, disallows multiple
             // audiences in an array, and even disallows wrapping even a single audience in an array 
@@ -119,9 +144,13 @@ public class PrivateKeyJwtSecretValidator : ISecretValidator
                 return audValue is string audString &&
                        AudiencesMatch(audString, issuer);
             };
+
+            // Strict audience validation requires that the token type be "client-authentication+jwt"
+            tokenValidationParameters.ValidTypes = ["client-authentication+jwt"];
         }
         else
         {
+            // Legacy behavior with a set of allowed audiences.
             tokenValidationParameters.ValidateAudience = true;
             tokenValidationParameters.ValidAudiences = new[]
             {
@@ -135,7 +164,7 @@ public class PrivateKeyJwtSecretValidator : ISecretValidator
                 string.Concat(_urls.BaseUrl.EnsureTrailingSlash(), ProtocolRoutePaths.BackchannelAuthentication),
                 // PAR endpoint: https://datatracker.ietf.org/doc/html/rfc9126#name-request
                 string.Concat(_urls.BaseUrl.EnsureTrailingSlash(), ProtocolRoutePaths.PushedAuthorization),
-            
+
             }.Distinct();
         }
 
@@ -180,7 +209,7 @@ public class PrivateKeyJwtSecretValidator : ISecretValidator
 
         return success;
     }
-    
+
     // AudiencesMatch and AudiencesMatchIgnoringTrailingSlash are based on code from 
     // https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet/blob/bef98ca10ae55603ce6d37dfb7cd5af27791527c/src/Microsoft.IdentityModel.Tokens/Validators.cs#L158-L193
     private bool AudiencesMatch(string tokenAudience, string validAudience)
@@ -195,7 +224,7 @@ public class PrivateKeyJwtSecretValidator : ISecretValidator
 
         return AudiencesMatchIgnoringTrailingSlash(tokenAudience, validAudience);
     }
-            
+
     private bool AudiencesMatchIgnoringTrailingSlash(string tokenAudience, string validAudience)
     {
         int length = -1;

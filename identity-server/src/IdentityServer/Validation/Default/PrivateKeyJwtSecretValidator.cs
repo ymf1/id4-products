@@ -145,7 +145,7 @@ public class PrivateKeyJwtSecretValidator : ISecretValidator
                        AudiencesMatch(audString, issuer);
             };
 
-            // Strict audience validation requires that the token type be "JWT"
+            // Strict audience validation requires that the token type be "client-authentication+jwt"
             tokenValidationParameters.ValidTypes = ["client-authentication+jwt"];
         }
         else

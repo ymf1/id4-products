@@ -40,25 +40,25 @@ public class PrivateKeyJwtSecretValidation
 
         _validator = new PrivateKeyJwtSecretValidator(
             new TestIssuerNameService("https://idsrv.com"),
-            new DefaultReplayCache(new TestCache()), 
+            new DefaultReplayCache(new TestCache()),
             new MockServerUrls() { Origin = "https://idsrv.com" },
             _options,
             new LoggerFactory().CreateLogger<PrivateKeyJwtSecretValidator>());
-            
+
         _clients = new InMemoryClientStore(ClientValidationTestClients.Get());
     }
 
-    private JwtSecurityToken CreateToken(string clientId, string aud = "https://idsrv.com/", DateTime? nowOverride = null, bool setStrict = false)
+    private JwtSecurityToken CreateToken(string clientId, string aud = "https://idsrv.com/", DateTime? nowOverride = null, bool setTyp = false)
     {
-        return CreateTokenHelper(clientId, new Claim(JwtClaimTypes.Audience, aud), nowOverride, setStrict);
+        return CreateTokenHelper(clientId, new Claim(JwtClaimTypes.Audience, aud), nowOverride, setTyp);
     }
 
-    private JwtSecurityToken CreateToken(string clientId, string[] audiences, DateTime? nowOverride = null)
+    private JwtSecurityToken CreateToken(string clientId, string[] audiences, DateTime? nowOverride = null, bool setTyp = false)
     {
-        return CreateTokenHelper(clientId, new Claim(JwtClaimTypes.Audience, JsonSerializer.Serialize(audiences), JsonClaimValueTypes.JsonArray), nowOverride);
+        return CreateTokenHelper(clientId, new Claim(JwtClaimTypes.Audience, JsonSerializer.Serialize(audiences), JsonClaimValueTypes.JsonArray), nowOverride, setTyp);
     }
-    
-    private JwtSecurityToken CreateTokenHelper(string clientId,  Claim aud = null, DateTime? nowOverride = null, bool setJwtStrict = false)
+
+    private JwtSecurityToken CreateTokenHelper(string clientId, Claim aud = null, DateTime? nowOverride = null, bool setJwtTyp = false)
     {
         var certificate = TestCert.Load();
         var now = nowOverride ?? DateTime.UtcNow;
@@ -84,7 +84,7 @@ public class PrivateKeyJwtSecretValidation
             )
         );
 
-        if (setJwtStrict)
+        if (setJwtTyp)
         {
             token.Header["typ"] = "client-authentication+jwt";
         }
@@ -153,15 +153,17 @@ public class PrivateKeyJwtSecretValidation
     [InlineData("https://idsrv.com/connect/token")]
     [InlineData("https://idsrv.com/connect/ciba")]
     [InlineData("https://idsrv.com/connect/par")]
-    public async Task Valid_legacy_aud(string aud)
+    public async Task Strict_audience_disabled_and_no_typ_header_allows_legacy_aud_values(string aud)
     {
+        _options.Preview.StrictClientAssertionAudienceValidation = false;
+
         var clientId = "certificate_base64_valid";
         var client = await _clients.FindEnabledClientByIdAsync(clientId);
 
         var secret = new ParsedSecret
         {
             Id = clientId,
-            Credential = new JwtSecurityTokenHandler().WriteToken(CreateToken(clientId, aud:aud)),
+            Credential = new JwtSecurityTokenHandler().WriteToken(CreateToken(clientId, aud: aud, setTyp: false)),
             Type = IdentityServerConstants.ParsedSecretTypes.JwtBearer
         };
 
@@ -177,7 +179,7 @@ public class PrivateKeyJwtSecretValidation
     [InlineData("https://idsrv.com/connect/ciba", false)]
     [InlineData("", false)]
     [InlineData("https://idsrv.com/connect/par", false)]
-    public async Task Valid_strict_aud(string aud, bool expectSuccess)
+    public async Task Strict_audience_from_options_validates_audience(string aud, bool expectSuccess)
     {
         _options.Preview.StrictClientAssertionAudienceValidation = true;
 
@@ -187,7 +189,7 @@ public class PrivateKeyJwtSecretValidation
         var secret = new ParsedSecret
         {
             Id = clientId,
-            Credential = new JwtSecurityTokenHandler().WriteToken(CreateToken(clientId, aud:aud, setStrict: true)), 
+            Credential = new JwtSecurityTokenHandler().WriteToken(CreateToken(clientId, aud: aud, setTyp: true)),
             Type = IdentityServerConstants.ParsedSecretTypes.JwtBearer
         };
 
@@ -197,49 +199,85 @@ public class PrivateKeyJwtSecretValidation
     }
 
     [Theory]
-    [InlineData("https://idsrv.com")]
-    [InlineData("https://idsrv.com/")]
-    [InlineData("https://idsrv.com/connect/token")]
-    [InlineData("https://idsrv.com/connect/ciba")]
-    [InlineData("https://idsrv.com/connect/par")]
-    public async Task StrictAudience_does_not_allow_single_valued_arrays(string aud)
+    [InlineData("https://idsrv.com", true)]
+    [InlineData("https://idsrv.com/", true)]
+    [InlineData("https://idsrv.com/connect/token", false)]
+    [InlineData("https://idsrv.com/connect/ciba", false)]
+    [InlineData("", false)]
+    [InlineData("https://idsrv.com/connect/par", false)]
+    public async Task Strict_audience_from_typ_header_validates_audience(string aud, bool expectSuccess)
     {
-        _options.Preview.StrictClientAssertionAudienceValidation = true;
+        _options.Preview.StrictClientAssertionAudienceValidation = false;
 
         var clientId = "certificate_base64_valid";
         var client = await _clients.FindEnabledClientByIdAsync(clientId);
-        
+
         var secret = new ParsedSecret
         {
             Id = clientId,
-            Credential = new JwtSecurityTokenHandler().WriteToken(CreateToken(clientId, [aud])),
+            Credential = new JwtSecurityTokenHandler().WriteToken(CreateToken(clientId, aud: aud, setTyp: true)),
             Type = IdentityServerConstants.ParsedSecretTypes.JwtBearer
         };
-    
+
         var result = await _validator.ValidateAsync(client.ClientSecrets, secret);
-    
-        result.Success.Should().BeFalse();
+
+        result.Success.Should().Be(expectSuccess, result.Error);
     }
 
-    [Fact]
-    public async Task StrictAudience_does_not_allow_multi_valued_arrays()
+    [Theory]
+    [InlineData(true, true, false)]
+    [InlineData(true, false, false)]
+    [InlineData(false, true, false)]
+    [InlineData(false, false, true)]
+    public async Task Strict_audience_does_not_allow_single_valued_arrays(bool setTyp, bool setStrictOption, bool expectedResult)
     {
-        _options.Preview.StrictClientAssertionAudienceValidation = true;
+        _options.Preview.StrictClientAssertionAudienceValidation = setStrictOption;
 
         var clientId = "certificate_base64_valid";
         var client = await _clients.FindEnabledClientByIdAsync(clientId);
-        
+        var token = new JwtSecurityTokenHandler().WriteToken(CreateToken(
+            clientId,
+            audiences: ["https://idsrv.com/connect/token"],
+            setTyp: setTyp));
+
         var secret = new ParsedSecret
         {
             Id = clientId,
-            Credential = new JwtSecurityTokenHandler().WriteToken(CreateToken(clientId, 
-                ["https://idsrv.com", "https://idsrv.com/"])),
+            Credential = token,
             Type = IdentityServerConstants.ParsedSecretTypes.JwtBearer
         };
-    
+
         var result = await _validator.ValidateAsync(client.ClientSecrets, secret);
-    
-        result.Success.Should().BeFalse();
+
+        result.Success.Should().Be(expectedResult);
+    }
+
+    [Theory]
+    [InlineData(true, true, false)]
+    [InlineData(true, false, false)]
+    [InlineData(false, true, false)]
+    [InlineData(false, false, true)]
+    public async Task Strict_audience_does_not_allow_multi_valued_arrays(bool setTyp, bool setStrictOption, bool expectedResult)
+    {
+        _options.Preview.StrictClientAssertionAudienceValidation = setStrictOption;
+
+        var clientId = "certificate_base64_valid";
+        var client = await _clients.FindEnabledClientByIdAsync(clientId);
+        var token = new JwtSecurityTokenHandler().WriteToken(CreateToken(
+            clientId,
+            audiences: ["https://idsrv.com", "https://idsrv.com/"],
+            setTyp: setTyp));
+
+        var secret = new ParsedSecret
+        {
+            Id = clientId,
+            Credential = token,
+            Type = IdentityServerConstants.ParsedSecretTypes.JwtBearer
+        };
+
+        var result = await _validator.ValidateAsync(client.ClientSecrets, secret);
+
+        result.Success.Should().Be(expectedResult);
     }
 
     [Theory]
@@ -247,13 +285,13 @@ public class PrivateKeyJwtSecretValidation
     [InlineData(true, false, true)]
     [InlineData(false, true, false)]
     [InlineData(false, false, true)]
-    public async Task StrictAudience_only_allows_correct_type(bool clientStrict, bool enforceStrict, bool expectedResult)
+    public async Task Strict_audience_only_allows_correct_type(bool setTyp, bool enforceStrict, bool expectedResult)
     {
         _options.Preview.StrictClientAssertionAudienceValidation = enforceStrict;
 
         var clientId = "certificate_base64_valid";
         var client = await _clients.FindEnabledClientByIdAsync(clientId);
-        var token = new JwtSecurityTokenHandler().WriteToken(CreateToken(clientId, setStrict: clientStrict));
+        var token = new JwtSecurityTokenHandler().WriteToken(CreateToken(clientId, setTyp: setTyp));
 
         var secret = new ParsedSecret
         {
@@ -265,7 +303,7 @@ public class PrivateKeyJwtSecretValidation
         var result = await _validator.ValidateAsync(client.ClientSecrets, secret);
         result.Success.Should().Be(expectedResult);
     }
-    
+
     [Fact]
     public async Task Invalid_Replay()
     {
@@ -281,7 +319,7 @@ public class PrivateKeyJwtSecretValidation
 
         var result = await _validator.ValidateAsync(client.ClientSecrets, secret);
         result.Success.Should().BeTrue();
-            
+
         result = await _validator.ValidateAsync(client.ClientSecrets, secret);
         result.Success.Should().BeFalse();
     }

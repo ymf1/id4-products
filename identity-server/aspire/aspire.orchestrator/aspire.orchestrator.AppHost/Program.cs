@@ -30,26 +30,26 @@ if (HostIsEnabled(nameof(Projects.Host_AspNetIdentity)) || HostIsEnabled(nameof(
 
     if (HostIsEnabled(nameof(Projects.Host_AspNetIdentity)))
     {
-        var aspnetDbProject = builder.AddProject<Projects.AspNetIdentityDb>(name: "aspnetidentitydb-migrations")
+        var aspnetMigration = builder.AddProject<Projects.AspNetIdentityDb>(name: "aspnetidentitydb-migrations")
             .WithReference(identityServerDb, connectionName: "DefaultConnection")
             .WaitFor(identityServerDb);
 
         builder.AddProject<Projects.Host_AspNetIdentity>(name: "host-aspnetidentity")
             .WithHttpsHealthCheck(path: "/.well-known/openid-configuration")
             .WithReference(identityServerDb, connectionName: "DefaultConnection")
-            .WaitForCompletion(aspnetDbProject);
+            .WaitForCompletion(aspnetMigration);
     }
 
     if (HostIsEnabled(nameof(Projects.Host_EntityFramework)))
     {
-        var idSrvDbProject = builder.AddProject<Projects.IdentityServerDb>(name: "identityserverdb-migrations")
+        var idSrvMigration = builder.AddProject<Projects.IdentityServerDb>(name: "identityserverdb-migrations")
             .WithReference(identityServerDb, connectionName: "DefaultConnection")
-            .WaitForCompletion(identityServerDb);
+            .WaitFor(identityServerDb);
 
         builder.AddProject<Projects.Host_EntityFramework>(name: "host-entityframework")
             .WithHttpsHealthCheck(path: "/.well-known/openid-configuration")
             .WithReference(identityServerDb, connectionName: "DefaultConnection")
-            .WaitFor(idSrvDbProject);
+            .WaitForCompletion(idSrvMigration);
     }
 }
 
@@ -90,16 +90,16 @@ if (ClientIsEnabled(nameof(Projects.ConsoleDeviceFlow)))
     builder.AddProject<Projects.ConsoleDeviceFlow>(name: "console-device-flow").WithExplicitStart();
 
 if (ClientIsEnabled(nameof(Projects.ConsoleClientCredentialsFlow)))
-    builder.AddProject<Projects.ConsoleClientCredentialsFlow>(name: "console-clientcredentials-flow").WithExplicitStart();
+    builder.AddProject<Projects.ConsoleClientCredentialsFlow>(name: "console-client-credentials-flow").WithExplicitStart();
 
 if (ClientIsEnabled(nameof(Projects.ConsoleClientCredentialsFlowCallingIdentityServerApi)))
-    builder.AddProject<Projects.ConsoleClientCredentialsFlowCallingIdentityServerApi>(name: "console-clientcredentials-flow-callingidentityserverapi").WithExplicitStart();
+    builder.AddProject<Projects.ConsoleClientCredentialsFlowCallingIdentityServerApi>(name: "console-client-credentials-flow-callingidentityserverapi").WithExplicitStart();
 
 if (ClientIsEnabled(nameof(Projects.ConsoleClientCredentialsFlowPostBody)))
-    builder.AddProject<Projects.ConsoleClientCredentialsFlowPostBody>("console-clientcredentials-flow-postbody").WithExplicitStart();
+    builder.AddProject<Projects.ConsoleClientCredentialsFlowPostBody>("console-client-credentials-flow-postbody").WithExplicitStart();
 
 if (ClientIsEnabled(nameof(Projects.ConsoleClientCredentialsFlowDPoP)))
-    builder.AddProject<Projects.ConsoleClientCredentialsFlowDPoP>("console-clientcredentials-flow-dpop").WithExplicitStart();
+    builder.AddProject<Projects.ConsoleClientCredentialsFlowDPoP>("console-client-credentials-flow-dpop").WithExplicitStart();
 
 if (ClientIsEnabled(nameof(Projects.ConsoleDcrClient)))
     builder.AddProject<Projects.ConsoleDcrClient>("console-dcr-client").WithExplicitStart();
@@ -108,7 +108,7 @@ if (ClientIsEnabled(nameof(Projects.ConsoleEphemeralMtlsClient)))
     builder.AddProject<Projects.ConsoleEphemeralMtlsClient>("console-ephemeral-mtls-client").WithExplicitStart();
 
 if (ClientIsEnabled(nameof(Projects.ConsoleExtensionGrant)))
-    builder.AddProject<Projects.ConsoleExtensionGrant>("console-extensiongrant").WithExplicitStart();
+    builder.AddProject<Projects.ConsoleExtensionGrant>("console-extension-grant").WithExplicitStart();
 
 if (ClientIsEnabled(nameof(Projects.ConsoleIntrospectionClient)))
     builder.AddProject<Projects.ConsoleIntrospectionClient>("console-introspection-client").WithExplicitStart();
@@ -117,25 +117,25 @@ if (ClientIsEnabled(nameof(Projects.ConsoleMTLSClient)))
     builder.AddProject<Projects.ConsoleMTLSClient>("console-mtls-client").WithExplicitStart();
 
 if (ClientIsEnabled(nameof(Projects.ConsolePrivateKeyJwtClient)))
-    builder.AddProject<Projects.ConsolePrivateKeyJwtClient>("consoleprivatekeyjwtclient").WithExplicitStart();
+    builder.AddProject<Projects.ConsolePrivateKeyJwtClient>("console-private-key-jwt-client").WithExplicitStart();
 
 if (ClientIsEnabled(nameof(Projects.ConsoleResourceOwnerFlow)))
-    builder.AddProject<Projects.ConsoleResourceOwnerFlow>("consoleresourceownerflow").WithExplicitStart();
+    builder.AddProject<Projects.ConsoleResourceOwnerFlow>("console-resource-owner-flow").WithExplicitStart();
 
 if (ClientIsEnabled(nameof(Projects.ConsoleResourceOwnerFlowPublic)))
-    builder.AddProject<Projects.ConsoleResourceOwnerFlowPublic>("consoleresourceownerflowpublic").WithExplicitStart();
+    builder.AddProject<Projects.ConsoleResourceOwnerFlowPublic>("console-resource-owner-flow-public").WithExplicitStart();
 
 if (ClientIsEnabled(nameof(Projects.ConsoleResourceOwnerFlowReference)))
-    builder.AddProject<Projects.ConsoleResourceOwnerFlowReference>("consoleresourceownerflowreference").WithExplicitStart();
+    builder.AddProject<Projects.ConsoleResourceOwnerFlowReference>("console-resource-owner-flow-reference").WithExplicitStart();
 
 if (ClientIsEnabled(nameof(Projects.ConsoleResourceOwnerFlowRefreshToken)))
-    builder.AddProject<Projects.ConsoleResourceOwnerFlowRefreshToken>("consoleresourceownerflowrefreshtoken").WithExplicitStart();
+    builder.AddProject<Projects.ConsoleResourceOwnerFlowRefreshToken>("console-resource-owner-flow-refresh-token").WithExplicitStart();
 
 if (ClientIsEnabled(nameof(Projects.ConsoleResourceOwnerFlowUserInfo)))
-    builder.AddProject<Projects.ConsoleResourceOwnerFlowUserInfo>("consoleresourceownerflowuserinfo").WithExplicitStart();
+    builder.AddProject<Projects.ConsoleResourceOwnerFlowUserInfo>("console-resource-owner-flow-userinfo").WithExplicitStart();
 
 if (ClientIsEnabled(nameof(Projects.WindowsConsoleSystemBrowser)))
-    builder.AddProject<Projects.WindowsConsoleSystemBrowser>(name: "console-systembrowser").WithExplicitStart();
+    builder.AddProject<Projects.WindowsConsoleSystemBrowser>(name: "console-system-browser").WithExplicitStart();
 
 #endregion
 

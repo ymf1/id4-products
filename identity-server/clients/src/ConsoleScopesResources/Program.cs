@@ -15,8 +15,8 @@ var Cache = new DiscoveryCache("https://localhost:5001");
 "Resource setup:\n".ConsoleGreen();
 
 "resource1: resource1.scope1 resource1.scope2 shared.scope".ConsoleGreen();
-"resource2: resource2.scope1 resource2.scope2 shared.scope\n".ConsoleGreen();
-"resource3 (isolated): resource3.scope1 resource3.scope2 shared.scope\n".ConsoleGreen();
+"resource2: resource2.scope1 resource2.scope2 shared.scope".ConsoleGreen();
+"resource3 (isolated): resource3.scope1 resource3.scope2 shared.scope".ConsoleGreen();
 "scopes without resource association: scope3 scope4 transaction\n\n".ConsoleGreen();
 
 // Define a set of automated runs to test the different scenarios

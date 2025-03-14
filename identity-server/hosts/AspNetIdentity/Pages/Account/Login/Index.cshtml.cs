@@ -98,7 +98,7 @@ public class Index : PageModel
         if (ModelState.IsValid)
         {
             // Only remember login if allowed
-            var rememberLogin = View.AllowRememberLogin && Input.RememberLogin;
+            var rememberLogin = LoginOptions.AllowRememberLogin && Input.RememberLogin;
 
             var result = await _signInManager.PasswordSignInAsync(Input.Username!, Input.Password!, isPersistent: rememberLogin, lockoutOnFailure: true);
             if (result.Succeeded)

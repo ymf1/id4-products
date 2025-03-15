@@ -7,8 +7,14 @@ indent_style = space
 insert_final_newline = true
 
 [*.cs]
-
 indent_size = 4
+
+# Remove this or Me qualification
+dotnet_diagnostic.IDE0003.severity = error
+dotnet_style_qualification_for_event = false:error
+dotnet_style_qualification_for_field = false:error
+dotnet_style_qualification_for_method = false:error
+dotnet_style_qualification_for_property = false:error
 
 # Remove unnecessary using directives
 dotnet_diagnostic.IDE0005.severity = warning
@@ -24,10 +30,3 @@ file_header_template = Copyright (c) Duende Software. All rights reserved.\nSee 
 # Use file-scoped namespace
 dotnet_diagnostic.IDE0161.severity = error  
 csharp_style_namespace_declarations = file_scoped
-
-# Remove this or Me qualification
-dotnet_diagnostic.IDE0003.severity = error
-dotnet_style_qualification_for_event = false:error
-dotnet_style_qualification_for_field = false:error
-dotnet_style_qualification_for_method = false:error
-dotnet_style_qualification_for_property = false:error

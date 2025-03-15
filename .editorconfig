@@ -25,7 +25,8 @@ file_header_template = Copyright (c) Duende Software. All rights reserved.\nSee 
 dotnet_diagnostic.IDE0161.severity = error  
 csharp_style_namespace_declarations = file_scoped
 
-dotnet_diagnostic.IDE0003.severity = error # Enforce that 'this.' should not be used when it's redundant
+# Remove this or Me qualification
+dotnet_diagnostic.IDE0003.severity = error
 dotnet_style_qualification_for_field = false:error
 dotnet_style_qualification_for_property = false:error
 dotnet_style_qualification_for_method = false:error

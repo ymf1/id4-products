@@ -1,9 +1,6 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
-// Supress the warning for the preview feature `Preview.StrictClientAssertionAudienceValidation`
-#pragma warning disable DUENDEPREVIEW002
-
 using Duende.IdentityModel;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
@@ -17,7 +14,6 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net;
 using System.Security.Claims;
 using System.Text.Json;
 using System.Threading.Tasks;

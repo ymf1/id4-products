@@ -11,6 +11,9 @@ var builder = Host.CreateApplicationBuilder(args);
 // Add ServiceDefaults from Aspire
 builder.AddServiceDefaults();
 
+var authority = builder.Configuration["is-host"];
+var simpleApi = builder.Configuration["simple-api"];
+
 var clientId = Guid.NewGuid().ToString();
 var clientSecret = Guid.NewGuid().ToString();
 
@@ -21,13 +24,16 @@ response.Show();
 
 await CallServiceAsync(response.AccessToken);
 
+// Graceful shutdown
+Environment.Exit(0);
+
 async Task RegisterClient()
 {
     var client = new HttpClient();
 
     var request = new DynamicClientRegistrationRequest
     {
-        Address = Constants.Authority + "/connect/dcr",
+        Address = authority + "/connect/dcr",
         Document = new DynamicClientRegistrationDocument
         {
 
@@ -66,7 +72,7 @@ async Task<TokenResponse> RequestTokenAsync()
 {
     var client = new HttpClient();
 
-    var disco = await client.GetDiscoveryDocumentAsync(Constants.Authority);
+    var disco = await client.GetDiscoveryDocumentAsync(authority);
     if (disco.IsError) throw new Exception(disco.Error);
 
     var response = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
@@ -86,13 +92,11 @@ async Task<TokenResponse> RequestTokenAsync()
     return response;
 }
 
-static async Task CallServiceAsync(string token)
+async Task CallServiceAsync(string token)
 {
-    var baseAddress = Constants.SampleApi;
-
     var client = new HttpClient
     {
-        BaseAddress = new Uri(baseAddress)
+        BaseAddress = new Uri(simpleApi)
     };
 
     client.SetBearerToken(token);

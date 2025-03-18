@@ -341,4 +341,4 @@ void WriteWorkflow(Workflow workflow, string fileName)
     Console.WriteLine($"Wrote workflow to {filePath}");
 }
 
-record Product(string Name, string Solution, string TagPrefix, string[] UnitTestProjects, string[] PlaywrightTestProjects);
+internal record Product(string Name, string Solution, string TagPrefix, string[] UnitTestProjects, string[] PlaywrightTestProjects);

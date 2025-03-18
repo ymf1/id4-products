@@ -4,7 +4,8 @@ using System.Text.Json;
 using Clients;
 using Duende.IdentityModel.Client;
 
-
+var clientId = Guid.NewGuid().ToString();
+var clientSecret = Guid.NewGuid().ToString();
 
 Console.Title = "Dynamic Client Registration - Client Credentials Flow";
 await RegisterClient();
@@ -16,7 +17,7 @@ Console.ReadLine();
 await CallServiceAsync(response.AccessToken);
 Console.ReadLine();
 
-static async Task RegisterClient()
+async Task RegisterClient()
 {
     var client = new HttpClient();
 
@@ -32,10 +33,10 @@ static async Task RegisterClient()
     };
 
     var json = JsonDocument.Parse(
-        """
+        $$"""
         {
-          "client_id": "client",
-          "client_secret": "secret"
+          "client_id": "{{clientId}}",
+          "client_secret": "{{clientSecret}}"
         }
         """
     );
@@ -45,12 +46,6 @@ static async Task RegisterClient()
     
     request.Document.Extensions!.Add("client_id", clientJson);
     request.Document.Extensions.Add("client_secret", secretJson);
-
-
-    var serialized = JsonSerializer.Serialize(request.Document);
-
-    var deserialized = JsonSerializer.Deserialize<DynamicClientRegistrationDocument>(serialized);
-
 
     var response = await client.RegisterClientAsync(request);
 
@@ -62,7 +57,7 @@ static async Task RegisterClient()
     Console.WriteLine(JsonSerializer.Serialize(response, new JsonSerializerOptions { WriteIndented = true }));
 }
 
-static async Task<TokenResponse> RequestTokenAsync()
+async Task<TokenResponse> RequestTokenAsync()
 {
     var client = new HttpClient();
 
@@ -73,11 +68,16 @@ static async Task<TokenResponse> RequestTokenAsync()
     {
         Address = disco.TokenEndpoint,
 
-        ClientId = "client",
-        ClientSecret = "secret",
+        ClientId = clientId,
+        ClientSecret = clientSecret,
     });
 
-    if (response.IsError) throw new Exception(response.Error);
+    if (response.IsError)
+    {
+        Console.WriteLine("\n\nError:\n{0}", response.Error);
+        Environment.Exit(-1);
+        return null;
+    }
     return response;
 }
 

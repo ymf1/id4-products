@@ -62,7 +62,7 @@ async Task FrontChannel(string scope, IEnumerable<string> resource)
     // create a redirect URI using an available port on the loopback address.
     // requires the OP to allow random ports on 127.0.0.1 - otherwise set a static port
     var browser = new SystemBrowser();
-    string redirectUri = string.Format($"http://127.0.0.1:{browser.Port}");
+    var redirectUri = string.Format($"http://127.0.0.1:{browser.Port}");
 
     var options = new OidcClientOptions
     {

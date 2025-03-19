@@ -215,6 +215,7 @@ public class IdentityServerOptions
     /// </summary>
     public TimeSpan JwtValidationClockSkew { get; set; } = TimeSpan.FromSeconds(10);
 
+    /// <summary>
     /// Gets or sets the options for enabling and configuring preview features in the server.
     /// Preview features provide access to experimental or in-progress functionality that may undergo
     /// further changes before being finalized.

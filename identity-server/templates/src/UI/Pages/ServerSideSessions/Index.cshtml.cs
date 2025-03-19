@@ -32,41 +32,48 @@ public class IndexModel : PageModel
     [BindProperty(SupportsGet = true)]
     public string? Prev { get; set; }
 
-        public async Task<ActionResult> OnGet()
+    public async Task<ActionResult> OnGet()
+    {
+        //Replace with an authorization policy check
+        if (HttpContext.Connection.IsRemote())
         {
-            //Replace with an authorization policy check
-            if (HttpContext.Connection.IsRemote())
-                return NotFound();
+            return NotFound();
+        }
 
-            if (_sessionManagementService != null)
+        if (_sessionManagementService != null)
+        {
+            UserSessions = await _sessionManagementService.QuerySessionsAsync(new SessionQuery
             {
-                UserSessions = await _sessionManagementService.QuerySessionsAsync(new SessionQuery
-                {
-                    ResultsToken = Token,
-                    RequestPriorResults = Prev == "true",
-                    DisplayName = DisplayNameFilter,
-                    SessionId = SessionIdFilter,
-                    SubjectId = SubjectIdFilter
-                });
-            }
-            return Page();
-        }
-
-        [BindProperty]
-        public string? SessionId { get; set; }
-
-        public async Task<IActionResult> OnPost()
-        {
-            //Replace with an authorization policy check
-            if (HttpContext.Connection.IsRemote())
-                return NotFound();
-
-            ArgumentNullException.ThrowIfNull(_sessionManagementService);
-
-            await _sessionManagementService.RemoveSessionsAsync(new RemoveSessionsContext { 
-                SessionId = SessionId,
+                ResultsToken = Token,
+                RequestPriorResults = Prev == "true",
+                DisplayName = DisplayNameFilter,
+                SessionId = SessionIdFilter,
+                SubjectId = SubjectIdFilter
             });
-            return RedirectToPage("/ServerSideSessions/Index", new { Token, DisplayNameFilter, SessionIdFilter, SubjectIdFilter, Prev });
         }
+
+        return Page();
+        return Page();
+    }
+
+    [BindProperty]
+    public string? SessionId { get; set; }
+
+    public async Task<IActionResult> OnPost()
+    {
+        //Replace with an authorization policy check
+        if (HttpContext.Connection.IsRemote())
+        {
+            return NotFound();
+        }
+
+        ArgumentNullException.ThrowIfNull(_sessionManagementService);
+
+        await _sessionManagementService.RemoveSessionsAsync(new RemoveSessionsContext
+        {
+            SessionId = SessionId,
+        });
+
+        return RedirectToPage("/ServerSideSessions/Index", new { Token, DisplayNameFilter, SessionIdFilter, SubjectIdFilter, Prev });
     }
 }

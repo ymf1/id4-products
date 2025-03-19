@@ -277,7 +277,7 @@ public class DiscoveryEndpointTests
     [Trait("Category", Category)]
     public async Task Can_enable_preview_feature_of_document_discovery_cache()
     {
-        IdentityServerPipeline pipeline = new IdentityServerPipeline();
+        var pipeline = new IdentityServerPipeline();
         pipeline.Initialize("/root");
 
         pipeline.Options.Preview.EnableDiscoveryDocumentCache = true;

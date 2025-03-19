@@ -10,10 +10,9 @@ using Duende.IdentityServer.ResponseHandling;
 using Duende.IdentityServer.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
+
 
 namespace Duende.IdentityServer.Endpoints;
 

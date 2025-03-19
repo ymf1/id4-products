@@ -98,7 +98,7 @@ public class DiscoveryDocumentResult : EndpointResult<DiscoveryDocumentResult>
     /// <param name="maxAge">The maximum age.</param>
     /// <exception cref="System.ArgumentNullException">entries</exception>
     internal DiscoveryDocumentResult(Dictionary<string, object> entries, bool isUsingPreviewFeature, int? maxAge)
-        :this(entries, maxAge)
+        : this(entries, maxAge)
     {
         _isUsingPreviewFeature = true;
     }

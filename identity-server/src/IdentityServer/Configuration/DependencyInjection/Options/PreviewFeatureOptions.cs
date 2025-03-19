@@ -1,8 +1,6 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
-using System;
-
 namespace Duende.IdentityServer.Configuration;
 
 /// <summary>
@@ -23,5 +21,5 @@ public class PreviewFeatureOptions
     /// <summary>
     /// DiscoveryDocument Cache Duration
     /// </summary>
-    public TimeSpan DiscoveryDocumentCacheDuration{ get; set; } = TimeSpan.FromMinutes(1);
+    public TimeSpan DiscoveryDocumentCacheDuration { get; set; } = TimeSpan.FromMinutes(1);
 }

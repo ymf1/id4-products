@@ -94,8 +94,8 @@ internal class IdentityServerLicenseValidator : LicenseValidator<IdentityServerL
 
     private HashSet<string> _clientIds = new();
     private object _clientIdLock = new();
-
     private bool _validateClientWarned = false;
+
     // Internal method that takes license as parameter to allow testing
     internal void ValidateClient(string clientId, IdentityServerLicense license)
     {

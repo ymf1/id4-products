@@ -25,6 +25,10 @@ csharp_style_var_when_type_is_apparent = true
 # Remove unnecessary using directives
 dotnet_diagnostic.IDE0005.severity = warning
 
+# Add accessibility modifiers
+dotnet_diagnostic.IDE0040.severity = error
+dotnet_style_require_accessibility_modifiers = always
+
 # Use language keywords instead of framework type names for type references 
 dotnet_diagnostic.IDE0049.severity = error
 dotnet_style_predefined_type_for_locals_parameters_members = true

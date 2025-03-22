@@ -81,9 +81,9 @@ async Task FrontChannel(string scope, IEnumerable<string> resource)
         Browser = browser,
 
         Policy =
-            {
-                RequireIdentityTokenSignature = false
-            }
+        {
+            RequireIdentityTokenSignature = false
+        }
     };
 
     var serilog = new LoggerConfiguration()

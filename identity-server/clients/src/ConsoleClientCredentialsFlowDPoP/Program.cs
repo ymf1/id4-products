@@ -26,7 +26,7 @@ builder.Services.AddClientCredentialsTokenManagement()
         client.TokenEndpoint = disco.TokenEndpoint;
         client.ClientId = "client";
         client.ClientSecret = "secret";
-        client.DPoPJsonWebKey =  CreateDPoPKey();
+        client.DPoPJsonWebKey = CreateDPoPKey();
     });
 
 builder.Services.AddClientCredentialsHttpClient("test", "client", config =>

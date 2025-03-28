@@ -6,6 +6,7 @@ using Duende.IdentityModel;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Configuration.EntityFramework;
+using Duende.IdentityServer.Configuration.RequestProcessing;
 using Host.Configuration;
 using Host.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -104,6 +105,8 @@ internal static class IdentityServerExtensions
             opt.DynamicClientRegistration.SecretLifetime = TimeSpan.FromHours(1);
         })
             .AddClientConfigurationStore();
+
+        builder.Services.AddTransient<IDynamicClientRegistrationRequestProcessor, CustomClientRegistrationProcessor>();
 
         return builder;
     }

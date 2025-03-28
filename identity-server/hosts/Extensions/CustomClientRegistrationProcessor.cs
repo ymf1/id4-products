@@ -8,7 +8,7 @@ using Duende.IdentityServer.Configuration.Models.DynamicClientRegistration;
 using Duende.IdentityServer.Configuration.RequestProcessing;
 using Duende.IdentityServer.Models;
 
-namespace IdentityServerHost;
+namespace Host.Extensions;
 
 internal sealed class CustomClientRegistrationProcessor : DynamicClientRegistrationRequestProcessor
 {

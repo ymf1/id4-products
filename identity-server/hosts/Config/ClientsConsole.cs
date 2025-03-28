@@ -4,14 +4,14 @@
 using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
 
-namespace IdentityServerHost.Configuration;
+namespace Host.Configuration;
 
 public static class ClientsConsole
 {
     public static IEnumerable<Client> Get()
     {
-        return new List<Client>
-        {
+        return
+        [
             ///////////////////////////////////////////
             // Console Client Credentials Flow Sample
             //////////////////////////////////////////
@@ -352,6 +352,6 @@ public static class ClientsConsole
                     "resource2.scope1"
                 }
             },
-        };
+        ];
     }
 }

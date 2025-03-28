@@ -5,8 +5,8 @@ using System.Security.Cryptography.X509Certificates;
 using Duende.IdentityModel;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
-using IdentityServerHost.Configuration;
-using IdentityServerHost.Extensions;
+using Host.Configuration;
+using Host.Extensions;
 using Microsoft.IdentityModel.Tokens;
 
 namespace IdentityServerHost;
@@ -39,16 +39,14 @@ internal static class IdentityServerExtensions
                 });
             })
             .AddServerSideSessions()
-            .AddInMemoryClients(Clients.Get().ToList())
-            .AddInMemoryIdentityResources(Resources.IdentityResources)
-            .AddInMemoryApiScopes(Resources.ApiScopes)
-            .AddInMemoryApiResources(Resources.ApiResources)
+            .AddInMemoryClients([.. TestClients.Get()])
+            .AddInMemoryIdentityResources(TestResources.IdentityResources)
             //.AddStaticSigningCredential()
-            .AddExtensionGrantValidator<Extensions.ExtensionGrantValidator>()
-            .AddExtensionGrantValidator<Extensions.NoSubjectExtensionGrantValidator>()
+            .AddExtensionGrantValidator<ExtensionGrantValidator>()
+            .AddExtensionGrantValidator<NoSubjectExtensionGrantValidator>()
             .AddJwtBearerClientAuthentication()
             .AddAppAuthRedirectUriValidator()
-            .AddTestUsers(TestUsers.Users)
+            .AddTestUsers([.. TestUsers.Users])
             .AddProfileService<HostProfileService>()
             .AddCustomTokenRequestValidator<ParameterizedScopeTokenRequestValidator>()
             .AddScopeParser<ParameterizedScopeParser>()

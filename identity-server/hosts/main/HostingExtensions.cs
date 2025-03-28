@@ -3,7 +3,7 @@
 
 using System.Security.Claims;
 using Duende.IdentityServer;
-using IdentityServerHost.Extensions;
+using Host.Extensions;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.IdentityModel.Tokens;
 using OpenTelemetry.Metrics;

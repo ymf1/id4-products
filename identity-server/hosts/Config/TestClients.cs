@@ -3,9 +3,9 @@
 
 using Duende.IdentityServer.Models;
 
-namespace IdentityServerHost.Configuration;
+namespace Host.Configuration;
 
-public static class Clients
+public static class TestClients
 {
     public static IEnumerable<Client> Get()
     {

@@ -4,7 +4,7 @@
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Validation;
 
-namespace IdentityServerHost.Extensions;
+namespace Host.Extensions;
 
 public class ExtensionGrantValidator : IExtensionGrantValidator
 {

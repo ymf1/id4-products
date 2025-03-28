@@ -1,7 +1,7 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
-namespace IdentityServerHost.Extensions;
+namespace Host.Extensions;
 
 // copied from https://devblogs.microsoft.com/aspnet/upcoming-samesite-cookie-changes-in-asp-net-and-asp-net-core/
 public static class SameSiteHandlingExtensions
@@ -11,10 +11,8 @@ public static class SameSiteHandlingExtensions
         services.Configure<CookiePolicyOptions>(options =>
         {
             options.MinimumSameSitePolicy = SameSiteMode.Unspecified;
-            options.OnAppendCookie = cookieContext =>
-                CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
-            options.OnDeleteCookie = cookieContext =>
-                CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
+            options.OnAppendCookie = cookieContext => CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
+            options.OnDeleteCookie = cookieContext => CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
         });
 
         return services;

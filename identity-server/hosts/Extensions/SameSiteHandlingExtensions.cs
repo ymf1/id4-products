@@ -1,7 +1,7 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
-namespace Host.Extensions;
+namespace IdentityServerHost.Extensions;
 
 // copied from https://devblogs.microsoft.com/aspnet/upcoming-samesite-cookie-changes-in-asp-net-and-asp-net-core/
 public static class SameSiteHandlingExtensions

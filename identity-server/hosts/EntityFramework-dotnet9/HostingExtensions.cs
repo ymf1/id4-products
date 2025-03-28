@@ -4,7 +4,7 @@
 using System.Security.Claims;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
-using Host.Extensions;
+using IdentityServerHost.Extensions;
 using IdentityServerHost.Pages.Admin.ApiScopes;
 using IdentityServerHost.Pages.Admin.IdentityScopes;
 using Microsoft.AspNetCore.Mvc.RazorPages;

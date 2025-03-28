@@ -4,7 +4,7 @@
 using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
 
-namespace Host.Configuration;
+namespace IdentityServerHost.Configuration;
 
 public static class ClientsWeb
 {

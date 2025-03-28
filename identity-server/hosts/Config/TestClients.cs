@@ -3,7 +3,7 @@
 
 using Duende.IdentityServer.Models;
 
-namespace Host.Configuration;
+namespace IdentityServerHost.Configuration;
 
 public static class TestClients
 {

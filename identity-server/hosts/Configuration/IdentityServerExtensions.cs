@@ -4,8 +4,8 @@
 using Duende.IdentityModel;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Configuration.RequestProcessing;
-using Host.Configuration;
-using Host.Extensions;
+using IdentityServerHost.Configuration;
+using IdentityServerHost.Extensions;
 
 namespace IdentityServerHost;
 

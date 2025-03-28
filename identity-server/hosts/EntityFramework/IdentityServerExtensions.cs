@@ -7,8 +7,8 @@ using Duende.IdentityServer;
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Configuration.EntityFramework;
 using Duende.IdentityServer.Configuration.RequestProcessing;
-using Host.Configuration;
-using Host.Extensions;
+using IdentityServerHost.Configuration;
+using IdentityServerHost.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 

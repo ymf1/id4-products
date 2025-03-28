@@ -7,7 +7,7 @@ using Duende.IdentityModel;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Test;
 
-namespace Host.Configuration;
+namespace IdentityServerHost.Configuration;
 
 public static class TestUsers
 {

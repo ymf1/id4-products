@@ -4,7 +4,7 @@
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Mappers;
 using Duende.IdentityServer.Models;
-using Host.Configuration;
+using IdentityServerHost.Configuration;
 using Microsoft.EntityFrameworkCore;
 
 namespace IdentityServerDb;

@@ -814,7 +814,7 @@ public class AuthorizeTests
 
     [Fact]
     [Trait("Category", Category)]
-    public async Task invalid_response_mode_for_flow_should_pass_return_url_to_error_page()
+    public async Task invalid_response_mode_for_flow_should_not_pass_return_url_to_error_page()
     {
         await _mockPipeline.LoginAsync("bob");
 
@@ -829,8 +829,8 @@ public class AuthorizeTests
         await _mockPipeline.BrowserClient.GetAsync(url);
 
         _mockPipeline.ErrorWasCalled.ShouldBeTrue();
-        _mockPipeline.ErrorMessage.RedirectUri.ShouldStartWith("https://client1/callback");
-        _mockPipeline.ErrorMessage.ResponseMode.ShouldBe("fragment");
+        _mockPipeline.ErrorMessage.RedirectUri.ShouldBeNull();
+        _mockPipeline.ErrorMessage.ResponseMode.ShouldBeNull();
     }
 
     [Fact]
@@ -856,7 +856,7 @@ public class AuthorizeTests
 
     [Fact]
     [Trait("Category", Category)]
-    public async Task invalid_response_mode_should_pass_return_url_to_error_page()
+    public async Task invalid_response_mode_should_not_pass_return_url_to_error_page()
     {
         await _mockPipeline.LoginAsync("bob");
 
@@ -871,8 +871,8 @@ public class AuthorizeTests
         await _mockPipeline.BrowserClient.GetAsync(url);
 
         _mockPipeline.ErrorWasCalled.ShouldBeTrue();
-        _mockPipeline.ErrorMessage.RedirectUri.ShouldStartWith("https://client1/callback");
-        _mockPipeline.ErrorMessage.ResponseMode.ShouldBe("fragment");
+        _mockPipeline.ErrorMessage.RedirectUri.ShouldBeNull();
+        _mockPipeline.ErrorMessage.ResponseMode.ShouldBeNull();
     }
 
     [Fact]
@@ -897,7 +897,7 @@ public class AuthorizeTests
 
     [Fact]
     [Trait("Category", Category)]
-    public async Task missing_scope_should_pass_return_url_to_error_page()
+    public async Task missing_scope_should_not_pass_return_url_to_error_page()
     {
         await _mockPipeline.LoginAsync("bob");
 
@@ -911,13 +911,13 @@ public class AuthorizeTests
         await _mockPipeline.BrowserClient.GetAsync(url);
 
         _mockPipeline.ErrorWasCalled.ShouldBeTrue();
-        _mockPipeline.ErrorMessage.RedirectUri.ShouldStartWith("https://client1/callback");
-        _mockPipeline.ErrorMessage.ResponseMode.ShouldBe("fragment");
+        _mockPipeline.ErrorMessage.RedirectUri.ShouldBeNull();
+        _mockPipeline.ErrorMessage.ResponseMode.ShouldBeNull();
     }
 
     [Fact]
     [Trait("Category", Category)]
-    public async Task explicit_response_mode_should_be_passed_to_error_page()
+    public async Task explicit_response_mode_should_not_be_passed_to_error_page()
     {
         await _mockPipeline.LoginAsync("bob");
 
@@ -932,8 +932,8 @@ public class AuthorizeTests
         await _mockPipeline.BrowserClient.GetAsync(url);
 
         _mockPipeline.ErrorWasCalled.ShouldBeTrue();
-        _mockPipeline.ErrorMessage.RedirectUri.ShouldStartWith("https://client1/callback");
-        _mockPipeline.ErrorMessage.ResponseMode.ShouldBe("form_post");
+        _mockPipeline.ErrorMessage.RedirectUri.ShouldBeNull();
+        _mockPipeline.ErrorMessage.ResponseMode.ShouldBeNull();
     }
 
     [Fact]
@@ -954,8 +954,8 @@ public class AuthorizeTests
         _mockPipeline.ErrorWasCalled.ShouldBeTrue();
         _mockPipeline.ErrorMessage.Error.ShouldBe(OidcConstants.AuthorizeErrors.InvalidRequest);
         _mockPipeline.ErrorMessage.ErrorDescription.ShouldContain("scope");
-        _mockPipeline.ErrorMessage.RedirectUri.ShouldStartWith("https://client1/callback");
-        _mockPipeline.ErrorMessage.ResponseMode.ShouldBe("fragment");
+        _mockPipeline.ErrorMessage.RedirectUri.ShouldBeNull();
+        _mockPipeline.ErrorMessage.ResponseMode.ShouldBeNull();
     }
 
     [Fact]
@@ -977,8 +977,8 @@ public class AuthorizeTests
         _mockPipeline.ErrorMessage.Error.ShouldBe(OidcConstants.AuthorizeErrors.InvalidRequest);
         _mockPipeline.ErrorMessage.ErrorDescription.ShouldContain("scope");
         _mockPipeline.ErrorMessage.ErrorDescription.ShouldContain("openid");
-        _mockPipeline.ErrorMessage.RedirectUri.ShouldStartWith("https://client1/callback");
-        _mockPipeline.ErrorMessage.ResponseMode.ShouldBe("fragment");
+        _mockPipeline.ErrorMessage.RedirectUri.ShouldBeNull();
+        _mockPipeline.ErrorMessage.ResponseMode.ShouldBeNull();
     }
 
     [Fact]
@@ -999,8 +999,8 @@ public class AuthorizeTests
         _mockPipeline.ErrorWasCalled.ShouldBeTrue();
         _mockPipeline.ErrorMessage.Error.ShouldBe(OidcConstants.AuthorizeErrors.InvalidScope);
         _mockPipeline.ErrorMessage.ErrorDescription.ShouldContain("scope");
-        _mockPipeline.ErrorMessage.RedirectUri.ShouldStartWith("https://client1/callback");
-        _mockPipeline.ErrorMessage.ResponseMode.ShouldBe("fragment");
+        _mockPipeline.ErrorMessage.RedirectUri.ShouldBeNull();
+        _mockPipeline.ErrorMessage.ResponseMode.ShouldBeNull();
     }
 
     [Fact]
@@ -1022,8 +1022,8 @@ public class AuthorizeTests
         _mockPipeline.ErrorWasCalled.ShouldBeTrue();
         _mockPipeline.ErrorMessage.Error.ShouldBe(OidcConstants.AuthorizeErrors.InvalidRequest);
         _mockPipeline.ErrorMessage.ErrorDescription.ShouldContain("nonce");
-        _mockPipeline.ErrorMessage.RedirectUri.ShouldStartWith("https://client1/callback");
-        _mockPipeline.ErrorMessage.ResponseMode.ShouldBe("fragment");
+        _mockPipeline.ErrorMessage.RedirectUri.ShouldBeNull();
+        _mockPipeline.ErrorMessage.ResponseMode.ShouldBeNull();
     }
 
     [Fact]
@@ -1044,8 +1044,8 @@ public class AuthorizeTests
         _mockPipeline.ErrorWasCalled.ShouldBeTrue();
         _mockPipeline.ErrorMessage.Error.ShouldBe(OidcConstants.AuthorizeErrors.InvalidRequest);
         _mockPipeline.ErrorMessage.ErrorDescription.ShouldContain("nonce");
-        _mockPipeline.ErrorMessage.RedirectUri.ShouldStartWith("https://client1/callback");
-        _mockPipeline.ErrorMessage.ResponseMode.ShouldBe("fragment");
+        _mockPipeline.ErrorMessage.RedirectUri.ShouldBeNull();
+        _mockPipeline.ErrorMessage.ResponseMode.ShouldBeNull();
     }
 
     [Fact]
@@ -1067,8 +1067,8 @@ public class AuthorizeTests
         _mockPipeline.ErrorWasCalled.ShouldBeTrue();
         _mockPipeline.ErrorMessage.Error.ShouldBe(OidcConstants.AuthorizeErrors.InvalidRequest);
         _mockPipeline.ErrorMessage.ErrorDescription.ShouldContain("ui_locales");
-        _mockPipeline.ErrorMessage.RedirectUri.ShouldStartWith("https://client1/callback");
-        _mockPipeline.ErrorMessage.ResponseMode.ShouldBe("fragment");
+        _mockPipeline.ErrorMessage.RedirectUri.ShouldBeNull();
+        _mockPipeline.ErrorMessage.ResponseMode.ShouldBeNull();
     }
 
     [Fact]
@@ -1090,8 +1090,8 @@ public class AuthorizeTests
         _mockPipeline.ErrorWasCalled.ShouldBeTrue();
         _mockPipeline.ErrorMessage.Error.ShouldBe(OidcConstants.AuthorizeErrors.InvalidRequest);
         _mockPipeline.ErrorMessage.ErrorDescription.ShouldContain("max_age");
-        _mockPipeline.ErrorMessage.RedirectUri.ShouldStartWith("https://client1/callback");
-        _mockPipeline.ErrorMessage.ResponseMode.ShouldBe("fragment");
+        _mockPipeline.ErrorMessage.RedirectUri.ShouldBeNull();
+        _mockPipeline.ErrorMessage.ResponseMode.ShouldBeNull();
     }
 
     [Fact]
@@ -1113,8 +1113,8 @@ public class AuthorizeTests
         _mockPipeline.ErrorWasCalled.ShouldBeTrue();
         _mockPipeline.ErrorMessage.Error.ShouldBe(OidcConstants.AuthorizeErrors.InvalidRequest);
         _mockPipeline.ErrorMessage.ErrorDescription.ShouldContain("max_age");
-        _mockPipeline.ErrorMessage.RedirectUri.ShouldStartWith("https://client1/callback");
-        _mockPipeline.ErrorMessage.ResponseMode.ShouldBe("fragment");
+        _mockPipeline.ErrorMessage.RedirectUri.ShouldBeNull();
+        _mockPipeline.ErrorMessage.ResponseMode.ShouldBeNull();
     }
 
     [Fact]
@@ -1136,8 +1136,8 @@ public class AuthorizeTests
         _mockPipeline.ErrorWasCalled.ShouldBeTrue();
         _mockPipeline.ErrorMessage.Error.ShouldBe(OidcConstants.AuthorizeErrors.InvalidRequest);
         _mockPipeline.ErrorMessage.ErrorDescription.ShouldContain("login_hint");
-        _mockPipeline.ErrorMessage.RedirectUri.ShouldStartWith("https://client1/callback");
-        _mockPipeline.ErrorMessage.ResponseMode.ShouldBe("fragment");
+        _mockPipeline.ErrorMessage.RedirectUri.ShouldBeNull();
+        _mockPipeline.ErrorMessage.ResponseMode.ShouldBeNull();
     }
 
     [Fact]
@@ -1159,8 +1159,8 @@ public class AuthorizeTests
         _mockPipeline.ErrorWasCalled.ShouldBeTrue();
         _mockPipeline.ErrorMessage.Error.ShouldBe(OidcConstants.AuthorizeErrors.InvalidRequest);
         _mockPipeline.ErrorMessage.ErrorDescription.ShouldContain("acr_values");
-        _mockPipeline.ErrorMessage.RedirectUri.ShouldStartWith("https://client1/callback");
-        _mockPipeline.ErrorMessage.ResponseMode.ShouldBe("fragment");
+        _mockPipeline.ErrorMessage.RedirectUri.ShouldBeNull();
+        _mockPipeline.ErrorMessage.ResponseMode.ShouldBeNull();
     }
 
     [Fact]

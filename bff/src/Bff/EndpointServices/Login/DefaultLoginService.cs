@@ -2,6 +2,7 @@
 // See LICENSE in the project root for license information.
 
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -14,9 +15,18 @@ namespace Duende.Bff;
 public class DefaultLoginService : ILoginService
 {
     /// <summary>
+    /// Authentication scheme provider
+    /// </summary>
+    protected readonly IAuthenticationSchemeProvider AuthenticationSchemeProvider;
+
+    /// <summary>
+    /// The OIDC options monitor
+    /// </summary>
+    protected readonly IOptionsMonitor<OpenIdConnectOptions> OpenIdConnectOptionsMonitor;
+    /// <summary>
     /// The BFF options
     /// </summary>
-    protected readonly BffOptions Options;
+    protected readonly BffOptions BffOptions;
 
     /// <summary>
     /// The return URL validator
@@ -31,12 +41,21 @@ public class DefaultLoginService : ILoginService
     /// <summary>
     /// ctor
     /// </summary>
-    /// <param name="options"></param>
+    /// <param name="openIdConnectOptionsMonitor"></param>
+    /// <param name="bffOptions"></param>
     /// <param name="returnUrlValidator"></param>
     /// <param name="logger"></param>
-    public DefaultLoginService(IOptions<BffOptions> options, IReturnUrlValidator returnUrlValidator, ILogger<DefaultLoginService> logger)
+    /// <param name="authenticationSchemeProvider"></param>
+    public DefaultLoginService(
+        IAuthenticationSchemeProvider authenticationSchemeProvider,
+        IOptionsMonitor<OpenIdConnectOptions> openIdConnectOptionsMonitor,
+        IOptions<BffOptions> bffOptions,
+        IReturnUrlValidator returnUrlValidator,
+        ILogger<DefaultLoginService> logger)
     {
-        Options = options.Value;
+        BffOptions = bffOptions.Value;
+        AuthenticationSchemeProvider = authenticationSchemeProvider;
+        OpenIdConnectOptionsMonitor = openIdConnectOptionsMonitor;
         ReturnUrlValidator = returnUrlValidator;
         Logger = logger;
     }
@@ -46,9 +65,18 @@ public class DefaultLoginService : ILoginService
     {
         Logger.LogDebug("Processing login request");
 
-        context.CheckForBffMiddleware(Options);
+        context.CheckForBffMiddleware(BffOptions);
 
         var returnUrl = context.Request.Query[Constants.RequestParameters.ReturnUrl].FirstOrDefault();
+
+        var prompt = context.Request.Query[Constants.RequestParameters.Prompt].FirstOrDefault();
+
+        var supportedPromptValues = await GetPromptValuesAsync();
+        if (prompt != null && !supportedPromptValues.Contains(prompt))
+        {
+            context.ReturnHttpProblem("Invalid prompt value", ("prompt", [$"prompt '{prompt}' is not supported"]));
+            return;
+        }
 
         if (!string.IsNullOrWhiteSpace(returnUrl))
         {
@@ -70,13 +98,47 @@ public class DefaultLoginService : ILoginService
             }
         }
 
+
         var props = new AuthenticationProperties
         {
-            RedirectUri = returnUrl
+            RedirectUri = returnUrl,
         };
+
+        if (prompt != null)
+        {
+            props.Items.Add(Constants.BffFlags.Prompt, prompt);
+        }
 
         Logger.LogDebug("Login endpoint triggering Challenge with returnUrl {returnUrl}", returnUrl);
 
         await context.ChallengeAsync(props);
+    }
+
+    private async Task<ICollection<string>> GetPromptValuesAsync()
+    {
+        var scheme = await AuthenticationSchemeProvider.GetDefaultChallengeSchemeAsync();
+        if (scheme == null)
+        {
+            throw new Exception("Failed to obtain default challenge scheme");
+        }
+
+        var options = OpenIdConnectOptionsMonitor.Get(scheme.Name);
+        if (options == null)
+        {
+            throw new Exception("Failed to obtain OIDC options for default challenge scheme");
+        }
+
+        var config = options.Configuration;
+        if (config == null)
+        {
+            config = await options.ConfigurationManager?.GetConfigurationAsync(CancellationToken.None)!;
+        }
+
+        if (config == null)
+        {
+            throw new Exception("Failed to obtain OIDC configuration");
+        }
+
+        return config.PromptValuesSupported;
     }
 }

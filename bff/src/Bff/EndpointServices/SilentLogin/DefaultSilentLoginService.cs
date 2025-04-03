@@ -11,6 +11,7 @@ namespace Duende.Bff;
 /// <summary>
 /// Service for handling silent login requests
 /// </summary>
+[Obsolete("This endpoint will be removed in a future version. Use /login?prompt=create")]
 public class DefaultSilentLoginService : ISilentLoginService
 {
     /// <summary>
@@ -41,20 +42,17 @@ public class DefaultSilentLoginService : ISilentLoginService
 
         context.CheckForBffMiddleware(Options);
 
-        var pathBase = context.Request.PathBase;
-        var redirectPath = pathBase + Options.SilentLoginCallbackPath;
-
         var props = new AuthenticationProperties
         {
-            RedirectUri = redirectPath,
             Items =
             {
-                { Constants.BffFlags.SilentLogin, "true" }
+                { Constants.BffFlags.Prompt, "none" }
             },
         };
 
-        Logger.LogDebug("Silent login endpoint triggering Challenge with returnUrl {redirectUri}", redirectPath);
+        Logger.LogWarning("Using deprecated silentlogin endpoint. This endpoint will be removed in future versions. Consider calling the BFF Login endpoint with prompt=none.");
 
         await context.ChallengeAsync(props);
+
     }
 }

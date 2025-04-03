@@ -35,6 +35,7 @@
     public static class AuthenticationPropertiesExtensions
     {
         public static bool IsSilentLogin(this Microsoft.AspNetCore.Authentication.AuthenticationProperties props) { }
+        public static bool TryGetPrompt(this Microsoft.AspNetCore.Authentication.AuthenticationProperties props, [System.Diagnostics.CodeAnalysis.NotNullWhen(true)] out string? prompt) { }
     }
     public static class AuthenticationTicketExtensions
     {
@@ -74,7 +75,7 @@
     public class BffOpenIdConnectEvents : Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectEvents
     {
         protected readonly Microsoft.Extensions.Logging.ILogger<Duende.Bff.BffOpenIdConnectEvents> Logger;
-        public BffOpenIdConnectEvents(Microsoft.Extensions.Logging.ILogger<Duende.Bff.BffOpenIdConnectEvents> logger) { }
+        public BffOpenIdConnectEvents(Microsoft.Extensions.Logging.ILogger<Duende.Bff.BffOpenIdConnectEvents> logger, Microsoft.Extensions.Options.IOptions<Duende.Bff.BffOptions> options) { }
         public override System.Threading.Tasks.Task AuthenticationFailed(Microsoft.AspNetCore.Authentication.OpenIdConnect.AuthenticationFailedContext context) { }
         public override System.Threading.Tasks.Task MessageReceived(Microsoft.AspNetCore.Authentication.OpenIdConnect.MessageReceivedContext context) { }
         public virtual System.Threading.Tasks.Task<bool> ProcessAuthenticationFailedAsync(Microsoft.AspNetCore.Authentication.OpenIdConnect.AuthenticationFailedContext context) { }
@@ -104,6 +105,8 @@
         public bool RevokeRefreshTokenOnLogout { get; set; }
         public System.TimeSpan SessionCleanupInterval { get; set; }
         public Microsoft.AspNetCore.Http.PathString SilentLoginCallbackPath { get; }
+        [System.Obsolete(("The silent login endpoint will be removed in a future version. Silent login is no" +
+            "w handled by passing the prompt=none parameter to the login endpoint."))]
         public Microsoft.AspNetCore.Http.PathString SilentLoginPath { get; }
         public Microsoft.AspNetCore.Http.PathString UserPath { get; }
     }
@@ -135,7 +138,7 @@
     {
         public static class BffFlags
         {
-            public const string SilentLogin = "bff-silent-login";
+            public const string Prompt = "bff-prompt";
         }
         public static class ClaimTypes
         {
@@ -149,12 +152,14 @@
             public const string Diagnostics = "/diagnostics";
             public const string Login = "/login";
             public const string Logout = "/logout";
+            [System.Obsolete("use /login?prompt=create")]
             public const string SilentLogin = "/silent-login";
             public const string SilentLoginCallback = "/silent-login-callback";
             public const string User = "/user";
         }
         public static class RequestParameters
         {
+            public const string Prompt = "prompt";
             public const string ReturnUrl = "returnUrl";
             public const string SlideCookie = "slide";
         }
@@ -198,10 +203,12 @@
     }
     public class DefaultLoginService : Duende.Bff.IBffEndpointService, Duende.Bff.ILoginService
     {
+        protected readonly Microsoft.AspNetCore.Authentication.IAuthenticationSchemeProvider AuthenticationSchemeProvider;
+        protected readonly Duende.Bff.BffOptions BffOptions;
         protected readonly Microsoft.Extensions.Logging.ILogger Logger;
-        protected readonly Duende.Bff.BffOptions Options;
+        protected readonly Microsoft.Extensions.Options.IOptionsMonitor<Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOptions> OpenIdConnectOptionsMonitor;
         protected readonly Duende.Bff.IReturnUrlValidator ReturnUrlValidator;
-        public DefaultLoginService(Microsoft.Extensions.Options.IOptions<Duende.Bff.BffOptions> options, Duende.Bff.IReturnUrlValidator returnUrlValidator, Microsoft.Extensions.Logging.ILogger<Duende.Bff.DefaultLoginService> logger) { }
+        public DefaultLoginService(Microsoft.AspNetCore.Authentication.IAuthenticationSchemeProvider authenticationSchemeProvider, Microsoft.Extensions.Options.IOptionsMonitor<Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOptions> openIdConnectOptionsMonitor, Microsoft.Extensions.Options.IOptions<Duende.Bff.BffOptions> bffOptions, Duende.Bff.IReturnUrlValidator returnUrlValidator, Microsoft.Extensions.Logging.ILogger<Duende.Bff.DefaultLoginService> logger) { }
         public virtual System.Threading.Tasks.Task ProcessRequestAsync(Microsoft.AspNetCore.Http.HttpContext context) { }
     }
     public class DefaultLogoutService : Duende.Bff.IBffEndpointService, Duende.Bff.ILogoutService
@@ -220,6 +227,7 @@
         public DefaultSilentLoginCallbackService(Microsoft.Extensions.Options.IOptions<Duende.Bff.BffOptions> options, Microsoft.Extensions.Logging.ILogger<Duende.Bff.DefaultSilentLoginCallbackService> logger) { }
         public virtual System.Threading.Tasks.Task ProcessRequestAsync(Microsoft.AspNetCore.Http.HttpContext context) { }
     }
+    [System.Obsolete("This endpoint will be removed in a future version. Use /login?prompt=create")]
     public class DefaultSilentLoginService : Duende.Bff.IBffEndpointService, Duende.Bff.ISilentLoginService
     {
         protected readonly Microsoft.Extensions.Logging.ILogger Logger;
@@ -323,7 +331,7 @@
     }
     public class PostConfigureOidcOptionsForSilentLogin : Microsoft.Extensions.Options.IPostConfigureOptions<Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOptions>
     {
-        public PostConfigureOidcOptionsForSilentLogin(Microsoft.Extensions.Options.IOptions<Microsoft.AspNetCore.Authentication.AuthenticationOptions> options, Microsoft.Extensions.Logging.ILoggerFactory logger) { }
+        public PostConfigureOidcOptionsForSilentLogin(Microsoft.Extensions.Options.IOptions<Duende.Bff.BffOptions> bffOptions, Microsoft.Extensions.Options.IOptions<Microsoft.AspNetCore.Authentication.AuthenticationOptions> authenticationOptions, Microsoft.Extensions.Logging.ILoggerFactory logger) { }
         public void PostConfigure(string? name, Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOptions options) { }
     }
     public class PostConfigureSlidingExpirationCheck : Microsoft.Extensions.Options.IPostConfigureOptions<Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationOptions>

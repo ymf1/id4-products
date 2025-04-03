@@ -19,10 +19,13 @@ public class PostConfigureOidcOptionsForSilentLogin : IPostConfigureOptions<Open
     /// <summary>
     /// ctor
     /// </summary>
-    public PostConfigureOidcOptionsForSilentLogin(IOptions<AuthenticationOptions> options, ILoggerFactory logger)
+    public PostConfigureOidcOptionsForSilentLogin(
+        IOptions<BffOptions> bffOptions,
+        IOptions<AuthenticationOptions> authenticationOptions,
+        ILoggerFactory logger)
     {
-        _scheme = options.Value.DefaultChallengeScheme;
-        _events = new BffOpenIdConnectEvents(logger.CreateLogger<BffOpenIdConnectEvents>());
+        _scheme = authenticationOptions.Value.DefaultChallengeScheme;
+        _events = new BffOpenIdConnectEvents(logger.CreateLogger<BffOpenIdConnectEvents>(), bffOptions);
     }
 
     /// <inheritdoc />

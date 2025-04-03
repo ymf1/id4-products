@@ -7,11 +7,13 @@ on:
     paths:
     - .github/workflows/identity-server-**
     - identity-server/**
+    - .editorconfig
     - Directory.Packages.props
   pull_request:
     paths:
     - .github/workflows/identity-server-**
     - identity-server/**
+    - .editorconfig
     - Directory.Packages.props
 env:
   DOTNET_NOLOGO: true

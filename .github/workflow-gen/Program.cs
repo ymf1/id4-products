@@ -39,6 +39,7 @@ void GenerateCiWorkflow(Product product)
     {
         $".github/workflows/{product.Name}-**",
         $"{product.Name}/**",
+        ".editorconfig",
         "Directory.Packages.props"
     };
 

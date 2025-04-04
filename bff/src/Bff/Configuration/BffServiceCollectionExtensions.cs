@@ -3,6 +3,8 @@
 
 using Duende.AccessTokenManagement.OpenIdConnect;
 using Duende.Bff;
+using Duende.Bff.EndpointProcessing;
+using Duende.Bff.Internal;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -10,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 
+// ReSharper disable once CheckNamespace
 namespace Microsoft.AspNetCore.Builder;
 
 /// <summary>
@@ -55,7 +58,9 @@ public static class BffServiceCollectionExtensions
         services.AddSingleton<IPostConfigureOptions<CookieAuthenticationOptions>, PostConfigureSlidingExpirationCheck>();
         services.AddSingleton<IPostConfigureOptions<CookieAuthenticationOptions>, PostConfigureApplicationCookieRevokeRefreshToken>();
 
+#pragma warning disable CS0612 // Type or member is obsolete
         services.AddSingleton<IPostConfigureOptions<OpenIdConnectOptions>, PostConfigureOidcOptionsForSilentLogin>();
+#pragma warning restore CS0612 // Type or member is obsolete
 
         // wrap ASP.NET Core
         services.AddAuthentication();

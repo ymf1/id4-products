@@ -3,6 +3,7 @@
 
 using System.Collections.Concurrent;
 
+// ReSharper disable once CheckNamespace
 namespace Duende.Bff;
 
 /// <summary>
@@ -19,6 +20,7 @@ public class InMemoryUserSessionStore : IUserSessionStore
         {
             throw new Exception("Key already exists");
         }
+
         return Task.CompletedTask;
     }
 
@@ -55,6 +57,7 @@ public class InMemoryUserSessionStore : IUserSessionStore
         {
             query = query.Where(x => x.SubjectId == filter.SubjectId);
         }
+
         if (!string.IsNullOrWhiteSpace(filter.SessionId))
         {
             query = query.Where(x => x.SessionId == filter.SessionId);
@@ -74,6 +77,7 @@ public class InMemoryUserSessionStore : IUserSessionStore
         {
             query = query.Where(x => x.SubjectId == filter.SubjectId);
         }
+
         if (!string.IsNullOrWhiteSpace(filter.SessionId))
         {
             query = query.Where(x => x.SessionId == filter.SessionId);

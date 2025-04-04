@@ -7,65 +7,43 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
+// ReSharper disable once CheckNamespace
 namespace Duende.Bff;
 
 /// <summary>
 /// Service for handling login requests
 /// </summary>
-public class DefaultLoginService : ILoginService
+public class DefaultLoginService(
+    IAuthenticationSchemeProvider authenticationSchemeProvider,
+    IOptionsMonitor<OpenIdConnectOptions> openIdConnectOptionsMonitor,
+    IOptions<BffOptions> bffOptions,
+    IReturnUrlValidator returnUrlValidator,
+    ILogger<DefaultLoginService> logger)
+    : ILoginService
 {
-    /// <summary>
-    /// Authentication scheme provider
-    /// </summary>
-    protected readonly IAuthenticationSchemeProvider AuthenticationSchemeProvider;
-
-    /// <summary>
-    /// The OIDC options monitor
-    /// </summary>
-    protected readonly IOptionsMonitor<OpenIdConnectOptions> OpenIdConnectOptionsMonitor;
     /// <summary>
     /// The BFF options
     /// </summary>
-    protected readonly BffOptions BffOptions;
+    protected readonly BffOptions Options = bffOptions.Value;
+
+    private readonly IOptionsMonitor<OpenIdConnectOptions> _openIdConnectOptionsMonitor = openIdConnectOptionsMonitor;
 
     /// <summary>
     /// The return URL validator
     /// </summary>
-    protected readonly IReturnUrlValidator ReturnUrlValidator;
+    protected readonly IReturnUrlValidator ReturnUrlValidator = returnUrlValidator;
 
     /// <summary>
     /// The logger
     /// </summary>
-    protected readonly ILogger Logger;
-
-    /// <summary>
-    /// ctor
-    /// </summary>
-    /// <param name="openIdConnectOptionsMonitor"></param>
-    /// <param name="bffOptions"></param>
-    /// <param name="returnUrlValidator"></param>
-    /// <param name="logger"></param>
-    /// <param name="authenticationSchemeProvider"></param>
-    public DefaultLoginService(
-        IAuthenticationSchemeProvider authenticationSchemeProvider,
-        IOptionsMonitor<OpenIdConnectOptions> openIdConnectOptionsMonitor,
-        IOptions<BffOptions> bffOptions,
-        IReturnUrlValidator returnUrlValidator,
-        ILogger<DefaultLoginService> logger)
-    {
-        BffOptions = bffOptions.Value;
-        AuthenticationSchemeProvider = authenticationSchemeProvider;
-        OpenIdConnectOptionsMonitor = openIdConnectOptionsMonitor;
-        ReturnUrlValidator = returnUrlValidator;
-        Logger = logger;
-    }
+    protected readonly ILogger Logger = logger;
 
     /// <inheritdoc />
     public virtual async Task ProcessRequestAsync(HttpContext context)
     {
         Logger.LogDebug("Processing login request");
 
-        context.CheckForBffMiddleware(BffOptions);
+        context.CheckForBffMiddleware(Options);
 
         var returnUrl = context.Request.Query[Constants.RequestParameters.ReturnUrl].FirstOrDefault();
 
@@ -116,13 +94,13 @@ public class DefaultLoginService : ILoginService
 
     private async Task<ICollection<string>> GetPromptValuesAsync()
     {
-        var scheme = await AuthenticationSchemeProvider.GetDefaultChallengeSchemeAsync();
+        var scheme = await authenticationSchemeProvider.GetDefaultChallengeSchemeAsync();
         if (scheme == null)
         {
             throw new Exception("Failed to obtain default challenge scheme");
         }
 
-        var options = OpenIdConnectOptionsMonitor.Get(scheme.Name);
+        var options = _openIdConnectOptionsMonitor.Get(scheme.Name);
         if (options == null)
         {
             throw new Exception("Failed to obtain OIDC options for default challenge scheme");

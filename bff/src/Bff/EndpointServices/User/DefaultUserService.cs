@@ -3,7 +3,7 @@
 
 using System.Text;
 using System.Text.Json;
-using Duende.Bff.Logging;
+using Duende.Bff.Internal;
 using Duende.IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
@@ -12,33 +12,24 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
+// ReSharper disable once CheckNamespace
 namespace Duende.Bff;
 
 /// <summary>
 /// Service for handling user requests
 /// </summary>
-public class DefaultUserService : IUserService
+public class DefaultUserService(IOptions<BffOptions> options, ILoggerFactory loggerFactory) : IUserService
 {
     /// <summary>
     /// The options
     /// </summary>
-    protected readonly BffOptions Options;
+    protected readonly BffOptions Options = options.Value;
 
     /// <summary>
     /// The logger
     /// </summary>
-    protected readonly ILogger Logger;
+    protected readonly ILogger Logger = loggerFactory.CreateLogger(LogCategories.ManagementEndpoints);
 
-    /// <summary>
-    /// Ctor
-    /// </summary>
-    /// <param name="options"></param>
-    /// <param name="loggerFactory"></param>
-    public DefaultUserService(IOptions<BffOptions> options, ILoggerFactory loggerFactory)
-    {
-        Options = options.Value;
-        Logger = loggerFactory.CreateLogger(LogCategories.ManagementEndpoints);
-    }
 
     /// <inheritdoc />
     public virtual async Task ProcessRequestAsync(HttpContext context)

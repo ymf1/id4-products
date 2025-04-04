@@ -1,6 +1,7 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
+// ReSharper disable once CheckNamespace
 namespace Duende.Bff;
 
 /// <summary>
@@ -15,5 +16,5 @@ public interface IAccessTokenRetriever
     /// <returns>A task that contains the access token result, which is an
     /// object model that can represent various types of tokens (bearer, dpop),
     /// the absence of an optional token, or an error. </returns>
-    Task<AccessTokenResult> GetAccessToken(AccessTokenRetrievalContext context);
+    public Task<AccessTokenResult> GetAccessToken(AccessTokenRetrievalContext context);
 }

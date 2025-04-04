@@ -8,33 +8,24 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
+// ReSharper disable once CheckNamespace
 namespace Duende.Bff;
 
 /// <summary>
 /// Default debug diagnostics service
 /// </summary>
-public class DefaultDiagnosticsService : IDiagnosticsService
+public class DefaultDiagnosticsService(IWebHostEnvironment environment, IOptions<BffOptions> options)
+    : IDiagnosticsService
 {
     /// <summary>
     /// The environment
     /// </summary>
-    protected readonly IWebHostEnvironment Environment;
+    protected readonly IWebHostEnvironment Environment = environment;
 
     /// <summary>
     /// The BFF options
     /// </summary>
-    protected readonly IOptions<BffOptions> Options;
-
-    /// <summary>
-    /// ctor
-    /// </summary>
-    /// <param name="environment"></param>
-    /// <param name="options"></param>
-    public DefaultDiagnosticsService(IWebHostEnvironment environment, IOptions<BffOptions> options)
-    {
-        Environment = environment;
-        Options = options;
-    }
+    protected readonly IOptions<BffOptions> Options = options;
 
     /// <inheritdoc />
     public virtual async Task ProcessRequestAsync(HttpContext context)

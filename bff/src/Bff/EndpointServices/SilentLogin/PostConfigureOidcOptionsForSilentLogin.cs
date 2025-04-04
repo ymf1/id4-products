@@ -6,27 +6,18 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
+// ReSharper disable once CheckNamespace
 namespace Duende.Bff;
 
 /// <summary>
 /// OIDC configuration to add silent login support
 /// </summary>
-public class PostConfigureOidcOptionsForSilentLogin : IPostConfigureOptions<OpenIdConnectOptions>
+public class PostConfigureOidcOptionsForSilentLogin(
+    IOptions<BffOptions> bffOptions,
+    IOptions<AuthenticationOptions> options, ILoggerFactory logger) : IPostConfigureOptions<OpenIdConnectOptions>
 {
-    private readonly string? _scheme;
-    private readonly BffOpenIdConnectEvents _events;
-
-    /// <summary>
-    /// ctor
-    /// </summary>
-    public PostConfigureOidcOptionsForSilentLogin(
-        IOptions<BffOptions> bffOptions,
-        IOptions<AuthenticationOptions> authenticationOptions,
-        ILoggerFactory logger)
-    {
-        _scheme = authenticationOptions.Value.DefaultChallengeScheme;
-        _events = new BffOpenIdConnectEvents(logger.CreateLogger<BffOpenIdConnectEvents>(), bffOptions);
-    }
+    private readonly string? _scheme = options.Value.DefaultChallengeScheme;
+    private readonly BffOpenIdConnectEvents _events = new BffOpenIdConnectEvents(bffOptions, logger.CreateLogger<BffOpenIdConnectEvents>());
 
     /// <inheritdoc />
     public void PostConfigure(string? name, OpenIdConnectOptions options)
@@ -53,10 +44,7 @@ public class PostConfigureOidcOptionsForSilentLogin : IPostConfigureOptions<Open
         {
             if (!await _events.ProcessRedirectToIdentityProviderAsync(ctx))
             {
-                if (inner != null)
-                {
-                    await inner.Invoke(ctx);
-                }
+                await inner.Invoke(ctx);
             }
         }
 
@@ -69,10 +57,7 @@ public class PostConfigureOidcOptionsForSilentLogin : IPostConfigureOptions<Open
         {
             if (!await _events.ProcessMessageReceivedAsync(ctx))
             {
-                if (inner != null)
-                {
-                    await inner.Invoke(ctx);
-                }
+                await inner.Invoke(ctx);
             }
         }
 
@@ -85,10 +70,7 @@ public class PostConfigureOidcOptionsForSilentLogin : IPostConfigureOptions<Open
         {
             if (!await _events.ProcessAuthenticationFailedAsync(ctx))
             {
-                if (inner != null)
-                {
-                    await inner.Invoke(ctx);
-                }
+                await inner.Invoke(ctx);
             }
         }
 

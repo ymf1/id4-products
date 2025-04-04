@@ -6,6 +6,7 @@ using Duende.Bff.EntityFramework;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 
+// ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>

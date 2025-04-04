@@ -1,12 +1,4 @@
-﻿namespace Duende.Bff
-{
-    public sealed class ActivityPropagationHandler : System.Net.Http.DelegatingHandler
-    {
-        public ActivityPropagationHandler(System.Net.Http.HttpMessageHandler innerHandler) { }
-        protected override System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> SendAsync(System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken) { }
-    }
-}
-namespace Duende.Bff.Yarp
+﻿namespace Duende.Bff.Yarp
 {
     public class AccessTokenRequestTransform : Yarp.ReverseProxy.Transforms.RequestTransform
     {

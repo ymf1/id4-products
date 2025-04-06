@@ -110,7 +110,6 @@ public static class ServiceCollectionExtensions
         }
 
         client.BaseAddress = new Uri(baseAddress);
-
     }
 
     private static Action<IServiceProvider, HttpClient> SetLocalApiBaseAddress(
@@ -132,6 +131,7 @@ public static class ServiceCollectionExtensions
             configureClient?.Invoke(sp, client);
         };
     }
+
     private static void SetRemoteApiBaseAddress(IServiceProvider sp, HttpClient client)
     {
         var baseAddress = GetRemoteBaseAddress(sp);

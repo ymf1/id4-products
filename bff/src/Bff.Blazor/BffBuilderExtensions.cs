@@ -16,12 +16,14 @@ public static class BffBuilderExtensions
             .AddOpenIdConnectAccessTokenManagement()
             .AddBlazorServerAccessTokenManagement<ServerSideTokenStore>()
             .AddSingleton<IClaimsTransformation, AddServerManagementClaimsTransform>()
-            .AddScoped<AuthenticationStateProvider, BffServerAuthenticationStateProvider>(); ;
+            .AddScoped<AuthenticationStateProvider, BffServerAuthenticationStateProvider>();
+
 
         if (configureOptions != null)
         {
             builder.Services.Configure(configureOptions);
         }
+
         return builder;
     }
 }

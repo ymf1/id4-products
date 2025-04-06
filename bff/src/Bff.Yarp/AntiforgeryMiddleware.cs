@@ -1,7 +1,7 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
-using Duende.Bff.Logging;
+using Duende.Bff.Internal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -37,6 +37,14 @@ public class AntiforgeryMiddleware
     public async Task Invoke(HttpContext context)
     {
         var route = context.GetRouteModel();
+
+        // Check if the request is a WebSocket request
+        if (_options.DisableAntiForgeryCheck(context))
+        {
+            await _next(context);
+            return;
+        }
+
 
         if (route.Config.Metadata != null)
         {

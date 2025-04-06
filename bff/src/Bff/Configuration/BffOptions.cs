@@ -1,9 +1,12 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
+using Duende.Bff.Configuration;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 
+// ReSharper disable once CheckNamespace
 namespace Duende.Bff;
 
 /// <summary>
@@ -67,6 +70,7 @@ public class BffOptions
     /// <summary>
     /// Silent login endpoint
     /// </summary>
+    [Obsolete("The silent login endpoint will be removed in a future version. Silent login is now handled by passing the prompt=none parameter to the login endpoint.")]
     public PathString SilentLoginPath => ManagementBasePath.Add(Constants.ManagementEndpoints.SilentLogin);
 
     /// <summary>
@@ -139,19 +143,11 @@ public class BffOptions
     /// APIs with TokenType.User or TokenType.UserOrClient. Defaults to True. 
     /// </summary>
     public bool RemoveSessionAfterRefreshTokenExpiration { get; set; } = true;
-}
 
-/// <summary>
-/// Enum representing the style of response from the ~/bff/user endpoint when the user is anonymous.
-/// </summary>
-public enum AnonymousSessionResponse
-{
     /// <summary>
-    /// 401 response with empty body
+    /// A delegate that determines if the anti-forgery check should be disabled for a given request.
+    /// The default is not to disable anti-forgery checks.
     /// </summary>
-    Response401,
-    /// <summary>
-    /// 200 response with "null" as the body
-    /// </summary>
-    Response200
+    public DisableAntiForgeryCheck DisableAntiForgeryCheck { get; set; } = (c) => false;
+
 }

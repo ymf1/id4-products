@@ -20,10 +20,11 @@ using Microsoft.Extensions.Options;
 
 namespace Duende.Bff.Blazor;
 
-
-// This is a server-side AuthenticationStateProvider that uses
-// PersistentComponentState to flow the authentication state to the client which
-// is then used to initialize the authentication state in the WASM application. 
+/// <summary>
+/// This is a server-side AuthenticationStateProvider that uses
+/// PersistentComponentState to flow the authentication state to the client which
+/// is then used to initialize the authentication state in the WASM application. 
+/// </summary>
 public sealed class BffServerAuthenticationStateProvider : RevalidatingServerAuthenticationStateProvider, IDisposable
 {
     private readonly IUserSessionStore _sessionStore;
@@ -61,14 +62,14 @@ public sealed class BffServerAuthenticationStateProvider : RevalidatingServerAut
         CheckLicense(loggerFactory, _bffOptions);
     }
 
-
     internal static bool LicenseChecked;
+
     internal static void CheckLicense(ILoggerFactory loggerFactory, BffOptions options)
     {
         if (LicenseChecked == false)
         {
-            LicenseValidator.Initalize(loggerFactory, options);
-            LicenseValidator.ValidateLicense();
+            Licensing.LicenseValidator.Initalize(loggerFactory, options);
+            Licensing.LicenseValidator.ValidateLicense();
         }
 
         LicenseChecked = true;
@@ -145,6 +146,4 @@ public sealed class BffServerAuthenticationStateProvider : RevalidatingServerAut
         cancellationToken);
         return sessions.Count != 0;
     }
-
-
 }

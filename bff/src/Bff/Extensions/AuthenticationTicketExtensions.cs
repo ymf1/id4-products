@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Logging;
 
+// ReSharper disable once CheckNamespace
 namespace Duende.Bff;
 
 /// <summary>
@@ -26,11 +27,13 @@ public static class AuthenticationTicketExtensions
     /// </summary>
     public static string GetSubjectId(this AuthenticationTicket ticket)
     {
-        return ticket.Principal.FindFirst(JwtClaimTypes.Subject)?.Value ??
-               ticket.Principal.FindFirst(ClaimTypes.NameIdentifier)?.Value ??
-               // for the mfa remember me cookie, ASP.NET Identity uses the 'name' claim for the subject id (for some reason)
-               ticket.Principal.FindFirst(ClaimTypes.Name)?.Value ??
-               throw new InvalidOperationException("Missing 'sub' claim in AuthenticationTicket");
+        var subjectId = ticket.Principal.FindFirst(JwtClaimTypes.Subject)?.Value ??
+                        ticket.Principal.FindFirst(ClaimTypes.NameIdentifier)?.Value ??
+                        // for the mfa remember me cookie, ASP.NET Identity uses the 'name' claim for the subject id (for some reason)
+                        ticket.Principal.FindFirst(ClaimTypes.Name)?.Value ??
+                        throw new InvalidOperationException("Missing 'sub' claim in AuthenticationTicket");
+
+        return subjectId;
     }
 
     /// <summary>

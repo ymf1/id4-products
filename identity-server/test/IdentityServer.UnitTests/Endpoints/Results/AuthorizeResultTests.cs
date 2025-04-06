@@ -214,13 +214,11 @@ public class AuthorizeResultTests
         _context.Response.Headers["X-Content-Security-Policy"].First().ShouldContain("default-src 'none';");
         _context.Response.Headers["X-Content-Security-Policy"].First().ShouldContain($"script-src '{IdentityServerConstants.ContentSecurityPolicyHashes.AuthorizeScript}'");
         _context.Response.Body.Seek(0, SeekOrigin.Begin);
-        using (var rdr = new StreamReader(_context.Response.Body))
-        {
-            var html = rdr.ReadToEnd();
-            html.ShouldContain("<base target='_self'/>");
-            html.ShouldContain("<form method='post' action='http://client/callback'>");
-            html.ShouldContain("<input type='hidden' name='state' value='state' />");
-        }
+        using var rdr = new StreamReader(_context.Response.Body);
+        var html = await rdr.ReadToEndAsync();
+        html.ShouldContain("<base target='_self'/>");
+        html.ShouldContain("<form method='post' action='http://client/callback'>");
+        html.ShouldContain("<input type='hidden' name='state' value='state' />");
     }
 
     [Fact]
@@ -301,7 +299,7 @@ public class AuthorizeResultTests
     [InlineData(OidcConstants.AuthorizeErrors.RegistrationNotSupported)]
     [InlineData(OidcConstants.AuthorizeErrors.InvalidTarget)]
     [Theory]
-    public async Task error_resulting_in_error_page_should_attach_fragment_to_error_model_redirect_uri(string error)
+    public async Task error_resulting_in_error_page_should_not_set_redirect_uri_or_response_mode(string error)
     {
         _response.Error = error;
         _response.Request = new ValidatedAuthorizeRequest
@@ -321,6 +319,7 @@ public class AuthorizeResultTests
         var queryParams = QueryHelpers.ParseQuery(queryString);
         var errorId = queryParams.First(kvp => kvp.Key == _options.UserInteraction.ErrorIdParameter).Value;
         var errorMessage = await _mockErrorMessageStore.ReadAsync(errorId);
-        errorMessage.Data.RedirectUri.ShouldContain("#_");
+        errorMessage.Data.RedirectUri.ShouldBeNull();
+        errorMessage.Data.ResponseMode.ShouldBeNull();
     }
 }

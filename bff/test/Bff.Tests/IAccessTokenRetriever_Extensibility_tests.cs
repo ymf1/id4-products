@@ -2,9 +2,6 @@
 // See LICENSE in the project root for license information.
 
 using Duende.Bff.Tests.TestHosts;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Xunit.Abstractions;
 
@@ -16,7 +13,9 @@ namespace Duende.Bff.Tests;
 public class IAccessTokenRetriever_Extensibility_tests : BffIntegrationTestBase
 {
 
+#pragma warning disable CS0618 // Type or member is obsolete
     private ContextCapturingAccessTokenRetriever _customAccessTokenReceiver { get; } = new(NullLogger<DefaultAccessTokenRetriever>.Instance);
+#pragma warning restore CS0618 // Type or member is obsolete
 
     public IAccessTokenRetriever_Extensibility_tests(ITestOutputHelper output) : base(output)
     {
@@ -83,10 +82,11 @@ public class IAccessTokenRetriever_Extensibility_tests : BffIntegrationTestBase
     /// <summary>
     /// Captures the context in which the access token retriever is called, so we can assert on it
     /// </summary>
+#pragma warning disable CS0618 // Type or member is obsolete
     private class ContextCapturingAccessTokenRetriever : DefaultAccessTokenRetriever
     {
         public AccessTokenRetrievalContext? UsedContext { get; private set; }
-        public ContextCapturingAccessTokenRetriever(ILogger<DefaultAccessTokenRetriever> logger) : base(logger)
+        public ContextCapturingAccessTokenRetriever(ILogger<DefaultAccessTokenRetriever> logger) : base()
         {
         }
 
@@ -96,4 +96,6 @@ public class IAccessTokenRetriever_Extensibility_tests : BffIntegrationTestBase
             return base.GetAccessToken(context);
         }
     }
+#pragma warning restore CS0618 // Type or member is obsolete
+
 }

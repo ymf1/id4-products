@@ -7,9 +7,6 @@ using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Duende.Bff.Tests.TestHosts;
 
@@ -46,6 +43,7 @@ public class IdentityServerHost : GenericHost
         services.AddIdentityServer(options =>
         {
             options.EmitStaticAudienceClaim = true;
+            options.UserInteraction.CreateAccountUrl = "/account/create";
         })
             .AddInMemoryClients(Clients)
             .AddInMemoryIdentityResources(IdentityResources)
@@ -61,6 +59,11 @@ public class IdentityServerHost : GenericHost
 
         app.UseEndpoints(endpoints =>
         {
+            endpoints.MapGet("/account/create", context =>
+            {
+                return Task.CompletedTask;
+            });
+
             endpoints.MapGet("/account/login", context =>
             {
                 return Task.CompletedTask;

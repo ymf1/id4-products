@@ -3,27 +3,22 @@
 
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
+// ReSharper disable once CheckNamespace
 namespace Duende.Bff;
 
 /// <summary>
 /// BFF specific OpenIdConnectEvents class.
 /// </summary>
-public class BffOpenIdConnectEvents : OpenIdConnectEvents
+public class BffOpenIdConnectEvents(IOptions<BffOptions> options, ILogger<BffOpenIdConnectEvents> logger) : OpenIdConnectEvents
 {
     /// <summary>
     /// The logger.
     /// </summary>
-    protected readonly ILogger<BffOpenIdConnectEvents> Logger;
+    protected readonly ILogger<BffOpenIdConnectEvents> Logger = logger;
 
-    /// <summary>
-    /// ctor
-    /// </summary>
-    /// <param name="logger"></param>
-    public BffOpenIdConnectEvents(ILogger<BffOpenIdConnectEvents> logger)
-    {
-        Logger = logger;
-    }
+    private object _silentRedirectUrl = "silent-redirect-url";
 
     /// <inheritdoc/>
     public override async Task RedirectToIdentityProvider(RedirectContext context)
@@ -39,10 +34,19 @@ public class BffOpenIdConnectEvents : OpenIdConnectEvents
     /// </summary>
     public virtual Task<bool> ProcessRedirectToIdentityProviderAsync(RedirectContext context)
     {
-        if (context.Properties?.IsSilentLogin() == true)
+        if (context.Properties.IsSilentLogin())
         {
+            var pathBase = context.Request.PathBase;
+            var redirectPath = pathBase + options.Value.SilentLoginCallbackPath;
+
+            context.Properties.RedirectUri = redirectPath;
             Logger.LogDebug("Setting OIDC ProtocolMessage.Prompt to 'none' for BFF silent login");
             context.ProtocolMessage.Prompt = "none";
+        }
+        else if (context.Properties.TryGetPrompt(out var prompt) == true)
+        {
+            Logger.LogDebug("Setting OIDC ProtocolMessage.Prompt to {prompt} for BFF silent login", prompt);
+            context.ProtocolMessage.Prompt = prompt;
         }
 
         // we've not "handled" the request, so let other code process
@@ -66,8 +70,20 @@ public class BffOpenIdConnectEvents : OpenIdConnectEvents
         if (context.Properties?.IsSilentLogin() == true &&
             context.Properties?.RedirectUri != null)
         {
-            context.HttpContext.Items[Constants.BffFlags.SilentLogin] = context.Properties.RedirectUri;
+            context.HttpContext.Items["silent"] = context.Properties.RedirectUri;
 
+            if (context.ProtocolMessage.Error != null)
+            {
+                Logger.LogDebug("Handling error response from OIDC provider for BFF silent login.");
+
+                context.HandleResponse();
+                context.Response.Redirect(context.Properties.RedirectUri);
+                return Task.FromResult(true);
+            }
+        }
+        else if (context.Properties?.TryGetPrompt(out _) == true &&
+                 context.Properties?.RedirectUri != null)
+        {
             if (context.ProtocolMessage.Error != null)
             {
                 Logger.LogDebug("Handling error response from OIDC provider for BFF silent login.");
@@ -95,16 +111,16 @@ public class BffOpenIdConnectEvents : OpenIdConnectEvents
     /// </summary>
     public virtual Task<bool> ProcessAuthenticationFailedAsync(AuthenticationFailedContext context)
     {
-        if (context.HttpContext.Items.ContainsKey(Constants.BffFlags.SilentLogin))
+        if (!context.HttpContext.Items.ContainsKey(_silentRedirectUrl))
         {
-            Logger.LogDebug("Handling failed response from OIDC provider for BFF silent login.");
-
-            context.HandleResponse();
-            context.Response.Redirect(context.HttpContext.Items[Constants.BffFlags.SilentLogin]!.ToString()!);
-
-            return Task.FromResult(true);
+            return Task.FromResult(false);
         }
 
-        return Task.FromResult(false);
+        Logger.LogDebug("Handling failed response from OIDC provider for BFF silent login.");
+
+        context.HandleResponse();
+        context.Response.Redirect(context.HttpContext.Items[_silentRedirectUrl]!.ToString()!);
+
+        return Task.FromResult(true);
     }
 }

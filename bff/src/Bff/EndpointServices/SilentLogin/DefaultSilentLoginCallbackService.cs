@@ -8,33 +8,23 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
+// ReSharper disable once CheckNamespace
 namespace Duende.Bff;
 
 /// <summary>
 /// Service for handling silent login callback requests
 /// </summary>
-public class DefaultSilentLoginCallbackService : ISilentLoginCallbackService
+public class DefaultSilentLoginCallbackService(IOptions<BffOptions> options, ILogger<DefaultSilentLoginCallbackService> logger) : ISilentLoginCallbackService
 {
     /// <summary>
     /// The BFF options
     /// </summary>
-    protected readonly BffOptions Options;
+    protected readonly BffOptions Options = options.Value;
 
     /// <summary>
     /// The logger
     /// </summary>
-    protected readonly ILogger Logger;
-
-    /// <summary>
-    /// ctor
-    /// </summary>
-    /// <param name="options"></param>
-    /// <param name="logger"></param>
-    public DefaultSilentLoginCallbackService(IOptions<BffOptions> options, ILogger<DefaultSilentLoginCallbackService> logger)
-    {
-        Options = options.Value;
-        Logger = logger;
-    }
+    protected readonly ILogger Logger = logger;
 
     /// <inheritdoc />
     public virtual async Task ProcessRequestAsync(HttpContext context)

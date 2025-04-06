@@ -229,13 +229,6 @@ public class AuthorizeHttpWriter : IHttpResponseWriter<AuthorizeResult>
             ClientId = response.Request?.ClientId
         };
 
-        if (response.RedirectUri != null && response.Request?.ResponseMode != null)
-        {
-            // if we have a valid redirect uri, then include it to the error page
-            errorModel.RedirectUri = BuildRedirectUri(response);
-            errorModel.ResponseMode = response.Request.ResponseMode;
-        }
-
         var message = new Message<ErrorMessage>(errorModel, _clock.UtcNow.UtcDateTime);
         var id = await _errorMessageStore.WriteAsync(message);
 

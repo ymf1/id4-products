@@ -15,7 +15,7 @@ var products = new Product[]
     new("bff",
         "bff.slnf",
         "bff",
-        ["Bff.Tests", "Bff.Blazor.Client.UnitTests", "Bff.Blazor.UnitTests", "Bff.EntityFramework.Tests"],
+        ["Bff.Tests"],
         ["Hosts.Tests"]),
     new("identity-server",
         "identity-server.slnf",
@@ -37,9 +37,14 @@ void GenerateCiWorkflow(Product product)
     var workflow = new Workflow($"{product.Name}/ci");
     var paths = new[]
     {
+        ".config/dotnet-tools.json",
         $".github/workflows/{product.Name}-**",
         $"{product.Name}/**",
-        "Directory.Packages.props"
+        ".editorconfig",
+        "Directory.Packages.props",
+        "global.json",
+        "src.props",
+        "test.props"
     };
 
     workflow.On

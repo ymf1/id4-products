@@ -2,7 +2,6 @@
 // See LICENSE in the project root for license information.
 
 using System.Net;
-using System.Net.Http.Json;
 using System.Text.Json;
 using Duende.Bff.Tests.TestFramework;
 using Duende.Bff.Tests.TestHosts;
@@ -338,5 +337,15 @@ public class RemoteEndpointTests(ITestOutputHelper output) : BffIntegrationTestB
 
         response.Content.Headers.Select(x => x.Key).ShouldNotContain("added-by-custom-default-transform",
             "a custom transform doesn't run the defaults");
+    }
+    [Fact]
+    public async Task can_disable_anti_forgery_check()
+    {
+        BffHost.BffOptions.DisableAntiForgeryCheck = (c) => true;
+
+        var req = new HttpRequestMessage(HttpMethod.Get, BffHost.Url("/api_user_or_anon/test"));
+        var response = await BffHost.BrowserClient.SendAsync(req);
+
+        response.StatusCode.ShouldBe(HttpStatusCode.OK);
     }
 }

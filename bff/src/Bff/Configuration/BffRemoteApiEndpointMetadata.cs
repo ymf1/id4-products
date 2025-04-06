@@ -1,6 +1,7 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
+// ReSharper disable once CheckNamespace
 namespace Duende.Bff;
 
 /// <summary>
@@ -30,10 +31,7 @@ public class BffRemoteApiEndpointMetadata : IBffApiEndpoint
     /// </summary>
     public Type AccessTokenRetriever
     {
-        get
-        {
-            return _accessTokenRetriever;
-        }
+        get => _accessTokenRetriever;
         set
         {
             if (value.IsAssignableTo(typeof(IAccessTokenRetriever)))

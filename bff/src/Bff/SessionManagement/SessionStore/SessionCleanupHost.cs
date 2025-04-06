@@ -6,30 +6,22 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
+// ReSharper disable once CheckNamespace
 namespace Duende.Bff;
 
 /// <summary>
 /// Helper to cleanup expired sessions.
 /// </summary>
-public class SessionCleanupHost : IHostedService
+public class SessionCleanupHost(
+    IServiceProvider serviceProvider,
+    IOptions<BffOptions> options,
+    ILogger<SessionCleanupHost> logger) : IHostedService
 {
-    private readonly IServiceProvider _serviceProvider;
-    private readonly BffOptions _options;
-    private readonly ILogger<SessionCleanupHost> _logger;
+    private readonly BffOptions _options = options.Value;
 
     private TimeSpan CleanupInterval => _options.SessionCleanupInterval;
 
     private CancellationTokenSource? _source;
-
-    /// <summary>
-    /// Constructor for SessionCleanupHost.
-    /// </summary>
-    public SessionCleanupHost(IServiceProvider serviceProvider, IOptions<BffOptions> options, ILogger<SessionCleanupHost> logger)
-    {
-        _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
-        _options = options.Value;
-        _logger = logger;
-    }
 
     /// <summary>
     /// Starts the token cleanup polling.
@@ -42,7 +34,7 @@ public class SessionCleanupHost : IHostedService
 
             if (IsIUserSessionStoreCleanupRegistered())
             {
-                _logger.LogDebug("Starting BFF session cleanup");
+                logger.LogDebug("Starting BFF session cleanup");
 
                 _source = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
@@ -50,7 +42,7 @@ public class SessionCleanupHost : IHostedService
             }
             else
             {
-                _logger.LogWarning("BFF session cleanup is enabled, but no IUserSessionStoreCleanup is registered in DI. BFF session cleanup will not run.");
+                logger.LogWarning("BFF session cleanup is enabled, but no IUserSessionStoreCleanup is registered in DI. BFF session cleanup will not run.");
             }
         }
 
@@ -64,7 +56,7 @@ public class SessionCleanupHost : IHostedService
     {
         if (_options.EnableSessionCleanup && _source != null)
         {
-            _logger.LogDebug("Stopping BFF session cleanup");
+            logger.LogDebug("Stopping BFF session cleanup");
 
             _source.Cancel();
             _source = null;
@@ -79,7 +71,7 @@ public class SessionCleanupHost : IHostedService
         {
             if (cancellationToken.IsCancellationRequested)
             {
-                _logger.LogDebug("CancellationRequested. Exiting.");
+                logger.LogDebug("CancellationRequested. Exiting.");
                 break;
             }
 
@@ -89,18 +81,18 @@ public class SessionCleanupHost : IHostedService
             }
             catch (TaskCanceledException)
             {
-                _logger.LogDebug("TaskCanceledException. Exiting.");
+                logger.LogDebug("TaskCanceledException. Exiting.");
                 break;
             }
             catch (Exception ex)
             {
-                _logger.LogError("Task.Delay exception: {0}. Exiting.", ex.Message);
+                logger.LogError("Task.Delay exception: {0}. Exiting.", ex.Message);
                 break;
             }
 
             if (cancellationToken.IsCancellationRequested)
             {
-                _logger.LogDebug("CancellationRequested. Exiting.");
+                logger.LogDebug("CancellationRequested. Exiting.");
                 break;
             }
 
@@ -112,7 +104,7 @@ public class SessionCleanupHost : IHostedService
     {
         try
         {
-            using (var serviceScope = _serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            using (var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var tokenCleanupService = serviceScope.ServiceProvider.GetRequiredService<IUserSessionStoreCleanup>();
                 await tokenCleanupService.DeleteExpiredSessionsAsync(cancellationToken);
@@ -120,13 +112,13 @@ public class SessionCleanupHost : IHostedService
         }
         catch (Exception ex)
         {
-            _logger.LogError("Exception deleting expired sessions: {exception}", ex.Message);
+            logger.LogError("Exception deleting expired sessions: {exception}", ex.Message);
         }
     }
 
     private bool IsIUserSessionStoreCleanupRegistered()
     {
-        var isService = _serviceProvider.GetRequiredService<IServiceProviderIsService>();
+        var isService = serviceProvider.GetRequiredService<IServiceProviderIsService>();
         return isService.IsService(typeof(IUserSessionStoreCleanup));
     }
 }

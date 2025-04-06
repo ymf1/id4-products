@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="Bff.Blazor.Client.UnitTests" />
+    <InternalsVisibleTo Include="Duende.Bff.Tests" />
     <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
   </ItemGroup>
 

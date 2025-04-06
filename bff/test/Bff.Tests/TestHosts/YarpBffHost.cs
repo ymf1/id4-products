@@ -4,9 +4,7 @@
 using System.Net;
 using Duende.Bff.Tests.TestFramework;
 using Duende.Bff.Yarp;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.Extensions.DependencyInjection;
 using Yarp.ReverseProxy.Configuration;
 using Yarp.ReverseProxy.Forwarder;
 
@@ -53,7 +51,10 @@ public class YarpBffHost : GenericHost
         services.AddRouting();
         services.AddAuthorization();
 
-        var bff = services.AddBff(options => { BffOptions = options; });
+        var bff = services.AddBff(options =>
+        {
+            BffOptions = options;
+        });
 
         services.AddSingleton<IForwarderHttpClientFactory>(
             new CallbackForwarderHttpClientFactory(

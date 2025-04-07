@@ -3,7 +3,7 @@
 
 using System.Security.Claims;
 using System.Text.Json;
-using Duende.Bff.Logging;
+using Duende.Bff.Internal;
 using Duende.IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -13,51 +13,38 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 
+// ReSharper disable once CheckNamespace
 namespace Duende.Bff;
 
 /// <summary>
 /// Default back-channel logout notification service implementation
 /// </summary>
-public class DefaultBackchannelLogoutService : IBackchannelLogoutService
+public class DefaultBackchannelLogoutService(
+    IAuthenticationSchemeProvider authenticationSchemeProvider,
+    IOptionsMonitor<OpenIdConnectOptions> optionsMonitor,
+    ISessionRevocationService userSession,
+    ILogger<DefaultBackchannelLogoutService> logger) : IBackchannelLogoutService
 {
     /// <summary>
     /// Authentication scheme provider
     /// </summary>
-    protected readonly IAuthenticationSchemeProvider AuthenticationSchemeProvider;
+    protected readonly IAuthenticationSchemeProvider AuthenticationSchemeProvider = authenticationSchemeProvider;
 
     /// <summary>
     /// OpenID Connect options monitor
     /// </summary>
-    protected readonly IOptionsMonitor<OpenIdConnectOptions> OptionsMonitor;
+    protected readonly IOptionsMonitor<OpenIdConnectOptions> OptionsMonitor = optionsMonitor;
 
     /// <summary>
     /// Session revocation service
     /// </summary>
-    protected readonly ISessionRevocationService UserSession;
+    protected readonly ISessionRevocationService UserSession = userSession;
 
     /// <summary>
     /// Logger
     /// </summary>
-    protected readonly ILogger<DefaultBackchannelLogoutService> Logger;
+    protected readonly ILogger<DefaultBackchannelLogoutService> Logger = logger;
 
-    /// <summary>
-    /// ctor
-    /// </summary>
-    /// <param name="authenticationSchemeProvider"></param>
-    /// <param name="optionsMonitor"></param>
-    /// <param name="userSession"></param>
-    /// <param name="logger"></param>
-    public DefaultBackchannelLogoutService(
-        IAuthenticationSchemeProvider authenticationSchemeProvider,
-        IOptionsMonitor<OpenIdConnectOptions> optionsMonitor,
-        ISessionRevocationService userSession,
-        ILogger<DefaultBackchannelLogoutService> logger)
-    {
-        AuthenticationSchemeProvider = authenticationSchemeProvider;
-        OptionsMonitor = optionsMonitor;
-        UserSession = userSession;
-        Logger = logger;
-    }
 
     /// <inheritdoc />
     public virtual async Task ProcessRequestAsync(HttpContext context)

@@ -4,7 +4,7 @@
 using System.Net.Http.Headers;
 using Duende.AccessTokenManagement;
 using Duende.AccessTokenManagement.OpenIdConnect;
-using Duende.Bff.Logging;
+using Duende.Bff.Internal;
 using Duende.IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
@@ -25,7 +25,6 @@ public class AccessTokenRequestTransform(
     IDPoPProofService proofService,
     ILogger<AccessTokenRequestTransform> logger) : RequestTransform
 {
-
     /// <inheritdoc />
     public override async ValueTask ApplyAsync(RequestTransformContext context)
     {
@@ -34,6 +33,7 @@ public class AccessTokenRequestTransform(
         {
             throw new InvalidOperationException("endpoint not found");
         }
+
         UserTokenRequestParameters? userAccessTokenParameters = null;
 
         context.HttpContext.RequestServices.CheckLicense();
@@ -88,9 +88,7 @@ public class AccessTokenRequestTransform(
 
                 ApplyError(context, tokenError, metadata.RequiredTokenType);
                 break;
-            case NoAccessTokenResult noToken:
-                break;
-            default:
+            case NoAccessTokenResult:
                 break;
         }
     }
@@ -108,7 +106,6 @@ public class AccessTokenRequestTransform(
 
             logger.UserSessionRevoked(tokenError.Error);
             return true;
-
         }
 
         return false;
@@ -121,14 +118,14 @@ public class AccessTokenRequestTransform(
             return null;
 
         TokenType? requiredTokenType = null;
-        if (Enum.TryParse<TokenType>(yarp.Config?.Metadata?.GetValueOrDefault(Constants.Yarp.TokenTypeMetadata), true, out var type))
+        if (Enum.TryParse<TokenType>(yarp.Config.Metadata?.GetValueOrDefault(Constants.Yarp.TokenTypeMetadata), true, out var type))
         {
             requiredTokenType = type;
         }
 
         return new BffRemoteApiEndpointMetadata()
         {
-            OptionalUserToken = yarp.Config?.Metadata?.GetValueOrDefault(Constants.Yarp.OptionalUserTokenMetadata) == "true",
+            OptionalUserToken = yarp.Config.Metadata?.GetValueOrDefault(Constants.Yarp.OptionalUserTokenMetadata) == "true",
             RequiredTokenType = requiredTokenType
         };
     }
@@ -141,11 +138,8 @@ public class AccessTokenRequestTransform(
         logger.AccessTokenMissing(tokenType?.ToString() ?? "Unknown token type", context.HttpContext.Request.Path, tokenError.Error);
     }
 
-    private void ApplyBearerToken(RequestTransformContext context, BearerTokenResult token)
-    {
-        context.ProxyRequest.Headers.Authorization =
+    private void ApplyBearerToken(RequestTransformContext context, BearerTokenResult token) => context.ProxyRequest.Headers.Authorization =
             new AuthenticationHeaderValue(OidcConstants.AuthenticationSchemes.AuthorizationHeaderBearer, token.AccessToken);
-    }
 
     private async Task ApplyDPoPToken(RequestTransformContext context, DPoPTokenResult token)
     {

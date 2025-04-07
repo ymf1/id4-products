@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Yarp.ReverseProxy.Transforms.Builder;
 
+// ReSharper disable once CheckNamespace
 namespace Microsoft.AspNetCore.Builder;
 
 /// <summary>
@@ -23,6 +24,7 @@ public static class YarpTransformExtensions
     public static TransformBuilderContext AddBffAccessToken(this TransformBuilderContext context, PathString localPath)
     {
         var proofService = context.Services.GetRequiredService<IDPoPProofService>();
+
         var logger = context.Services.GetRequiredService<ILogger<AccessTokenRequestTransform>>();
         var options = context.Services.GetRequiredService<IOptions<BffOptions>>();
         context.RequestTransforms.Add(

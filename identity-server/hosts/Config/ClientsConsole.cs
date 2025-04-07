@@ -8,10 +8,8 @@ namespace IdentityServerHost.Configuration;
 
 public static class ClientsConsole
 {
-    public static IEnumerable<Client> Get()
-    {
-        return
-        [
+    public static IEnumerable<Client> Get() => new List<Client>
+        {
             ///////////////////////////////////////////
             // Console Client Credentials Flow Sample
             //////////////////////////////////////////
@@ -352,6 +350,5 @@ public static class ClientsConsole
                     "resource2.scope1"
                 }
             },
-        ];
-    }
+        };
 }

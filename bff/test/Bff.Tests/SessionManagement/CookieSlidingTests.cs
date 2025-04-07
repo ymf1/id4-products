@@ -11,27 +11,23 @@ namespace Duende.Bff.Tests.SessionManagement;
 
 public class CookieSlidingTests : BffIntegrationTestBase
 {
+#pragma warning disable CS0618 // Type or member is obsolete
     private readonly InMemoryUserSessionStore _sessionStore = new();
+#pragma warning restore CS0618 // Type or member is obsolete
     private readonly FakeTimeProvider _clock = new(DateTime.UtcNow);
 
-    public CookieSlidingTests(ITestOutputHelper output) : base(output)
-    {
-        BffHost.OnConfigureServices += services =>
-        {
-            services.AddSingleton<IUserSessionStore>(_sessionStore);
-            services.Configure<CookieAuthenticationOptions>("cookie", options =>
-            {
-                options.SlidingExpiration = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
-            });
-            services.AddSingleton<TimeProvider>(_clock);
-        };
-    }
+    public CookieSlidingTests(ITestOutputHelper output) : base(output) => BffHost.OnConfigureServices += services =>
+                                                                               {
+                                                                                   services.AddSingleton<IUserSessionStore>(_sessionStore);
+                                                                                   services.Configure<CookieAuthenticationOptions>("cookie", options =>
+                                                                                   {
+                                                                                       options.SlidingExpiration = true;
+                                                                                       options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+                                                                                   });
+                                                                                   services.AddSingleton<TimeProvider>(_clock);
+                                                                               };
 
-    private void SetClock(TimeSpan t)
-    {
-        _clock.SetUtcNow(_clock.GetUtcNow().Add(t));
-    }
+    private void SetClock(TimeSpan t) => _clock.SetUtcNow(_clock.GetUtcNow().Add(t));
 
     [Fact]
     public async Task user_endpoint_cookie_should_slide()

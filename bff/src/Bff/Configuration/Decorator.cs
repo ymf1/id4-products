@@ -3,6 +3,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 
+// ReSharper disable once CheckNamespace
 namespace Microsoft.AspNetCore.Builder;
 
 /// <summary>
@@ -25,6 +26,7 @@ internal static class DecoratorServiceCollectionExtensions
         {
             throw new InvalidOperationException("Service type: " + typeof(TService).Name + " not registered.");
         }
+
         if (services.Any(x => x.ServiceType == typeof(Decorator<TService>)))
         {
             throw new InvalidOperationException("Decorator already registered for type: " + typeof(TService).Name + ".");
@@ -42,9 +44,7 @@ internal static class DecoratorServiceCollectionExtensions
         else if (registration.ImplementationFactory != null)
         {
             services.Add(new ServiceDescriptor(typeof(Decorator<TService>), provider =>
-            {
-                return new DisposableDecorator<TService>((TService)registration.ImplementationFactory(provider));
-            }, registration.Lifetime));
+                new DisposableDecorator<TService>((TService)registration.ImplementationFactory(provider)), registration.Lifetime));
         }
         else
         {
@@ -61,10 +61,7 @@ internal class Decorator<TService>
 {
     public TService Instance { get; set; }
 
-    public Decorator(TService instance)
-    {
-        Instance = instance;
-    }
+    public Decorator(TService instance) => Instance = instance;
 }
 
 internal class Decorator<TService, TImpl> : Decorator<TService>
@@ -81,8 +78,5 @@ internal class DisposableDecorator<TService> : Decorator<TService>, IDisposable
     {
     }
 
-    public void Dispose()
-    {
-        (Instance as IDisposable)?.Dispose();
-    }
+    public void Dispose() => (Instance as IDisposable)?.Dispose();
 }

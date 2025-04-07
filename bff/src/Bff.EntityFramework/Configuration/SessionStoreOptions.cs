@@ -1,7 +1,7 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
-
+// ReSharper disable once CheckNamespace
 namespace Duende.Bff.EntityFramework;
 
 /// <summary>
@@ -15,7 +15,7 @@ public class SessionStoreOptions
     /// <value>
     /// The default schema.
     /// </value>
-    public string DefaultSchema { get; set; } = null;
+    public string? DefaultSchema { get; set; }
 
     /// <summary>
     /// Gets or sets the persisted grants table configuration.

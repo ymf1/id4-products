@@ -1,16 +1,32 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
+using System.Net;
 using Duende.AccessTokenManagement;
 using Duende.AccessTokenManagement.OpenIdConnect;
 using Duende.IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 
+// ReSharper disable once CheckNamespace
 namespace Duende.Bff;
 
 internal static class HttpContextExtensions
 {
+    public static void ReturnHttpProblem(this HttpContext context, string title, params (string key, string[] values)[] errors)
+    {
+        var problem = new HttpValidationProblemDetails()
+        {
+            Status = (int)HttpStatusCode.BadRequest,
+            Title = title,
+            Errors = errors.ToDictionary()
+        };
+        context.Response.StatusCode = problem.Status.Value;
+        context.Response.ContentType = "application/problem+json";
+        context.Response.WriteAsJsonAsync(problem);
+
+    }
+
     public static void CheckForBffMiddleware(this HttpContext context, BffOptions options)
     {
         if (options.EnforceBffMiddleware)
@@ -70,6 +86,7 @@ internal static class HttpContextExtensions
             {
                 token = await context.GetClientAccessTokenAsync();
             }
+
             return token;
         }
     }

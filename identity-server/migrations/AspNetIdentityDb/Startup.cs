@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AspNetIdentityDb;
 
-public class Startup(IConfiguration config)
+public class Startup
 {
-    public IConfiguration Configuration { get; } = config;
+    public IConfiguration Configuration { get; }
+
+    public Startup(IConfiguration config) => Configuration = config;
 
     public void ConfigureServices(IServiceCollection services)
     {

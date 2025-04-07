@@ -1,6 +1,7 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
+// ReSharper disable once CheckNamespace
 namespace Duende.Bff;
 
 /// <summary>
@@ -13,5 +14,5 @@ public interface IReturnUrlValidator
     /// </summary>
     /// <param name="returnUrl"></param>
     /// <returns></returns>
-    Task<bool> IsValidAsync(string returnUrl);
+    public Task<bool> IsValidAsync(string returnUrl);
 }

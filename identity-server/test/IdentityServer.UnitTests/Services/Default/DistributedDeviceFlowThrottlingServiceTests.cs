@@ -27,10 +27,7 @@ public class DistributedDeviceFlowThrottlingServiceTests
     private const string CacheKey = "devicecode_";
     private readonly DateTime testDate = new DateTime(2018, 09, 01, 8, 0, 0, DateTimeKind.Utc);
 
-    public DistributedDeviceFlowThrottlingServiceTests()
-    {
-        _store = new InMemoryClientStore(new List<Client>());
-    }
+    public DistributedDeviceFlowThrottlingServiceTests() => _store = new InMemoryClientStore(new List<Client>());
 
     [Fact]
     public async Task First_Poll()
@@ -51,7 +48,7 @@ public class DistributedDeviceFlowThrottlingServiceTests
         var handle = Guid.NewGuid().ToString();
         var service = new DistributedDeviceFlowThrottlingService(cache, _store, new StubClock { UtcNowFunc = () => testDate }, options);
 
-        cache.Set(CacheKey + handle, Encoding.UTF8.GetBytes(testDate.AddSeconds(-1).ToString("O")));
+        await cache.SetAsync(CacheKey + handle, Encoding.UTF8.GetBytes(testDate.AddSeconds(-1).ToString("O")));
 
         var result = await service.ShouldSlowDown(handle, deviceCode);
 
@@ -67,7 +64,7 @@ public class DistributedDeviceFlowThrottlingServiceTests
 
         var service = new DistributedDeviceFlowThrottlingService(cache, _store, new StubClock { UtcNowFunc = () => testDate }, options);
 
-        cache.Set($"devicecode_{handle}", Encoding.UTF8.GetBytes(testDate.AddSeconds(-deviceCode.Lifetime - 1).ToString("O")));
+        await cache.SetAsync($"devicecode_{handle}", Encoding.UTF8.GetBytes(testDate.AddSeconds(-deviceCode.Lifetime - 1).ToString("O")));
 
         var result = await service.ShouldSlowDown(handle, deviceCode);
 
@@ -118,10 +115,7 @@ internal class TestCache : IDistributedCache
         return null;
     }
 
-    public Task<byte[]> GetAsync(string key, CancellationToken token = new CancellationToken())
-    {
-        return Task.FromResult(Get(key));
-    }
+    public Task<byte[]> GetAsync(string key, CancellationToken token = new CancellationToken()) => Task.FromResult(Get(key));
 
     public void Set(string key, byte[] value, DistributedCacheEntryOptions options)
     {
@@ -136,23 +130,11 @@ internal class TestCache : IDistributedCache
         return Task.CompletedTask;
     }
 
-    public void Refresh(string key)
-    {
-        throw new NotImplementedException();
-    }
+    public void Refresh(string key) => throw new NotImplementedException();
 
-    public Task RefreshAsync(string key, CancellationToken token = new CancellationToken())
-    {
-        throw new NotImplementedException();
-    }
+    public Task RefreshAsync(string key, CancellationToken token = new CancellationToken()) => throw new NotImplementedException();
 
-    public void Remove(string key)
-    {
-        throw new NotImplementedException();
-    }
+    public void Remove(string key) => throw new NotImplementedException();
 
-    public Task RemoveAsync(string key, CancellationToken token = new CancellationToken())
-    {
-        throw new NotImplementedException();
-    }
+    public Task RemoveAsync(string key, CancellationToken token = new CancellationToken()) => throw new NotImplementedException();
 }

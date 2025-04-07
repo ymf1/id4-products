@@ -1,6 +1,7 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
+// ReSharper disable once CheckNamespace
 namespace Duende.Bff.EntityFramework;
 
 /// <summary>
@@ -12,10 +13,7 @@ public class TableConfiguration
     /// Initializes a new instance of the <see cref="TableConfiguration"/> class.
     /// </summary>
     /// <param name="name">The name.</param>
-    public TableConfiguration(string name)
-    {
-        Name = name;
-    }
+    public TableConfiguration(string name) => Name = name;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="TableConfiguration"/> class.
@@ -42,5 +40,5 @@ public class TableConfiguration
     /// <value>
     /// The schema.
     /// </value>
-    public string Schema { get; set; }
+    public string? Schema { get; set; }
 }

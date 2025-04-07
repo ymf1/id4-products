@@ -1,13 +1,11 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
-#nullable disable
-
 using System.Security.Claims;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Duende;
+namespace Duende.Bff.Licensing;
 
 internal class License
 {
@@ -34,7 +32,7 @@ internal class License
         }
 
         var edition = claims.FindFirst("edition")?.Value;
-        if (!Enum.TryParse<License.LicenseEdition>(edition, true, out var editionValue))
+        if (!Enum.TryParse<LicenseEdition>(edition, true, out var editionValue))
         {
             throw new Exception($"Invalid edition in license: '{edition}'");
         }
@@ -205,8 +203,8 @@ internal class License
 
     public int Id { get; set; }
 
-    public string CompanyName { get; set; }
-    public string ContactInfo { get; set; }
+    public string? CompanyName { get; set; }
+    public string? ContactInfo { get; set; }
 
     public DateTime? Expiration { get; set; }
 
@@ -231,7 +229,7 @@ internal class License
     public bool ConfigApiFeature { get; set; }
     public bool DPoPFeature { get; set; }
 
-    public string Extras { get; set; }
+    public string? Extras { get; set; }
 
     public enum LicenseEdition
     {
@@ -242,10 +240,7 @@ internal class License
         Bff
     }
 
-    public override string ToString()
-    {
-        return ObjectSerializer.ToString(this);
-    }
+    public override string ToString() => ObjectSerializer.ToString(this);
 
     internal static class ObjectSerializer
     {
@@ -254,9 +249,6 @@ internal class License
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
         };
 
-        public static string ToString(object o)
-        {
-            return JsonSerializer.Serialize(o, Options);
-        }
+        public static string ToString(object o) => JsonSerializer.Serialize(o, Options);
     }
 }

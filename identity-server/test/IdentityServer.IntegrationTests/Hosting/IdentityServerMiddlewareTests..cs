@@ -12,15 +12,9 @@ namespace IntegrationTests.Hosting;
 public class FailRouter : IEndpointRouter
 {
     private readonly Type _exceptionType;
-    public FailRouter(Type exceptionType)
-    {
-        _exceptionType = exceptionType;
-    }
+    public FailRouter(Type exceptionType) => _exceptionType = exceptionType;
 
-    public IEndpointHandler Find(HttpContext context)
-    {
-        throw (Exception)_exceptionType.GetConstructor([]).Invoke(null);
-    }
+    public IEndpointHandler Find(HttpContext context) => throw (Exception)_exceptionType.GetConstructor([]).Invoke(null);
 }
 
 public class IdentityServerMiddlewareTests
@@ -34,7 +28,6 @@ public class IdentityServerMiddlewareTests
         { typeof(InvalidOperationException), false },
         { typeof(ArgumentException), false },
         { typeof(NullReferenceException), false }
-
     };
 
     [Theory]

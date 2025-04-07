@@ -1,36 +1,23 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
-using Duende.Bff.Logging;
+using Duende.Bff.Internal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
+// ReSharper disable once CheckNamespace
 namespace Duende.Bff.Endpoints;
 
 /// <summary>
 /// Middleware to provide anti-forgery protection via a static header and 302 to 401 conversion
 /// Must run *before* the authorization middleware
 /// </summary>
-public class BffMiddleware
+public class BffMiddleware(
+    RequestDelegate next,
+    IOptions<BffOptions> options,
+    ILogger<BffMiddleware> logger)
 {
-    private readonly RequestDelegate _next;
-    private readonly BffOptions _options;
-    private readonly ILogger<BffMiddleware> _logger;
-
-    /// <summary>
-    /// ctor
-    /// </summary>
-    /// <param name="next"></param>
-    /// <param name="options"></param>
-    /// <param name="logger"></param>
-    public BffMiddleware(RequestDelegate next, IOptions<BffOptions> options, ILogger<BffMiddleware> logger)
-    {
-        _next = next;
-        _options = options.Value;
-        _logger = logger;
-    }
-
     /// <summary>
     /// Request processing
     /// </summary>
@@ -41,37 +28,38 @@ public class BffMiddleware
         // add marker so we can determine if middleware has run later in the pipeline
         context.Items[Constants.BffMiddlewareMarker] = true;
 
+        if (options.Value.DisableAntiForgeryCheck(context))
+        {
+            await next(context);
+            return;
+        }
+
         // inbound: add CSRF check for local APIs 
 
         var endpoint = context.GetEndpoint();
         if (endpoint == null)
         {
-            await _next(context);
+            await next(context);
             return;
         }
 
         var isBffEndpoint = endpoint.Metadata.GetMetadata<IBffApiEndpoint>() != null;
-        if (isBffEndpoint)
+        var requireAntiForgeryCheck = endpoint.Metadata.GetMetadata<IBffApiSkipAntiforgery>() == null;
+        var hasAntiForgeryHeader = context.CheckAntiForgeryHeader(options.Value);
+        if (isBffEndpoint && requireAntiForgeryCheck && !hasAntiForgeryHeader)
         {
-            var requireAntiForgeryCheck = endpoint.Metadata.GetMetadata<IBffApiSkipAntiforgery>() == null;
-            if (requireAntiForgeryCheck)
-            {
-                if (!context.CheckAntiForgeryHeader(_options))
-                {
-                    _logger.AntiForgeryValidationFailed(context.Request.Path);
+            logger.AntiForgeryValidationFailed(context.Request.Path);
 
-                    context.Response.StatusCode = 401;
-                    return;
-                }
-            }
+            context.Response.StatusCode = 401;
+            return;
         }
 
-        var isUIEndpoint = endpoint.Metadata.GetMetadata<IBffUIApiEndpoint>() != null;
-        if (isUIEndpoint && context.IsAjaxRequest())
+        var isUiEndpoint = endpoint.Metadata.GetMetadata<IBffUIApiEndpoint>() != null;
+        if (isUiEndpoint && context.IsAjaxRequest())
         {
-            _logger.LogDebug("BFF management endpoint {endpoint} is only intended for a browser window to request and load. It is not intended to be accessed with Ajax or fetch requests.", context.Request.Path);
+            logger.ManagementEndpointAccessedViaAjax(context.Request.Path);
         }
 
-        await _next(context);
+        await next(context);
     }
 }

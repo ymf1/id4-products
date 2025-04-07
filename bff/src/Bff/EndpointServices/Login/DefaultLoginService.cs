@@ -2,44 +2,41 @@
 // See LICENSE in the project root for license information.
 
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
+// ReSharper disable once CheckNamespace
 namespace Duende.Bff;
 
 /// <summary>
 /// Service for handling login requests
 /// </summary>
-public class DefaultLoginService : ILoginService
+public class DefaultLoginService(
+    IAuthenticationSchemeProvider authenticationSchemeProvider,
+    IOptionsMonitor<OpenIdConnectOptions> openIdConnectOptionsMonitor,
+    IOptions<BffOptions> bffOptions,
+    IReturnUrlValidator returnUrlValidator,
+    ILogger<DefaultLoginService> logger)
+    : ILoginService
 {
     /// <summary>
     /// The BFF options
     /// </summary>
-    protected readonly BffOptions Options;
+    protected readonly BffOptions Options = bffOptions.Value;
+
+    private readonly IOptionsMonitor<OpenIdConnectOptions> _openIdConnectOptionsMonitor = openIdConnectOptionsMonitor;
 
     /// <summary>
     /// The return URL validator
     /// </summary>
-    protected readonly IReturnUrlValidator ReturnUrlValidator;
+    protected readonly IReturnUrlValidator ReturnUrlValidator = returnUrlValidator;
 
     /// <summary>
     /// The logger
     /// </summary>
-    protected readonly ILogger Logger;
-
-    /// <summary>
-    /// ctor
-    /// </summary>
-    /// <param name="options"></param>
-    /// <param name="returnUrlValidator"></param>
-    /// <param name="logger"></param>
-    public DefaultLoginService(IOptions<BffOptions> options, IReturnUrlValidator returnUrlValidator, ILogger<DefaultLoginService> logger)
-    {
-        Options = options.Value;
-        ReturnUrlValidator = returnUrlValidator;
-        Logger = logger;
-    }
+    protected readonly ILogger Logger = logger;
 
     /// <inheritdoc />
     public virtual async Task ProcessRequestAsync(HttpContext context)
@@ -49,6 +46,15 @@ public class DefaultLoginService : ILoginService
         context.CheckForBffMiddleware(Options);
 
         var returnUrl = context.Request.Query[Constants.RequestParameters.ReturnUrl].FirstOrDefault();
+
+        var prompt = context.Request.Query[Constants.RequestParameters.Prompt].FirstOrDefault();
+
+        var supportedPromptValues = await GetPromptValuesAsync();
+        if (prompt != null && !supportedPromptValues.Contains(prompt))
+        {
+            context.ReturnHttpProblem("Invalid prompt value", ("prompt", [$"prompt '{prompt}' is not supported"]));
+            return;
+        }
 
         if (!string.IsNullOrWhiteSpace(returnUrl))
         {
@@ -70,13 +76,47 @@ public class DefaultLoginService : ILoginService
             }
         }
 
+
         var props = new AuthenticationProperties
         {
-            RedirectUri = returnUrl
+            RedirectUri = returnUrl,
         };
+
+        if (prompt != null)
+        {
+            props.Items.Add(Constants.BffFlags.Prompt, prompt);
+        }
 
         Logger.LogDebug("Login endpoint triggering Challenge with returnUrl {returnUrl}", returnUrl);
 
         await context.ChallengeAsync(props);
+    }
+
+    private async Task<ICollection<string>> GetPromptValuesAsync()
+    {
+        var scheme = await authenticationSchemeProvider.GetDefaultChallengeSchemeAsync();
+        if (scheme == null)
+        {
+            throw new Exception("Failed to obtain default challenge scheme");
+        }
+
+        var options = _openIdConnectOptionsMonitor.Get(scheme.Name);
+        if (options == null)
+        {
+            throw new Exception("Failed to obtain OIDC options for default challenge scheme");
+        }
+
+        var config = options.Configuration;
+        if (config == null)
+        {
+            config = await options.ConfigurationManager?.GetConfigurationAsync(CancellationToken.None)!;
+        }
+
+        if (config == null)
+        {
+            throw new Exception("Failed to obtain OIDC configuration");
+        }
+
+        return config.PromptValuesSupported;
     }
 }

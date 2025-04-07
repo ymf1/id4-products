@@ -30,10 +30,7 @@ public class AuthorizeResult : EndpointResult<AuthorizeResult>
     /// </summary>
     /// <param name="response"></param>
     /// <exception cref="ArgumentNullException"></exception>
-    public AuthorizeResult(AuthorizeResponse response)
-    {
-        Response = response ?? throw new ArgumentNullException(nameof(response));
-    }
+    public AuthorizeResult(AuthorizeResponse response) => Response = response ?? throw new ArgumentNullException(nameof(response));
 }
 
 /// <summary>
@@ -228,13 +225,6 @@ public class AuthorizeHttpWriter : IHttpResponseWriter<AuthorizeResult>
             DisplayMode = response.Request?.DisplayMode,
             ClientId = response.Request?.ClientId
         };
-
-        if (response.RedirectUri != null && response.Request?.ResponseMode != null)
-        {
-            // if we have a valid redirect uri, then include it to the error page
-            errorModel.RedirectUri = BuildRedirectUri(response);
-            errorModel.ResponseMode = response.Request.ResponseMode;
-        }
 
         var message = new Message<ErrorMessage>(errorModel, _clock.UtcNow.UtcDateTime);
         var id = await _errorMessageStore.WriteAsync(message);

@@ -24,49 +24,40 @@ public class ScopeStoreTests : IntegrationTest<ScopeStoreTests, ConfigurationDbC
         }
     }
 
-    private static IdentityResource CreateIdentityTestResource()
+    private static IdentityResource CreateIdentityTestResource() => new IdentityResource()
     {
-        return new IdentityResource()
-        {
-            Name = Guid.NewGuid().ToString(),
-            DisplayName = Guid.NewGuid().ToString(),
-            Description = Guid.NewGuid().ToString(),
-            ShowInDiscoveryDocument = true,
-            UserClaims =
+        Name = Guid.NewGuid().ToString(),
+        DisplayName = Guid.NewGuid().ToString(),
+        Description = Guid.NewGuid().ToString(),
+        ShowInDiscoveryDocument = true,
+        UserClaims =
             {
                 JwtClaimTypes.Subject,
                 JwtClaimTypes.Name,
             }
-        };
-    }
+    };
 
-    private static ApiResource CreateApiResourceTestResource()
+    private static ApiResource CreateApiResourceTestResource() => new ApiResource()
     {
-        return new ApiResource()
-        {
-            Name = Guid.NewGuid().ToString(),
-            ApiSecrets = new List<Secret> { new Secret("secret".ToSha256()) },
-            Scopes = { Guid.NewGuid().ToString() },
-            UserClaims =
+        Name = Guid.NewGuid().ToString(),
+        ApiSecrets = new List<Secret> { new Secret("secret".ToSha256()) },
+        Scopes = { Guid.NewGuid().ToString() },
+        UserClaims =
             {
                 Guid.NewGuid().ToString(),
                 Guid.NewGuid().ToString(),
             }
-        };
-    }
+    };
 
-    private static ApiScope CreateApiScopeTestResource()
+    private static ApiScope CreateApiScopeTestResource() => new ApiScope()
     {
-        return new ApiScope()
-        {
-            Name = Guid.NewGuid().ToString(),
-            UserClaims =
+        Name = Guid.NewGuid().ToString(),
+        UserClaims =
             {
                 Guid.NewGuid().ToString(),
                 Guid.NewGuid().ToString(),
             }
-        };
-    }
+    };
 
 
     [Theory, MemberData(nameof(TestDatabaseProviders))]
@@ -74,14 +65,14 @@ public class ScopeStoreTests : IntegrationTest<ScopeStoreTests, ConfigurationDbC
     {
         var resource = CreateApiResourceTestResource();
 
-        using (var context = new ConfigurationDbContext(options))
+        await using (var context = new ConfigurationDbContext(options))
         {
             context.ApiResources.Add(resource.ToEntity());
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         ApiResource foundResource;
-        using (var context = new ConfigurationDbContext(options))
+        await using (var context = new ConfigurationDbContext(options))
         {
             var store = new ResourceStore(context, FakeLogger<ResourceStore>.Create(), new NoneCancellationTokenProvider());
             foundResource = (await store.FindApiResourcesByNameAsync(new[] { resource.Name })).SingleOrDefault();
@@ -102,15 +93,15 @@ public class ScopeStoreTests : IntegrationTest<ScopeStoreTests, ConfigurationDbC
     {
         var resource = CreateApiResourceTestResource();
 
-        using (var context = new ConfigurationDbContext(options))
+        await using (var context = new ConfigurationDbContext(options))
         {
             context.ApiResources.Add(resource.ToEntity());
             context.ApiResources.Add(CreateApiResourceTestResource().ToEntity());
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         ApiResource foundResource;
-        using (var context = new ConfigurationDbContext(options))
+        await using (var context = new ConfigurationDbContext(options))
         {
             var store = new ResourceStore(context, FakeLogger<ResourceStore>.Create(), new NoneCancellationTokenProvider());
             foundResource = (await store.FindApiResourcesByNameAsync(new[] { resource.Name })).SingleOrDefault();
@@ -134,15 +125,15 @@ public class ScopeStoreTests : IntegrationTest<ScopeStoreTests, ConfigurationDbC
         var testApiScope = CreateApiScopeTestResource();
         testApiResource.Scopes.Add(testApiScope.Name);
 
-        using (var context = new ConfigurationDbContext(options))
+        await using (var context = new ConfigurationDbContext(options))
         {
             context.ApiResources.Add(testApiResource.ToEntity());
             context.ApiScopes.Add(testApiScope.ToEntity());
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         IEnumerable<ApiResource> resources;
-        using (var context = new ConfigurationDbContext(options))
+        await using (var context = new ConfigurationDbContext(options))
         {
             var store = new ResourceStore(context, FakeLogger<ResourceStore>.Create(), new NoneCancellationTokenProvider());
             resources = await store.FindApiResourcesByScopeNameAsync(new List<string>
@@ -164,7 +155,7 @@ public class ScopeStoreTests : IntegrationTest<ScopeStoreTests, ConfigurationDbC
         var testApiScope = CreateApiScopeTestResource();
         testApiResource.Scopes.Add(testApiScope.Name);
 
-        using (var context = new ConfigurationDbContext(options))
+        await using (var context = new ConfigurationDbContext(options))
         {
             context.IdentityResources.Add(testIdentityResource.ToEntity());
             context.ApiResources.Add(testApiResource.ToEntity());
@@ -172,11 +163,11 @@ public class ScopeStoreTests : IntegrationTest<ScopeStoreTests, ConfigurationDbC
             context.IdentityResources.Add(CreateIdentityTestResource().ToEntity());
             context.ApiResources.Add(CreateApiResourceTestResource().ToEntity());
             context.ApiScopes.Add(CreateApiScopeTestResource().ToEntity());
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         IEnumerable<ApiResource> resources;
-        using (var context = new ConfigurationDbContext(options))
+        await using (var context = new ConfigurationDbContext(options))
         {
             var store = new ResourceStore(context, FakeLogger<ResourceStore>.Create(), new NoneCancellationTokenProvider());
             resources = await store.FindApiResourcesByScopeNameAsync(new[] { testApiScope.Name });
@@ -192,14 +183,14 @@ public class ScopeStoreTests : IntegrationTest<ScopeStoreTests, ConfigurationDbC
     {
         var resource = CreateIdentityTestResource();
 
-        using (var context = new ConfigurationDbContext(options))
+        await using (var context = new ConfigurationDbContext(options))
         {
             context.IdentityResources.Add(resource.ToEntity());
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         IList<IdentityResource> resources;
-        using (var context = new ConfigurationDbContext(options))
+        await using (var context = new ConfigurationDbContext(options))
         {
             var store = new ResourceStore(context, FakeLogger<ResourceStore>.Create(), new NoneCancellationTokenProvider());
             resources = (await store.FindIdentityResourcesByScopeNameAsync(new List<string>
@@ -222,15 +213,15 @@ public class ScopeStoreTests : IntegrationTest<ScopeStoreTests, ConfigurationDbC
     {
         var resource = CreateIdentityTestResource();
 
-        using (var context = new ConfigurationDbContext(options))
+        await using (var context = new ConfigurationDbContext(options))
         {
             context.IdentityResources.Add(resource.ToEntity());
             context.IdentityResources.Add(CreateIdentityTestResource().ToEntity());
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         IList<IdentityResource> resources;
-        using (var context = new ConfigurationDbContext(options))
+        await using (var context = new ConfigurationDbContext(options))
         {
             var store = new ResourceStore(context, FakeLogger<ResourceStore>.Create(), new NoneCancellationTokenProvider());
             resources = (await store.FindIdentityResourcesByScopeNameAsync(new List<string>
@@ -249,14 +240,14 @@ public class ScopeStoreTests : IntegrationTest<ScopeStoreTests, ConfigurationDbC
     {
         var resource = CreateApiScopeTestResource();
 
-        using (var context = new ConfigurationDbContext(options))
+        await using (var context = new ConfigurationDbContext(options))
         {
             context.ApiScopes.Add(resource.ToEntity());
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         IList<ApiScope> resources;
-        using (var context = new ConfigurationDbContext(options))
+        await using (var context = new ConfigurationDbContext(options))
         {
             var store = new ResourceStore(context, FakeLogger<ResourceStore>.Create(), new NoneCancellationTokenProvider());
             resources = (await store.FindApiScopesByNameAsync(new List<string>
@@ -279,15 +270,15 @@ public class ScopeStoreTests : IntegrationTest<ScopeStoreTests, ConfigurationDbC
     {
         var resource = CreateApiScopeTestResource();
 
-        using (var context = new ConfigurationDbContext(options))
+        await using (var context = new ConfigurationDbContext(options))
         {
             context.ApiScopes.Add(resource.ToEntity());
             context.ApiScopes.Add(CreateApiScopeTestResource().ToEntity());
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         IList<ApiScope> resources;
-        using (var context = new ConfigurationDbContext(options))
+        await using (var context = new ConfigurationDbContext(options))
         {
             var store = new ResourceStore(context, FakeLogger<ResourceStore>.Create(), new NoneCancellationTokenProvider());
             resources = (await store.FindApiScopesByNameAsync(new List<string>
@@ -320,7 +311,7 @@ public class ScopeStoreTests : IntegrationTest<ScopeStoreTests, ConfigurationDbC
             ShowInDiscoveryDocument = false
         };
 
-        using (var context = new ConfigurationDbContext(options))
+        await using (var context = new ConfigurationDbContext(options))
         {
             context.IdentityResources.Add(visibleIdentityResource.ToEntity());
             context.ApiResources.Add(visibleApiResource.ToEntity());
@@ -330,11 +321,11 @@ public class ScopeStoreTests : IntegrationTest<ScopeStoreTests, ConfigurationDbC
             context.ApiResources.Add(hiddenApiResource.ToEntity());
             context.ApiScopes.Add(hiddenApiScope.ToEntity());
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         Resources resources;
-        using (var context = new ConfigurationDbContext(options))
+        await using (var context = new ConfigurationDbContext(options))
         {
             var store = new ResourceStore(context, FakeLogger<ResourceStore>.Create(), new NoneCancellationTokenProvider());
             resources = await store.GetAllResourcesAsync();

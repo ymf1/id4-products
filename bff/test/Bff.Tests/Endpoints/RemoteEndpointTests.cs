@@ -12,13 +12,10 @@ namespace Duende.Bff.Tests.Endpoints;
 public class RemoteEndpointTests(ITestOutputHelper output) : BffIntegrationTestBase(output)
 {
     [Fact]
-    public async Task unauthenticated_calls_to_remote_endpoint_should_return_401()
-    {
-        await BffHost.BrowserClient.CallBffHostApi(
+    public async Task unauthenticated_calls_to_remote_endpoint_should_return_401() => await BffHost.BrowserClient.CallBffHostApi(
             url: BffHost.Url("/api_user/test"),
             expectedStatusCode: HttpStatusCode.Unauthorized
         );
-    }
 
     [Fact]
     public async Task calls_to_remote_endpoint_should_forward_user_to_api()
@@ -337,5 +334,15 @@ public class RemoteEndpointTests(ITestOutputHelper output) : BffIntegrationTestB
 
         response.Content.Headers.Select(x => x.Key).ShouldNotContain("added-by-custom-default-transform",
             "a custom transform doesn't run the defaults");
+    }
+    [Fact]
+    public async Task can_disable_anti_forgery_check()
+    {
+        BffHost.BffOptions.DisableAntiForgeryCheck = (c) => true;
+
+        var req = new HttpRequestMessage(HttpMethod.Get, BffHost.Url("/api_user_or_anon/test"));
+        var response = await BffHost.BrowserClient.SendAsync(req);
+
+        response.StatusCode.ShouldBe(HttpStatusCode.OK);
     }
 }

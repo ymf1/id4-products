@@ -3,9 +3,9 @@
 
 using System.Net;
 using System.Text.Json;
-using Bff.Tests.Blazor.Components;
 using Duende.Bff;
 using Duende.Bff.Blazor;
+using Duende.Bff.Tests.Blazor.Components;
 using Duende.Bff.Tests.TestFramework;
 using Duende.Bff.Tests.TestHosts;
 using Duende.Bff.Yarp;
@@ -231,16 +231,10 @@ public class BffBlazorHost : GenericHost
 
     public class CallbackHttpMessageInvokerFactory : IForwarderHttpClientFactory
     {
-        public CallbackHttpMessageInvokerFactory(Func<HttpMessageInvoker> callback)
-        {
-            CreateInvoker = callback;
-        }
+        public CallbackHttpMessageInvokerFactory(Func<HttpMessageInvoker> callback) => CreateInvoker = callback;
 
         public Func<HttpMessageInvoker> CreateInvoker { get; set; }
 
-        public HttpMessageInvoker CreateClient(ForwarderHttpClientContext context)
-        {
-            return CreateInvoker.Invoke();
-        }
+        public HttpMessageInvoker CreateClient(ForwarderHttpClientContext context) => CreateInvoker.Invoke();
     }
 }

@@ -11,7 +11,7 @@ namespace IdentityServerHost.Configuration;
 
 public static class TestUsers
 {
-    public static IEnumerable<TestUser> Users
+    public static List<TestUser> Users
     {
         get
         {

@@ -49,7 +49,7 @@ internal static class IdentityServerExtensions
             });
 
         })
-            .AddTestUsers([.. TestUsers.Users])
+            .AddTestUsers(TestUsers.Users)
             // this adds the config data from DB (clients, resources, CORS)
             .AddConfigurationStore(options =>
             {
@@ -68,10 +68,10 @@ internal static class IdentityServerExtensions
             .AddAppAuthRedirectUriValidator()
             .AddServerSideSessions()
             .AddScopeParser<ParameterizedScopeParser>()
+
             // this is something you will want in production to reduce load on and requests to the DB
             //.AddConfigurationStoreCache()
 
-            // IMPORTED EXTENSIONS
             //.AddStaticSigningCredential()
             .AddExtensionGrantValidator<ExtensionGrantValidator>()
             .AddExtensionGrantValidator<NoSubjectExtensionGrantValidator>()
@@ -113,7 +113,7 @@ internal static class IdentityServerExtensions
     // You can create keys for dev use with the mkcert util:
     //    mkcert -pkcs12 identityserver.test.rsa
     //    mkcert -pkcs12 -ecdsa identityserver.test.ecdsa
-    // Then import the keys into the certificate manager. This code expect keys in the personal store of the current user.
+    // Then import the keys into the certificate manager. This code expects keys in the personal store of the current user.
     private static IIdentityServerBuilder AddStaticSigningCredential(this IIdentityServerBuilder builder)
     {
         var store = new X509Store(StoreName.My, StoreLocation.CurrentUser);

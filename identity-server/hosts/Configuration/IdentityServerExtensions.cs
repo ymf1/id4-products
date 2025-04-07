@@ -36,7 +36,7 @@ internal static class IdentityServerExtensions
             .AddExtensionGrantValidator<NoSubjectExtensionGrantValidator>()
             .AddJwtBearerClientAuthentication()
             .AddAppAuthRedirectUriValidator()
-            .AddTestUsers([.. TestUsers.Users])
+            .AddTestUsers(TestUsers.Users)
             .AddProfileService<HostProfileService>()
             .AddCustomTokenRequestValidator<ParameterizedScopeTokenRequestValidator>()
             .AddScopeParser<ParameterizedScopeParser>()

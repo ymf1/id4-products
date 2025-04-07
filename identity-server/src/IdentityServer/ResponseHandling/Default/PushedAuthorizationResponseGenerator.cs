@@ -5,6 +5,7 @@
 using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Validation;
+using Microsoft.Extensions.Logging;
 
 namespace Duende.IdentityServer.ResponseHandling;
 
@@ -14,6 +15,7 @@ public class PushedAuthorizationResponseGenerator : IPushedAuthorizationResponse
     private readonly IHandleGenerationService _handleGeneration;
     private readonly IdentityServerOptions _options;
     private readonly IPushedAuthorizationService _pushedAuthorizationService;
+    private readonly ILogger<PushedAuthorizationResponseGenerator> _logger;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PushedAuthorizationResponseGenerator"/> class.

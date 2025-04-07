@@ -22,14 +22,16 @@ public class PushedAuthorizationResponseGenerator : IPushedAuthorizationResponse
     /// </param>
     /// <param name="options">The IdentityServer options</param>
     /// <param name="pushedAuthorizationService">The pushed authorization service</param>
-    public PushedAuthorizationResponseGenerator(
-        IHandleGenerationService handleGeneration,
+    /// <param name="logger">The logger</param>
+    public PushedAuthorizationResponseGenerator(IHandleGenerationService handleGeneration,
         IdentityServerOptions options,
-        IPushedAuthorizationService pushedAuthorizationService)
+        IPushedAuthorizationService pushedAuthorizationService,
+        ILogger<PushedAuthorizationResponseGenerator> logger)
     {
         _handleGeneration = handleGeneration;
         _options = options;
         _pushedAuthorizationService = pushedAuthorizationService;
+        _logger = logger;
     }
 
     /// <inheritdoc />

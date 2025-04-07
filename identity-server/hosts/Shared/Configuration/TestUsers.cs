@@ -11,7 +11,9 @@ namespace IdentityServerHost.Configuration;
 
 public static class TestUsers
 {
+#pragma warning disable CA1002 // Do not expose generic lists
     public static List<TestUser> Users
+#pragma warning restore CA1002 // Do not expose generic lists
     {
         get
         {

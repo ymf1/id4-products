@@ -53,7 +53,7 @@ public class Authorize_ProtocolValidation_Resources
             _mockResourceValidator,
             _mockUserSession,
             Factory.CreateRequestObjectValidator(),
-            new LicenseUsageTracker(new LicenseAccessor(new IdentityServerOptions(), NullLogger<LicenseAccessor>.Instance)),
+            new LicenseUsageTracker(new LicenseAccessor(new IdentityServerOptions(), NullLogger<LicenseAccessor>.Instance), new NullLoggerFactory()),
             new SanitizedLogger<AuthorizeRequestValidator>(TestLogger.Create<AuthorizeRequestValidator>()));
 
     [Fact]

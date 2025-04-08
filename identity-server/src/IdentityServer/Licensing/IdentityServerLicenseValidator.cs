@@ -94,7 +94,6 @@ internal class IdentityServerLicenseValidator : LicenseValidator<IdentityServerL
 
     private HashSet<string> _clientIds = new();
     private object _clientIdLock = new();
-    private bool _validateClientWarned = false;
 
     // Internal method that takes license as parameter to allow testing
     internal void ValidateClient(string clientId, IdentityServerLicense license)
@@ -106,23 +105,13 @@ internal class IdentityServerLicenseValidator : LicenseValidator<IdentityServerL
 
         EnsureAdded(ref _clientIds, _clientIdLock, clientId);
 
-        if (license != null)
+        if (license != null && license.RedistributionFeature)
         {
             if (_clientIds.Count > license.ClientLimit)
             {
                 ErrorLog.Invoke(
                     "Your license for Duende IdentityServer only permits {clientLimit} number of clients. You have processed requests for {clientCount}. The clients used were: {clients}.",
                     [license.ClientLimit, _clientIds.Count, _clientIds.ToArray()]);
-            }
-        }
-        else
-        {
-            if (!_validateClientWarned && _clientIds.Count > 5)
-            {
-                _validateClientWarned = true;
-                WarningLog?.Invoke(
-                    "You do not have a license, and you have processed requests for {clientCount} clients. This number requires a tier of license higher than Starter Edition. The clients used were: {clients}.",
-                    [_clientIds.Count, _clientIds.ToArray()]);
             }
         }
     }

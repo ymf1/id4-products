@@ -5,6 +5,8 @@ using Duende.IdentityServer.Configuration;
 using Duende.IdentityServer.Licensing.V2;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using UnitTests.Common;
 
@@ -22,6 +24,7 @@ public class PostConfigureApplicationCookieTicketStoreTests
             sp.AddSingleton(TestLogger.Create<LicenseAccessor>());
             sp.AddSingleton<LicenseAccessor>();
             sp.AddSingleton<LicenseUsageTracker>();
+            sp.AddSingleton<ILoggerFactory>(new NullLoggerFactory());
         });
 
         // The mock http context accessor has a convenient HttpContext, but

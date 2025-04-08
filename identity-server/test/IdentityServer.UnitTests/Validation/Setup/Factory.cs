@@ -136,7 +136,7 @@ internal static class Factory
             new DefaultDPoPProofValidator(options, new MockReplayCache(), new StubClock(), new StubDataProtectionProvider(), new LoggerFactory().CreateLogger<DefaultDPoPProofValidator>()),
             new TestEventService(),
             new StubClock(),
-            new LicenseUsageTracker(new LicenseAccessor(new IdentityServerOptions(), NullLogger<LicenseAccessor>.Instance)),
+            new LicenseUsageTracker(new LicenseAccessor(new IdentityServerOptions(), NullLogger<LicenseAccessor>.Instance), new NullLoggerFactory()),
             TestLogger.Create<TokenRequestValidator>());
     }
 
@@ -264,7 +264,7 @@ internal static class Factory
             resourceValidator,
             userSession,
             requestObjectValidator,
-            new LicenseUsageTracker(new LicenseAccessor(new IdentityServerOptions(), NullLogger<LicenseAccessor>.Instance)),
+            new LicenseUsageTracker(new LicenseAccessor(new IdentityServerOptions(), NullLogger<LicenseAccessor>.Instance), new NullLoggerFactory()),
             new SanitizedLogger<AuthorizeRequestValidator>(TestLogger.Create<AuthorizeRequestValidator>()));
     }
 

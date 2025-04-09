@@ -318,4 +318,18 @@ public class DiscoveryEndpointTests
         Should.Throw<InvalidOperationException>(() =>
             result.Entries.Add("Joe", "Good Stuff"));
     }
+
+    [Fact]
+    [Trait("Category", Category)]
+    public async Task par_is_included_in_mtls_aliases()
+    {
+        var pipeline = new IdentityServerPipeline();
+        pipeline.Initialize();
+
+        pipeline.Options.MutualTls.Enabled = true;
+
+
+        var result = await pipeline.BackChannelClient.GetDiscoveryDocumentAsync("https://server/.well-known/openid-configuration");
+        result.MtlsEndpointAliases.PushedAuthorizationRequestEndpoint.ShouldNotBeNull();
+    }
 }

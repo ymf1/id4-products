@@ -184,6 +184,11 @@ public class DiscoveryResponseGenerator : IDiscoveryResponseGenerator
                     mtlsEndpoints.Add(OidcConstants.Discovery.DeviceAuthorizationEndpoint, ConstructMtlsEndpoint(ProtocolRoutePaths.DeviceAuthorization));
                 }
 
+                if (Options.Endpoints.EnablePushedAuthorizationEndpoint)
+                {
+                    mtlsEndpoints.Add(OidcConstants.Discovery.PushedAuthorizationRequestEndpoint, ConstructMtlsEndpoint(ProtocolRoutePaths.PushedAuthorization));
+                }
+
                 if (mtlsEndpoints.Any())
                 {
                     entries.Add(OidcConstants.Discovery.MtlsEndpointAliases, mtlsEndpoints);

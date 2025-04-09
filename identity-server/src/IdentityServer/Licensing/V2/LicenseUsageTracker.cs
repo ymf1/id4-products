@@ -19,6 +19,7 @@ internal class LicenseUsageTracker(LicenseAccessor licenseAccessor, ILoggerFacto
     private readonly ConcurrentHashSet<string> _issuersUsed = new();
 
     private const int ClientLimitExceededThreshold = 5;
+    private const int IssuerLimitExceededThreshold = 1;
 
     public void FeatureUsed(LicenseFeature feature)
     {
@@ -81,7 +82,43 @@ internal class LicenseUsageTracker(LicenseAccessor licenseAccessor, ILoggerFacto
         }
     }
 
-    public void IssuerUsed(string issuer) => _issuersUsed.Add(issuer);
+    public void IssuerUsed(string issuer)
+    {
+        var initialIssuerCount = _issuersUsed.Values.Count;
+
+        _issuersUsed.Add(issuer);
+
+        if (initialIssuerCount == _issuersUsed.Values.Count)
+        {
+            return;
+        }
+
+        if (licenseAccessor.Current.IsConfigured)
+        {
+            if (licenseAccessor.Current.Redistribution || !licenseAccessor.Current.IssuerLimit.HasValue)
+            {
+                return;
+            }
+
+            var issuerLimitOverage = _issuersUsed.Values.Count - licenseAccessor.Current.IssuerLimit;
+            switch (issuerLimitOverage)
+            {
+                case > IssuerLimitExceededThreshold:
+                    _logger.IssuerLimitExceededOverThreshold(licenseAccessor.Current.IssuerLimit.Value, _issuersUsed.Values.Count, IssuerLimitExceededThreshold, _issuersUsed.Values);
+                    break;
+                case > 0:
+                    _logger.IssuerLimitExceededWithinOverageThreshold(licenseAccessor.Current.IssuerLimit.Value, _issuersUsed.Values.Count, IssuerLimitExceededThreshold, _issuersUsed.Values);
+                    break;
+            }
+        }
+        else
+        {
+            if (_issuersUsed.Values.Count > IssuerLimitExceededThreshold)
+            {
+                _logger.IssuerLimitWithNoLicenseExceeded(_issuersUsed.Values.Count, _issuersUsed.Values);
+            }
+        }
+    }
 
     public LicenseUsageSummary GetSummary()
     {

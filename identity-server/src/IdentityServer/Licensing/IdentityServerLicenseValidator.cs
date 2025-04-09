@@ -118,33 +118,26 @@ internal class IdentityServerLicenseValidator : LicenseValidator<IdentityServerL
 
     private HashSet<string> _issuers = new();
     private object _issuerLock = new();
-    private bool _validateIssuerWarned = false;
-    public void ValidateIssuer(string iss)
+
+    public void ValidateIssuer(string iss) => ValidateIssuer(iss, License);
+
+    //Internal method that takes a license as parameter to allow testing
+    internal void ValidateIssuer(string iss, IdentityServerLicense license)
     {
-        if (License != null && !License.IssuerLimit.HasValue)
+        if (License != null && !license.IssuerLimit.HasValue)
         {
             return;
         }
 
         EnsureAdded(ref _issuers, _issuerLock, iss);
 
-        if (License != null)
+        if (license != null && license.RedistributionFeature)
         {
-            if (_issuers.Count > License.IssuerLimit)
+            if (_issuers.Count > license.IssuerLimit)
             {
                 ErrorLog.Invoke(
                     "Your license for Duende IdentityServer only permits {issuerLimit} number of issuers. You have processed requests for {issuerCount}. The issuers used were: {issuers}. This might be due to your server being accessed via different URLs or a direct IP and/or you have reverse proxy or a gateway involved. This suggests a network infrastructure configuration problem, or you are deliberately hosting multiple URLs and require an upgraded license.",
-                    [License.IssuerLimit, _issuers.Count, _issuers.ToArray()]);
-            }
-        }
-        else
-        {
-            if (!_validateIssuerWarned && _issuers.Count > 1)
-            {
-                _validateIssuerWarned = true;
-                WarningLog?.Invoke(
-                    "You do not have a license, and you have processed requests for {issuerCount} issuers. If you are deliberately hosting multiple URLs then this number requires a license per issuer, or the Enterprise Edition tier of license. If not then this might be due to your server being accessed via different URLs or a direct IP and/or you have reverse proxy or a gateway involved, and this suggests a network infrastructure configuration problem. The issuers used were: {issuers}.",
-                    [_issuers.Count, _issuers.ToArray()]);
+                    [license.IssuerLimit, _issuers.Count, _issuers.ToArray()]);
             }
         }
     }

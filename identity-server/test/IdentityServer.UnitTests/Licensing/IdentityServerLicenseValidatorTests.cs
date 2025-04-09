@@ -444,4 +444,54 @@ public class IdentityServerLicenseValidatorTests
         subject.ErrorLogCount.ShouldBe(0);
         subject.WarningLogCount.ShouldBe(0);
     }
+
+    [Fact]
+    [Trait("Category", Category)]
+    public void issuer_count_exceeded_should_warn_for_redist_license()
+    {
+        var license = new IdentityServerLicense(new Claim("edition", "starter"), new Claim("feature", "redistribution"));
+        var subject = new MockLicenseValidator();
+
+        subject.ValidateIssuer("issuer", license);
+
+        // Adding the allowed number of issuers shouldn't log.
+        subject.ErrorLogCount.ShouldBe(0);
+        subject.WarningLogCount.ShouldBe(0);
+
+        // Validating same issuer again shouldn't log.
+        subject.ValidateIssuer("issuer", license);
+        subject.ErrorLogCount.ShouldBe(0);
+        subject.WarningLogCount.ShouldBe(0);
+
+        subject.ValidateIssuer("extra1", license);
+        subject.ValidateIssuer("extra2", license);
+
+        subject.ErrorLogCount.ShouldBe(2);
+        subject.WarningLogCount.ShouldBe(0);
+    }
+
+    [Fact]
+    [Trait("Category", Category)]
+    public void issuer_count_exceeded_should_not_warn_for_non_redist_license()
+    {
+        var license = new IdentityServerLicense(new Claim("edition", "starter"));
+        var subject = new MockLicenseValidator();
+
+        subject.ValidateIssuer("issuer", license);
+
+        // Adding the allowed number of issuers shouldn't log.
+        subject.ErrorLogCount.ShouldBe(0);
+        subject.WarningLogCount.ShouldBe(0);
+
+        // Validating same issuer again shouldn't log.
+        subject.ValidateClient("issuer", license);
+        subject.ErrorLogCount.ShouldBe(0);
+        subject.WarningLogCount.ShouldBe(0);
+
+        subject.ValidateIssuer("extra1", license);
+        subject.ValidateIssuer("extra2", license);
+
+        subject.ErrorLogCount.ShouldBe(0);
+        subject.WarningLogCount.ShouldBe(0);
+    }
 }

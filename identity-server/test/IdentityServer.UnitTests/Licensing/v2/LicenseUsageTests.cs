@@ -152,6 +152,19 @@ public class LicenseUsageTests
     }
 
     [Fact]
+    public void client_count_for_license_with_unlimited_clients_should_not_log_warning()
+    {
+        Init(TestLicenses.EnterpriseLicense);
+
+        for (var i = 0; i < 11; i++)
+        {
+            _licenseUsageTracker.ClientUsed($"client{i}");
+        }
+
+        _logger.Collector.GetSnapshot().ShouldBeEmpty();
+    }
+
+    [Fact]
     public void client_count_over_limit_for_redist_license_does_not_log()
     {
         Init(TestLicenses.RedistributionStarterLicense);
@@ -179,10 +192,111 @@ public class LicenseUsageTests
         summary.IssuersUsed.ShouldContain("https://acme.com");
     }
 
+    [Theory]
+    [InlineData(TestLicenses.StarterLicense)]
+    [InlineData(null)]
+    public void issuer_count_within_limit_should_not_log(string licenseKey)
+    {
+        Init(licenseKey);
+
+        _licenseUsageTracker.IssuerUsed("issuer1");
+
+        _logger.Collector.GetSnapshot().ShouldBeEmpty();
+    }
+
+    [Fact]
+    public void issuer_count_over_limit_without_license_should_log_warning()
+    {
+        Init(null);
+
+        _licenseUsageTracker.IssuerUsed("issuer1");
+        _licenseUsageTracker.IssuerUsed("issuer2");
+
+        var initialLogSnapshot = _logger.Collector.GetSnapshot();
+        initialLogSnapshot.ShouldContain(r =>
+            r.Level == LogLevel.Error &&
+            r.Message.StartsWith(
+                $"You do not have a license, and you have processed requests for 2 issuers. If you are deliberately hosting multiple URLs then this number requires a license per issuer, or the Enterprise Edition tier of license. If not then this might be due to your server being accessed via different URLs or a direct IP and/or you have reverse proxy or a gateway involved, and this suggests a network infrastructure configuration problem. The issuers used were: "));
+    }
+
+    [Fact]
+    public void issuer_count_over_limit_and_within_overage_threshold_and_new_client_used_should_log_warning()
+    {
+        Init(TestLicenses.StarterLicense);
+
+        _licenseUsageTracker.IssuerUsed("issuer1");
+        _licenseUsageTracker.IssuerUsed("issuer2");
+
+        var logSnapshot = _logger.Collector.GetSnapshot();
+        logSnapshot.ShouldContain(r =>
+            r.Level == LogLevel.Error &&
+            r.Message.StartsWith(
+                "Your license for Duende IdentityServer only permits 1 number of issuers. You have processed requests for 2 issuers and are still within the threshold of 1. The issuers used were: ") &&
+            r.Message.EndsWith(
+                "This might be due to your server being accessed via different URLs or a direct IP and/or you have reverse proxy or a gateway involved. This suggests a network infrastructure configuration problem, or you are deliberately hosting multiple URLs and require an upgraded license. In a future version of issuer limit will be enforced."));
+    }
+
+    [Fact]
+    public void issuer_count_within_limit_and_existing_client_used_should_not_log_warning()
+    {
+        Init(TestLicenses.StarterLicense);
+
+        _licenseUsageTracker.IssuerUsed("issuer1");
+
+        _licenseUsageTracker.ClientUsed("issuer1");
+
+        _logger.Collector.GetSnapshot().ShouldBeEmpty();
+    }
+
+    [Fact]
+    public void issuer_count_over_limit_and_over_threshold_overage_and_new_client_used_should_log_warning()
+    {
+        Init(TestLicenses.StarterLicense);
+
+        _licenseUsageTracker.IssuerUsed("issuer1");
+        _licenseUsageTracker.IssuerUsed("issuer2");
+        _licenseUsageTracker.IssuerUsed("issuer3");
+
+        var logSnapshot = _logger.Collector.GetSnapshot();
+        logSnapshot.ShouldContain(r =>
+            r.Level == LogLevel.Error &&
+            r.Message.StartsWith(
+                "Your license for Duende IdentityServer only permits 1 number of issuers. You have processed requests for 3 issuers and are over the threshold of 1. The issuers used were: ") &&
+            r.Message.EndsWith(
+                "This might be due to your server being accessed via different URLs or a direct IP and/or you have reverse proxy or a gateway involved. This suggests a network infrastructure configuration problem, or you are deliberately hosting multiple URLs and require an upgraded license. In a future version of issuer limit will be enforced."));
+    }
+
+    [Fact]
+    public void issuer_count_over_limit_for_redist_license_does_not_log()
+    {
+        Init(TestLicenses.RedistributionStarterLicense);
+
+        _licenseUsageTracker.IssuerUsed("issuer1");
+        _licenseUsageTracker.IssuerUsed("issuer2");
+        _licenseUsageTracker.IssuerUsed("issuer3");
+
+        _logger.Collector.GetSnapshot().ShouldBeEmpty();
+    }
+
+    [Fact]
+    public void issuer_count_for_license_with_unlimited_issuers_should_not_log_warning()
+    {
+        Init(TestLicenses.EnterpriseLicense);
+
+        _licenseUsageTracker.IssuerUsed("issuer1");
+        _licenseUsageTracker.IssuerUsed("issuer2");
+        _licenseUsageTracker.IssuerUsed("issuer3");
+
+        _logger.Collector.GetSnapshot().ShouldBeEmpty();
+    }
+
     private static class TestLicenses
     {
         public const string StarterLicense =
             "eyJhbGciOiJQUzI1NiIsImtpZCI6IklkZW50aXR5U2VydmVyTGljZW5zZWtleS83Y2VhZGJiNzgxMzA0NjllODgwNjg5MTAyNTQxNGYxNiIsInR5cCI6ImxpY2Vuc2Urand0In0.eyJpc3MiOiJodHRwczovL2R1ZW5kZXNvZnR3YXJlLmNvbSIsImF1ZCI6IklkZW50aXR5U2VydmVyIiwiaWF0IjoxNzMwNDE5MjAwLCJleHAiOjE3MzE2Mjg4MDAsImNvbXBhbnlfbmFtZSI6Il90ZXN0IiwiY29udGFjdF9pbmZvIjoiam9lQGR1ZW5kZXNvZnR3YXJlLmNvbSIsImVkaXRpb24iOiJTdGFydGVyIiwiaWQiOiI2Njc3In0.WEEZFmwoSmJYVJ9geeSKvpB5GaJKQBUUFfABeeQEwh3Tkdg4gnjEme9WJS03MZkxMPj7nEfv8i0Tl1xwTC4gWpV2bfqDzj3R3eKCvz6BZflcmr14j4fbhbc7jDD26b5wAdyiD3krvkd2VsvVnYTTRCilK1UKr6ZVhmSgU8oXgth8JjQ2wIQ80p9D2nurHuWq6UdFdNqbO8aDu6C2eOQuAVmp6gKo7zBbFTbO1G1J1rGyWX8kXYBZMN0Rj_Xp_sdj34uwvzFsJN0i1EwhFATFS6vf6na_xpNz9giBNL04ulDRR95ZSE1vmRoCuP96fsgK7aYCJV1WSRBHXIrwfJhd7A";
+
+        public const string EnterpriseLicense =
+            "eyJhbGciOiJQUzI1NiIsImtpZCI6IklkZW50aXR5U2VydmVyTGljZW5zZWtleS83Y2VhZGJiNzgxMzA0NjllODgwNjg5MTAyNTQxNGYxNiIsInR5cCI6ImxpY2Vuc2Urand0In0.eyJpc3MiOiJodHRwczovL2R1ZW5kZXNvZnR3YXJlLmNvbSIsImF1ZCI6IklkZW50aXR5U2VydmVyIiwiaWF0IjoxNzMwNDE5MjAwLCJleHAiOjE3MzE2Mjg4MDAsImNvbXBhbnlfbmFtZSI6Il90ZXN0IiwiY29udGFjdF9pbmZvIjoiam9lQGR1ZW5kZXNvZnR3YXJlLmNvbSIsImVkaXRpb24iOiJFbnRlcnByaXNlIiwiaWQiOiI2Njg1In0.UgguIFVBciR8lpTF5RuM3FNcIm8m8wGR4Mt0xOCgo-XknFwXBpxOfr0zVjciGboteOl9AFtrqZLopEjsYXGFh2dkl5AzRyq--Ai5y7aezszlMpq8SkjRRCeBUYLNnEO41_YnfjYhNrcmb0Jx9wMomCv74vU3f8Hulz1ppWtoL-MVcGq0fhv_KOCP49aImCgiawPJ6a_bfs2C1QLpj-GG411OhdyrO9QLIH_We4BEvRUyajraisljB1VQzC8Q6188Mm_BLwl4ZENPaoNE4egiqTAuoTS5tb1l732-CGZwpGuU80NSpJbrUc6jd3rVi_pNf_1rH-O4Xt0HRCWiNCDYgg";
 
         public const string RedistributionStarterLicense =
             "eyJhbGciOiJQUzI1NiIsImtpZCI6IklkZW50aXR5U2VydmVyTGljZW5zZWtleS83Y2VhZGJiNzgxMzA0NjllODgwNjg5MTAyNTQxNGYxNiIsInR5cCI6ImxpY2Vuc2Urand0In0.eyJpc3MiOiJodHRwczovL2R1ZW5kZXNvZnR3YXJlLmNvbSIsImF1ZCI6IklkZW50aXR5U2VydmVyIiwiaWF0IjoxNzMwNDE5MjAwLCJleHAiOjE3MzE2Mjg4MDAsImNvbXBhbnlfbmFtZSI6Il90ZXN0IiwiY29udGFjdF9pbmZvIjoiY29udGFjdEBkdWVuZGVzb2Z0d2FyZS5jb20iLCJlZGl0aW9uIjoiU3RhcnRlciIsImlkIjoiNjY4MiIsImZlYXR1cmUiOiJpc3YiLCJwcm9kdWN0IjoiVEJEIn0.Ag4HLR1TVJ2VYgW1MJbpIHvAerx7zaHoM4CLu7baipsZVwc82ZkmLUeO_yB3CqN7N6XepofwZ-RcloxN8UGZ6qPRGQPE1cOMrp8YqxLOI38gJbxALOBG5BB6YTCMf_TKciXn1c3XhrsxVDayMGxAU68fKDCg1rnamBehZfXr2uENipNPkGDh_iuRw2MUgeGY96CGvwCC5R0E6UnvGZbjQ7dFYV-CkAHuE8dEAr0pX_gD77YsYcSxq5rNUavcNnWV7-3knFwozNqi02wTDpcKtqaL2mAr0nRof1E8Df9C8RwCTWXSaWhr9_47W2I1r_IhLYS2Jnq6m_3BgAIvWL4cjQ";

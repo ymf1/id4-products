@@ -389,16 +389,14 @@ public class IdentityServerLicenseValidatorTests
         public int WarningLogCount { get; set; }
     }
 
-    [Theory]
+    [Fact]
     [Trait("Category", Category)]
-    [InlineData(false, 5)]
-    [InlineData(true, 15)]
-    public void client_count_exceeded_should_warn(bool hasLicense, int allowedClients)
+    public void client_count_exceeded_should_warn_for_redist_license()
     {
-        var license = hasLicense ? new IdentityServerLicense(new Claim("edition", "business")) : null;
+        var license = new IdentityServerLicense(new Claim("edition", "starter"), new Claim("feature", "redistribution"));
         var subject = new MockLicenseValidator();
 
-        for (var i = 0; i < allowedClients; i++)
+        for (var i = 0; i < 5; i++)
         {
             subject.ValidateClient("client" + i, license);
         }
@@ -415,15 +413,35 @@ public class IdentityServerLicenseValidatorTests
         subject.ValidateClient("extra1", license);
         subject.ValidateClient("extra2", license);
 
-        if (hasLicense)
+        subject.ErrorLogCount.ShouldBe(2);
+        subject.WarningLogCount.ShouldBe(0);
+    }
+
+    [Fact]
+    [Trait("Category", Category)]
+    public void client_count_exceeded_should_not_warn_for_non_redist_license()
+    {
+        var license = new IdentityServerLicense(new Claim("edition", "starter"));
+        var subject = new MockLicenseValidator();
+
+        for (var i = 0; i < 5; i++)
         {
-            subject.ErrorLogCount.ShouldBe(2);
-            subject.WarningLogCount.ShouldBe(0);
+            subject.ValidateClient("client" + i, license);
         }
-        else
-        {
-            subject.ErrorLogCount.ShouldBe(0);
-            subject.WarningLogCount.ShouldBe(1);
-        }
+
+        // Adding the allowed number of clients shouldn't log.
+        subject.ErrorLogCount.ShouldBe(0);
+        subject.WarningLogCount.ShouldBe(0);
+
+        // Validating same client again shouldn't log.
+        subject.ValidateClient("client3", license);
+        subject.ErrorLogCount.ShouldBe(0);
+        subject.WarningLogCount.ShouldBe(0);
+
+        subject.ValidateClient("extra1", license);
+        subject.ValidateClient("extra2", license);
+
+        subject.ErrorLogCount.ShouldBe(0);
+        subject.WarningLogCount.ShouldBe(0);
     }
 }

@@ -4,16 +4,21 @@
 #nullable enable
 
 using System.Collections.Concurrent;
+using Microsoft.Extensions.Logging;
 
 namespace Duende.IdentityServer.Licensing.V2;
 
-internal class LicenseUsageTracker(LicenseAccessor licenseAccessor)
+internal class LicenseUsageTracker(LicenseAccessor licenseAccessor, ILoggerFactory loggerFactory)
 {
+    private readonly ILogger _logger = loggerFactory.CreateLogger("Duende.IdentityServer.License");
+
     private readonly ConcurrentHashSet<LicenseFeature> _otherFeatures = new();
     private readonly ConcurrentHashSet<LicenseFeature> _businessFeatures = new();
     private readonly ConcurrentHashSet<LicenseFeature> _enterpriseFeatures = new();
     private readonly ConcurrentHashSet<string> _clientsUsed = new();
     private readonly ConcurrentHashSet<string> _issuersUsed = new();
+
+    private const int ClientLimitExceededThreshold = 5;
 
     public void FeatureUsed(LicenseFeature feature)
     {
@@ -38,7 +43,43 @@ internal class LicenseUsageTracker(LicenseAccessor licenseAccessor)
         }
     }
 
-    public void ClientUsed(string clientId) => _clientsUsed.Add(clientId);
+    public void ClientUsed(string clientId)
+    {
+        var initialClientCount = _clientsUsed.Values.Count;
+
+        _clientsUsed.Add(clientId);
+
+        if (initialClientCount == _clientsUsed.Values.Count)
+        {
+            return;
+        }
+
+        if (licenseAccessor.Current.IsConfigured)
+        {
+            if (licenseAccessor.Current.Redistribution || !licenseAccessor.Current.ClientLimit.HasValue)
+            {
+                return;
+            }
+
+            var clientLimitOverage = _clientsUsed.Values.Count - licenseAccessor.Current.ClientLimit;
+            switch (clientLimitOverage)
+            {
+                case > ClientLimitExceededThreshold:
+                    _logger.ClientLimitExceededOverThreshold(licenseAccessor.Current.ClientLimit.Value, _clientsUsed.Values.Count, ClientLimitExceededThreshold, _clientsUsed.Values);
+                    break;
+                case > 0:
+                    _logger.ClientLimitExceededWithinOverageThreshold(licenseAccessor.Current.ClientLimit.Value, _clientsUsed.Values.Count, ClientLimitExceededThreshold, _clientsUsed.Values);
+                    break;
+            }
+        }
+        else
+        {
+            if (_clientsUsed.Values.Count > ClientLimitExceededThreshold)
+            {
+                _logger.ClientLimitWithNoLicenseExceeded(_clientsUsed.Values.Count, _clientsUsed.Values);
+            }
+        }
+    }
 
     public void IssuerUsed(string issuer) => _issuersUsed.Add(issuer);
 
@@ -59,7 +100,7 @@ internal class LicenseUsageTracker(LicenseAccessor licenseAccessor)
         private readonly ConcurrentDictionary<T, byte> _dictionary = new();
 
         // We check if the dictionary contains the key first, because it
-        // performs better given our workload. Typically these sets will contain
+        // performs better given our workload. Typically, these sets will contain
         // a small number of elements, and won't change much over time (e.g.,
         // the first time we try to use DPoP, that gets added, and then all
         // subsequent requests with a proof don't need to do anything here).

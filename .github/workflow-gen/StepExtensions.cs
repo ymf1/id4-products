@@ -250,6 +250,7 @@ public static class StepExtensions
     public static void StepPerformCodeQlAnalysis(this Job job) =>
         job.Step()
             .Name("Perform CodeQL Analysis")
+            .If("${{ env.DISABLE_CODEQL_ANALYSIS != 'true' }}")
             .Uses("github/codeql-action/analyze@9e8d0789d4a0fa9ceb6b1738f7e269594bdd67f0") // 3.28.9
             .With(
                 ("category", "/language:csharp"));

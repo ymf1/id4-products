@@ -7,18 +7,16 @@ using Duende.IdentityServer.Configuration.Models;
 using Duende.IdentityServer.Configuration.Models.DynamicClientRegistration;
 using Duende.IdentityServer.Configuration.RequestProcessing;
 using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Stores;
 
 namespace IdentityServerHost.Extensions;
 
 [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "CA1812:Avoid uninstantiated internal classes", Justification = "Instantiated via DI container")]
-internal sealed class CustomClientRegistrationProcessor : DynamicClientRegistrationRequestProcessor
+internal sealed class CustomClientRegistrationProcessor(
+    IdentityServerConfigurationOptions options,
+    IClientConfigurationStore dcrStore,
+    IClientStore clientStore) : DynamicClientRegistrationRequestProcessor(options, dcrStore)
 {
-    private readonly ICollection<Client> _clients;
-
-    public CustomClientRegistrationProcessor(
-        IdentityServerConfigurationOptions options,
-        IClientConfigurationStore store,
-        ICollection<Client> clients) : base(options, store) => _clients = clients;
 
     protected override async Task<IStepResult> AddClientId(DynamicClientRegistrationContext context)
     {
@@ -27,7 +25,8 @@ internal sealed class CustomClientRegistrationProcessor : DynamicClientRegistrat
             var clientId = clientIdParameter.ToString();
             if (clientId != null)
             {
-                if (_clients.Any(c => c.ClientId == clientId))
+                var existingClient = clientStore.FindClientByIdAsync(clientId);
+                if (existingClient is not null)
                 {
                     return new DynamicClientRegistrationError(
                         "Duplicate client id",

@@ -185,7 +185,7 @@ internal class IntrospectionRequestValidator : IIntrospectionRequestValidator
         var refreshValidationResult = await _refreshTokenService.ValidateRefreshTokenAsync(token, client);
         if (!refreshValidationResult.IsError)
         {
-            var iat = refreshValidationResult.RefreshToken.CreationTime.ToEpochTime();
+            var iat = ((DateTimeOffset)refreshValidationResult.RefreshToken.CreationTime).ToUnixTimeSeconds();
             var claims = new List<Claim>
             {
                 new Claim("client_id", client.ClientId),

@@ -133,7 +133,7 @@ static string CreateClientToken(SigningCredentials credential, string clientId, 
         [
             new Claim(JwtClaimTypes.JwtId, Guid.NewGuid().ToString()),
             new Claim(JwtClaimTypes.Subject, clientId),
-            new Claim(JwtClaimTypes.IssuedAt, now.ToEpochTime().ToString(), ClaimValueTypes.Integer64)
+            new Claim(JwtClaimTypes.IssuedAt, ((DateTimeOffset) now).ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64)
         ],
         now,
         now.AddMinutes(1),

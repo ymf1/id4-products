@@ -38,7 +38,7 @@ public class AssertionService(IConfiguration configuration)
             {
                 new Claim(JwtClaimTypes.JwtId, Guid.NewGuid().ToString()),
                 new Claim(JwtClaimTypes.Subject, "mvc.jar.jwt"),
-                new Claim(JwtClaimTypes.IssuedAt, now.ToEpochTime().ToString(), ClaimValueTypes.Integer64)
+                new Claim(JwtClaimTypes.IssuedAt, ((DateTimeOffset) now).ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64)
             },
             now,
             now.AddMinutes(1),

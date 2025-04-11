@@ -214,6 +214,7 @@ jobs:
     - name: Build
       run: dotnet build identity-server.slnf --no-restore -c Release
     - name: Perform CodeQL Analysis
+      if: ${{ env.DISABLE_CODEQL_ANALYSIS != 'true' }}
       uses: github/codeql-action/analyze@9e8d0789d4a0fa9ceb6b1738f7e269594bdd67f0
       with:
         category: /language:csharp

@@ -119,7 +119,7 @@ public class DPoPJwtBearerEvents : JwtBearerEvents
     protected static bool IsDPoPAuthorizationScheme(HttpRequest request)
     {
         var authz = request.Headers.Authorization.FirstOrDefault();
-        return authz?.StartsWith(DPoPPrefix, StringComparison.Ordinal) == true;
+        return authz?.StartsWith(DPoPPrefix, StringComparison.OrdinalIgnoreCase) == true;
     }
 
     /// <summary>
@@ -137,7 +137,7 @@ public class DPoPJwtBearerEvents : JwtBearerEvents
             _logger.LogInformation("DPoP proof rejected because it exceeded ProofTokenMaxLength.");
             return false;
         }
-        if (authz?.StartsWith(DPoPPrefix, StringComparison.Ordinal) == true)
+        if (authz?.StartsWith(DPoPPrefix, StringComparison.OrdinalIgnoreCase) == true)
         {
             token = authz[DPoPPrefix.Length..].Trim();
             return true;

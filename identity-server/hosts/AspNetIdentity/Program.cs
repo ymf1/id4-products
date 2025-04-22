@@ -17,17 +17,26 @@ Log.Information("Host.AspNetIdentity Starting up");
 
 try
 {
+    //1,builder
     var builder = WebApplication.CreateBuilder(args);
 
-    builder.Host.UseSerilog((ctx, lc) => lc
-        .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}", formatProvider: CultureInfo.InvariantCulture)
+    //2,log
+    builder.Host.UseSerilog((ctx, lc) =>
+    {
+        lc.WriteTo.Console(
+            outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}"
+            , formatProvider: CultureInfo.InvariantCulture)
         .Enrich.FromLogContext()
-        .ReadFrom.Configuration(ctx.Configuration));
+        .ReadFrom.Configuration(ctx.Configuration);
+    });
 
-    var app = builder
-        .ConfigureServices()
-        .ConfigurePipeline();
+    //3,DI
+    var app = builder.ConfigureServices();
 
+    //4,Midware
+    _ = app.ConfigurePipeline();
+
+    //5，注册结束事件
     if (app.Environment.IsDevelopment())
     {
         app.Lifetime.ApplicationStopping.Register(() =>
@@ -38,6 +47,7 @@ try
         });
     }
 
+    //run
     app.Run();
 }
 catch (Exception ex) when (ex is not HostAbortedException)

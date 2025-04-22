@@ -124,6 +124,8 @@ internal static class HostingExtensions
 
         app.UseRouting();
         app.UseIdentityServer();
+
+        //授权
         app.UseAuthorization();
 
         // UI
